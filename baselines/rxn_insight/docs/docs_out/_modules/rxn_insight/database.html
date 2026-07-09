@@ -1,0 +1,498 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LQN104JT30"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-LQN104JT30');
+    </script>
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>rxn_insight.database &mdash; Rxn-INSIGHT 0.1.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=92734c54"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Rxn-INSIGHT
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Quickstart</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../advanced-features.html">Advanced Features and API Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../common-use-cases.html">Potential Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../visualization-guide.html">Visualizing Chemical Reactions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ord-documentation.html">ORD Integration with Rxn-INSIGHT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../molecule-module.html">Molecule Module</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../rxn_insight.html">rxn_insight</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Rxn-INSIGHT</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">rxn_insight.database</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for rxn_insight.database</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rxn_insight.reaction</span><span class="w"> </span><span class="kn">import</span> <span class="n">Reaction</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rxn_insight.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">curate_smirks</span><span class="p">,</span> <span class="n">get_reaction_template</span><span class="p">,</span> <span class="n">make_rdkit_fp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rxnmapper</span><span class="w"> </span><span class="kn">import</span> <span class="n">RXNMapper</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">importlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">resources</span>
+
+
+<div class="viewcode-block" id="Database">
+<a class="viewcode-back" href="../../rxn_insight.html#rxn_insight.database.Database">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Database</span><span class="p">:</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class to manage and analyze reaction datasets, providing functionalities</span>
+<span class="sd">    for creating databases, analyzing reactions, and saving results.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; import rxn_insight as ri</span>
+<span class="sd">        &gt;&gt;&gt; import pandas as pd</span>
+<span class="sd">        &gt;&gt;&gt; # Create a sample DataFrame</span>
+<span class="sd">        &gt;&gt;&gt; data = {</span>
+<span class="sd">        ...     &quot;reaction&quot;: [&quot;OB(O)c1ccccc1.Brc1ccccc1&gt;&gt;c1ccc(-c2ccccc2)cc1&quot;],</span>
+<span class="sd">        ...     &quot;solvent&quot;: [&quot;CN(C)C=O&quot;],</span>
+<span class="sd">        ...     &quot;reagent&quot;: [&quot;F[Cs]&quot;],</span>
+<span class="sd">        ...     &quot;catalyst&quot;: [&quot;[Pd]&quot;],</span>
+<span class="sd">        ...     &quot;yield&quot;: [85],</span>
+<span class="sd">        ...     &quot;reference&quot;: [&quot;Ref1&quot;]</span>
+<span class="sd">        ... }</span>
+<span class="sd">        &gt;&gt;&gt; df = pd.DataFrame(data)</span>
+<span class="sd">        &gt;&gt;&gt; # Initialize a Database object</span>
+<span class="sd">        &gt;&gt;&gt; db = ri.Database()</span>
+<span class="sd">        &gt;&gt;&gt; # Create a database from the DataFrame</span>
+<span class="sd">        &gt;&gt;&gt; reaction_df = db.create_database_from_df(</span>
+<span class="sd">        ...     df,</span>
+<span class="sd">        ...     reaction_column=&quot;reaction&quot;,</span>
+<span class="sd">        ...     solvent_column=&quot;solvent&quot;,</span>
+<span class="sd">        ...     reagent_column=&quot;reagent&quot;,</span>
+<span class="sd">        ...     catalyst_column=&quot;catalyst&quot;,</span>
+<span class="sd">        ...     yield_column=&quot;yield&quot;,</span>
+<span class="sd">        ...     ref_column=&quot;reference&quot;</span>
+<span class="sd">        ...     )</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes a Database object with an optional DataFrame.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            df: An optional pandas DataFrame containing reaction data.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({})</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">class_distribution</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({})</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name_distribution</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({})</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">class_distribution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_class_distribution</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name_distribution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_name_distribution</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">skipped_reactions</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="Database.create_database_from_df">
+<a class="viewcode-back" href="../../rxn_insight.html#rxn_insight.database.Database.create_database_from_df">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_database_from_df</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+            <span class="n">reaction_column</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">solvent_column</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;SOLVENT&quot;</span><span class="p">,</span>
+            <span class="n">reagent_column</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;REAGENT&quot;</span><span class="p">,</span>
+            <span class="n">catalyst_column</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;CATALYST&quot;</span><span class="p">,</span>
+            <span class="n">yield_column</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;YIELD&quot;</span><span class="p">,</span>
+            <span class="n">ref_column</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;REF&quot;</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a reaction database from a given DataFrame.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            df: A DataFrame containing reaction data.</span>
+<span class="sd">            reaction_column: Name of the column containing reaction SMILES.</span>
+<span class="sd">            solvent_column: Name of the solvent column (default: &quot;SOLVENT&quot;).</span>
+<span class="sd">            reagent_column: Name of the reagent column (default: &quot;REAGENT&quot;).</span>
+<span class="sd">            catalyst_column: Name of the catalyst column (default: &quot;CATALYST&quot;).</span>
+<span class="sd">            yield_column: Name of the yield column (default: &quot;YIELD&quot;).</span>
+<span class="sd">            ref_column: Name of the reference column (default: &quot;REF&quot;).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A DataFrame with analyzed reaction data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">all_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;SOLVENT&quot;</span><span class="p">,</span> <span class="s2">&quot;REAGENT&quot;</span><span class="p">,</span> <span class="s2">&quot;CATALYST&quot;</span><span class="p">,</span> <span class="s2">&quot;YIELD&quot;</span><span class="p">,</span> <span class="s2">&quot;REF&quot;</span><span class="p">]</span>
+        <span class="n">df_protocol</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="n">reaction_column</span><span class="p">:</span> <span class="s2">&quot;REACTION&quot;</span><span class="p">,</span>
+                                             <span class="n">solvent_column</span><span class="p">:</span> <span class="s2">&quot;SOLVENT&quot;</span><span class="p">,</span>
+                                             <span class="n">reagent_column</span><span class="p">:</span> <span class="s2">&quot;REAGENT&quot;</span><span class="p">,</span>
+                                             <span class="n">catalyst_column</span><span class="p">:</span> <span class="s2">&quot;CATALYST&quot;</span><span class="p">,</span>
+                                             <span class="n">yield_column</span><span class="p">:</span> <span class="s2">&quot;YIELD&quot;</span><span class="p">,</span>
+                                             <span class="n">ref_column</span><span class="p">:</span> <span class="s2">&quot;REF&quot;</span><span class="p">})</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">all_cols</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df_protocol</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">df_protocol</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;not-reported&quot;</span>
+
+        <span class="n">df</span><span class="p">,</span> <span class="n">skipped_reactions</span> <span class="o">=</span> <span class="n">analyze_reactions</span><span class="p">(</span><span class="n">df_protocol</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">skipped_reactions</span> <span class="o">=</span> <span class="n">skipped_reactions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_distribution</span> <span class="o">=</span> <span class="n">calculate_class_distribution</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name_distribution</span> <span class="o">=</span> <span class="n">calculate_name_distribution</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">df</span></div>
+
+
+<div class="viewcode-block" id="Database.create_database_from_csv">
+<a class="viewcode-back" href="../../rxn_insight.html#rxn_insight.database.Database.create_database_from_csv">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_database_from_csv</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">fname</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">reaction_column</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">solvent_column</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;SOLVENT&quot;</span><span class="p">,</span>
+            <span class="n">reagent_column</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;REAGENT&quot;</span><span class="p">,</span>
+            <span class="n">catalyst_column</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;CATALYST&quot;</span><span class="p">,</span>
+            <span class="n">yield_column</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;YIELD&quot;</span><span class="p">,</span>
+            <span class="n">ref_column</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;REF&quot;</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a reaction database from a CSV file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            fname: Path to the CSV file.</span>
+<span class="sd">            reaction_column: Name of the column containing reaction SMILES.</span>
+<span class="sd">            solvent_column: Name of the solvent column (default: &quot;SOLVENT&quot;).</span>
+<span class="sd">            reagent_column: Name of the reagent column (default: &quot;REAGENT&quot;).</span>
+<span class="sd">            catalyst_column: Name of the catalyst column (default: &quot;CATALYST&quot;).</span>
+<span class="sd">            yield_column: Name of the yield column (default: &quot;YIELD&quot;).</span>
+<span class="sd">            ref_column: Name of the reference column (default: &quot;REF&quot;).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A DataFrame with analyzed reaction data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">df_csv</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">all_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;SOLVENT&quot;</span><span class="p">,</span> <span class="s2">&quot;REAGENT&quot;</span><span class="p">,</span> <span class="s2">&quot;CATALYST&quot;</span><span class="p">,</span> <span class="s2">&quot;YIELD&quot;</span><span class="p">,</span> <span class="s2">&quot;REF&quot;</span><span class="p">]</span>
+        <span class="n">df_protocol</span> <span class="o">=</span> <span class="n">df_csv</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="n">reaction_column</span><span class="p">:</span> <span class="s2">&quot;REACTION&quot;</span><span class="p">,</span>
+                                             <span class="n">solvent_column</span><span class="p">:</span> <span class="s2">&quot;SOLVENT&quot;</span><span class="p">,</span>
+                                             <span class="n">reagent_column</span><span class="p">:</span> <span class="s2">&quot;REAGENT&quot;</span><span class="p">,</span>
+                                             <span class="n">catalyst_column</span><span class="p">:</span> <span class="s2">&quot;CATALYST&quot;</span><span class="p">,</span>
+                                             <span class="n">yield_column</span><span class="p">:</span> <span class="s2">&quot;YIELD&quot;</span><span class="p">,</span>
+                                             <span class="n">ref_column</span><span class="p">:</span> <span class="s2">&quot;REF&quot;</span><span class="p">})</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">all_cols</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df_protocol</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">df_protocol</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;not-reported&quot;</span>
+
+        <span class="n">df</span><span class="p">,</span> <span class="n">skipped_reactions</span> <span class="o">=</span> <span class="n">analyze_reactions</span><span class="p">(</span><span class="n">df_protocol</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">skipped_reactions</span> <span class="o">=</span> <span class="n">skipped_reactions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_distribution</span> <span class="o">=</span> <span class="n">calculate_class_distribution</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name_distribution</span> <span class="o">=</span> <span class="n">calculate_name_distribution</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">df</span></div>
+
+
+<div class="viewcode-block" id="Database.save_to_parquet">
+<a class="viewcode-back" href="../../rxn_insight.html#rxn_insight.database.Database.save_to_parquet">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">save_to_parquet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Saves the reaction database to a Parquet file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            fname: The name of the output file (without extension).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s2">.gzip&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Database.save_to_csv">
+<a class="viewcode-back" href="../../rxn_insight.html#rxn_insight.database.Database.save_to_csv">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">save_to_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Saves the reaction database to a CSV file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            fname: The name of the output file (without extension).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s2">.csv&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Database.save_to_excel">
+<a class="viewcode-back" href="../../rxn_insight.html#rxn_insight.database.Database.save_to_excel">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">save_to_excel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Saves the reaction database to an Excel file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            fname: The name of the output file (without extension).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fname</span><span class="si">}</span><span class="s2">.xlsx&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Database.get_class_distribution">
+<a class="viewcode-back" href="../../rxn_insight.html#rxn_insight.database.Database.get_class_distribution">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_class_distribution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the class distribution of reactions in the database.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A DataFrame summarizing the reaction class distribution.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_distribution</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">class_distribution</span> <span class="o">=</span> <span class="n">calculate_class_distribution</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_distribution</span></div>
+
+
+<div class="viewcode-block" id="Database.get_name_distribution">
+<a class="viewcode-back" href="../../rxn_insight.html#rxn_insight.database.Database.get_name_distribution">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_name_distribution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the distribution of reaction names in the database.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A DataFrame summarizing the reaction name distribution.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name_distribution</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name_distribution</span> <span class="o">=</span> <span class="n">calculate_name_distribution</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name_distribution</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="analyze_reactions">
+<a class="viewcode-back" href="../../rxn_insight.html#rxn_insight.database.analyze_reactions">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">analyze_reactions</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Analyzes a DataFrame of reactions to extract detailed information.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        df: A DataFrame with reaction data.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A tuple containing the updated DataFrame and a list of skipped reactions.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;REACTANTS&#39;</span><span class="p">,</span> <span class="s1">&#39;PRODUCTS&#39;</span><span class="p">,</span> <span class="s1">&#39;SANITIZED_REACTION&#39;</span><span class="p">,</span> <span class="s1">&#39;MAPPED_REACTION&#39;</span><span class="p">,</span> <span class="s1">&#39;N_REACTANTS&#39;</span><span class="p">,</span> <span class="s1">&#39;N_PRODUCTS&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;FG_REACTANTS&#39;</span><span class="p">,</span> <span class="s1">&#39;FG_PRODUCTS&#39;</span><span class="p">,</span> <span class="s1">&#39;PARTICIPATING_RINGS_REACTANTS&#39;</span><span class="p">,</span> <span class="s1">&#39;PARTICIPATING_RINGS_PRODUCTS&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;ALL_RINGS_PRODUCTS&#39;</span><span class="p">,</span> <span class="s1">&#39;BY-PRODUCTS&#39;</span><span class="p">,</span> <span class="s1">&#39;CLASS&#39;</span><span class="p">,</span> <span class="s1">&#39;NAME&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;TAG&#39;</span><span class="p">,</span> <span class="s1">&#39;TAG2&#39;</span><span class="p">,</span> <span class="s1">&#39;SCAFFOLD&#39;</span><span class="p">,</span> <span class="s1">&#39;rxn_str_patt_fp&#39;</span><span class="p">,</span> <span class="s1">&#39;rxn_dif_patt_fp&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;rxn_str_morgan_fp&#39;</span><span class="p">,</span> <span class="s1">&#39;rxn_dif_morgan_fp&#39;</span><span class="p">,</span> <span class="s1">&#39;TEMPLATE&#39;</span>
+    <span class="p">]</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">headers</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="n">rxn_mapper</span> <span class="o">=</span> <span class="n">RXNMapper</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">resources</span><span class="o">.</span><span class="n">path</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">__package__</span><span class="si">}</span><span class="s2">.data&quot;</span><span class="p">,</span> <span class="s2">&quot;functional_groups.json&quot;</span>
+    <span class="p">)</span> <span class="k">as</span> <span class="n">path</span><span class="p">:</span>
+        <span class="n">fg_db</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s2">&quot;records&quot;</span><span class="p">,</span> <span class="n">lines</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">resources</span><span class="o">.</span><span class="n">path</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">__package__</span><span class="si">}</span><span class="s2">.data&quot;</span><span class="p">,</span> <span class="s2">&quot;smirks.json&quot;</span>
+    <span class="p">)</span> <span class="k">as</span> <span class="n">path</span><span class="p">:</span>
+        <span class="n">smirks</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s2">&quot;records&quot;</span><span class="p">,</span> <span class="n">lines</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">smirks_db</span> <span class="o">=</span> <span class="n">curate_smirks</span><span class="p">(</span><span class="n">smirks</span><span class="p">)</span>
+    <span class="n">bad_reactions</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Analyzing all reactions...&quot;</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">rxn</span> <span class="o">=</span> <span class="n">Reaction</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;REACTION&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">],</span>
+                           <span class="n">solvent</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;SOLVENT&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">],</span>
+                           <span class="n">reagent</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;REAGENT&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">],</span>
+                           <span class="n">catalyst</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;CATALYST&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">ref</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;REF&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">rxn_mapper</span><span class="o">=</span><span class="n">rxn_mapper</span><span class="p">,</span>
+                           <span class="n">smirks</span><span class="o">=</span><span class="n">smirks_db</span><span class="p">,</span> <span class="n">fg</span><span class="o">=</span><span class="n">fg_db</span><span class="p">)</span>
+            <span class="n">ri</span> <span class="o">=</span> <span class="n">rxn</span><span class="o">.</span><span class="n">get_reaction_info</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">header</span> <span class="ow">in</span> <span class="n">headers</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">header</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">ri</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+                    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">ri</span><span class="p">[</span><span class="n">header</span><span class="p">])</span> <span class="ow">is</span> <span class="nb">list</span><span class="p">:</span>
+                        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">header</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ri</span><span class="p">[</span><span class="n">header</span><span class="p">])</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">header</span><span class="p">]</span> <span class="o">=</span> <span class="n">ri</span><span class="p">[</span><span class="n">header</span><span class="p">]</span>
+
+            <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot;SANITIZED_REACTION&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ri</span><span class="p">[</span><span class="s2">&quot;REACTION&quot;</span><span class="p">]</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot;TAG2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rxn</span><span class="o">.</span><span class="n">give_broad_tag</span><span class="p">()</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot;TEMPLATE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_reaction_template</span><span class="p">(</span><span class="n">ri</span><span class="p">[</span><span class="s2">&quot;MAPPED_REACTION&quot;</span><span class="p">],</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot;REACTANTS&quot;</span><span class="p">],</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot;PRODUCTS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ri</span><span class="p">[</span><span class="s2">&quot;REACTION&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;&gt;&gt;&quot;</span><span class="p">)</span>
+
+            <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot;rxn_str_patt_fp&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">make_rdkit_fp</span><span class="p">(</span><span class="n">ri</span><span class="p">[</span><span class="s2">&quot;REACTION&quot;</span><span class="p">],</span> <span class="n">fp</span><span class="o">=</span><span class="s2">&quot;MACCS&quot;</span><span class="p">,</span> <span class="n">concatenate</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot;rxn_dif_patt_fp&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">make_rdkit_fp</span><span class="p">(</span><span class="n">ri</span><span class="p">[</span><span class="s2">&quot;REACTION&quot;</span><span class="p">],</span> <span class="n">fp</span><span class="o">=</span><span class="s2">&quot;MACCS&quot;</span><span class="p">,</span> <span class="n">concatenate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot;rxn_str_morgan_fp&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">make_rdkit_fp</span><span class="p">(</span><span class="n">ri</span><span class="p">[</span><span class="s2">&quot;REACTION&quot;</span><span class="p">],</span> <span class="n">fp</span><span class="o">=</span><span class="s2">&quot;Morgan&quot;</span><span class="p">,</span> <span class="n">concatenate</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot;rxn_dif_morgan_fp&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">make_rdkit_fp</span><span class="p">(</span><span class="n">ri</span><span class="p">[</span><span class="s2">&quot;REACTION&quot;</span><span class="p">],</span> <span class="n">fp</span><span class="o">=</span><span class="s2">&quot;Morgan&quot;</span><span class="p">,</span> <span class="n">concatenate</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+            <span class="k">raise</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error at reaction nr </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;REACTION&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+            <span class="n">bad_reactions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;REACTION&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">df</span><span class="p">,</span> <span class="n">bad_reactions</span></div>
+
+
+
+<div class="viewcode-block" id="calculate_class_distribution">
+<a class="viewcode-back" href="../../rxn_insight.html#rxn_insight.database.calculate_class_distribution">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">calculate_class_distribution</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the distribution of reaction classes.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        df: A DataFrame containing reaction data.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A DataFrame summarizing reaction class counts.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">class_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;CLASS&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;COUNT&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+    <span class="n">classes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Acylation&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;Heteroatom Alkylation and Arylation&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;Aromatic Heterocycle Formation&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;C-C Coupling&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;Deprotection&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;Protection&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;Functional Group Interconversion&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;Functional Group Addition&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;Reduction&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;Oxidation&#39;</span><span class="p">,</span>
+               <span class="s1">&#39;Miscellaneous&#39;</span><span class="p">]</span>
+    <span class="n">all_classes</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;CLASS&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">:</span>
+        <span class="n">class_dict</span><span class="p">[</span><span class="s2">&quot;CLASS&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="n">class_dict</span><span class="p">[</span><span class="s2">&quot;COUNT&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">all_classes</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+
+    <span class="n">df_class</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">class_dict</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">df_class</span></div>
+
+
+
+<div class="viewcode-block" id="calculate_name_distribution">
+<a class="viewcode-back" href="../../rxn_insight.html#rxn_insight.database.calculate_name_distribution">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">calculate_name_distribution</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the distribution of reaction names.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        df: A DataFrame containing reaction data.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A DataFrame summarizing reaction name counts.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">names_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;NAME&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;COUNT&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+    <span class="n">all_names</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;NAME&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+    <span class="n">unique_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">all_names</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">unique_names</span><span class="p">:</span>
+        <span class="n">names_dict</span><span class="p">[</span><span class="s2">&quot;NAME&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">names_dict</span><span class="p">[</span><span class="s2">&quot;COUNT&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">all_names</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+
+    <span class="n">df_names</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">names_dict</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">df_names</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Maarten R. Dobbelaere.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

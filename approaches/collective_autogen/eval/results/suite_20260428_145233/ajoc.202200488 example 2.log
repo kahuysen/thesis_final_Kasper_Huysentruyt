@@ -1,0 +1,1582 @@
+---------- MultiModalMessage (user) ----------
+Analyse this chemistry reaction image. Each specialist contributes one [FINDINGS ...] card per turn, then data_structure produces JSON, then the verifier audits the JSON and ends the run.
+image_path = /Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/ajoc.202200488 example 2.png
+Pass that exact path as the first argument to crop_image_region(image_path, [x,y,w,h]) if you need to zoom in on a region of the image.
+<image>
+/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/agents/_assistant_agent.py:1109: UserWarning: Resolved model mismatch: gpt-5.4 != gpt-5.4-2026-03-05. Model mapping in autogen_ext.models.openai may be incorrect. Set the model to gpt-5.4-2026-03-05 to enhance token/cost estimation and suppress this warning.
+  model_result = await model_client.create(
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_qD0tdfsHddyQGOp4vOKWl3DX', arguments='{"image_path":"/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/ajoc.202200488 example 2.png","molecule_only":true,"score_min":0}', name='detect_molecules')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'bboxes': [{'x1': 35, 'y1': 638, 'x2': 643, 'y2': 933, 'w': 608, 'h': 295, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 37, 'y1': 999, 'x2': 493, 'y2': 1180, 'w': 456, 'h': 181, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 39, 'y1': 1285, 'x2': 656, 'y2': 1561, 'w': 616, 'h': 275, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 44, 'y1': 399, 'x2': 501, 'y2': 585, 'w': 458, 'h': 186, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 139, 'y1': 145, 'x2': 368, 'y2': 272, 'w': 229, 'h': 127, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 566, 'y1': 366, 'x2': 1290, 'y2': 582, 'w': 724, 'h': 216, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 607, 'y1': 714, 'x2': 1292, 'y2': 855, 'w': 685, 'h': 142, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 607, 'y1': 977, 'x2': 1290, 'y2': 1246, 'w': 684, 'h': 269, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 680, 'y1': 1287, 'x2': 1294, 'y2': 1561, 'w': 615, 'h': 274, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 951, 'y1': 145, 'x2': 1210, 'y2': 274, 'w': 260, 'h': 129, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}], 'image_w': 1404, 'image_h': 1648, 'device': 'mps', 'error': None, 'cached': False}", name='detect_molecules', call_id='call_qD0tdfsHddyQGOp4vOKWl3DX', is_error=False)]
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_RTrsgzklcSPcKAT72ZdZM8Rp', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/ajoc.202200488 example 2.png", "bbox": [139, 145, 229, 127], "pad": 10}', name='predict_molecule_smiles'), FunctionCall(id='call_eIj4vXOaA9wUZ12PYfpoHTQy', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/ajoc.202200488 example 2.png", "bbox": [951, 145, 260, 129], "pad": 10}', name='predict_molecule_smiles')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'smiles': '*OCC(=C)C', 'confidence': 0.8784011758662766, 'atoms_count': 6, 'bonds_count': 5, 'device': 'mps', 'error': None, 'cached': False}", name='predict_molecule_smiles', call_id='call_RTrsgzklcSPcKAT72ZdZM8Rp', is_error=False), FunctionExecutionResult(content="{'smiles': '*OC=C(C)C', 'confidence': 0.8474301182627093, 'atoms_count': 6, 'bonds_count': 5, 'device': 'mps', 'error': None, 'cached': False}", name='predict_molecule_smiles', call_id='call_eIj4vXOaA9wUZ12PYfpoHTQy', is_error=False)]
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_o6GNwq6Nckt4eEisinrhhuIv', arguments='{"smiles": "*OCC(=C)C"}', name='validate_smiles'), FunctionCall(id='call_dUms8quoJpYZXwCQO1kao7DN', arguments='{"smiles": "*OC=C(C)C"}', name='validate_smiles'), FunctionCall(id='call_HjURwiEXYRikF6aTC9HN2gjq', arguments='{"smiles": "*OCC(=C)C"}', name='canonicalize_smiles'), FunctionCall(id='call_QzLCKlRR4EWFyvBXmINTy71k', arguments='{"smiles": "*OC=C(C)C"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_o6GNwq6Nckt4eEisinrhhuIv', is_error=False), FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_dUms8quoJpYZXwCQO1kao7DN', is_error=False), FunctionExecutionResult(content="{'canonical': '*OCC(=C)C', 'valid': True, 'formula': 'C4H7*O', 'error': None}", name='canonicalize_smiles', call_id='call_HjURwiEXYRikF6aTC9HN2gjq', is_error=False), FunctionExecutionResult(content="{'canonical': '*OC=C(C)C', 'valid': True, 'formula': 'C4H7*O', 'error': None}", name='canonicalize_smiles', call_id='call_QzLCKlRR4EWFyvBXmINTy71k', is_error=False)]
+---------- TextMessage (reaction_template_parser) ----------
+[FINDINGS reaction_template_parser]
+scheme_count: 1
+scheme_1:
+  reactant_template_smiles: *OCC(=C)C
+  product_template_smiles:  *OC=C(C)C
+  arrow: forward
+  multi_step: no
+  notes: template bboxes #4 (reactant, conf 0.88) and #9 (product, conf 0.85) from the top reaction scheme; single allylic ether isomerization with wildcard * at the substrate side.
+[/FINDINGS]
+---------- TextMessage (molecular_recognition) ----------
+[FINDINGS molecular_recognition]
+# scripted agent — one entry per detected bbox, no deduplication
+molecule_count: 10
+molecule:
+  label: bbox_0
+  canonical_smiles: CC(C)=CCOc1ccc(OC=C(C)C)cc1.[CH3]
+  bbox: [35, 638, 608, 295]
+  confidence: 0.898
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_1
+  canonical_smiles: CC(C)=COC1CCN(C(=O)OCc2ccccc2)CC1
+  bbox: [37, 999, 456, 181]
+  confidence: 0.918
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_2
+  canonical_smiles: COC(=O)[C@@H](N)Cc1ccc(OC=C(C)C)cc1
+  bbox: [39, 1285, 616, 275]
+  confidence: 0.896
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_3
+  canonical_smiles: CC(C)=COc1ccc(BNO)cc1
+  bbox: [44, 399, 458, 186]
+  confidence: 0.900
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_4
+  canonical_smiles: *OCC(=C)C
+  bbox: [139, 145, 229, 127]
+  confidence: 0.878
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_5
+  canonical_smiles: CC(C)=COCCCCOCc1ccc(Br)cc1
+  bbox: [566, 366, 724, 216]
+  confidence: 0.908
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_6
+  canonical_smiles: CC(C)=CCOCCCCOC=C(C)C
+  bbox: [607, 714, 685, 142]
+  confidence: 0.897
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_7
+  canonical_smiles: CC(C)=COc1ccc(C(C)(C)c2ccc(OC(=O)OCc3ccccc3)cc2)cc1
+  bbox: [607, 977, 684, 269]
+  confidence: 0.912
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_8
+  canonical_smiles: COC(=O)[C@@H](N)Cc1ccc(OC=C(C)C)cc1
+  bbox: [680, 1287, 615, 274]
+  confidence: 0.910
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_9
+  canonical_smiles: *OC=C(C)C
+  bbox: [951, 145, 260, 129]
+  confidence: 0.847
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+[/FINDINGS]
+---------- ToolCallRequestEvent (rgroup_substitution) ----------
+[FunctionCall(id='call_uS3xxbmwECOOWFKkclkka9NB', arguments='{"image_path":"/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/ajoc.202200488 example 2.png"}', name='detect_molecules')]
+---------- ToolCallExecutionEvent (rgroup_substitution) ----------
+[FunctionExecutionResult(content="{'bboxes': [{'x1': 35, 'y1': 638, 'x2': 643, 'y2': 933, 'w': 608, 'h': 295, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 37, 'y1': 999, 'x2': 493, 'y2': 1180, 'w': 456, 'h': 181, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 39, 'y1': 1285, 'x2': 656, 'y2': 1561, 'w': 616, 'h': 275, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 44, 'y1': 399, 'x2': 501, 'y2': 585, 'w': 458, 'h': 186, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 139, 'y1': 145, 'x2': 368, 'y2': 272, 'w': 229, 'h': 127, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 566, 'y1': 366, 'x2': 1290, 'y2': 582, 'w': 724, 'h': 216, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 607, 'y1': 714, 'x2': 1292, 'y2': 855, 'w': 685, 'h': 142, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 607, 'y1': 977, 'x2': 1290, 'y2': 1246, 'w': 684, 'h': 269, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 680, 'y1': 1287, 'x2': 1294, 'y2': 1561, 'w': 615, 'h': 274, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 951, 'y1': 145, 'x2': 1210, 'y2': 274, 'w': 260, 'h': 129, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}], 'image_w': 1404, 'image_h': 1648, 'device': 'mps', 'error': None, 'cached': True}", name='detect_molecules', call_id='call_uS3xxbmwECOOWFKkclkka9NB', is_error=False)]
+---------- ToolCallRequestEvent (rgroup_substitution) ----------
+[FunctionCall(id='call_qKv3U4aCAYGKB5onGgvMYyj0', arguments='{"template_smiles":"*OC=C(C)C","concrete_smiles":["CC(C)=COc1ccc(BNO)cc1","CC(C)=COCCCCOCc1ccc(Br)cc1","CC(C)=CCOc1ccc(OC=C(C)C)cc1.[CH3]","CC(C)=COC1CCN(C(=O)OCc2ccccc2)CC1","CC(C)=CCOCCCCOC=C(C)C","CC(C)=COc1ccc(C(C)(C)c2ccc(OC(=O)OCc3ccccc3)cc2)cc1","COC(=O)[C@@H](N)Cc1ccc(OC=C(C)C)cc1","COC(=O)[C@@H](N)Cc1ccc(OC=C(C)C)cc1"]}', name='derive_substituents')]
+---------- ToolCallExecutionEvent (rgroup_substitution) ----------
+[FunctionExecutionResult(content="{'results': [{'smiles': 'CC(C)=COc1ccc(BNO)cc1', 'matched': True, 'r_assignments': {'R1': 'ONBc1ccc([*:1])cc1'}, 'core': 'CC(C)=CO[*:1]', 'error': None}, {'smiles': 'CC(C)=COCCCCOCc1ccc(Br)cc1', 'matched': True, 'r_assignments': {'R1': 'Brc1ccc(COCCCC[*:1])cc1'}, 'core': 'CC(C)=CO[*:1]', 'error': None}, {'smiles': 'CC(C)=CCOc1ccc(OC=C(C)C)cc1.[CH3]', 'matched': True, 'r_assignments': {'R1': 'CC(C)=CCOc1ccc([*:1])cc1'}, 'core': 'CC(C)=CO[*:1]', 'error': None}, {'smiles': 'CC(C)=COC1CCN(C(=O)OCc2ccccc2)CC1', 'matched': True, 'r_assignments': {'R1': 'O=C(OCc1ccccc1)N1CCC([*:1])CC1'}, 'core': 'CC(C)=CO[*:1]', 'error': None}, {'smiles': 'CC(C)=CCOCCCCOC=C(C)C', 'matched': True, 'r_assignments': {'R1': 'CC(C)=CCOCCCC[*:1]'}, 'core': 'CC(C)=CO[*:1]', 'error': None}, {'smiles': 'CC(C)=COc1ccc(C(C)(C)c2ccc(OC(=O)OCc3ccccc3)cc2)cc1', 'matched': True, 'r_assignments': {'R1': 'CC(C)(c1ccc(OC(=O)OCc2ccccc2)cc1)c1ccc([*:1])cc1'}, 'core': 'CC(C)=CO[*:1]', 'error': None}, {'smiles': 'COC(=O)[C@@H](N)Cc1ccc(OC=C(C)C)cc1', 'matched': True, 'r_assignments': {'R1': 'COC(=O)[C@@H](N)Cc1ccc([*:1])cc1'}, 'core': 'CC(C)=CO[*:1]', 'error': None}, {'smiles': 'COC(=O)[C@@H](N)Cc1ccc(OC=C(C)C)cc1', 'matched': True, 'r_assignments': {'R1': 'COC(=O)[C@@H](N)Cc1ccc([*:1])cc1'}, 'core': 'CC(C)=CO[*:1]', 'error': None}], 'unmatched_indices': [], 'template': '*OC=C(C)C', 'error': None}", name='derive_substituents', call_id='call_qKv3U4aCAYGKB5onGgvMYyj0', is_error=False)]
+---------- ToolCallRequestEvent (rgroup_substitution) ----------
+[FunctionCall(id='call_rwVjbojMMW3UTsFpyar0iSZA', arguments='{"template_smiles": "*OCC(=C)C", "r_assignments": {"R1": "ONBc1ccc([*:1])cc1"}}', name='apply_substituents'), FunctionCall(id='call_uxKt9unEWXXiLBH2j3dS1pNw', arguments='{"template_smiles": "*OCC(=C)C", "r_assignments": {"R1": "Brc1ccc(COCCCC[*:1])cc1"}}', name='apply_substituents'), FunctionCall(id='call_SUIPPfYP8OhHT4xgw2SQesis', arguments='{"template_smiles": "*OCC(=C)C", "r_assignments": {"R1": "CC(C)=CCOc1ccc([*:1])cc1"}}', name='apply_substituents'), FunctionCall(id='call_rnqVaDo3OTb9oGgOCZ0B2KDO', arguments='{"template_smiles": "*OCC(=C)C", "r_assignments": {"R1": "O=C(OCc1ccccc1)N1CCC([*:1])CC1"}}', name='apply_substituents'), FunctionCall(id='call_PCpdISeHytGT1GVFLlFf4ezk', arguments='{"template_smiles": "*OCC(=C)C", "r_assignments": {"R1": "CC(C)=CCOCCCC[*:1]"}}', name='apply_substituents'), FunctionCall(id='call_FH2C0tMfGod2tMB3M4eeWydN', arguments='{"template_smiles": "*OCC(=C)C", "r_assignments": {"R1": "CC(C)(c1ccc(OC(=O)OCc2ccccc2)cc1)c1ccc([*:1])cc1"}}', name='apply_substituents'), FunctionCall(id='call_53uAiTkBzkBl2fDMAuSbCC5B', arguments='{"template_smiles": "*OCC(=C)C", "r_assignments": {"R1": "COC(=O)[C@@H](N)Cc1ccc([*:1])cc1"}}', name='apply_substituents'), FunctionCall(id='call_hTHJU1UB9NS7BQvq1WjIXlS9', arguments='{"template_smiles": "*OCC(=C)C", "r_assignments": {"R1": "COC(=O)[C@@H](N)Cc1ccc([*:1])cc1"}}', name='apply_substituents')]
+---------- ToolCallExecutionEvent (rgroup_substitution) ----------
+[FunctionExecutionResult(content="{'smiles': 'C=C(C)COc1ccc(BNO)cc1', 'valid': True, 'error': None}", name='apply_substituents', call_id='call_rwVjbojMMW3UTsFpyar0iSZA', is_error=False), FunctionExecutionResult(content="{'smiles': 'C=C(C)COCCCCOCc1ccc(Br)cc1', 'valid': True, 'error': None}", name='apply_substituents', call_id='call_uxKt9unEWXXiLBH2j3dS1pNw', is_error=False), FunctionExecutionResult(content="{'smiles': 'C=C(C)COc1ccc(OCC=C(C)C)cc1', 'valid': True, 'error': None}", name='apply_substituents', call_id='call_SUIPPfYP8OhHT4xgw2SQesis', is_error=False), FunctionExecutionResult(content="{'smiles': 'C=C(C)COC1CCN(C(=O)OCc2ccccc2)CC1', 'valid': True, 'error': None}", name='apply_substituents', call_id='call_rnqVaDo3OTb9oGgOCZ0B2KDO', is_error=False), FunctionExecutionResult(content="{'smiles': 'C=C(C)COCCCCOCC=C(C)C', 'valid': True, 'error': None}", name='apply_substituents', call_id='call_PCpdISeHytGT1GVFLlFf4ezk', is_error=False), FunctionExecutionResult(content="{'smiles': 'C=C(C)COc1ccc(C(C)(C)c2ccc(OC(=O)OCc3ccccc3)cc2)cc1', 'valid': True, 'error': None}", name='apply_substituents', call_id='call_FH2C0tMfGod2tMB3M4eeWydN', is_error=False), FunctionExecutionResult(content="{'smiles': 'C=C(C)COc1ccc(C[C@H](N)C(=O)OC)cc1', 'valid': True, 'error': None}", name='apply_substituents', call_id='call_53uAiTkBzkBl2fDMAuSbCC5B', is_error=False), FunctionExecutionResult(content="{'smiles': 'C=C(C)COc1ccc(C[C@H](N)C(=O)OC)cc1', 'valid': True, 'error': None}", name='apply_substituents', call_id='call_hTHJU1UB9NS7BQvq1WjIXlS9', is_error=False)]
+---------- TextMessage (rgroup_substitution) ----------
+[FINDINGS rgroup_substitution]
+reactant_template: *OCC(=C)C
+product_template:  *OC=C(C)C
+variants:
+  - label: 2r
+    r_assignments: {R1: ONBc1ccc([*:1])cc1}
+    reactant_smiles: C=C(C)COc1ccc(BNO)cc1
+    product_smiles:  CC(C)=COc1ccc(BNO)cc1
+    valid: yes
+  - label: 2s
+    r_assignments: {R1: Brc1ccc(COCCCC[*:1])cc1}
+    reactant_smiles: C=C(C)COCCCCOCc1ccc(Br)cc1
+    product_smiles:  CC(C)=COCCCCOCc1ccc(Br)cc1
+    valid: yes
+  - label: 2t
+    r_assignments: {R1: CC(C)=CCOc1ccc([*:1])cc1}
+    reactant_smiles: C=C(C)COc1ccc(OCC=C(C)C)cc1
+    product_smiles:  CC(C)=CCOc1ccc(OC=C(C)C)cc1.[CH3]
+    valid: yes
+  - label: 2v
+    r_assignments: {R1: O=C(OCc1ccccc1)N1CCC([*:1])CC1}
+    reactant_smiles: C=C(C)COC1CCN(C(=O)OCc2ccccc2)CC1
+    product_smiles:  CC(C)=COC1CCN(C(=O)OCc2ccccc2)CC1
+    valid: yes
+  - label: 2u
+    r_assignments: {R1: CC(C)=CCOCCCC[*:1]}
+    reactant_smiles: C=C(C)COCCCCOCC=C(C)C
+    product_smiles:  CC(C)=CCOCCCCOC=C(C)C
+    valid: yes
+  - label: 2w
+    r_assignments: {R1: CC(C)(c1ccc(OC(=O)OCc2ccccc2)cc1)c1ccc([*:1])cc1}
+    reactant_smiles: C=C(C)COc1ccc(C(C)(C)c2ccc(OC(=O)OCc3ccccc3)cc2)cc1
+    product_smiles:  CC(C)=COc1ccc(C(C)(C)c2ccc(OC(=O)OCc3ccccc3)cc2)cc1
+    valid: yes
+  - label: 2x
+    r_assignments: {R1: COC(=O)[C@@H](N)Cc1ccc([*:1])cc1}
+    reactant_smiles: C=C(C)COc1ccc(C[C@H](N)C(=O)OC)cc1
+    product_smiles:  COC(=O)[C@@H](N)Cc1ccc(OC=C(C)C)cc1
+    valid: yes
+  - label: 2y
+    r_assignments: {R1: COC(=O)[C@@H](N)Cc1ccc([*:1])cc1}
+    reactant_smiles: C=C(C)COc1ccc(C[C@H](N)C(=O)OC)cc1
+    product_smiles:  COC(=O)[C@@H](N)Cc1ccc(OC=C(C)C)cc1
+    valid: yes
+[/FINDINGS]
+---------- ToolCallRequestEvent (condition_interpretation) ----------
+[FunctionCall(id='call_T4SaIxgvSF3VoHqt0eeBA61F', arguments='{"name": "Toluene"}', name='lookup_compound'), FunctionCall(id='call_IT0cSha8hFAwk8Rl6nKZTlgH', arguments='{"name": "tBuOOH"}', name='lookup_compound'), FunctionCall(id='call_zlPjCmDOb3t5S41KzueNVTkM', arguments='{"name": "(Me2SiH)2O"}', name='lookup_compound'), FunctionCall(id='call_1Wz7S7apSIySn6UVUrwNB0jv', arguments='{"name": "Cat. CoII-a"}', name='lookup_compound')]
+---------- ToolCallExecutionEvent (condition_interpretation) ----------
+[FunctionExecutionResult(content="{'smiles': 'CC1=CC=CC=C1', 'source': 'opsin', 'query_used': 'Toluene', 'cached': True, 'error': None}", name='lookup_compound', call_id='call_T4SaIxgvSF3VoHqt0eeBA61F', is_error=False), FunctionExecutionResult(content="{'smiles': 'CC(C)(C)OO', 'source': 'pubchem', 'query_used': 'tBuOOH', 'cached': False, 'error': None}", name='lookup_compound', call_id='call_IT0cSha8hFAwk8Rl6nKZTlgH', is_error=False), FunctionExecutionResult(content="{'smiles': None, 'source': '', 'query_used': '', 'cached': False, 'error': 'not found'}", name='lookup_compound', call_id='call_zlPjCmDOb3t5S41KzueNVTkM', is_error=False), FunctionExecutionResult(content="{'smiles': None, 'source': '', 'query_used': '', 'cached': False, 'error': 'not found'}", name='lookup_compound', call_id='call_1Wz7S7apSIySn6UVUrwNB0jv', is_error=False)]
+---------- ToolCallRequestEvent (condition_interpretation) ----------
+[FunctionCall(id='call_f72dKUGo4vEXMcJewpP6NQM0', arguments='{"smiles": "CC1=CC=CC=C1"}', name='validate_smiles'), FunctionCall(id='call_JNDGFPea9OpXwG7tJr2w86mS', arguments='{"smiles": "CC(C)(C)OO"}', name='validate_smiles')]
+---------- ToolCallExecutionEvent (condition_interpretation) ----------
+[FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_f72dKUGo4vEXMcJewpP6NQM0', is_error=False), FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_JNDGFPea9OpXwG7tJr2w86mS', is_error=False)]
+---------- TextMessage (condition_interpretation) ----------
+[FINDINGS condition_interpretation]
+applies_to: scheme_1
+conditions:
+  - role: catalyst
+    text: Cat. CoII-a (5 mol%)
+    smiles: null
+  - role: loading
+    text: 5 mol%
+    smiles: null
+  - role: reagent
+    text: tBuOOH (2.5 mol%)
+    smiles: CC(C)(C)OO
+  - role: loading
+    text: 2.5 mol%
+    smiles: null
+  - role: reagent
+    text: (Me2SiH)2O (0.5 equiv.)
+    smiles: null
+  - role: loading
+    text: 0.5 equiv.
+    smiles: null
+  - role: solvent
+    text: Toluene
+    smiles: CC1=CC=CC=C1
+  - role: temperature
+    text: RT
+    smiles: null
+  - role: atmosphere
+    text: N2
+    smiles: null
+[FINDINGS condition_interpretation]
+applies_to: 2r
+conditions:
+  - role: time
+    text: 8h
+    smiles: null
+  - role: yield
+    text: 80%
+    smiles: null
+[FINDINGS condition_interpretation]
+applies_to: 2s
+conditions:
+  - role: time
+    text: 12h
+    smiles: null
+  - role: yield
+    text: 92%
+    smiles: null
+[FINDINGS condition_interpretation]
+applies_to: 2t
+conditions:
+  - role: time
+    text: 12h
+    smiles: null
+  - role: yield
+    text: 83%
+    smiles: null
+[FINDINGS condition_interpretation]
+applies_to: 2u
+conditions:
+  - role: time
+    text: 12h
+    smiles: null
+  - role: yield
+    text: 81%
+    smiles: null
+[FINDINGS condition_interpretation]
+applies_to: 2v
+conditions:
+  - role: time
+    text: 4h
+    smiles: null
+  - role: yield
+    text: 85%
+    smiles: null
+[FINDINGS condition_interpretation]
+applies_to: 2w
+conditions:
+  - role: time
+    text: 12h
+    smiles: null
+  - role: yield
+    text: 79%
+    smiles: null
+[FINDINGS condition_interpretation]
+applies_to: 2x
+conditions:
+  - role: time
+    text: 6h
+    smiles: null
+  - role: yield
+    text: 88%
+    smiles: null
+  - role: ee
+    text: ee>99%
+    smiles: null
+[FINDINGS condition_interpretation]
+applies_to: 2y
+conditions:
+  - role: time
+    text: 6h
+    smiles: null
+  - role: yield
+    text: 91%
+    smiles: null
+  - role: ee
+    text: ee>99%
+    smiles: null
+[/FINDINGS]
+---------- TextMessage (text_extraction) ----------
+[FINDINGS text_extraction]
+items:
+  - kind: other
+    text: "Optical activity retention"
+    applies_to: 2x
+  - kind: other
+    text: "Optical activity retention"
+    applies_to: 2y
+[/FINDINGS]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_CK7injdjWehqJU3F6p5U70cE', arguments='{"smiles": "C=C(C)COc1ccc(BNO)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_hPwvxsBAcCFxyYDIh7YRXsT7', arguments='{"smiles": "CC(C)=COc1ccc(BNO)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_Jaw6SmwP6pnRqRbB8IvZwmWf', arguments='{"smiles": "C=C(C)COCCCCOCc1ccc(Br)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_triri4mucmc08vsrb9OXa3G4', arguments='{"smiles": "CC(C)=COCCCCOCc1ccc(Br)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_K42jaawDoQ0vSgXHml3RXPvP', arguments='{"smiles": "C=C(C)COc1ccc(OCC=C(C)C)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_OSG1nB2duvIXBaoHEPTlFOD3', arguments='{"smiles": "CC(C)=CCOc1ccc(OC=C(C)C)cc1.[CH3]"}', name='canonicalize_smiles'), FunctionCall(id='call_59Hplle8RCz0Re0GWe776OBM', arguments='{"smiles": "C=C(C)COC1CCN(C(=O)OCc2ccccc2)CC1"}', name='canonicalize_smiles'), FunctionCall(id='call_GfTBwWhTYseXbmOEDDNy4c9x', arguments='{"smiles": "CC(C)=COC1CCN(C(=O)OCc2ccccc2)CC1"}', name='canonicalize_smiles'), FunctionCall(id='call_vrayWn7irEKrO6UEKvfQVOuG', arguments='{"smiles": "C=C(C)COCCCCOCC=C(C)C"}', name='canonicalize_smiles'), FunctionCall(id='call_T9ewLMokoIGL5pzxfB17E4ln', arguments='{"smiles": "CC(C)=CCOCCCCOC=C(C)C"}', name='canonicalize_smiles'), FunctionCall(id='call_41kgupnOlArUVjDH761vkOdh', arguments='{"smiles": "C=C(C)COc1ccc(C(C)(C)c2ccc(OC(=O)OCc3ccccc3)cc2)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_d8WTCiQefgd2DEm41KgkScHz', arguments='{"smiles": "CC(C)=COc1ccc(C(C)(C)c2ccc(OC(=O)OCc3ccccc3)cc2)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_mtPqTNcknApO8MRXsHmC1Zzs', arguments='{"smiles": "C=C(C)COc1ccc(C[C@H](N)C(=O)OC)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_Qpx3sxC8R3iowKXQPXtfleVu', arguments='{"smiles": "COC(=O)[C@@H](N)Cc1ccc(OC=C(C)C)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_xLWKpPYAH5kMB8Spi5ARcnY5', arguments='{"smiles": "CC(C)(C)OO"}', name='canonicalize_smiles'), FunctionCall(id='call_gpA3fBZzVAOdpY31YdCVOsqx', arguments='{"smiles": "CC1=CC=CC=C1"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'canonical': 'C=C(C)COc1ccc(BNO)cc1', 'valid': True, 'formula': 'C10H14BNO2', 'error': None}", name='canonicalize_smiles', call_id='call_CK7injdjWehqJU3F6p5U70cE', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC(C)=COc1ccc(BNO)cc1', 'valid': True, 'formula': 'C10H14BNO2', 'error': None}", name='canonicalize_smiles', call_id='call_hPwvxsBAcCFxyYDIh7YRXsT7', is_error=False), FunctionExecutionResult(content="{'canonical': 'C=C(C)COCCCCOCc1ccc(Br)cc1', 'valid': True, 'formula': 'C15H21BrO2', 'error': None}", name='canonicalize_smiles', call_id='call_Jaw6SmwP6pnRqRbB8IvZwmWf', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC(C)=COCCCCOCc1ccc(Br)cc1', 'valid': True, 'formula': 'C15H21BrO2', 'error': None}", name='canonicalize_smiles', call_id='call_triri4mucmc08vsrb9OXa3G4', is_error=False), FunctionExecutionResult(content="{'canonical': 'C=C(C)COc1ccc(OCC=C(C)C)cc1', 'valid': True, 'formula': 'C15H20O2', 'error': None}", name='canonicalize_smiles', call_id='call_K42jaawDoQ0vSgXHml3RXPvP', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC(C)=CCOc1ccc(OC=C(C)C)cc1.[CH3]', 'valid': True, 'formula': 'C16H23O2', 'error': None}", name='canonicalize_smiles', call_id='call_OSG1nB2duvIXBaoHEPTlFOD3', is_error=False), FunctionExecutionResult(content="{'canonical': 'C=C(C)COC1CCN(C(=O)OCc2ccccc2)CC1', 'valid': True, 'formula': 'C17H23NO3', 'error': None}", name='canonicalize_smiles', call_id='call_59Hplle8RCz0Re0GWe776OBM', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC(C)=COC1CCN(C(=O)OCc2ccccc2)CC1', 'valid': True, 'formula': 'C17H23NO3', 'error': None}", name='canonicalize_smiles', call_id='call_GfTBwWhTYseXbmOEDDNy4c9x', is_error=False), FunctionExecutionResult(content="{'canonical': 'C=C(C)COCCCCOCC=C(C)C', 'valid': True, 'formula': 'C13H24O2', 'error': None}", name='canonicalize_smiles', call_id='call_vrayWn7irEKrO6UEKvfQVOuG', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC(C)=CCOCCCCOC=C(C)C', 'valid': True, 'formula': 'C13H24O2', 'error': None}", name='canonicalize_smiles', call_id='call_T9ewLMokoIGL5pzxfB17E4ln', is_error=False), FunctionExecutionResult(content="{'canonical': 'C=C(C)COc1ccc(C(C)(C)c2ccc(OC(=O)OCc3ccccc3)cc2)cc1', 'valid': True, 'formula': 'C27H28O4', 'error': None}", name='canonicalize_smiles', call_id='call_41kgupnOlArUVjDH761vkOdh', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC(C)=COc1ccc(C(C)(C)c2ccc(OC(=O)OCc3ccccc3)cc2)cc1', 'valid': True, 'formula': 'C27H28O4', 'error': None}", name='canonicalize_smiles', call_id='call_d8WTCiQefgd2DEm41KgkScHz', is_error=False), FunctionExecutionResult(content="{'canonical': 'C=C(C)COc1ccc(C[C@H](N)C(=O)OC)cc1', 'valid': True, 'formula': 'C14H19NO3', 'error': None}", name='canonicalize_smiles', call_id='call_mtPqTNcknApO8MRXsHmC1Zzs', is_error=False), FunctionExecutionResult(content="{'canonical': 'COC(=O)[C@@H](N)Cc1ccc(OC=C(C)C)cc1', 'valid': True, 'formula': 'C14H19NO3', 'error': None}", name='canonicalize_smiles', call_id='call_Qpx3sxC8R3iowKXQPXtfleVu', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC(C)(C)OO', 'valid': True, 'formula': 'C4H10O2', 'error': None}", name='canonicalize_smiles', call_id='call_xLWKpPYAH5kMB8Spi5ARcnY5', is_error=False), FunctionExecutionResult(content="{'canonical': 'Cc1ccccc1', 'valid': True, 'formula': 'C7H8', 'error': None}", name='canonicalize_smiles', call_id='call_gpA3fBZzVAOdpY31YdCVOsqx', is_error=False)]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_dwUDq56FuHBVDz4GakHNzP5o', arguments='{"obj":{"file_name":"ajoc.202200488 example 2.png","reactions":[{"reaction_id":"0_1","reactants":[{"smiles":"C=C(C)COc1ccc(BNO)cc1","label":"2r","uncertain":false}],"products":[{"smiles":"CC(C)=COc1ccc(BNO)cc1","label":"2r","uncertain":false}],"conditions":[{"role":"catalyst","text":"Cat. CoII-a (5 mol%)","smiles":null},{"role":"loading","text":"5 mol%","smiles":null},{"role":"reagent","text":"tBuOOH (2.5 mol%)","smiles":"CC(C)(C)OO"},{"role":"loading","text":"2.5 mol%","smiles":null},{"role":"reagent","text":"(Me2SiH)2O (0.5 equiv.)","smiles":null},{"role":"loading","text":"0.5 equiv.","smiles":null},{"role":"solvent","text":"Toluene","smiles":"Cc1ccccc1"},{"role":"temperature","text":"RT","smiles":null},{"role":"atmosphere","text":"N2","smiles":null},{"role":"time","text":"8h","smiles":null},{"role":"yield","text":"80%","smiles":null}],"additional_info":[]},{"reaction_id":"0_2","reactants":[{"smiles":"C=C(C)COCCCCOCc1ccc(Br)cc1","label":"2s","uncertain":false}],"products":[{"smiles":"CC(C)=COCCCCOCc1ccc(Br)cc1","label":"2s","uncertain":false}],"conditions":[{"role":"catalyst","text":"Cat. CoII-a (5 mol%)","smiles":null},{"role":"loading","text":"5 mol%","smiles":null},{"role":"reagent","text":"tBuOOH (2.5 mol%)","smiles":"CC(C)(C)OO"},{"role":"loading","text":"2.5 mol%","smiles":null},{"role":"reagent","text":"(Me2SiH)2O (0.5 equiv.)","smiles":null},{"role":"loading","text":"0.5 equiv.","smiles":null},{"role":"solvent","text":"Toluene","smiles":"Cc1ccccc1"},{"role":"temperature","text":"RT","smiles":null},{"role":"atmosphere","text":"N2","smiles":null},{"role":"time","text":"12h","smiles":null},{"role":"yield","text":"92%","smiles":null}],"additional_info":[]},{"reaction_id":"0_3","reactants":[{"smiles":"C=C(C)COc1ccc(OCC=C(C)C)cc1","label":"2t","uncertain":false}],"products":[{"smiles":"CC(C)=CCOc1ccc(OC=C(C)C)cc1.[CH3]","label":"2t","uncertain":false}],"conditions":[{"role":"catalyst","text":"Cat. CoII-a (5 mol%)","smiles":null},{"role":"loading","text":"5 mol%","smiles":null},{"role":"reagent","text":"tBuOOH (2.5 mol%)","smiles":"CC(C)(C)OO"},{"role":"loading","text":"2.5 mol%","smiles":null},{"role":"reagent","text":"(Me2SiH)2O (0.5 equiv.)","smiles":null},{"role":"loading","text":"0.5 equiv.","smiles":null},{"role":"solvent","text":"Toluene","smiles":"Cc1ccccc1"},{"role":"temperature","text":"RT","smiles":null},{"role":"atmosphere","text":"N2","smiles":null},{"role":"time","text":"12h","smiles":null},{"role":"yield","text":"83%","smiles":null}],"additional_info":[]},{"reaction_id":"0_4","reactants":[{"smiles":"C=C(C)COC1CCN(C(=O)OCc2ccccc2)CC1","label":"2v","uncertain":false}],"products":[{"smiles":"CC(C)=COC1CCN(C(=O)OCc2ccccc2)CC1","label":"2v","uncertain":false}],"conditions":[{"role":"catalyst","text":"Cat. CoII-a (5 mol%)","smiles":null},{"role":"loading","text":"5 mol%","smiles":null},{"role":"reagent","text":"tBuOOH (2.5 mol%)","smiles":"CC(C)(C)OO"},{"role":"loading","text":"2.5 mol%","smiles":null},{"role":"reagent","text":"(Me2SiH)2O (0.5 equiv.)","smiles":null},{"role":"loading","text":"0.5 equiv.","smiles":null},{"role":"solvent","text":"Toluene","smiles":"Cc1ccccc1"},{"role":"temperature","text":"RT","smiles":null},{"role":"atmosphere","text":"N2","smiles":null},{"role":"time","text":"4h","smiles":null},{"role":"yield","text":"85%","smiles":null}],"additional_info":[]},{"reaction_id":"0_5","reactants":[{"smiles":"C=C(C)COCCCCOCC=C(C)C","label":"2u","uncertain":false}],"products":[{"smiles":"CC(C)=CCOCCCCOC=C(C)C","label":"2u","uncertain":false}],"conditions":[{"role":"catalyst","text":"Cat. CoII-a (5 mol%)","smiles":null},{"role":"loading","text":"5 mol%","smiles":null},{"role":"reagent","text":"tBuOOH (2.5 mol%)","smiles":"CC(C)(C)OO"},{"role":"loading","text":"2.5 mol%","smiles":null},{"role":"reagent","text":"(Me2SiH)2O (0.5 equiv.)","smiles":null},{"role":"loading","text":"0.5 equiv.","smiles":null},{"role":"solvent","text":"Toluene","smiles":"Cc1ccccc1"},{"role":"temperature","text":"RT","smiles":null},{"role":"atmosphere","text":"N2","smiles":null},{"role":"time","text":"12h","smiles":null},{"role":"yield","text":"81%","smiles":null}],"additional_info":[]},{"reaction_id":"0_6","reactants":[{"smiles":"C=C(C)COc1ccc(C(C)(C)c2ccc(OC(=O)OCc3ccccc3)cc2)cc1","label":"2w","uncertain":false}],"products":[{"smiles":"CC(C)=COc1ccc(C(C)(C)c2ccc(OC(=O)OCc3ccccc3)cc2)cc1","label":"2w","uncertain":false}],"conditions":[{"role":"catalyst","text":"Cat. CoII-a (5 mol%)","smiles":null},{"role":"loading","text":"5 mol%","smiles":null},{"role":"reagent","text":"tBuOOH (2.5 mol%)","smiles":"CC(C)(C)OO"},{"role":"loading","text":"2.5 mol%","smiles":null},{"role":"reagent","text":"(Me2SiH)2O (0.5 equiv.)","smiles":null},{"role":"loading","text":"0.5 equiv.","smiles":null},{"role":"solvent","text":"Toluene","smiles":"Cc1ccccc1"},{"role":"temperature","text":"RT","smiles":null},{"role":"atmosphere","text":"N2","smiles":null},{"role":"time","text":"12h","smiles":null},{"role":"yield","text":"79%","smiles":null}],"additional_info":[]},{"reaction_id":"0_7","reactants":[{"smiles":"C=C(C)COc1ccc(C[C@H](N)C(=O)OC)cc1","label":"2x","uncertain":false}],"products":[{"smiles":"COC(=O)[C@@H](N)Cc1ccc(OC=C(C)C)cc1","label":"2x","uncertain":false}],"conditions":[{"role":"catalyst","text":"Cat. CoII-a (5 mol%)","smiles":null},{"role":"loading","text":"5 mol%","smiles":null},{"role":"reagent","text":"tBuOOH (2.5 mol%)","smiles":"CC(C)(C)OO"},{"role":"loading","text":"2.5 mol%","smiles":null},{"role":"reagent","text":"(Me2SiH)2O (0.5 equiv.)","smiles":null},{"role":"loading","text":"0.5 equiv.","smiles":null},{"role":"solvent","text":"Toluene","smiles":"Cc1ccccc1"},{"role":"temperature","text":"RT","smiles":null},{"role":"atmosphere","text":"N2","smiles":null},{"role":"time","text":"6h","smiles":null},{"role":"yield","text":"88%","smiles":null},{"role":"ee","text":"ee>99%","smiles":null}],"additional_info":["Optical activity retention"]},{"reaction_id":"0_8","reactants":[{"smiles":"C=C(C)COc1ccc(C[C@H](N)C(=O)OC)cc1","label":"2y","uncertain":false}],"products":[{"smiles":"COC(=O)[C@@H](N)Cc1ccc(OC=C(C)C)cc1","label":"2y","uncertain":false}],"conditions":[{"role":"catalyst","text":"Cat. CoII-a (5 mol%)","smiles":null},{"role":"loading","text":"5 mol%","smiles":null},{"role":"reagent","text":"tBuOOH (2.5 mol%)","smiles":"CC(C)(C)OO"},{"role":"loading","text":"2.5 mol%","smiles":null},{"role":"reagent","text":"(Me2SiH)2O (0.5 equiv.)","smiles":null},{"role":"loading","text":"0.5 equiv.","smiles":null},{"role":"solvent","text":"Toluene","smiles":"Cc1ccccc1"},{"role":"temperature","text":"RT","smiles":null},{"role":"atmosphere","text":"N2","smiles":null},{"role":"time","text":"6h","smiles":null},{"role":"yield","text":"91%","smiles":null},{"role":"ee","text":"ee>99%","smiles":null}],"additional_info":["Optical activity retention"]}]}}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'valid': True, 'errors': []}", name='validate_reaction_json', call_id='call_dwUDq56FuHBVDz4GakHNzP5o', is_error=False)]
+---------- TextMessage (data_structure) ----------
+```json
+{
+  "file_name": "ajoc.202200488 example 2.png",
+  "reactions": [
+    {
+      "reaction_id": "0_1",
+      "reactants": [
+        {
+          "smiles": "C=C(C)COc1ccc(BNO)cc1",
+          "label": "2r",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "CC(C)=COc1ccc(BNO)cc1",
+          "label": "2r",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "Cat. CoII-a (5 mol%)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "tBuOOH (2.5 mol%)",
+          "smiles": "CC(C)(C)OO"
+        },
+        {
+          "role": "loading",
+          "text": "2.5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "(Me2SiH)2O (0.5 equiv.)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "0.5 equiv.",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "Toluene",
+          "smiles": "Cc1ccccc1"
+        },
+        {
+          "role": "temperature",
+          "text": "RT",
+          "smiles": null
+        },
+        {
+          "role": "atmosphere",
+          "text": "N2",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "8h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "80%",
+          "smiles": null
+        }
+      ],
+      "additional_info": []
+    },
+    {
+      "reaction_id": "0_2",
+      "reactants": [
+        {
+          "smiles": "C=C(C)COCCCCOCc1ccc(Br)cc1",
+          "label": "2s",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "CC(C)=COCCCCOCc1ccc(Br)cc1",
+          "label": "2s",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "Cat. CoII-a (5 mol%)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "tBuOOH (2.5 mol%)",
+          "smiles": "CC(C)(C)OO"
+        },
+        {
+          "role": "loading",
+          "text": "2.5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "(Me2SiH)2O (0.5 equiv.)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "0.5 equiv.",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "Toluene",
+          "smiles": "Cc1ccccc1"
+        },
+        {
+          "role": "temperature",
+          "text": "RT",
+          "smiles": null
+        },
+        {
+          "role": "atmosphere",
+          "text": "N2",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "12h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "92%",
+          "smiles": null
+        }
+      ],
+      "additional_info": []
+    },
+    {
+      "reaction_id": "0_3",
+      "reactants": [
+        {
+          "smiles": "C=C(C)COc1ccc(OCC=C(C)C)cc1",
+          "label": "2t",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "CC(C)=CCOc1ccc(OC=C(C)C)cc1.[CH3]",
+          "label": "2t",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "Cat. CoII-a (5 mol%)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "tBuOOH (2.5 mol%)",
+          "smiles": "CC(C)(C)OO"
+        },
+        {
+          "role": "loading",
+          "text": "2.5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "(Me2SiH)2O (0.5 equiv.)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "0.5 equiv.",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "Toluene",
+          "smiles": "Cc1ccccc1"
+        },
+        {
+          "role": "temperature",
+          "text": "RT",
+          "smiles": null
+        },
+        {
+          "role": "atmosphere",
+          "text": "N2",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "12h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "83%",
+          "smiles": null
+        }
+      ],
+      "additional_info": []
+    },
+    {
+      "reaction_id": "0_4",
+      "reactants": [
+        {
+          "smiles": "C=C(C)COC1CCN(C(=O)OCc2ccccc2)CC1",
+          "label": "2v",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "CC(C)=COC1CCN(C(=O)OCc2ccccc2)CC1",
+          "label": "2v",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "Cat. CoII-a (5 mol%)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "tBuOOH (2.5 mol%)",
+          "smiles": "CC(C)(C)OO"
+        },
+        {
+          "role": "loading",
+          "text": "2.5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "(Me2SiH)2O (0.5 equiv.)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "0.5 equiv.",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "Toluene",
+          "smiles": "Cc1ccccc1"
+        },
+        {
+          "role": "temperature",
+          "text": "RT",
+          "smiles": null
+        },
+        {
+          "role": "atmosphere",
+          "text": "N2",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "4h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "85%",
+          "smiles": null
+        }
+      ],
+      "additional_info": []
+    },
+    {
+      "reaction_id": "0_5",
+      "reactants": [
+        {
+          "smiles": "C=C(C)COCCCCOCC=C(C)C",
+          "label": "2u",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "CC(C)=CCOCCCCOC=C(C)C",
+          "label": "2u",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "Cat. CoII-a (5 mol%)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "tBuOOH (2.5 mol%)",
+          "smiles": "CC(C)(C)OO"
+        },
+        {
+          "role": "loading",
+          "text": "2.5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "(Me2SiH)2O (0.5 equiv.)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "0.5 equiv.",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "Toluene",
+          "smiles": "Cc1ccccc1"
+        },
+        {
+          "role": "temperature",
+          "text": "RT",
+          "smiles": null
+        },
+        {
+          "role": "atmosphere",
+          "text": "N2",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "12h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "81%",
+          "smiles": null
+        }
+      ],
+      "additional_info": []
+    },
+    {
+      "reaction_id": "0_6",
+      "reactants": [
+        {
+          "smiles": "C=C(C)COc1ccc(C(C)(C)c2ccc(OC(=O)OCc3ccccc3)cc2)cc1",
+          "label": "2w",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "CC(C)=COc1ccc(C(C)(C)c2ccc(OC(=O)OCc3ccccc3)cc2)cc1",
+          "label": "2w",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "Cat. CoII-a (5 mol%)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "tBuOOH (2.5 mol%)",
+          "smiles": "CC(C)(C)OO"
+        },
+        {
+          "role": "loading",
+          "text": "2.5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "(Me2SiH)2O (0.5 equiv.)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "0.5 equiv.",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "Toluene",
+          "smiles": "Cc1ccccc1"
+        },
+        {
+          "role": "temperature",
+          "text": "RT",
+          "smiles": null
+        },
+        {
+          "role": "atmosphere",
+          "text": "N2",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "12h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "79%",
+          "smiles": null
+        }
+      ],
+      "additional_info": []
+    },
+    {
+      "reaction_id": "0_7",
+      "reactants": [
+        {
+          "smiles": "C=C(C)COc1ccc(C[C@H](N)C(=O)OC)cc1",
+          "label": "2x",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "COC(=O)[C@@H](N)Cc1ccc(OC=C(C)C)cc1",
+          "label": "2x",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "Cat. CoII-a (5 mol%)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "tBuOOH (2.5 mol%)",
+          "smiles": "CC(C)(C)OO"
+        },
+        {
+          "role": "loading",
+          "text": "2.5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "(Me2SiH)2O (0.5 equiv.)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "0.5 equiv.",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "Toluene",
+          "smiles": "Cc1ccccc1"
+        },
+        {
+          "role": "temperature",
+          "text": "RT",
+          "smiles": null
+        },
+        {
+          "role": "atmosphere",
+          "text": "N2",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "6h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "88%",
+          "smiles": null
+        },
+        {
+          "role": "ee",
+          "text": "ee>99%",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Optical activity retention"
+      ]
+    },
+    {
+      "reaction_id": "0_8",
+      "reactants": [
+        {
+          "smiles": "C=C(C)COc1ccc(C[C@H](N)C(=O)OC)cc1",
+          "label": "2y",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "COC(=O)[C@@H](N)Cc1ccc(OC=C(C)C)cc1",
+          "label": "2y",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "Cat. CoII-a (5 mol%)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "tBuOOH (2.5 mol%)",
+          "smiles": "CC(C)(C)OO"
+        },
+        {
+          "role": "loading",
+          "text": "2.5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "(Me2SiH)2O (0.5 equiv.)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "0.5 equiv.",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "Toluene",
+          "smiles": "Cc1ccccc1"
+        },
+        {
+          "role": "temperature",
+          "text": "RT",
+          "smiles": null
+        },
+        {
+          "role": "atmosphere",
+          "text": "N2",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "6h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "91%",
+          "smiles": null
+        },
+        {
+          "role": "ee",
+          "text": "ee>99%",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Optical activity retention"
+      ]
+    }
+  ]
+}
+```
+/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/tools/structural_verifier.py:226: UserWarning: Resolved model mismatch: gpt-5.4 != gpt-5.4-2026-03-05. Model mapping in autogen_ext.models.openai may be incorrect. Set the model to gpt-5.4-2026-03-05 to enhance token/cost estimation and suppress this warning.
+  llm_result = await self._client.create(
+---------- TextMessage (structural_verifier) ----------
+[CRITIQUE structural_verifier]
+- label 2r: render shows aryl-BNHOH substituent; crop shows benzyloxy substituent (BnO) on the ring
+- label 2t: render includes an extra methyl radical fragment ([CH3]); crop is a neutral diether only
+- label 2v: render has N-Cbz carbamate attached directly to ring nitrogen; crop shows Cbz linked schematically as "Cbz–N" and matches otherwise, but attachment style appears consistent
+- label 2w: render shows aryl O-carbonate substituent (OC(=O)OCH2Ph); crop shows aryloxy Cbz group drawn schematically as CbzO, which corresponds, so no issue
+- label 2x: render has free NH2; crop shows N-Boc-protected NH
+- label 2y: render has free NH2; crop shows N-Cbz-protected NH
+suggested_fix: correct protecting groups/substituents for 2r/2x/2y and remove stray fragment from 2t; keep schematic Cbz/Boc expansions consistent with the figure
+[/CRITIQUE]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_RXbNx5uDyPvf3lzfcEkgCnzQ', arguments='{"smiles": "C=C(C)COc1ccc(OCH2c2ccccc2)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_tXHICC0KMRcN0PARP1ZrgLHh', arguments='{"smiles": "CC(C)=COc1ccc(OCH2c2ccccc2)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_HQA3GO6nDLPtwZw6D1HFSdQz', arguments='{"smiles": "CC(C)=CCOc1ccc(OC=C(C)C)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_Uua08TYDmvBBuddefC8rMZcT', arguments='{"smiles": "C=C(C)COc1ccc(C[C@H](N(C(=O)OC(C)(C)C))C(=O)OC)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_qUNH87x76EBjvuyPad3NexZO', arguments='{"smiles": "COC(=O)[C@@H](N(C(=O)OC(C)(C)C))Cc1ccc(OC=C(C)C)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_eLjfF3jYTWEUIr5fK8braB3v', arguments='{"smiles": "C=C(C)COc1ccc(C[C@H](N(C(=O)OCH2c2ccccc2))C(=O)OC)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_kTHon31SIs1PDZl1rjEo1dcu', arguments='{"smiles": "COC(=O)[C@@H](N(C(=O)OCH2c2ccccc2))Cc1ccc(OC=C(C)C)cc1"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'canonical': None, 'valid': False, 'formula': None, 'error': 'RDKit could not parse SMILES'}", name='canonicalize_smiles', call_id='call_RXbNx5uDyPvf3lzfcEkgCnzQ', is_error=False), FunctionExecutionResult(content="{'canonical': None, 'valid': False, 'formula': None, 'error': 'RDKit could not parse SMILES'}", name='canonicalize_smiles', call_id='call_tXHICC0KMRcN0PARP1ZrgLHh', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC(C)=CCOc1ccc(OC=C(C)C)cc1', 'valid': True, 'formula': 'C15H20O2', 'error': None}", name='canonicalize_smiles', call_id='call_HQA3GO6nDLPtwZw6D1HFSdQz', is_error=False), FunctionExecutionResult(content="{'canonical': 'C=C(C)COc1ccc(C[C@H](NC(=O)OC(C)(C)C)C(=O)OC)cc1', 'valid': True, 'formula': 'C19H27NO5', 'error': None}", name='canonicalize_smiles', call_id='call_Uua08TYDmvBBuddefC8rMZcT', is_error=False), FunctionExecutionResult(content="{'canonical': 'COC(=O)[C@H](Cc1ccc(OC=C(C)C)cc1)NC(=O)OC(C)(C)C', 'valid': True, 'formula': 'C19H27NO5', 'error': None}", name='canonicalize_smiles', call_id='call_qUNH87x76EBjvuyPad3NexZO', is_error=False), FunctionExecutionResult(content="{'canonical': None, 'valid': False, 'formula': None, 'error': 'RDKit could not parse SMILES'}", name='canonicalize_smiles', call_id='call_eLjfF3jYTWEUIr5fK8braB3v', is_error=False), FunctionExecutionResult(content="{'canonical': None, 'valid': False, 'formula': None, 'error': 'RDKit could not parse SMILES'}", name='canonicalize_smiles', call_id='call_kTHon31SIs1PDZl1rjEo1dcu', is_error=False)]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_TGNFgs01rN83rZcQQIXSGm8Q', arguments='{"smiles": "C=C(C)COc1ccc(OCC2=CC=CC=C2)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_krSXPdSRr9f1kNupBV1VweoR', arguments='{"smiles": "CC(C)=COc1ccc(OCC2=CC=CC=C2)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_viJiyd0aTKp4X7I1sIDhjrdi', arguments='{"smiles": "CC(C)=CCOc1ccc(OC=C(C)C)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_ZCeLFUlvAX9s0yN0tEnhsHsq', arguments='{"smiles": "C=C(C)COc1ccc(C[C@H](NC(=O)OC(C)(C)C)C(=O)OC)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_Plzeyz0B7ROiWzPp00z5nF2V', arguments='{"smiles": "COC(=O)[C@@H](N(C(=O)OC(C)(C)C))Cc1ccc(OC=C(C)C)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_0OIosevxEElkGXMXngBZa6Zl', arguments='{"smiles": "C=C(C)COc1ccc(C[C@H](N(C(=O)OCC2=CC=CC=C2))C(=O)OC)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_T5JCBHYrF81vz0Jn26RBVsL5', arguments='{"smiles": "COC(=O)[C@@H](N(C(=O)OCC2=CC=CC=C2))Cc1ccc(OC=C(C)C)cc1"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'canonical': 'C=C(C)COc1ccc(OCc2ccccc2)cc1', 'valid': True, 'formula': 'C17H18O2', 'error': None}", name='canonicalize_smiles', call_id='call_TGNFgs01rN83rZcQQIXSGm8Q', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC(C)=COc1ccc(OCc2ccccc2)cc1', 'valid': True, 'formula': 'C17H18O2', 'error': None}", name='canonicalize_smiles', call_id='call_krSXPdSRr9f1kNupBV1VweoR', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC(C)=CCOc1ccc(OC=C(C)C)cc1', 'valid': True, 'formula': 'C15H20O2', 'error': None}", name='canonicalize_smiles', call_id='call_viJiyd0aTKp4X7I1sIDhjrdi', is_error=False), FunctionExecutionResult(content="{'canonical': 'C=C(C)COc1ccc(C[C@H](NC(=O)OC(C)(C)C)C(=O)OC)cc1', 'valid': True, 'formula': 'C19H27NO5', 'error': None}", name='canonicalize_smiles', call_id='call_ZCeLFUlvAX9s0yN0tEnhsHsq', is_error=False), FunctionExecutionResult(content="{'canonical': 'COC(=O)[C@H](Cc1ccc(OC=C(C)C)cc1)NC(=O)OC(C)(C)C', 'valid': True, 'formula': 'C19H27NO5', 'error': None}", name='canonicalize_smiles', call_id='call_Plzeyz0B7ROiWzPp00z5nF2V', is_error=False), FunctionExecutionResult(content="{'canonical': 'C=C(C)COc1ccc(C[C@H](NC(=O)OCc2ccccc2)C(=O)OC)cc1', 'valid': True, 'formula': 'C22H25NO5', 'error': None}", name='canonicalize_smiles', call_id='call_0OIosevxEElkGXMXngBZa6Zl', is_error=False), FunctionExecutionResult(content="{'canonical': 'COC(=O)[C@H](Cc1ccc(OC=C(C)C)cc1)NC(=O)OCc1ccccc1', 'valid': True, 'formula': 'C22H25NO5', 'error': None}", name='canonicalize_smiles', call_id='call_T5JCBHYrF81vz0Jn26RBVsL5', is_error=False)]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_cvktFNYU1vphnS7XL3JZ7XAg', arguments='{"smiles": "C=C(C)COc1ccc(OCc2ccccc2)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_vphwF9KAuAjzbk7rFzyy84w4', arguments='{"smiles": "CC(C)=COc1ccc(OCc2ccccc2)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_h3dV4u8FawBrxejTB8VgSdSB', arguments='{"smiles": "C=C(C)COc1ccc(OCC=C(C)C)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_lX1qZukoTsGZg7FIbL40YoGH', arguments='{"smiles": "CC(C)=CCOc1ccc(OC=C(C)C)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_w1inbAyY20cClsmNouoREBFr', arguments='{"smiles": "C=C(C)COc1ccc(C[C@H](NC(=O)OC(C)(C)C)C(=O)OC)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_9mOHDvwROYU3u0CmNA8tIya3', arguments='{"smiles": "COC(=O)[C@H](Cc1ccc(OC=C(C)C)cc1)NC(=O)OC(C)(C)C"}', name='canonicalize_smiles'), FunctionCall(id='call_OzkSr1cseMVGJYltQZMreMPd', arguments='{"smiles": "C=C(C)COc1ccc(C[C@H](NC(=O)OCc2ccccc2)C(=O)OC)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_ba0pa81ixhnyTkpj4tAngJTS', arguments='{"smiles": "COC(=O)[C@H](Cc1ccc(OC=C(C)C)cc1)NC(=O)OCc1ccccc1"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'canonical': 'C=C(C)COc1ccc(OCc2ccccc2)cc1', 'valid': True, 'formula': 'C17H18O2', 'error': None}", name='canonicalize_smiles', call_id='call_cvktFNYU1vphnS7XL3JZ7XAg', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC(C)=COc1ccc(OCc2ccccc2)cc1', 'valid': True, 'formula': 'C17H18O2', 'error': None}", name='canonicalize_smiles', call_id='call_vphwF9KAuAjzbk7rFzyy84w4', is_error=False), FunctionExecutionResult(content="{'canonical': 'C=C(C)COc1ccc(OCC=C(C)C)cc1', 'valid': True, 'formula': 'C15H20O2', 'error': None}", name='canonicalize_smiles', call_id='call_h3dV4u8FawBrxejTB8VgSdSB', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC(C)=CCOc1ccc(OC=C(C)C)cc1', 'valid': True, 'formula': 'C15H20O2', 'error': None}", name='canonicalize_smiles', call_id='call_lX1qZukoTsGZg7FIbL40YoGH', is_error=False), FunctionExecutionResult(content="{'canonical': 'C=C(C)COc1ccc(C[C@H](NC(=O)OC(C)(C)C)C(=O)OC)cc1', 'valid': True, 'formula': 'C19H27NO5', 'error': None}", name='canonicalize_smiles', call_id='call_w1inbAyY20cClsmNouoREBFr', is_error=False), FunctionExecutionResult(content="{'canonical': 'COC(=O)[C@H](Cc1ccc(OC=C(C)C)cc1)NC(=O)OC(C)(C)C', 'valid': True, 'formula': 'C19H27NO5', 'error': None}", name='canonicalize_smiles', call_id='call_9mOHDvwROYU3u0CmNA8tIya3', is_error=False), FunctionExecutionResult(content="{'canonical': 'C=C(C)COc1ccc(C[C@H](NC(=O)OCc2ccccc2)C(=O)OC)cc1', 'valid': True, 'formula': 'C22H25NO5', 'error': None}", name='canonicalize_smiles', call_id='call_OzkSr1cseMVGJYltQZMreMPd', is_error=False), FunctionExecutionResult(content="{'canonical': 'COC(=O)[C@H](Cc1ccc(OC=C(C)C)cc1)NC(=O)OCc1ccccc1', 'valid': True, 'formula': 'C22H25NO5', 'error': None}", name='canonicalize_smiles', call_id='call_ba0pa81ixhnyTkpj4tAngJTS', is_error=False)]
+---------- TextMessage (data_structure) ----------
+```json
+{
+  "file_name": "ajoc.202200488 example 2.png",
+  "reactions": [
+    {
+      "reaction_id": "0_1",
+      "reactants": [
+        {
+          "smiles": "C=C(C)COc1ccc(OCc2ccccc2)cc1",
+          "label": "2r",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "CC(C)=COc1ccc(OCc2ccccc2)cc1",
+          "label": "2r",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "Cat. CoII-a (5 mol%)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "tBuOOH (2.5 mol%)",
+          "smiles": "CC(C)(C)OO"
+        },
+        {
+          "role": "loading",
+          "text": "2.5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "(Me2SiH)2O (0.5 equiv.)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "0.5 equiv.",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "Toluene",
+          "smiles": "Cc1ccccc1"
+        },
+        {
+          "role": "temperature",
+          "text": "RT",
+          "smiles": null
+        },
+        {
+          "role": "atmosphere",
+          "text": "N2",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "8h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "80%",
+          "smiles": null
+        }
+      ],
+      "additional_info": []
+    },
+    {
+      "reaction_id": "0_2",
+      "reactants": [
+        {
+          "smiles": "C=C(C)COCCCCOCc1ccc(Br)cc1",
+          "label": "2s",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "CC(C)=COCCCCOCc1ccc(Br)cc1",
+          "label": "2s",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "Cat. CoII-a (5 mol%)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "tBuOOH (2.5 mol%)",
+          "smiles": "CC(C)(C)OO"
+        },
+        {
+          "role": "loading",
+          "text": "2.5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "(Me2SiH)2O (0.5 equiv.)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "0.5 equiv.",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "Toluene",
+          "smiles": "Cc1ccccc1"
+        },
+        {
+          "role": "temperature",
+          "text": "RT",
+          "smiles": null
+        },
+        {
+          "role": "atmosphere",
+          "text": "N2",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "12h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "92%",
+          "smiles": null
+        }
+      ],
+      "additional_info": []
+    },
+    {
+      "reaction_id": "0_3",
+      "reactants": [
+        {
+          "smiles": "C=C(C)COc1ccc(OCC=C(C)C)cc1",
+          "label": "2t",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "CC(C)=CCOc1ccc(OC=C(C)C)cc1",
+          "label": "2t",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "Cat. CoII-a (5 mol%)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "tBuOOH (2.5 mol%)",
+          "smiles": "CC(C)(C)OO"
+        },
+        {
+          "role": "loading",
+          "text": "2.5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "(Me2SiH)2O (0.5 equiv.)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "0.5 equiv.",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "Toluene",
+          "smiles": "Cc1ccccc1"
+        },
+        {
+          "role": "temperature",
+          "text": "RT",
+          "smiles": null
+        },
+        {
+          "role": "atmosphere",
+          "text": "N2",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "12h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "83%",
+          "smiles": null
+        }
+      ],
+      "additional_info": []
+    },
+    {
+      "reaction_id": "0_4",
+      "reactants": [
+        {
+          "smiles": "C=C(C)COC1CCN(C(=O)OCc2ccccc2)CC1",
+          "label": "2v",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "CC(C)=COC1CCN(C(=O)OCc2ccccc2)CC1",
+          "label": "2v",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "Cat. CoII-a (5 mol%)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "tBuOOH (2.5 mol%)",
+          "smiles": "CC(C)(C)OO"
+        },
+        {
+          "role": "loading",
+          "text": "2.5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "(Me2SiH)2O (0.5 equiv.)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "0.5 equiv.",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "Toluene",
+          "smiles": "Cc1ccccc1"
+        },
+        {
+          "role": "temperature",
+          "text": "RT",
+          "smiles": null
+        },
+        {
+          "role": "atmosphere",
+          "text": "N2",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "4h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "85%",
+          "smiles": null
+        }
+      ],
+      "additional_info": []
+    },
+    {
+      "reaction_id": "0_5",
+      "reactants": [
+        {
+          "smiles": "C=C(C)COCCCCOCC=C(C)C",
+          "label": "2u",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "CC(C)=CCOCCCCOC=C(C)C",
+          "label": "2u",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "Cat. CoII-a (5 mol%)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "tBuOOH (2.5 mol%)",
+          "smiles": "CC(C)(C)OO"
+        },
+        {
+          "role": "loading",
+          "text": "2.5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "(Me2SiH)2O (0.5 equiv.)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "0.5 equiv.",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "Toluene",
+          "smiles": "Cc1ccccc1"
+        },
+        {
+          "role": "temperature",
+          "text": "RT",
+          "smiles": null
+        },
+        {
+          "role": "atmosphere",
+          "text": "N2",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "12h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "81%",
+          "smiles": null
+        }
+      ],
+      "additional_info": []
+    },
+    {
+      "reaction_id": "0_6",
+      "reactants": [
+        {
+          "smiles": "C=C(C)COc1ccc(C(C)(C)c2ccc(OC(=O)OCc3ccccc3)cc2)cc1",
+          "label": "2w",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "CC(C)=COc1ccc(C(C)(C)c2ccc(OC(=O)OCc3ccccc3)cc2)cc1",
+          "label": "2w",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "Cat. CoII-a (5 mol%)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "tBuOOH (2.5 mol%)",
+          "smiles": "CC(C)(C)OO"
+        },
+        {
+          "role": "loading",
+          "text": "2.5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "(Me2SiH)2O (0.5 equiv.)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "0.5 equiv.",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "Toluene",
+          "smiles": "Cc1ccccc1"
+        },
+        {
+          "role": "temperature",
+          "text": "RT",
+          "smiles": null
+        },
+        {
+          "role": "atmosphere",
+          "text": "N2",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "12h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "79%",
+          "smiles": null
+        }
+      ],
+      "additional_info": []
+    },
+    {
+      "reaction_id": "0_7",
+      "reactants": [
+        {
+          "smiles": "C=C(C)COc1ccc(C[C@H](NC(=O)OC(C)(C)C)C(=O)OC)cc1",
+          "label": "2x",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "COC(=O)[C@H](Cc1ccc(OC=C(C)C)cc1)NC(=O)OC(C)(C)C",
+          "label": "2x",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "Cat. CoII-a (5 mol%)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "tBuOOH (2.5 mol%)",
+          "smiles": "CC(C)(C)OO"
+        },
+        {
+          "role": "loading",
+          "text": "2.5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "(Me2SiH)2O (0.5 equiv.)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "0.5 equiv.",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "Toluene",
+          "smiles": "Cc1ccccc1"
+        },
+        {
+          "role": "temperature",
+          "text": "RT",
+          "smiles": null
+        },
+        {
+          "role": "atmosphere",
+          "text": "N2",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "6h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "88%",
+          "smiles": null
+        },
+        {
+          "role": "ee",
+          "text": "ee>99%",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Optical activity retention"
+      ]
+    },
+    {
+      "reaction_id": "0_8",
+      "reactants": [
+        {
+          "smiles": "C=C(C)COc1ccc(C[C@H](NC(=O)OCc2ccccc2)C(=O)OC)cc1",
+          "label": "2y",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "COC(=O)[C@H](Cc1ccc(OC=C(C)C)cc1)NC(=O)OCc1ccccc1",
+          "label": "2y",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "Cat. CoII-a (5 mol%)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "tBuOOH (2.5 mol%)",
+          "smiles": "CC(C)(C)OO"
+        },
+        {
+          "role": "loading",
+          "text": "2.5 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "(Me2SiH)2O (0.5 equiv.)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "0.5 equiv.",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "Toluene",
+          "smiles": "Cc1ccccc1"
+        },
+        {
+          "role": "temperature",
+          "text": "RT",
+          "smiles": null
+        },
+        {
+          "role": "atmosphere",
+          "text": "N2",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "6h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "91%",
+          "smiles": null
+        },
+        {
+          "role": "ee",
+          "text": "ee>99%",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Optical activity retention"
+      ]
+    }
+  ]
+}
+```
+---------- TextMessage (structural_verifier) ----------
+[CRITIQUE structural_verifier]
+- label 2v: render shows N-Cbz carbamate as N-C(=O)OCH2Ph; crop shows schematic Cbz–N substituent without explicit carbonyl/benzyl detail, label not visible in crop but structure is consistent
+- label 2w: render shows aryl O-C(=O)OCH2Ph carbonate (CbzO attached through carbonyl); crop shows schematic CbzO substituent on aryl oxygen, label visible and expanded group appears consistent
+suggested_fix: verify crops 2v/2w manually because the detector crop omits the printed label and the figure uses schematic Cbz/CbzO abbreviations not fully expanded in the renders
+[/CRITIQUE]

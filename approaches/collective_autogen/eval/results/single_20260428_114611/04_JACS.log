@@ -1,0 +1,308 @@
+---------- MultiModalMessage (user) ----------
+Analyse this chemistry reaction image end-to-end and emit one ReactionRecord JSON.
+image_path = /Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/04_JACS.png
+Pass that exact path as the first argument to detect_molecules, predict_molecule_smiles, and crop_image_region.
+<image>
+/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/agents/_assistant_agent.py:1109: UserWarning: Resolved model mismatch: gpt-5.4 != gpt-5.4-2026-03-05. Model mapping in autogen_ext.models.openai may be incorrect. Set the model to gpt-5.4-2026-03-05 to enhance token/cost estimation and suppress this warning.
+  model_result = await model_client.create(
+---------- ToolCallRequestEvent (single_agent) ----------
+[FunctionCall(id='call_YzNZvCoRaERx7oGXOEXEnVst', arguments='{"image_path":"/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/04_JACS.png","molecule_only":true,"score_min":0}', name='detect_molecules')]
+---------- ToolCallExecutionEvent (single_agent) ----------
+[FunctionExecutionResult(content="{'bboxes': [{'x1': 123, 'y1': 682, 'x2': 804, 'y2': 953, 'w': 681, 'h': 271, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 238, 'y1': 81, 'x2': 371, 'y2': 212, 'w': 133, 'h': 130, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 241, 'y1': 1109, 'x2': 682, 'y2': 1304, 'w': 441, 'h': 195, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 506, 'y1': 36, 'x2': 902, 'y2': 256, 'w': 396, 'h': 221, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 938, 'y1': 1024, 'x2': 1411, 'y2': 1439, 'w': 473, 'h': 414, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 953, 'y1': 292, 'x2': 1255, 'y2': 559, 'w': 301, 'h': 268, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 968, 'y1': 675, 'x2': 1414, 'y2': 891, 'w': 446, 'h': 216, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 1320, 'y1': 40, 'x2': 1516, 'y2': 216, 'w': 196, 'h': 176, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}], 'image_w': 1664, 'image_h': 1480, 'device': 'mps', 'error': None, 'cached': True}", name='detect_molecules', call_id='call_YzNZvCoRaERx7oGXOEXEnVst', is_error=False)]
+---------- ToolCallRequestEvent (single_agent) ----------
+[FunctionCall(id='call_7P8qIKsSsBGYrSgvsVWVq7KC', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/04_JACS.png", "bbox": [123, 682, 681, 271]}', name='predict_molecule_smiles'), FunctionCall(id='call_6UGGcoDFYGPqMNOtNLj2Vw8X', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/04_JACS.png", "bbox": [238, 81, 133, 130]}', name='predict_molecule_smiles'), FunctionCall(id='call_10XJhkH3blhKRxAbRGOV0kAk', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/04_JACS.png", "bbox": [241, 1109, 441, 195]}', name='predict_molecule_smiles'), FunctionCall(id='call_m6l2vJuXSib7SYuG4grw09Xg', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/04_JACS.png", "bbox": [506, 36, 396, 221]}', name='predict_molecule_smiles'), FunctionCall(id='call_v70H9icQj83DVZtLPusOi9Tz', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/04_JACS.png", "bbox": [938, 1024, 473, 414]}', name='predict_molecule_smiles'), FunctionCall(id='call_fmBDi8wM0oJvCzPIDyXlnYdb', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/04_JACS.png", "bbox": [953, 292, 301, 268]}', name='predict_molecule_smiles'), FunctionCall(id='call_VaQNYyPt4PRfAucFfPnogJDi', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/04_JACS.png", "bbox": [968, 675, 446, 216]}', name='predict_molecule_smiles'), FunctionCall(id='call_e5lG5mKBRWFHIoeJNxj1Wvox', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/04_JACS.png", "bbox": [1320, 40, 196, 176]}', name='predict_molecule_smiles')]
+---------- ToolCallExecutionEvent (single_agent) ----------
+[FunctionExecutionResult(content="{'smiles': 'CC(C)(Oc1ccc(CCNC(=O)c2ccc(Cl)cc2)cc1)C(=O)c1ccccc1', 'confidence': 0.8950663929990562, 'atoms_count': 25, 'bonds_count': 26, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_7P8qIKsSsBGYrSgvsVWVq7KC', is_error=False), FunctionExecutionResult(content="{'smiles': '*C(*)=O', 'confidence': 0.8749004088955443, 'atoms_count': 4, 'bonds_count': 3, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_6UGGcoDFYGPqMNOtNLj2Vw8X', is_error=False), FunctionExecutionResult(content="{'smiles': 'C[C@H](C(=O)c1ccccc1)c1ccc(CC2CCCC2=O)cc1', 'confidence': 0.8960304118662425, 'atoms_count': 18, 'bonds_count': 19, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_10XJhkH3blhKRxAbRGOV0kAk', is_error=False), FunctionExecutionResult(content="{'smiles': '[3*]C([4*])(FF)C(=O)ON1C(=O)c2ccccc2C1=O', 'confidence': 0.8766900073671161, 'atoms_count': 18, 'bonds_count': 19, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_m6l2vJuXSib7SYuG4grw09Xg', is_error=False), FunctionExecutionResult(content="{'smiles': '*[C@]12C(=O)C=C3[C@]4(*)C[C@@](C)(C(=O)c5ccccc5)CC[C@]4(C)CC[C@@]3(C)[C@]1(C)CC[C@@]1(*)C(C)(C)[C@@H](OC(=O)C(C)(C)C)CC[C@]21C', 'confidence': 0.8572900141392616, 'atoms_count': 37, 'bonds_count': 41, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_v70H9icQj83DVZtLPusOi9Tz', is_error=False), FunctionExecutionResult(content="{'smiles': 'CC(C)C1=CC=CC(C(C)C)=C1N1=CSC2=C1CCCCC2', 'confidence': 0.5127169595188334, 'atoms_count': 18, 'bonds_count': 20, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_fmBDi8wM0oJvCzPIDyXlnYdb', is_error=False), FunctionExecutionResult(content="{'smiles': 'Cc1ccc(C)c(OCCCC(C)(C)C(=O)c2ccccc2)c1', 'confidence': 0.8978565191171906, 'atoms_count': 18, 'bonds_count': 18, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_VaQNYyPt4PRfAucFfPnogJDi', is_error=False), FunctionExecutionResult(content="{'smiles': '[1*]C(=O)C([2*])([3*])[3*]', 'confidence': 0.8068063245941501, 'atoms_count': 7, 'bonds_count': 6, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_e5lG5mKBRWFHIoeJNxj1Wvox', is_error=False)]
+---------- ToolCallRequestEvent (single_agent) ----------
+[FunctionCall(id='call_kZmw8Yu7l6PMXaJ9f1sFt9We', arguments='{"smiles": "CC(C)(Oc1ccc(CCNC(=O)c2ccc(Cl)cc2)cc1)C(=O)c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_sFZ5HqCnyhkRB04RjtgZdWFF', arguments='{"smiles": "*C(*)=O"}', name='canonicalize_smiles'), FunctionCall(id='call_Y5JXnZdDEnDnGcn6r7iXGmZW', arguments='{"smiles": "C[C@H](C(=O)c1ccccc1)c1ccc(CC2CCCC2=O)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_xvPXhdJcBkrtl3dNUNDphAeY', arguments='{"smiles": "[3*]C([4*])(FF)C(=O)ON1C(=O)c2ccccc2C1=O"}', name='canonicalize_smiles'), FunctionCall(id='call_LWpUgzhXOxkbQj0WSxYh2UJM', arguments='{"smiles": "*[C@]12C(=O)C=C3[C@]4(*)C[C@@](C)(C(=O)c5ccccc5)CC[C@]4(C)CC[C@@]3(C)[C@]1(C)CC[C@@]1(*)C(C)(C)[C@@H](OC(=O)C(C)(C)C)CC[C@]21C"}', name='canonicalize_smiles'), FunctionCall(id='call_wY2M1QRf2rSoP4J3s1ZgiP8s', arguments='{"smiles": "CC(C)C1=CC=CC(C(C)C)=C1N1=CSC2=C1CCCCC2"}', name='canonicalize_smiles'), FunctionCall(id='call_dcGrzsdb6qoKrGT2TyJ6z6DP', arguments='{"smiles": "Cc1ccc(C)c(OCCCC(C)(C)C(=O)c2ccccc2)c1"}', name='canonicalize_smiles'), FunctionCall(id='call_TA0X7wZLufr695ybpwQtz1nX', arguments='{"smiles": "[1*]C(=O)C([2*])([3*])[3*]"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (single_agent) ----------
+[FunctionExecutionResult(content="{'canonical': 'CC(C)(Oc1ccc(CCNC(=O)c2ccc(Cl)cc2)cc1)C(=O)c1ccccc1', 'valid': True, 'formula': 'C25H24ClNO3', 'error': None}", name='canonicalize_smiles', call_id='call_kZmw8Yu7l6PMXaJ9f1sFt9We', is_error=False), FunctionExecutionResult(content="{'canonical': '*C(*)=O', 'valid': True, 'formula': 'C*2O', 'error': None}", name='canonicalize_smiles', call_id='call_sFZ5HqCnyhkRB04RjtgZdWFF', is_error=False), FunctionExecutionResult(content="{'canonical': 'C[C@H](C(=O)c1ccccc1)c1ccc(CC2CCCC2=O)cc1', 'valid': True, 'formula': 'C21H22O2', 'error': None}", name='canonicalize_smiles', call_id='call_Y5JXnZdDEnDnGcn6r7iXGmZW', is_error=False), FunctionExecutionResult(content="{'canonical': None, 'valid': False, 'formula': None, 'error': 'RDKit could not parse SMILES'}", name='canonicalize_smiles', call_id='call_xvPXhdJcBkrtl3dNUNDphAeY', is_error=False), FunctionExecutionResult(content="{'canonical': '*[C@]12C(=O)C=C3[C@]4(*)C[C@@](C)(C(=O)c5ccccc5)CC[C@]4(C)CC[C@@]3(C)[C@]1(C)CC[C@@]1(*)C(C)(C)[C@@H](OC(=O)C(C)(C)C)CC[C@]21C', 'valid': True, 'formula': 'C41H55*3O4', 'error': None}", name='canonicalize_smiles', call_id='call_LWpUgzhXOxkbQj0WSxYh2UJM', is_error=False), FunctionExecutionResult(content="{'canonical': None, 'valid': False, 'formula': None, 'error': 'RDKit could not parse SMILES'}", name='canonicalize_smiles', call_id='call_wY2M1QRf2rSoP4J3s1ZgiP8s', is_error=False), FunctionExecutionResult(content="{'canonical': 'Cc1ccc(C)c(OCCCC(C)(C)C(=O)c2ccccc2)c1', 'valid': True, 'formula': 'C21H26O2', 'error': None}", name='canonicalize_smiles', call_id='call_dcGrzsdb6qoKrGT2TyJ6z6DP', is_error=False), FunctionExecutionResult(content="{'canonical': '[1*]C(=O)C([2*])([3*])[3*]', 'valid': True, 'formula': 'C2*4O', 'error': None}", name='canonicalize_smiles', call_id='call_TA0X7wZLufr695ybpwQtz1nX', is_error=False)]
+---------- ToolCallRequestEvent (single_agent) ----------
+[FunctionCall(id='call_kScC0Pqti4SHA7ZrB97xYcPY', arguments='{"name": "DMSO"}', name='lookup_compound'), FunctionCall(id='call_3aYktfJFILAOnYIKgCIH5dsc', arguments='{"name": "Cs2CO3"}', name='lookup_compound'), FunctionCall(id='call_rxAr4davJ4uqFplkS6O0OL5p', arguments='{"name": "perchlorate"}', name='lookup_compound')]
+---------- ToolCallExecutionEvent (single_agent) ----------
+[FunctionExecutionResult(content="{'smiles': 'CS(=O)C', 'source': 'opsin', 'query_used': 'dimethyl sulfoxide', 'cached': True, 'error': None}", name='lookup_compound', call_id='call_kScC0Pqti4SHA7ZrB97xYcPY', is_error=False), FunctionExecutionResult(content="{'smiles': 'C(=O)([O-])[O-].[Cs+].[Cs+]', 'source': 'pubchem', 'query_used': 'Cs2CO3', 'cached': True, 'error': None}", name='lookup_compound', call_id='call_3aYktfJFILAOnYIKgCIH5dsc', is_error=False), FunctionExecutionResult(content="{'smiles': 'Cl(=O)(=O)(=O)[O-]', 'source': 'opsin', 'query_used': 'perchlorate', 'cached': False, 'error': None}", name='lookup_compound', call_id='call_rxAr4davJ4uqFplkS6O0OL5p', is_error=False)]
+---------- ToolCallRequestEvent (single_agent) ----------
+[FunctionCall(id='call_Yc3ELMXaV7dqVFStsYysMMqV', arguments='{"obj":{"file_name":"04_JACS.png","reactions":[{"reaction_id":"0_1","reactants":[{"smiles":"*C(*)=O","label":"1","uncertain":false},{"smiles":"[1*]C(=O)C([2*])([3*])[3*]","label":"2","uncertain":false}],"products":[{"smiles":"CC(C)(Oc1ccc(CCNC(=O)c2ccc(Cl)cc2)cc1)C(=O)c1ccccc1","label":"3an","uncertain":false}],"conditions":[{"role":"catalyst","text":"N1 (10 mol%)","smiles":null},{"role":"loading","text":"10 mol%","smiles":null},{"role":"reagent","text":"Cs2CO3","smiles":"C(=O)([O-])[O-].[Cs+].[Cs+]"},{"role":"loading","text":"20 mol%","smiles":null},{"role":"solvent","text":"DMSO","smiles":"CS(=O)C"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"time","text":"4 h","smiles":null},{"role":"yield","text":"49%","smiles":null}],"additional_info":["from Bezafibrate"]},{"reaction_id":"0_2","reactants":[{"smiles":"*C(*)=O","label":"1","uncertain":false},{"smiles":"[1*]C(=O)C([2*])([3*])[3*]","label":"2","uncertain":false}],"products":[{"smiles":"Cc1ccc(C)c(OCCCC(C)(C)C(=O)c2ccccc2)c1","label":"3ao","uncertain":false}],"conditions":[{"role":"catalyst","text":"N1 (10 mol%)","smiles":null},{"role":"loading","text":"10 mol%","smiles":null},{"role":"reagent","text":"Cs2CO3","smiles":"C(=O)([O-])[O-].[Cs+].[Cs+]"},{"role":"loading","text":"20 mol%","smiles":null},{"role":"solvent","text":"DMSO","smiles":"CS(=O)C"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"time","text":"4 h","smiles":null},{"role":"yield","text":"67%","smiles":null}],"additional_info":["from Gemfibrozil"]},{"reaction_id":"0_3","reactants":[{"smiles":"*C(*)=O","label":"1","uncertain":false},{"smiles":"[1*]C(=O)C([2*])([3*])[3*]","label":"2","uncertain":false}],"products":[{"smiles":"C[C@H](C(=O)c1ccccc1)c1ccc(CC2CCCC2=O)cc1","label":"3ap","uncertain":false}],"conditions":[{"role":"catalyst","text":"N1 (10 mol%)","smiles":null},{"role":"loading","text":"10 mol%","smiles":null},{"role":"reagent","text":"Cs2CO3","smiles":"C(=O)([O-])[O-].[Cs+].[Cs+]"},{"role":"loading","text":"20 mol%","smiles":null},{"role":"solvent","text":"DMSO","smiles":"CS(=O)C"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"time","text":"4 h","smiles":null},{"role":"yield","text":"54%","smiles":null}],"additional_info":["from Loxoprofen"]},{"reaction_id":"0_4","reactants":[{"smiles":"*C(*)=O","label":"1","uncertain":false},{"smiles":"[1*]C(=O)C([2*])([3*])[3*]","label":"2","uncertain":false}],"products":[{"smiles":"*[C@]12C(=O)C=C3[C@]4(*)C[C@@](C)(C(=O)c5ccccc5)CC[C@]4(C)CC[C@@]3(C)[C@]1(C)CC[C@@]1(*)C(C)(C)[C@@H](OC(=O)C(C)(C)C)CC[C@]21C","label":"3aq","uncertain":false}],"conditions":[{"role":"catalyst","text":"N1 (10 mol%)","smiles":null},{"role":"loading","text":"10 mol%","smiles":null},{"role":"reagent","text":"Cs2CO3","smiles":"C(=O)([O-])[O-].[Cs+].[Cs+]"},{"role":"loading","text":"20 mol%","smiles":null},{"role":"solvent","text":"DMSO","smiles":"CS(=O)C"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"time","text":"4 h","smiles":null},{"role":"yield","text":"55%","smiles":null}],"additional_info":["from Glycyrrhetinic acid"]}]}}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (single_agent) ----------
+[FunctionExecutionResult(content="{'valid': True, 'errors': []}", name='validate_reaction_json', call_id='call_Yc3ELMXaV7dqVFStsYysMMqV', is_error=False)]
+---------- TextMessage (single_agent) ----------
+Found 8 molecule bboxes: 2 top-row templates/reagents, catalyst inset, product template, and 4 example products. Extracted shared conditions: N1 (10 mol%), Cs2CO3 (20 mol%), DMSO, 60 °C, 4 h. Emitting 4 reactions for products 3an/3ao/3ap/3aq.
+
+```json
+{
+  "file_name": "04_JACS.png",
+  "reactions": [
+    {
+      "reaction_id": "0_1",
+      "reactants": [
+        {
+          "smiles": "*C(*)=O",
+          "label": "1",
+          "uncertain": false
+        },
+        {
+          "smiles": "[1*]C(=O)C([2*])([3*])[3*]",
+          "label": "2",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "CC(C)(Oc1ccc(CCNC(=O)c2ccc(Cl)cc2)cc1)C(=O)c1ccccc1",
+          "label": "3an",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "N1 (10 mol%)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "10 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "Cs2CO3",
+          "smiles": "C(=O)([O-])[O-].[Cs+].[Cs+]"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol%",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMSO",
+          "smiles": "CS(=O)C"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "4 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "49%",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "from Bezafibrate"
+      ]
+    },
+    {
+      "reaction_id": "0_2",
+      "reactants": [
+        {
+          "smiles": "*C(*)=O",
+          "label": "1",
+          "uncertain": false
+        },
+        {
+          "smiles": "[1*]C(=O)C([2*])([3*])[3*]",
+          "label": "2",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "Cc1ccc(C)c(OCCCC(C)(C)C(=O)c2ccccc2)c1",
+          "label": "3ao",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "N1 (10 mol%)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "10 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "Cs2CO3",
+          "smiles": "C(=O)([O-])[O-].[Cs+].[Cs+]"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol%",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMSO",
+          "smiles": "CS(=O)C"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "4 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "67%",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "from Gemfibrozil"
+      ]
+    },
+    {
+      "reaction_id": "0_3",
+      "reactants": [
+        {
+          "smiles": "*C(*)=O",
+          "label": "1",
+          "uncertain": false
+        },
+        {
+          "smiles": "[1*]C(=O)C([2*])([3*])[3*]",
+          "label": "2",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "C[C@H](C(=O)c1ccccc1)c1ccc(CC2CCCC2=O)cc1",
+          "label": "3ap",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "N1 (10 mol%)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "10 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "Cs2CO3",
+          "smiles": "C(=O)([O-])[O-].[Cs+].[Cs+]"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol%",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMSO",
+          "smiles": "CS(=O)C"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "4 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "54%",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "from Loxoprofen"
+      ]
+    },
+    {
+      "reaction_id": "0_4",
+      "reactants": [
+        {
+          "smiles": "*C(*)=O",
+          "label": "1",
+          "uncertain": false
+        },
+        {
+          "smiles": "[1*]C(=O)C([2*])([3*])[3*]",
+          "label": "2",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "*[C@]12C(=O)C=C3[C@]4(*)C[C@@](C)(C(=O)c5ccccc5)CC[C@]4(C)CC[C@@]3(C)[C@]1(C)CC[C@@]1(*)C(C)(C)[C@@H](OC(=O)C(C)(C)C)CC[C@]21C",
+          "label": "3aq",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "N1 (10 mol%)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "10 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "Cs2CO3",
+          "smiles": "C(=O)([O-])[O-].[Cs+].[Cs+]"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol%",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMSO",
+          "smiles": "CS(=O)C"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "4 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "55%",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "from Glycyrrhetinic acid"
+      ]
+    }
+  ]
+}
+```
+
+[validation] PASSED after 0 retry/retries
+Results saved to /Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/runs/20260428_114611_single

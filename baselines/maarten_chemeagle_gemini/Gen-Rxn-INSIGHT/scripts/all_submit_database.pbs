@@ -1,0 +1,39 @@
+#!/bin/bash
+#PBS -N rxn_insight_db
+#PBS -l nodes=1:ppn=8
+#PBS -l mem=18000mb
+#PBS -l walltime=0:59:00
+#PBS -t 0-99
+
+# --- Configuration ---
+# 666k reactions / 100 jobs = ~6660 reactions per job
+INPUT="/kyukon/data/gent/vo/000/gvo00008/vsc43212/data/sanitized_uspto_with_templates.parquet"
+OUTDIR="/kyukon/scratch/gent/vo/000/gvo00008/vsc43212/genrxn/uspto_database_chunks"
+CHUNK_SIZE=17600       # ~666k / 100
+N_JOBS=8               # parallel cores within each job
+
+# --- Modules ---
+# module load PyTorch/2.1.2-foss-2023a-CUDA-12.1.1
+# module load Transformers/4.39.3-gfbf-2023a
+# module load SciPy-bundle/2023.07-gfbf-2023a
+# module load RDKit/2024.03.3-foss-2023a
+
+export OMPI_MCA_mpi_warn_on_fork=0
+# export CUDA_VISIBLE_DEVICES=""   # CPU only
+# source /kyukon/data/gent/432/vsc43212/venv/genrxn/bin/activate
+source /kyukon/data/gent/432/vsc43212/venv/chemperium/bin/activate
+
+# --- Compute chunk range for this array task ---
+CHUNK_START=${PBS_ARRAYID}
+CHUNK_END=$(( PBS_ARRAYID + 1 ))
+
+echo "Array task ${PBS_ARRAYID}: processing chunk ${CHUNK_START}"
+
+python /user/gent/432/vsc43212/genrxn/parse_daniel/all_process_database.py \
+    --input "${INPUT}" \
+    --output-dir "${OUTDIR}" \
+    --reaction-col "REACTION" \
+    --chunk-size ${CHUNK_SIZE} \
+    --chunk-start ${CHUNK_START} \
+    --chunk-end ${CHUNK_END} \
+    --n-jobs ${N_JOBS}

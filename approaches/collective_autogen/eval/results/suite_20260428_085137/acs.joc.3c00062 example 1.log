@@ -1,0 +1,2067 @@
+---------- MultiModalMessage (user) ----------
+Analyse this chemistry reaction image. Each specialist contributes one [FINDINGS ...] card per turn, then data_structure produces JSON, then the verifier audits the JSON and ends the run.
+image_path = /Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/acs.joc.3c00062 example 1.png
+Pass that exact path as the first argument to crop_image_region(image_path, [x,y,w,h]) if you need to zoom in on a region of the image.
+<image>
+/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/agents/_assistant_agent.py:1109: UserWarning: Resolved model mismatch: gpt-5.4 != gpt-5.4-2026-03-05. Model mapping in autogen_ext.models.openai may be incorrect. Set the model to gpt-5.4-2026-03-05 to enhance token/cost estimation and suppress this warning.
+  model_result = await model_client.create(
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_2REb2J8R76ZTbjoq4GXCFSzD', arguments='{"image_path":"/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/acs.joc.3c00062 example 1.png","molecule_only":true,"score_min":0}', name='detect_molecules')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'bboxes': [{'x1': 192, 'y1': 48, 'x2': 277, 'y2': 95, 'w': 85, 'h': 47, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 193, 'y1': 159, 'x2': 325, 'y2': 236, 'w': 131, 'h': 76, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 193, 'y1': 369, 'x2': 344, 'y2': 446, 'w': 150, 'h': 76, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 195, 'y1': 583, 'x2': 326, 'y2': 658, 'w': 131, 'h': 76, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 195, 'y1': 263, 'x2': 353, 'y2': 337, 'w': 158, 'h': 74, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 193, 'y1': 479, 'x2': 356, 'y2': 554, 'w': 162, 'h': 75, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 320, 'y1': 57, 'x2': 377, 'y2': 86, 'w': 57, 'h': 29, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 368, 'y1': 369, 'x2': 516, 'y2': 446, 'w': 148, 'h': 77, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 372, 'y1': 158, 'x2': 504, 'y2': 236, 'w': 132, 'h': 78, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 372, 'y1': 261, 'x2': 539, 'y2': 337, 'w': 167, 'h': 76, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 400, 'y1': 477, 'x2': 530, 'y2': 554, 'w': 130, 'h': 77, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 420, 'y1': 62, 'x2': 480, 'y2': 83, 'w': 60, 'h': 21, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 541, 'y1': 158, 'x2': 700, 'y2': 236, 'w': 159, 'h': 78, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 555, 'y1': 372, 'x2': 700, 'y2': 453, 'w': 145, 'h': 81, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 565, 'y1': 261, 'x2': 697, 'y2': 339, 'w': 131, 'h': 77, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 580, 'y1': 475, 'x2': 694, 'y2': 551, 'w': 114, 'h': 76, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 590, 'y1': 30, 'x2': 704, 'y2': 113, 'w': 114, 'h': 83, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}], 'image_w': 912, 'image_h': 701, 'device': 'mps', 'error': None, 'cached': True}", name='detect_molecules', call_id='call_2REb2J8R76ZTbjoq4GXCFSzD', is_error=False)]
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_4gYxvzZtf3ZBySsfiz8BPASS', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/acs.joc.3c00062 example 1.png", "bbox": [192, 48, 85, 47], "pad": 10}', name='predict_molecule_smiles'), FunctionCall(id='call_pFPbBxqPNzyVPtYc9xai8FHA', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/acs.joc.3c00062 example 1.png", "bbox": [320, 57, 57, 29], "pad": 10}', name='predict_molecule_smiles'), FunctionCall(id='call_GP7rqB3O1alE88YznY6lDHVc', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/acs.joc.3c00062 example 1.png", "bbox": [420, 62, 60, 21], "pad": 10}', name='predict_molecule_smiles'), FunctionCall(id='call_GbA4k4k7X14PvAVccR3b6bVX', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/acs.joc.3c00062 example 1.png", "bbox": [590, 30, 114, 83], "pad": 10}', name='predict_molecule_smiles')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'smiles': '[3*]/C(O)=C/S(C)(=O)=O', 'confidence': 0.8528148253252135, 'atoms_count': 8, 'bonds_count': 7, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_4gYxvzZtf3ZBySsfiz8BPASS', is_error=False), FunctionExecutionResult(content="{'smiles': 'O=Nc1ccccc1', 'confidence': 0.8131055535128473, 'atoms_count': 3, 'bonds_count': 2, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_pFPbBxqPNzyVPtYc9xai8FHA', is_error=False), FunctionExecutionResult(content="{'smiles': 'C#Cc1ccccc1', 'confidence': 0.7563821742192591, 'atoms_count': 3, 'bonds_count': 2, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_GP7rqB3O1alE88YznY6lDHVc', is_error=False), FunctionExecutionResult(content="{'smiles': 'C1C2C3C[CH]123.[3*]C(=O)C1C(C(=O)c2ccccc2)N1c1ccccc1', 'confidence': 0.23396606651123147, 'atoms_count': 15, 'bonds_count': 17, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_GbA4k4k7X14PvAVccR3b6bVX', is_error=False)]
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_W1OaOcD6H08T98VMARFu5X8x', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/acs.joc.3c00062 example 1.png", "bbox": [193, 159, 131, 76], "pad": 10}', name='predict_molecule_smiles'), FunctionCall(id='call_BnI8EgzJvMRsQ8hWB0mVfG6f', arguments='{"smiles": "[3*]/C(O)=C/S(C)(=O)=O"}', name='validate_smiles'), FunctionCall(id='call_Pk9GQFtIiiJophYMM26pRKvf', arguments='{"smiles": "[3*]/C(O)=C/S(C)(=O)=O"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'smiles': 'O=C(c1ccccc1)C1[C@@H](C(=O)c2ccccc2)N1c1ccccc1', 'confidence': 0.6616449402035793, 'atoms_count': 25, 'bonds_count': 28, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_W1OaOcD6H08T98VMARFu5X8x', is_error=False), FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_BnI8EgzJvMRsQ8hWB0mVfG6f', is_error=False), FunctionExecutionResult(content="{'canonical': '[3*]/C(O)=C/S(C)(=O)=O', 'valid': True, 'formula': 'C3H5*O3S', 'error': None}", name='canonicalize_smiles', call_id='call_Pk9GQFtIiiJophYMM26pRKvf', is_error=False)]
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_i7BsYGEsI1B3hmoJIS74Tg1F', arguments='{"smiles": "O=Nc1ccccc1"}', name='validate_smiles'), FunctionCall(id='call_XbEw9vJobSrSoPWp2s8WwOKi', arguments='{"smiles": "O=Nc1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_b0dyMj04SlY0AuqxmzRJ3Ph0', arguments='{"smiles": "C#Cc1ccccc1"}', name='validate_smiles'), FunctionCall(id='call_VREVk5yQQZ12dDpgmj1HfjHi', arguments='{"smiles": "C#Cc1ccccc1"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_i7BsYGEsI1B3hmoJIS74Tg1F', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=Nc1ccccc1', 'valid': True, 'formula': 'C6H5NO', 'error': None}", name='canonicalize_smiles', call_id='call_XbEw9vJobSrSoPWp2s8WwOKi', is_error=False), FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_b0dyMj04SlY0AuqxmzRJ3Ph0', is_error=False), FunctionExecutionResult(content="{'canonical': 'C#Cc1ccccc1', 'valid': True, 'formula': 'C8H6', 'error': None}", name='canonicalize_smiles', call_id='call_VREVk5yQQZ12dDpgmj1HfjHi', is_error=False)]
+---------- TextMessage (reaction_template_parser) ----------
+[FINDINGS reaction_template_parser]
+scheme_count: 1
+scheme_1:
+  reactant_template_smiles: [3*]/C(O)=C/S(C)(=O)=O.O=Nc1ccccc1.C#Cc1ccccc1
+  product_template_smiles:  [3*]C(=O)C1C(C(=O)c2ccccc2)N1c2ccccc2
+  arrow: forward
+  multi_step: no
+  notes: template/reactant bboxes #1 (sulfoxonium ylide, conf 0.85), #7 (nitrosobenzene-like partner, conf 0.81), and #12 (phenylacetylene, conf 0.76); product template inferred from representative product bbox #2 (conf 0.66) because top product bbox #17 was low-confidence. [3*] marks the variable acyl substituent from 1(a-m).
+[/FINDINGS]
+---------- TextMessage (molecular_recognition) ----------
+[FINDINGS molecular_recognition]
+# scripted agent — one entry per detected bbox, no deduplication
+molecule_count: 17
+molecule:
+  label: bbox_0
+  canonical_smiles: [3*]/C(O)=C/S(C)(=O)=O
+  bbox: [192, 48, 85, 47]
+  confidence: 0.853
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_1
+  canonical_smiles: O=C(c1ccccc1)C1[C@@H](C(=O)c2ccccc2)N1c1ccccc1
+  bbox: [193, 159, 131, 76]
+  confidence: 0.662
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_2
+  canonical_smiles: O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc(F)c2)N1c1ccccc1
+  bbox: [193, 369, 150, 76]
+  confidence: 0.856
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_3
+  canonical_smiles: O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)C2CCCCC2)N1c1ccccc1
+  bbox: [195, 583, 131, 76]
+  confidence: 0.883
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_4
+  canonical_smiles: Cc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1
+  bbox: [195, 263, 158, 74]
+  confidence: 0.754
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_5
+  canonical_smiles: CC.CC.CC.CC.CC.CC.CC.CC.CCCCCC.O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc3ccccc3c2)N1c1ccccc1
+  bbox: [193, 479, 162, 75]
+  confidence: 0.079
+  stereochemistry: from MolNexTR
+  uncertain: yes
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_6
+  canonical_smiles: O=Nc1ccccc1
+  bbox: [320, 57, 57, 29]
+  confidence: 0.813
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_7
+  canonical_smiles: O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc(F)cc2)N1c1ccccc1
+  bbox: [368, 369, 148, 77]
+  confidence: 0.852
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_8
+  canonical_smiles: CC.CC.CC.CC.CC.CC.Cc1ccccc1C(=O)[C@@H]1[C@@H](C(=O)c2ccccc2)N1c1ccccc1
+  bbox: [372, 158, 132, 78]
+  confidence: 0.497
+  stereochemistry: from MolNexTR
+  uncertain: yes
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_9
+  canonical_smiles: COc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1
+  bbox: [372, 261, 167, 76]
+  confidence: 0.899
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_10
+  canonical_smiles: O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccs2)N1c1ccccc1.[CH2+]C.[CH2+][CH2+]
+  bbox: [400, 477, 130, 77]
+  confidence: 0.306
+  stereochemistry: from MolNexTR
+  uncertain: yes
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_11
+  canonical_smiles: C#Cc1ccccc1
+  bbox: [420, 62, 60, 21]
+  confidence: 0.756
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_12
+  canonical_smiles: CC.CC.Cc1cccc(C(=O)[C@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)c1
+  bbox: [541, 158, 159, 78]
+  confidence: 0.518
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_13
+  canonical_smiles: O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc3ccccc23)N1c1ccccc1
+  bbox: [555, 372, 145, 81]
+  confidence: 0.883
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_14
+  canonical_smiles: O=C(c1ccccc1)C1C(C(=O)c2ccccc2F)N1c1ccccc1
+  bbox: [565, 261, 131, 77]
+  confidence: 0.723
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_15
+  canonical_smiles: CC(C)C(=O)[C@@H]1C(C(=O)c2ccccc2)N1c1ccccc1
+  bbox: [580, 475, 114, 76]
+  confidence: 0.702
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_16
+  canonical_smiles: C1C2C3C[CH]123.[3*]C(=O)C1C(C(=O)c2ccccc2)N1c1ccccc1
+  bbox: [590, 30, 114, 83]
+  confidence: 0.234
+  stereochemistry: from MolNexTR
+  uncertain: yes
+  notes: extracted via MolNexTR per-bbox
+[/FINDINGS]
+---------- ToolCallRequestEvent (rgroup_substitution) ----------
+[FunctionCall(id='call_rCeoUz9H1SczEYJh9ZrAArlY', arguments='{"template_smiles":"[3*]C(=O)C1C(C(=O)c2ccccc2)N1c2ccccc2","concrete_smiles":["O=C(c1ccccc1)C1[C@@H](C(=O)c2ccccc2)N1c1ccccc1","O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc(F)c2)N1c1ccccc1","O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)C2CCCCC2)N1c1ccccc1","Cc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1","CC.CC.CC.CC.CC.CC.CC.CC.CCCCCC.O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc3ccccc3c2)N1c1ccccc1","O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc(F)cc2)N1c1ccccc1","CC.CC.CC.CC.CC.CC.Cc1ccccc1C(=O)[C@@H]1[C@@H](C(=O)c2ccccc2)N1c1ccccc1","COc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1","O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccs2)N1c1ccccc1.[CH2+]C.[CH2+][CH2+]","CC.CC.Cc1cccc(C(=O)[C@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)c1","O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc3ccccc23)N1c1ccccc1","O=C(c1ccccc1)C1C(C(=O)c2ccccc2F)N1c1ccccc1","CC(C)C(=O)[C@@H]1C(C(=O)c2ccccc2)N1c1ccccc1"]}', name='derive_substituents')]
+---------- ToolCallExecutionEvent (rgroup_substitution) ----------
+[FunctionExecutionResult(content="{'results': [{'smiles': 'O=C(c1ccccc1)C1[C@@H](C(=O)c2ccccc2)N1c1ccccc1', 'matched': True, 'r_assignments': {'R3': 'c1ccc([*:3])cc1'}, 'core': 'O=C(c1ccccc1)C1[C@@H](C(=O)[*:3])N1c1ccccc1', 'error': None}, {'smiles': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc(F)c2)N1c1ccccc1', 'matched': True, 'r_assignments': {'R3': 'Fc1cccc([*:3])c1'}, 'core': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)[*:3])N1c1ccccc1', 'error': None}, {'smiles': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)C2CCCCC2)N1c1ccccc1', 'matched': True, 'r_assignments': {'R3': 'C1CCC([*:3])CC1'}, 'core': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)[*:3])N1c1ccccc1', 'error': None}, {'smiles': 'Cc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1', 'matched': True, 'r_assignments': {'R3': 'Cc1ccc([*:3])cc1'}, 'core': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)[*:3])N1c1ccccc1', 'error': None}, {'smiles': 'CC.CC.CC.CC.CC.CC.CC.CC.CCCCCC.O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc3ccccc3c2)N1c1ccccc1', 'matched': True, 'r_assignments': {'R3': 'c1ccc2cc([*:3])ccc2c1'}, 'core': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)[*:3])N1c1ccccc1', 'error': None}, {'smiles': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc(F)cc2)N1c1ccccc1', 'matched': True, 'r_assignments': {'R3': 'Fc1ccc([*:3])cc1'}, 'core': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)[*:3])N1c1ccccc1', 'error': None}, {'smiles': 'CC.CC.CC.CC.CC.CC.Cc1ccccc1C(=O)[C@@H]1[C@@H](C(=O)c2ccccc2)N1c1ccccc1', 'matched': True, 'r_assignments': {'R3': 'Cc1ccccc1[*:3]'}, 'core': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)[*:3])N1c1ccccc1', 'error': None}, {'smiles': 'COc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1', 'matched': True, 'r_assignments': {'R3': 'COc1ccc([*:3])cc1'}, 'core': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)[*:3])N1c1ccccc1', 'error': None}, {'smiles': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccs2)N1c1ccccc1.[CH2+]C.[CH2+][CH2+]', 'matched': True, 'r_assignments': {'R3': 'c1csc([*:3])c1'}, 'core': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)[*:3])N1c1ccccc1', 'error': None}, {'smiles': 'CC.CC.Cc1cccc(C(=O)[C@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)c1', 'matched': True, 'r_assignments': {'R3': 'Cc1cccc([*:3])c1'}, 'core': 'O=C(c1ccccc1)[C@@H]1[C@H](C(=O)[*:3])N1c1ccccc1', 'error': None}, {'smiles': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc3ccccc23)N1c1ccccc1', 'matched': True, 'r_assignments': {'R3': 'c1ccc2c([*:3])cccc2c1'}, 'core': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)[*:3])N1c1ccccc1', 'error': None}, {'smiles': 'O=C(c1ccccc1)C1C(C(=O)c2ccccc2F)N1c1ccccc1', 'matched': True, 'r_assignments': {'R3': 'Fc1ccccc1[*:3]'}, 'core': 'O=C(c1ccccc1)C1C(C(=O)[*:3])N1c1ccccc1', 'error': None}, {'smiles': 'CC(C)C(=O)[C@@H]1C(C(=O)c2ccccc2)N1c1ccccc1', 'matched': True, 'r_assignments': {'R3': 'CC(C)[*:3]'}, 'core': 'O=C(c1ccccc1)C1[C@@H](C(=O)[*:3])N1c1ccccc1', 'error': None}], 'unmatched_indices': [], 'template': '[3*]C(=O)C1C(C(=O)c2ccccc2)N1c1ccccc1', 'error': None}", name='derive_substituents', call_id='call_rCeoUz9H1SczEYJh9ZrAArlY', is_error=False)]
+---------- ToolCallRequestEvent (rgroup_substitution) ----------
+[FunctionCall(id='call_yDiqecdlReVPw65Y7jr9EICy', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O", "r_assignments": {"R3": "c1ccc([*:3])cc1"}}', name='apply_substituents'), FunctionCall(id='call_7E23Kq6JAbCz5Mlfmsqw1xUH', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O", "r_assignments": {"R3": "Fc1cccc([*:3])c1"}}', name='apply_substituents'), FunctionCall(id='call_4QfjxMoXtGLglllqTqFm0c6v', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O", "r_assignments": {"R3": "C1CCC([*:3])CC1"}}', name='apply_substituents'), FunctionCall(id='call_gVATRE8nSQn670XSxJar8eJp', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O", "r_assignments": {"R3": "Cc1ccc([*:3])cc1"}}', name='apply_substituents'), FunctionCall(id='call_OFsgYkfhFWcFHISi0tgPqiQk', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O", "r_assignments": {"R3": "c1ccc2cc([*:3])ccc2c1"}}', name='apply_substituents'), FunctionCall(id='call_oEsofApnEPFOKfti3hSwaFWa', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O", "r_assignments": {"R3": "Fc1ccc([*:3])cc1"}}', name='apply_substituents'), FunctionCall(id='call_xxsy2gMANz7JnxAGY5zjblpA', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O", "r_assignments": {"R3": "Cc1ccccc1[*:3]"}}', name='apply_substituents'), FunctionCall(id='call_wYJTKulmCYW5hd6rHBc9nTy0', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O", "r_assignments": {"R3": "COc1ccc([*:3])cc1"}}', name='apply_substituents'), FunctionCall(id='call_vyn4jPWb3VOmZUUwSpGcxLoK', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O", "r_assignments": {"R3": "c1csc([*:3])c1"}}', name='apply_substituents'), FunctionCall(id='call_Qx0S8CeeXMwCgUifswg3Fd5d', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O", "r_assignments": {"R3": "Cc1cccc([*:3])c1"}}', name='apply_substituents'), FunctionCall(id='call_dn9pNaAxVgRCBJcCI0ismRFR', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O", "r_assignments": {"R3": "c1ccc2c([*:3])cccc2c1"}}', name='apply_substituents'), FunctionCall(id='call_xZfA7ennTWAymUcULrEwz5Jf', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O", "r_assignments": {"R3": "Fc1ccccc1[*:3]"}}', name='apply_substituents'), FunctionCall(id='call_tgCyRlJCXzeIEm8vFbVrhA84', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O", "r_assignments": {"R3": "CC(C)[*:3]"}}', name='apply_substituents')]
+---------- ToolCallExecutionEvent (rgroup_substitution) ----------
+[FunctionExecutionResult(content='{\'smiles\': None, \'valid\': False, \'error\': "template did not parse: \'[3*]/C(O)=C/S(C)(=O)=O\'"}', name='apply_substituents', call_id='call_yDiqecdlReVPw65Y7jr9EICy', is_error=False), FunctionExecutionResult(content='{\'smiles\': None, \'valid\': False, \'error\': "template did not parse: \'[3*]/C(O)=C/S(C)(=O)=O\'"}', name='apply_substituents', call_id='call_7E23Kq6JAbCz5Mlfmsqw1xUH', is_error=False), FunctionExecutionResult(content='{\'smiles\': None, \'valid\': False, \'error\': "template did not parse: \'[3*]/C(O)=C/S(C)(=O)=O\'"}', name='apply_substituents', call_id='call_4QfjxMoXtGLglllqTqFm0c6v', is_error=False), FunctionExecutionResult(content='{\'smiles\': None, \'valid\': False, \'error\': "template did not parse: \'[3*]/C(O)=C/S(C)(=O)=O\'"}', name='apply_substituents', call_id='call_gVATRE8nSQn670XSxJar8eJp', is_error=False), FunctionExecutionResult(content='{\'smiles\': None, \'valid\': False, \'error\': "template did not parse: \'[3*]/C(O)=C/S(C)(=O)=O\'"}', name='apply_substituents', call_id='call_OFsgYkfhFWcFHISi0tgPqiQk', is_error=False), FunctionExecutionResult(content='{\'smiles\': None, \'valid\': False, \'error\': "template did not parse: \'[3*]/C(O)=C/S(C)(=O)=O\'"}', name='apply_substituents', call_id='call_oEsofApnEPFOKfti3hSwaFWa', is_error=False), FunctionExecutionResult(content='{\'smiles\': None, \'valid\': False, \'error\': "template did not parse: \'[3*]/C(O)=C/S(C)(=O)=O\'"}', name='apply_substituents', call_id='call_xxsy2gMANz7JnxAGY5zjblpA', is_error=False), FunctionExecutionResult(content='{\'smiles\': None, \'valid\': False, \'error\': "template did not parse: \'[3*]/C(O)=C/S(C)(=O)=O\'"}', name='apply_substituents', call_id='call_wYJTKulmCYW5hd6rHBc9nTy0', is_error=False), FunctionExecutionResult(content='{\'smiles\': None, \'valid\': False, \'error\': "template did not parse: \'[3*]/C(O)=C/S(C)(=O)=O\'"}', name='apply_substituents', call_id='call_vyn4jPWb3VOmZUUwSpGcxLoK', is_error=False), FunctionExecutionResult(content='{\'smiles\': None, \'valid\': False, \'error\': "template did not parse: \'[3*]/C(O)=C/S(C)(=O)=O\'"}', name='apply_substituents', call_id='call_Qx0S8CeeXMwCgUifswg3Fd5d', is_error=False), FunctionExecutionResult(content='{\'smiles\': None, \'valid\': False, \'error\': "template did not parse: \'[3*]/C(O)=C/S(C)(=O)=O\'"}', name='apply_substituents', call_id='call_dn9pNaAxVgRCBJcCI0ismRFR', is_error=False), FunctionExecutionResult(content='{\'smiles\': None, \'valid\': False, \'error\': "template did not parse: \'[3*]/C(O)=C/S(C)(=O)=O\'"}', name='apply_substituents', call_id='call_xZfA7ennTWAymUcULrEwz5Jf', is_error=False), FunctionExecutionResult(content='{\'smiles\': None, \'valid\': False, \'error\': "template did not parse: \'[3*]/C(O)=C/S(C)(=O)=O\'"}', name='apply_substituents', call_id='call_tgCyRlJCXzeIEm8vFbVrhA84', is_error=False)]
+---------- TextMessage (rgroup_substitution) ----------
+[FINDINGS rgroup_substitution]
+reactant_template: [3*]/C(O)=C/S(C)(=O)=O.O=Nc1ccccc1.C#Cc1ccccc1
+product_template:  [3*]C(=O)C1C(C(=O)c2ccccc2)N1c2ccccc2
+variants:
+  - label: 4aaa
+    r_assignments: {R3: c1ccc([*:3])cc1}
+    reactant_smiles: null
+    product_smiles:  O=C(c1ccccc1)C1[C@@H](C(=O)c2ccccc2)N1c1ccccc1
+    valid: no
+    notes: apply_substituents failed because the quoted reactant template from reaction_template_parser did not parse in the tool ("template did not parse: '[3*]/C(O)=C/S(C)(=O)=O'").
+  - label: 4faa
+    r_assignments: {R3: Fc1cccc([*:3])c1}
+    reactant_smiles: null
+    product_smiles:  O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc(F)c2)N1c1ccccc1
+    valid: no
+    notes: apply_substituents failed because the quoted reactant template from reaction_template_parser did not parse in the tool ("template did not parse: '[3*]/C(O)=C/S(C)(=O)=O'").
+  - label: 4maa
+    r_assignments: {R3: C1CCC([*:3])CC1}
+    reactant_smiles: null
+    product_smiles:  O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)C2CCCCC2)N1c1ccccc1
+    valid: no
+    notes: apply_substituents failed because the quoted reactant template from reaction_template_parser did not parse in the tool ("template did not parse: '[3*]/C(O)=C/S(C)(=O)=O'").
+  - label: 4daa
+    r_assignments: {R3: Cc1ccc([*:3])cc1}
+    reactant_smiles: null
+    product_smiles:  Cc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1
+    valid: no
+    notes: apply_substituents failed because the quoted reactant template from reaction_template_parser did not parse in the tool ("template did not parse: '[3*]/C(O)=C/S(C)(=O)=O'").
+  - label: 4jaa
+    r_assignments: {R3: c1ccc2cc([*:3])ccc2c1}
+    reactant_smiles: null
+    product_smiles:  CC.CC.CC.CC.CC.CC.CC.CC.CCCCCC.O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc3ccccc3c2)N1c1ccccc1
+    valid: no
+    notes: product_smiles copied verbatim from molecular_recognition despite obvious OCR artifacts; apply_substituents failed because the quoted reactant template from reaction_template_parser did not parse in the tool.
+  - label: 4haa
+    r_assignments: {R3: Fc1ccc([*:3])cc1}
+    reactant_smiles: null
+    product_smiles:  O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc(F)cc2)N1c1ccccc1
+    valid: no
+    notes: apply_substituents failed because the quoted reactant template from reaction_template_parser did not parse in the tool ("template did not parse: '[3*]/C(O)=C/S(C)(=O)=O'").
+  - label: 4baa
+    r_assignments: {R3: Cc1ccccc1[*:3]}
+    reactant_smiles: null
+    product_smiles:  CC.CC.CC.CC.CC.CC.Cc1ccccc1C(=O)[C@@H]1[C@@H](C(=O)c2ccccc2)N1c1ccccc1
+    valid: no
+    notes: product_smiles copied verbatim from molecular_recognition despite likely OCR artifacts; apply_substituents failed because the quoted reactant template from reaction_template_parser did not parse in the tool.
+  - label: 4eaa
+    r_assignments: {R3: COc1ccc([*:3])cc1}
+    reactant_smiles: null
+    product_smiles:  COc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1
+    valid: no
+    notes: apply_substituents failed because the quoted reactant template from reaction_template_parser did not parse in the tool ("template did not parse: '[3*]/C(O)=C/S(C)(=O)=O'").
+  - label: 4kaa
+    r_assignments: {R3: c1csc([*:3])c1}
+    reactant_smiles: null
+    product_smiles:  O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccs2)N1c1ccccc1.[CH2+]C.[CH2+][CH2+]
+    valid: no
+    notes: product_smiles copied verbatim from molecular_recognition despite likely OCR artifacts; apply_substituents failed because the quoted reactant template from reaction_template_parser did not parse in the tool.
+  - label: 4caa
+    r_assignments: {R3: Cc1cccc([*:3])c1}
+    reactant_smiles: null
+    product_smiles:  CC.CC.Cc1cccc(C(=O)[C@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)c1
+    valid: no
+    notes: product_smiles copied verbatim from molecular_recognition; apply_substituents failed because the quoted reactant template from reaction_template_parser did not parse in the tool.
+  - label: 4iaa
+    r_assignments: {R3: c1ccc2c([*:3])cccc2c1}
+    reactant_smiles: null
+    product_smiles:  O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc3ccccc23)N1c1ccccc1
+    valid: no
+    notes: apply_substituents failed because the quoted reactant template from reaction_template_parser did not parse in the tool ("template did not parse: '[3*]/C(O)=C/S(C)(=O)=O'").
+  - label: 4gaa
+    r_assignments: {R3: Fc1ccccc1[*:3]}
+    reactant_smiles: null
+    product_smiles:  O=C(c1ccccc1)C1C(C(=O)c2ccccc2F)N1c1ccccc1
+    valid: no
+    notes: apply_substituents failed because the quoted reactant template from reaction_template_parser did not parse in the tool ("template did not parse: '[3*]/C(O)=C/S(C)(=O)=O'").
+  - label: 4laa
+    r_assignments: {R3: CC(C)[*:3]}
+    reactant_smiles: null
+    product_smiles:  CC(C)C(=O)[C@@H]1C(C(=O)c2ccccc2)N1c1ccccc1
+    valid: no
+    notes: apply_substituents failed because the quoted reactant template from reaction_template_parser did not parse in the tool ("template did not parse: '[3*]/C(O)=C/S(C)(=O)=O'").
+[/FINDINGS]
+---------- TextMessage (condition_interpretation) ----------
+[FINDINGS condition_interpretation]
+applies_to: scheme_1
+conditions:
+  - role: solvent
+    text: CH3CN
+    smiles: CC#N
+  - role: temperature
+    text: 60 °C
+    smiles: null
+[FINDINGS condition_interpretation]
+applies_to: 4aaa
+conditions:
+  - role: yield
+    text: 89%
+    smiles: null
+  - role: dr
+    text: 3:1
+    smiles: null
+[FINDINGS condition_interpretation]
+applies_to: 4baa
+conditions:
+  - role: yield
+    text: 85%
+    smiles: null
+  - role: dr
+    text: 2.1:1
+    smiles: null
+[FINDINGS condition_interpretation]
+applies_to: 4caa
+conditions:
+  - role: yield
+    text: 85%
+    smiles: null
+  - role: dr
+    text: 3.3:1
+    smiles: null
+[FINDINGS condition_interpretation]
+applies_to: 4daa
+conditions:
+  - role: yield
+    text: 86%
+    smiles: null
+  - role: dr
+    text: 3.5:1
+    smiles: null
+[FINDINGS condition_interpretation]
+applies_to: 4eaa
+conditions:
+  - role: yield
+    text: 77%
+    smiles: null
+  - role: dr
+    text: 3.3:1
+    smiles: null
+[FINDINGS condition_interpretation]
+applies_to: 4faa
+conditions:
+  - role: yield
+    text: 85%
+    smiles: null
+  - role: dr
+    text: 2.9:1
+    smiles: null
+[FINDINGS condition_interpretation]
+applies_to: 4gaa
+conditions:
+  - role: yield
+    text: 86%
+    smiles: null
+  - role: dr
+    text: 2.1:1
+    smiles: null
+[FINDINGS condition_interpretation]
+applies_to: 4haa
+conditions:
+  - role: yield
+    text: 86%
+    smiles: null
+  - role: dr
+    text: 2.2:1
+    smiles: null
+[FINDINGS condition_interpretation]
+applies_to: 4iaa
+conditions:
+  - role: yield
+    text: 83%
+    smiles: null
+  - role: dr
+    text: 2.1:1
+    smiles: null
+[FINDINGS condition_interpretation]
+applies_to: 4jaa
+conditions:
+  - role: yield
+    text: 63%
+    smiles: null
+  - role: dr
+    text: >99:1
+    smiles: null
+[FINDINGS condition_interpretation]
+applies_to: 4kaa
+conditions:
+  - role: yield
+    text: 82%
+    smiles: null
+  - role: dr
+    text: 1.5:1
+    smiles: null
+[FINDINGS condition_interpretation]
+applies_to: 4laa
+conditions:
+  - role: yield
+    text: 73%
+    smiles: null
+  - role: dr
+    text: 2.5:1
+    smiles: null
+[FINDINGS condition_interpretation]
+applies_to: 4maa
+conditions:
+  - role: yield
+    text: 76%
+    smiles: null
+  - role: dr
+    text: 3.3:1
+    smiles: null
+[/FINDINGS]
+[FINDINGS condition_interpretation]
+applies_to: scheme_1
+conditions:
+  - role: solvent
+    text: CH3CN
+    smiles: CC#N
+  - role: temperature
+    text: 60 °C
+    smiles: null
+  - role: yield
+    text: 89%
+    smiles: null
+  - role: dr
+    text: 3:1
+    smiles: null
+  - role: yield
+    text: 85%
+    smiles: null
+  - role: dr
+    text: 2.1:1
+    smiles: null
+  - role: yield
+    text: 85%
+    smiles: null
+    smiles: null
+  - role: dr
+    text: 3.3:1
+    smiles: null
+  - role: yield
+    text: 86%
+    smiles: null
+  - role: dr
+    text: 3.5:1
+    smiles: null
+  - role: yield
+    text: 77%
+    smiles: null
+  - role: dr
+    text: 3.3:1
+    smiles: null
+  - role: yield
+    text: 85%
+    smiles: null
+  - role: dr
+    text: 2.9:1
+    smiles: null
+  - role: yield
+    text: 86%
+    smiles: null
+  - role: dr
+    text: 2.1:1
+    smiles: null
+  - role: yield
+    text: 86%
+    smiles: null
+  - role: dr
+    text: 2.2:1
+    smiles: null
+  - role: yield
+    text: 83%
+    smiles: null
+  - role: dr
+    text: 2.1:1
+    smiles: null
+  - role: yield
+    text: 63%
+    smiles: null
+  - role: dr
+    text: >99:1
+    smiles: null
+  - role: yield
+    text: 82%
+    smiles: null
+  - role: dr
+    text: 1.5:1
+    smiles: null
+  - role: yield
+    text: 73%
+    smiles: null
+  - role: dr
+    text: 2.5:1
+    smiles: null
+  - role: yield
+    text: 76%
+    smiles: null
+  - role: dr
+    text: 3.3:1
+    smiles: null
+[/FINDINGS]
+---------- TextMessage (text_extraction) ----------
+[FINDINGS text_extraction]
+items:
+  - kind: heading
+    text: "Scheme 2. Investigation of Various Sulfoxonium Ylides"
+    applies_to: figure
+  - kind: footnote
+    text: "a,b"
+    applies_to: figure
+  - kind: reference
+    text: "1-(a-m)"
+    applies_to: figure
+  - kind: reference
+    text: "2a"
+    applies_to: figure
+  - kind: reference
+    text: "3a"
+    applies_to: figure
+  - kind: reference
+    text: "4-(a-m)aa"
+    applies_to: figure
+  - kind: footnote
+    text: "c"
+    applies_to: 4aaa
+  - kind: footnote
+    text: "d"
+    applies_to: 4baa
+  - kind: footnote
+    text: "c"
+    applies_to: 4caa
+  - kind: footnote
+    text: "c"
+    applies_to: 4daa
+  - kind: footnote
+    text: "c"
+    applies_to: 4eaa
+  - kind: footnote
+    text: "c"
+    applies_to: 4faa
+  - kind: footnote
+    text: "c"
+    applies_to: 4gaa
+  - kind: footnote
+    text: "c"
+    applies_to: 4haa
+  - kind: footnote
+    text: "d"
+    applies_to: 4iaa
+  - kind: footnote
+    text: "d"
+    applies_to: 4jaa
+  - kind: footnote
+    text: "d"
+    applies_to: 4kaa
+  - kind: footnote
+    text: "d"
+    applies_to: 4laa
+  - kind: footnote
+    text: "d"
+    applies_to: 4maa
+[/FINDINGS]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_4qxRoorrCT3Cj6AojBz3obpS', arguments='{"smiles": "CC#N"}', name='canonicalize_smiles'), FunctionCall(id='call_oqOn02ponO8vRzoTnPXbvYxE', arguments='{"smiles": "O=C(c1ccccc1)C1[C@@H](C(=O)c2ccccc2)N1c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_9LJakPCLwMjcxBEjJSvaIPt0', arguments='{"smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc(F)c2)N1c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_505801B9tCGPl8p5W0LR5pkU', arguments='{"smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)C2CCCCC2)N1c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_2cuh9emcL8PJFtPV1hUK4QpZ', arguments='{"smiles": "Cc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_GhQSmBK9agXPqiYpNEj8CXkl', arguments='{"smiles": "CC.CC.CC.CC.CC.CC.CC.CC.CCCCCC.O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc3ccccc3c2)N1c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_KIgoaqGeCfRpuBm1V8yiCvmR', arguments='{"smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc(F)cc2)N1c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_tzqPaOUM9px46Evk25lSbwAl', arguments='{"smiles": "CC.CC.CC.CC.CC.CC.Cc1ccccc1C(=O)[C@@H]1[C@@H](C(=O)c2ccccc2)N1c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_StysTPi0cdbA8aueLMI8e628', arguments='{"smiles": "COc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_NKjgZzh0arRUTcecxg85hkrL', arguments='{"smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccs2)N1c1ccccc1.[CH2+]C.[CH2+][CH2+]"}', name='canonicalize_smiles'), FunctionCall(id='call_ZdSKbl8IH5dAcRKpXxFbWh89', arguments='{"smiles": "CC.CC.Cc1cccc(C(=O)[C@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)c1"}', name='canonicalize_smiles'), FunctionCall(id='call_mR0AbnwgX3vYRRTRNicURCu2', arguments='{"smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc3ccccc23)N1c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_4lHqzTw2cBA4QmrZMQ0O7ijH', arguments='{"smiles": "O=C(c1ccccc1)C1C(C(=O)c2ccccc2F)N1c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_2EoF01nIhJkAhRJhjz8kpw9g', arguments='{"smiles": "CC(C)C(=O)[C@@H]1C(C(=O)c2ccccc2)N1c1ccccc1"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'canonical': 'CC#N', 'valid': True, 'formula': 'C2H3N', 'error': None}", name='canonicalize_smiles', call_id='call_4qxRoorrCT3Cj6AojBz3obpS', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=C(c1ccccc1)C1[C@@H](C(=O)c2ccccc2)N1c1ccccc1', 'valid': True, 'formula': 'C22H17NO2', 'error': None}", name='canonicalize_smiles', call_id='call_oqOn02ponO8vRzoTnPXbvYxE', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc(F)c2)N1c1ccccc1', 'valid': True, 'formula': 'C22H16FNO2', 'error': None}", name='canonicalize_smiles', call_id='call_9LJakPCLwMjcxBEjJSvaIPt0', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)C2CCCCC2)N1c1ccccc1', 'valid': True, 'formula': 'C22H23NO2', 'error': None}", name='canonicalize_smiles', call_id='call_505801B9tCGPl8p5W0LR5pkU', is_error=False), FunctionExecutionResult(content="{'canonical': 'Cc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1', 'valid': True, 'formula': 'C23H19NO2', 'error': None}", name='canonicalize_smiles', call_id='call_2cuh9emcL8PJFtPV1hUK4QpZ', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC.CC.CC.CC.CC.CC.CC.CC.CCCCCC.O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc3ccccc3c2)N1c1ccccc1', 'valid': True, 'formula': 'C48H81NO2', 'error': None}", name='canonicalize_smiles', call_id='call_GhQSmBK9agXPqiYpNEj8CXkl', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc(F)cc2)N1c1ccccc1', 'valid': True, 'formula': 'C22H16FNO2', 'error': None}", name='canonicalize_smiles', call_id='call_KIgoaqGeCfRpuBm1V8yiCvmR', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC.CC.CC.CC.CC.CC.Cc1ccccc1C(=O)[C@@H]1[C@@H](C(=O)c2ccccc2)N1c1ccccc1', 'valid': True, 'formula': 'C35H55NO2', 'error': None}", name='canonicalize_smiles', call_id='call_tzqPaOUM9px46Evk25lSbwAl', is_error=False), FunctionExecutionResult(content="{'canonical': 'COc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1', 'valid': True, 'formula': 'C23H19NO3', 'error': None}", name='canonicalize_smiles', call_id='call_StysTPi0cdbA8aueLMI8e628', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccs2)N1c1ccccc1.[CH2+]C.[CH2+][CH2+]', 'valid': True, 'formula': 'C24H24NO2S+3', 'error': None}", name='canonicalize_smiles', call_id='call_NKjgZzh0arRUTcecxg85hkrL', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC.CC.Cc1cccc(C(=O)[C@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)c1', 'valid': True, 'formula': 'C27H31NO2', 'error': None}", name='canonicalize_smiles', call_id='call_ZdSKbl8IH5dAcRKpXxFbWh89', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc3ccccc23)N1c1ccccc1', 'valid': True, 'formula': 'C26H19NO2', 'error': None}", name='canonicalize_smiles', call_id='call_mR0AbnwgX3vYRRTRNicURCu2', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=C(c1ccccc1)C1C(C(=O)c2ccccc2F)N1c1ccccc1', 'valid': True, 'formula': 'C22H16FNO2', 'error': None}", name='canonicalize_smiles', call_id='call_4lHqzTw2cBA4QmrZMQ0O7ijH', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC(C)C(=O)[C@@H]1C(C(=O)c2ccccc2)N1c1ccccc1', 'valid': True, 'formula': 'C19H19NO2', 'error': None}", name='canonicalize_smiles', call_id='call_2EoF01nIhJkAhRJhjz8kpw9g', is_error=False)]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_hclGtjeGKBr6szCQT2EhnvGB', arguments='{"smiles":"O=Nc1ccccc1"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'canonical': 'O=Nc1ccccc1', 'valid': True, 'formula': 'C6H5NO', 'error': None}", name='canonicalize_smiles', call_id='call_hclGtjeGKBr6szCQT2EhnvGB', is_error=False)]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_etAEGMhxxS39A5l7BaSYvAAw', arguments='{"smiles":"[3*]/C(O)=C/S(C)(=O)=O"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'canonical': '[3*]/C(O)=C/S(C)(=O)=O', 'valid': True, 'formula': 'C3H5*O3S', 'error': None}", name='canonicalize_smiles', call_id='call_etAEGMhxxS39A5l7BaSYvAAw', is_error=False)]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_SNMrGqqGq14ffXKr7IRn6RYt', arguments='{"smiles":"C#Cc1ccccc1"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'canonical': 'C#Cc1ccccc1', 'valid': True, 'formula': 'C8H6', 'error': None}", name='canonicalize_smiles', call_id='call_SNMrGqqGq14ffXKr7IRn6RYt', is_error=False)]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_vg3TRAYjE04NyguXeBLxgel1', arguments='{"obj":{"file_name":"acs.joc.3c00062 example 1.png","reactions":[{"reaction_id":"0_1","reactants":[{"smiles":"[3*]/C(O)=C/S(C)(=O)=O","label":null,"uncertain":false},{"smiles":"O=Nc1ccccc1","label":null,"uncertain":false},{"smiles":"C#Cc1ccccc1","label":null,"uncertain":false}],"products":[{"smiles":"O=C(c1ccccc1)C1[C@@H](C(=O)c2ccccc2)N1c1ccccc1","label":"4aaa","uncertain":false}],"conditions":[{"role":"solvent","text":"CH3CN","smiles":"CC#N"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"yield","text":"89%","smiles":null},{"role":"dr","text":"3:1","smiles":null}],"additional_info":["Scheme 2. Investigation of Various Sulfoxonium Ylides"]},{"reaction_id":"0_2","reactants":[{"smiles":"[3*]/C(O)=C/S(C)(=O)=O","label":null,"uncertain":false},{"smiles":"O=Nc1ccccc1","label":null,"uncertain":false},{"smiles":"C#Cc1ccccc1","label":null,"uncertain":false}],"products":[{"smiles":"O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc(F)c2)N1c1ccccc1","label":"4faa","uncertain":false}],"conditions":[{"role":"solvent","text":"CH3CN","smiles":"CC#N"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"yield","text":"85%","smiles":null},{"role":"dr","text":"2.9:1","smiles":null}],"additional_info":["Scheme 2. Investigation of Various Sulfoxonium Ylides"]},{"reaction_id":"0_3","reactants":[{"smiles":"[3*]/C(O)=C/S(C)(=O)=O","label":null,"uncertain":false},{"smiles":"O=Nc1ccccc1","label":null,"uncertain":false},{"smiles":"C#Cc1ccccc1","label":null,"uncertain":false}],"products":[{"smiles":"O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)C2CCCCC2)N1c1ccccc1","label":"4maa","uncertain":false}],"conditions":[{"role":"solvent","text":"CH3CN","smiles":"CC#N"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"yield","text":"76%","smiles":null},{"role":"dr","text":"3.3:1","smiles":null}],"additional_info":["Scheme 2. Investigation of Various Sulfoxonium Ylides"]},{"reaction_id":"0_4","reactants":[{"smiles":"[3*]/C(O)=C/S(C)(=O)=O","label":null,"uncertain":false},{"smiles":"O=Nc1ccccc1","label":null,"uncertain":false},{"smiles":"C#Cc1ccccc1","label":null,"uncertain":false}],"products":[{"smiles":"Cc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1","label":"4daa","uncertain":false}],"conditions":[{"role":"solvent","text":"CH3CN","smiles":"CC#N"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"yield","text":"86%","smiles":null},{"role":"dr","text":"3.5:1","smiles":null}],"additional_info":["Scheme 2. Investigation of Various Sulfoxonium Ylides"]},{"reaction_id":"0_5","reactants":[{"smiles":"[3*]/C(O)=C/S(C)(=O)=O","label":null,"uncertain":false},{"smiles":"O=Nc1ccccc1","label":null,"uncertain":false},{"smiles":"C#Cc1ccccc1","label":null,"uncertain":false}],"products":[{"smiles":"CC.CC.CC.CC.CC.CC.CC.CC.CCCCCC.O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc3ccccc3c2)N1c1ccccc1","label":"4jaa","uncertain":false}],"conditions":[{"role":"solvent","text":"CH3CN","smiles":"CC#N"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"yield","text":"63%","smiles":null},{"role":"dr","text":">99:1","smiles":null}],"additional_info":["Scheme 2. Investigation of Various Sulfoxonium Ylides"]},{"reaction_id":"0_6","reactants":[{"smiles":"[3*]/C(O)=C/S(C)(=O)=O","label":null,"uncertain":false},{"smiles":"O=Nc1ccccc1","label":null,"uncertain":false},{"smiles":"C#Cc1ccccc1","label":null,"uncertain":false}],"products":[{"smiles":"O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc(F)cc2)N1c1ccccc1","label":"4haa","uncertain":false}],"conditions":[{"role":"solvent","text":"CH3CN","smiles":"CC#N"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"yield","text":"86%","smiles":null},{"role":"dr","text":"2.2:1","smiles":null}],"additional_info":["Scheme 2. Investigation of Various Sulfoxonium Ylides"]},{"reaction_id":"0_7","reactants":[{"smiles":"[3*]/C(O)=C/S(C)(=O)=O","label":null,"uncertain":false},{"smiles":"O=Nc1ccccc1","label":null,"uncertain":false},{"smiles":"C#Cc1ccccc1","label":null,"uncertain":false}],"products":[{"smiles":"CC.CC.CC.CC.CC.CC.Cc1ccccc1C(=O)[C@@H]1[C@@H](C(=O)c2ccccc2)N1c1ccccc1","label":"4baa","uncertain":false}],"conditions":[{"role":"solvent","text":"CH3CN","smiles":"CC#N"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"yield","text":"85%","smiles":null},{"role":"dr","text":"2.1:1","smiles":null}],"additional_info":["Scheme 2. Investigation of Various Sulfoxonium Ylides"]},{"reaction_id":"0_8","reactants":[{"smiles":"[3*]/C(O)=C/S(C)(=O)=O","label":null,"uncertain":false},{"smiles":"O=Nc1ccccc1","label":null,"uncertain":false},{"smiles":"C#Cc1ccccc1","label":null,"uncertain":false}],"products":[{"smiles":"COc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1","label":"4eaa","uncertain":false}],"conditions":[{"role":"solvent","text":"CH3CN","smiles":"CC#N"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"yield","text":"77%","smiles":null},{"role":"dr","text":"3.3:1","smiles":null}],"additional_info":["Scheme 2. Investigation of Various Sulfoxonium Ylides"]},{"reaction_id":"0_9","reactants":[{"smiles":"[3*]/C(O)=C/S(C)(=O)=O","label":null,"uncertain":false},{"smiles":"O=Nc1ccccc1","label":null,"uncertain":false},{"smiles":"C#Cc1ccccc1","label":null,"uncertain":false}],"products":[{"smiles":"O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccs2)N1c1ccccc1.[CH2+]C.[CH2+][CH2+]","label":"4kaa","uncertain":false}],"conditions":[{"role":"solvent","text":"CH3CN","smiles":"CC#N"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"yield","text":"82%","smiles":null},{"role":"dr","text":"1.5:1","smiles":null}],"additional_info":["Scheme 2. Investigation of Various Sulfoxonium Ylides"]},{"reaction_id":"0_10","reactants":[{"smiles":"[3*]/C(O)=C/S(C)(=O)=O","label":null,"uncertain":false},{"smiles":"O=Nc1ccccc1","label":null,"uncertain":false},{"smiles":"C#Cc1ccccc1","label":null,"uncertain":false}],"products":[{"smiles":"CC.CC.Cc1cccc(C(=O)[C@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)c1","label":"4caa","uncertain":false}],"conditions":[{"role":"solvent","text":"CH3CN","smiles":"CC#N"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"yield","text":"85%","smiles":null},{"role":"dr","text":"3.3:1","smiles":null}],"additional_info":["Scheme 2. Investigation of Various Sulfoxonium Ylides"]},{"reaction_id":"0_11","reactants":[{"smiles":"[3*]/C(O)=C/S(C)(=O)=O","label":null,"uncertain":false},{"smiles":"O=Nc1ccccc1","label":null,"uncertain":false},{"smiles":"C#Cc1ccccc1","label":null,"uncertain":false}],"products":[{"smiles":"O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc3ccccc23)N1c1ccccc1","label":"4iaa","uncertain":false}],"conditions":[{"role":"solvent","text":"CH3CN","smiles":"CC#N"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"yield","text":"83%","smiles":null},{"role":"dr","text":"2.1:1","smiles":null}],"additional_info":["Scheme 2. Investigation of Various Sulfoxonium Ylides"]},{"reaction_id":"0_12","reactants":[{"smiles":"[3*]/C(O)=C/S(C)(=O)=O","label":null,"uncertain":false},{"smiles":"O=Nc1ccccc1","label":null,"uncertain":false},{"smiles":"C#Cc1ccccc1","label":null,"uncertain":false}],"products":[{"smiles":"O=C(c1ccccc1)C1C(C(=O)c2ccccc2F)N1c1ccccc1","label":"4gaa","uncertain":false}],"conditions":[{"role":"solvent","text":"CH3CN","smiles":"CC#N"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"yield","text":"86%","smiles":null},{"role":"dr","text":"2.1:1","smiles":null}],"additional_info":["Scheme 2. Investigation of Various Sulfoxonium Ylides"]},{"reaction_id":"0_13","reactants":[{"smiles":"[3*]/C(O)=C/S(C)(=O)=O","label":null,"uncertain":false},{"smiles":"O=Nc1ccccc1","label":null,"uncertain":false},{"smiles":"C#Cc1ccccc1","label":null,"uncertain":false}],"products":[{"smiles":"CC(C)C(=O)[C@@H]1C(C(=O)c2ccccc2)N1c1ccccc1","label":"4laa","uncertain":false}],"conditions":[{"role":"solvent","text":"CH3CN","smiles":"CC#N"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"yield","text":"73%","smiles":null},{"role":"dr","text":"2.5:1","smiles":null}],"additional_info":["Scheme 2. Investigation of Various Sulfoxonium Ylides"]},{"reaction_id":"0_14","reactants":[{"smiles":"[3*]/C(O)=C/S(C)(=O)=O","label":null,"uncertain":false},{"smiles":"O=Nc1ccccc1","label":null,"uncertain":false},{"smiles":"C#Cc1ccccc1","label":null,"uncertain":false}],"products":[{"smiles":"O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc3ccccc3c2)N1c1ccccc1","label":"4maa","uncertain":false}],"conditions":[{"role":"solvent","text":"CH3CN","smiles":"CC#N"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"yield","text":"76%","smiles":null},{"role":"dr","text":"3.3:1","smiles":null}],"additional_info":["Scheme 2. Investigation of Various Sulfoxonium Ylides"]}]}}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'valid': True, 'errors': []}", name='validate_reaction_json', call_id='call_vg3TRAYjE04NyguXeBLxgel1', is_error=False)]
+---------- TextMessage (data_structure) ----------
+```json
+{
+  "file_name": "acs.joc.3c00062 example 1.png",
+  "reactions": [
+    {
+      "reaction_id": "0_1",
+      "reactants": [
+        {
+          "smiles": "[3*]/C(O)=C/S(C)(=O)=O",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "O=Nc1ccccc1",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "C#Cc1ccccc1",
+          "label": null,
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=C(c1ccccc1)C1[C@@H](C(=O)c2ccccc2)N1c1ccccc1",
+          "label": "4aaa",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "solvent",
+          "text": "CH3CN",
+          "smiles": "CC#N"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "89%",
+          "smiles": null
+        },
+        {
+          "role": "dr",
+          "text": "3:1",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 2. Investigation of Various Sulfoxonium Ylides"
+      ]
+    },
+    {
+      "reaction_id": "0_2",
+      "reactants": [
+        {
+          "smiles": "[3*]/C(O)=C/S(C)(=O)=O",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "O=Nc1ccccc1",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "C#Cc1ccccc1",
+          "label": null,
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc(F)c2)N1c1ccccc1",
+          "label": "4faa",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "solvent",
+          "text": "CH3CN",
+          "smiles": "CC#N"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "85%",
+          "smiles": null
+        },
+        {
+          "role": "dr",
+          "text": "2.9:1",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 2. Investigation of Various Sulfoxonium Ylides"
+      ]
+    },
+    {
+      "reaction_id": "0_3",
+      "reactants": [
+        {
+          "smiles": "[3*]/C(O)=C/S(C)(=O)=O",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "O=Nc1ccccc1",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "C#Cc1ccccc1",
+          "label": null,
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)C2CCCCC2)N1c1ccccc1",
+          "label": "4maa",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "solvent",
+          "text": "CH3CN",
+          "smiles": "CC#N"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "76%",
+          "smiles": null
+        },
+        {
+          "role": "dr",
+          "text": "3.3:1",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 2. Investigation of Various Sulfoxonium Ylides"
+      ]
+    },
+    {
+      "reaction_id": "0_4",
+      "reactants": [
+        {
+          "smiles": "[3*]/C(O)=C/S(C)(=O)=O",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "O=Nc1ccccc1",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "C#Cc1ccccc1",
+          "label": null,
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "Cc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1",
+          "label": "4daa",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "solvent",
+          "text": "CH3CN",
+          "smiles": "CC#N"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "86%",
+          "smiles": null
+        },
+        {
+          "role": "dr",
+          "text": "3.5:1",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 2. Investigation of Various Sulfoxonium Ylides"
+      ]
+    },
+    {
+      "reaction_id": "0_5",
+      "reactants": [
+        {
+          "smiles": "[3*]/C(O)=C/S(C)(=O)=O",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "O=Nc1ccccc1",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "C#Cc1ccccc1",
+          "label": null,
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "CC.CC.CC.CC.CC.CC.CC.CC.CCCCCC.O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc3ccccc3c2)N1c1ccccc1",
+          "label": "4jaa",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "solvent",
+          "text": "CH3CN",
+          "smiles": "CC#N"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "63%",
+          "smiles": null
+        },
+        {
+          "role": "dr",
+          "text": ">99:1",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 2. Investigation of Various Sulfoxonium Ylides"
+      ]
+    },
+    {
+      "reaction_id": "0_6",
+      "reactants": [
+        {
+          "smiles": "[3*]/C(O)=C/S(C)(=O)=O",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "O=Nc1ccccc1",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "C#Cc1ccccc1",
+          "label": null,
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc(F)cc2)N1c1ccccc1",
+          "label": "4haa",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "solvent",
+          "text": "CH3CN",
+          "smiles": "CC#N"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "86%",
+          "smiles": null
+        },
+        {
+          "role": "dr",
+          "text": "2.2:1",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 2. Investigation of Various Sulfoxonium Ylides"
+      ]
+    },
+    {
+      "reaction_id": "0_7",
+      "reactants": [
+        {
+          "smiles": "[3*]/C(O)=C/S(C)(=O)=O",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "O=Nc1ccccc1",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "C#Cc1ccccc1",
+          "label": null,
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "CC.CC.CC.CC.CC.CC.Cc1ccccc1C(=O)[C@@H]1[C@@H](C(=O)c2ccccc2)N1c1ccccc1",
+          "label": "4baa",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "solvent",
+          "text": "CH3CN",
+          "smiles": "CC#N"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "85%",
+          "smiles": null
+        },
+        {
+          "role": "dr",
+          "text": "2.1:1",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 2. Investigation of Various Sulfoxonium Ylides"
+      ]
+    },
+    {
+      "reaction_id": "0_8",
+      "reactants": [
+        {
+          "smiles": "[3*]/C(O)=C/S(C)(=O)=O",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "O=Nc1ccccc1",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "C#Cc1ccccc1",
+          "label": null,
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "COc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1",
+          "label": "4eaa",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "solvent",
+          "text": "CH3CN",
+          "smiles": "CC#N"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "77%",
+          "smiles": null
+        },
+        {
+          "role": "dr",
+          "text": "3.3:1",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 2. Investigation of Various Sulfoxonium Ylides"
+      ]
+    },
+    {
+      "reaction_id": "0_9",
+      "reactants": [
+        {
+          "smiles": "[3*]/C(O)=C/S(C)(=O)=O",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "O=Nc1ccccc1",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "C#Cc1ccccc1",
+          "label": null,
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccs2)N1c1ccccc1.[CH2+]C.[CH2+][CH2+]",
+          "label": "4kaa",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "solvent",
+          "text": "CH3CN",
+          "smiles": "CC#N"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "82%",
+          "smiles": null
+        },
+        {
+          "role": "dr",
+          "text": "1.5:1",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 2. Investigation of Various Sulfoxonium Ylides"
+      ]
+    },
+    {
+      "reaction_id": "0_10",
+      "reactants": [
+        {
+          "smiles": "[3*]/C(O)=C/S(C)(=O)=O",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "O=Nc1ccccc1",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "C#Cc1ccccc1",
+          "label": null,
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "CC.CC.Cc1cccc(C(=O)[C@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)c1",
+          "label": "4caa",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "solvent",
+          "text": "CH3CN",
+          "smiles": "CC#N"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "85%",
+          "smiles": null
+        },
+        {
+          "role": "dr",
+          "text": "3.3:1",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 2. Investigation of Various Sulfoxonium Ylides"
+      ]
+    },
+    {
+      "reaction_id": "0_11",
+      "reactants": [
+        {
+          "smiles": "[3*]/C(O)=C/S(C)(=O)=O",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "O=Nc1ccccc1",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "C#Cc1ccccc1",
+          "label": null,
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc3ccccc23)N1c1ccccc1",
+          "label": "4iaa",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "solvent",
+          "text": "CH3CN",
+          "smiles": "CC#N"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "83%",
+          "smiles": null
+        },
+        {
+          "role": "dr",
+          "text": "2.1:1",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 2. Investigation of Various Sulfoxonium Ylides"
+      ]
+    },
+    {
+      "reaction_id": "0_12",
+      "reactants": [
+        {
+          "smiles": "[3*]/C(O)=C/S(C)(=O)=O",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "O=Nc1ccccc1",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "C#Cc1ccccc1",
+          "label": null,
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=C(c1ccccc1)C1C(C(=O)c2ccccc2F)N1c1ccccc1",
+          "label": "4gaa",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "solvent",
+          "text": "CH3CN",
+          "smiles": "CC#N"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "86%",
+          "smiles": null
+        },
+        {
+          "role": "dr",
+          "text": "2.1:1",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 2. Investigation of Various Sulfoxonium Ylides"
+      ]
+    },
+    {
+      "reaction_id": "0_13",
+      "reactants": [
+        {
+          "smiles": "[3*]/C(O)=C/S(C)(=O)=O",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "O=Nc1ccccc1",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "C#Cc1ccccc1",
+          "label": null,
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "CC(C)C(=O)[C@@H]1C(C(=O)c2ccccc2)N1c1ccccc1",
+          "label": "4laa",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "solvent",
+          "text": "CH3CN",
+          "smiles": "CC#N"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "73%",
+          "smiles": null
+        },
+        {
+          "role": "dr",
+          "text": "2.5:1",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 2. Investigation of Various Sulfoxonium Ylides"
+      ]
+    },
+    {
+      "reaction_id": "0_14",
+      "reactants": [
+        {
+          "smiles": "[3*]/C(O)=C/S(C)(=O)=O",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "O=Nc1ccccc1",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "C#Cc1ccccc1",
+          "label": null,
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc3ccccc3c2)N1c1ccccc1",
+          "label": "4maa",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "solvent",
+          "text": "CH3CN",
+          "smiles": "CC#N"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "76%",
+          "smiles": null
+        },
+        {
+          "role": "dr",
+          "text": "3.3:1",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 2. Investigation of Various Sulfoxonium Ylides"
+      ]
+    }
+  ]
+}
+```
+---------- ToolCallRequestEvent (verifier) ----------
+[FunctionCall(id='call_CleJRBrLsMLiAaMvoH6Xzzvo', arguments='{}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (verifier) ----------
+[FunctionExecutionResult(content='1 validation error for validate_reaction_jsonargs\nobj\n  Field required [type=missing, input_value={}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing', name='validate_reaction_json', call_id='call_CleJRBrLsMLiAaMvoH6Xzzvo', is_error=True)]
+---------- TextMessage (verifier) ----------
+[CRITIQUE verifier]
+schema_errors:
+  - obj: "Field required [type=missing, input_value={}, input_type=dict]    For further information visit https://errors.pydantic.dev/2.13/v/missing"
+[/CRITIQUE]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_XhYBtVXpPWaBBtDxKoZseHm2', arguments='{"obj":{"file_name":"acs.joc.3c00062 example 1.png","reactions":[{"reaction_id":"0_1","reactants":[{"smiles":null,"label":null,"uncertain":true},{"smiles":"O=Nc1ccccc1","label":null,"uncertain":false},{"smiles":"C#Cc1ccccc1","label":null,"uncertain":false}],"products":[{"smiles":"O=C(c1ccccc1)C1[C@@H](C(=O)c2ccccc2)N1c1ccccc1","label":"4aaa","uncertain":false}],"conditions":[{"role":"solvent","text":"CH3CN","smiles":"CC#N"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"yield","text":"89%","smiles":null},{"role":"dr","text":"3:1","smiles":null}],"additional_info":["Scheme 2. Investigation of Various Sulfoxonium Ylides"]},{"reaction_id":"0_2","reactants":[{"smiles":null,"label":null,"uncertain":true},{"smiles":"O=Nc1ccccc1","label":null,"uncertain":false},{"smiles":"C#Cc1ccccc1","label":null,"uncertain":false}],"products":[{"smiles":"O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc(F)c2)N1c1ccccc1","label":"4faa","uncertain":false}],"conditions":[{"role":"solvent","text":"CH3CN","smiles":"CC#N"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"yield","text":"85%","smiles":null},{"role":"dr","text":"2.9:1","smiles":null}],"additional_info":["Scheme 2. Investigation of Various Sulfoxonium Ylides"]},{"reaction_id":"0_3","reactants":[{"smiles":null,"label":null,"uncertain":true},{"smiles":"O=Nc1ccccc1","label":null,"uncertain":false},{"smiles":"C#Cc1ccccc1","label":null,"uncertain":false}],"products":[{"smiles":"O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)C2CCCCC2)N1c1ccccc1","label":"4maa","uncertain":false}],"conditions":[{"role":"solvent","text":"CH3CN","smiles":"CC#N"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"yield","text":"76%","smiles":null},{"role":"dr","text":"3.3:1","smiles":null}],"additional_info":["Scheme 2. Investigation of Various Sulfoxonium Ylides"]},{"reaction_id":"0_4","reactants":[{"smiles":null,"label":null,"uncertain":true},{"smiles":"O=Nc1ccccc1","label":null,"uncertain":false},{"smiles":"C#Cc1ccccc1","label":null,"uncertain":false}],"products":[{"smiles":"Cc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1","label":"4daa","uncertain":false}],"conditions":[{"role":"solvent","text":"CH3CN","smiles":"CC#N"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"yield","text":"86%","smiles":null},{"role":"dr","text":"3.5:1","smiles":null}],"additional_info":["Scheme 2. Investigation of Various Sulfoxonium Ylides"]},{"reaction_id":"0_5","reactants":[{"smiles":null,"label":null,"uncertain":true},{"smiles":"O=Nc1ccccc1","label":null,"uncertain":false},{"smiles":"C#Cc1ccccc1","label":null,"uncertain":false}],"products":[{"smiles":"CC.CC.CC.CC.CC.CC.CC.CC.CCCCCC.O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc3ccccc3c2)N1c1ccccc1","label":"4jaa","uncertain":true}],"conditions":[{"role":"solvent","text":"CH3CN","smiles":"CC#N"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"yield","text":"63%","smiles":null},{"role":"dr","text":">99:1","smiles":null}],"additional_info":["Scheme 2. Investigation of Various Sulfoxonium Ylides"]},{"reaction_id":"0_6","reactants":[{"smiles":null,"label":null,"uncertain":true},{"smiles":"O=Nc1ccccc1","label":null,"uncertain":false},{"smiles":"C#Cc1ccccc1","label":null,"uncertain":false}],"products":[{"smiles":"O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc(F)cc2)N1c1ccccc1","label":"4haa","uncertain":false}],"conditions":[{"role":"solvent","text":"CH3CN","smiles":"CC#N"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"yield","text":"86%","smiles":null},{"role":"dr","text":"2.2:1","smiles":null}],"additional_info":["Scheme 2. Investigation of Various Sulfoxonium Ylides"]},{"reaction_id":"0_7","reactants":[{"smiles":null,"label":null,"uncertain":true},{"smiles":"O=Nc1ccccc1","label":null,"uncertain":false},{"smiles":"C#Cc1ccccc1","label":null,"uncertain":false}],"products":[{"smiles":"CC.CC.CC.CC.CC.CC.Cc1ccccc1C(=O)[C@@H]1[C@@H](C(=O)c2ccccc2)N1c1ccccc1","label":"4baa","uncertain":true}],"conditions":[{"role":"solvent","text":"CH3CN","smiles":"CC#N"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"yield","text":"85%","smiles":null},{"role":"dr","text":"2.1:1","smiles":null}],"additional_info":["Scheme 2. Investigation of Various Sulfoxonium Ylides"]},{"reaction_id":"0_8","reactants":[{"smiles":null,"label":null,"uncertain":true},{"smiles":"O=Nc1ccccc1","label":null,"uncertain":false},{"smiles":"C#Cc1ccccc1","label":null,"uncertain":false}],"products":[{"smiles":"COc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1","label":"4eaa","uncertain":false}],"conditions":[{"role":"solvent","text":"CH3CN","smiles":"CC#N"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"yield","text":"77%","smiles":null},{"role":"dr","text":"3.3:1","smiles":null}],"additional_info":["Scheme 2. Investigation of Various Sulfoxonium Ylides"]},{"reaction_id":"0_9","reactants":[{"smiles":null,"label":null,"uncertain":true},{"smiles":"O=Nc1ccccc1","label":null,"uncertain":false},{"smiles":"C#Cc1ccccc1","label":null,"uncertain":false}],"products":[{"smiles":"O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccs2)N1c1ccccc1.[CH2+]C.[CH2+][CH2+]","label":"4kaa","uncertain":true}],"conditions":[{"role":"solvent","text":"CH3CN","smiles":"CC#N"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"yield","text":"82%","smiles":null},{"role":"dr","text":"1.5:1","smiles":null}],"additional_info":["Scheme 2. Investigation of Various Sulfoxonium Ylides"]},{"reaction_id":"0_10","reactants":[{"smiles":null,"label":null,"uncertain":true},{"smiles":"O=Nc1ccccc1","label":null,"uncertain":false},{"smiles":"C#Cc1ccccc1","label":null,"uncertain":false}],"products":[{"smiles":"CC.CC.Cc1cccc(C(=O)[C@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)c1","label":"4caa","uncertain":true}],"conditions":[{"role":"solvent","text":"CH3CN","smiles":"CC#N"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"yield","text":"85%","smiles":null},{"role":"dr","text":"3.3:1","smiles":null}],"additional_info":["Scheme 2. Investigation of Various Sulfoxonium Ylides"]},{"reaction_id":"0_11","reactants":[{"smiles":null,"label":null,"uncertain":true},{"smiles":"O=Nc1ccccc1","label":null,"uncertain":false},{"smiles":"C#Cc1ccccc1","label":null,"uncertain":false}],"products":[{"smiles":"O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc3ccccc23)N1c1ccccc1","label":"4iaa","uncertain":false}],"conditions":[{"role":"solvent","text":"CH3CN","smiles":"CC#N"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"yield","text":"83%","smiles":null},{"role":"dr","text":"2.1:1","smiles":null}],"additional_info":["Scheme 2. Investigation of Various Sulfoxonium Ylides"]},{"reaction_id":"0_12","reactants":[{"smiles":null,"label":null,"uncertain":true},{"smiles":"O=Nc1ccccc1","label":null,"uncertain":false},{"smiles":"C#Cc1ccccc1","label":null,"uncertain":false}],"products":[{"smiles":"O=C(c1ccccc1)C1C(C(=O)c2ccccc2F)N1c1ccccc1","label":"4gaa","uncertain":false}],"conditions":[{"role":"solvent","text":"CH3CN","smiles":"CC#N"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"yield","text":"86%","smiles":null},{"role":"dr","text":"2.1:1","smiles":null}],"additional_info":["Scheme 2. Investigation of Various Sulfoxonium Ylides"]},{"reaction_id":"0_13","reactants":[{"smiles":null,"label":null,"uncertain":true},{"smiles":"O=Nc1ccccc1","label":null,"uncertain":false},{"smiles":"C#Cc1ccccc1","label":null,"uncertain":false}],"products":[{"smiles":"CC(C)C(=O)[C@@H]1C(C(=O)c2ccccc2)N1c1ccccc1","label":"4laa","uncertain":false}],"conditions":[{"role":"solvent","text":"CH3CN","smiles":"CC#N"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"yield","text":"73%","smiles":null},{"role":"dr","text":"2.5:1","smiles":null}],"additional_info":["Scheme 2. Investigation of Various Sulfoxonium Ylides"]},{"reaction_id":"0_14","reactants":[{"smiles":null,"label":null,"uncertain":true},{"smiles":"O=Nc1ccccc1","label":null,"uncertain":false},{"smiles":"C#Cc1ccccc1","label":null,"uncertain":false}],"products":[{"smiles":"O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc3ccccc3c2)N1c1ccccc1","label":"4maa","uncertain":false}],"conditions":[{"role":"solvent","text":"CH3CN","smiles":"CC#N"},{"role":"temperature","text":"60 °C","smiles":null},{"role":"yield","text":"76%","smiles":null},{"role":"dr","text":"3.3:1","smiles":null}],"additional_info":["Scheme 2. Investigation of Various Sulfoxonium Ylides"]}]}}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'valid': True, 'errors': []}", name='validate_reaction_json', call_id='call_XhYBtVXpPWaBBtDxKoZseHm2', is_error=False)]
+---------- TextMessage (data_structure) ----------
+```json
+{
+  "file_name": "acs.joc.3c00062 example 1.png",
+  "reactions": [
+    {
+      "reaction_id": "0_1",
+      "reactants": [
+        {
+          "smiles": null,
+          "label": null,
+          "uncertain": true
+        },
+        {
+          "smiles": "O=Nc1ccccc1",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "C#Cc1ccccc1",
+          "label": null,
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=C(c1ccccc1)C1[C@@H](C(=O)c2ccccc2)N1c1ccccc1",
+          "label": "4aaa",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "solvent",
+          "text": "CH3CN",
+          "smiles": "CC#N"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "89%",
+          "smiles": null
+        },
+        {
+          "role": "dr",
+          "text": "3:1",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 2. Investigation of Various Sulfoxonium Ylides"
+      ]
+    },
+    {
+      "reaction_id": "0_2",
+      "reactants": [
+        {
+          "smiles": null,
+          "label": null,
+          "uncertain": true
+        },
+        {
+          "smiles": "O=Nc1ccccc1",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "C#Cc1ccccc1",
+          "label": null,
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc(F)c2)N1c1ccccc1",
+          "label": "4faa",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "solvent",
+          "text": "CH3CN",
+          "smiles": "CC#N"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "85%",
+          "smiles": null
+        },
+        {
+          "role": "dr",
+          "text": "2.9:1",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 2. Investigation of Various Sulfoxonium Ylides"
+      ]
+    },
+    {
+      "reaction_id": "0_3",
+      "reactants": [
+        {
+          "smiles": null,
+          "label": null,
+          "uncertain": true
+        },
+        {
+          "smiles": "O=Nc1ccccc1",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "C#Cc1ccccc1",
+          "label": null,
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)C2CCCCC2)N1c1ccccc1",
+          "label": "4maa",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "solvent",
+          "text": "CH3CN",
+          "smiles": "CC#N"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "76%",
+          "smiles": null
+        },
+        {
+          "role": "dr",
+          "text": "3.3:1",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 2. Investigation of Various Sulfoxonium Ylides"
+      ]
+    },
+    {
+      "reaction_id": "0_4",
+      "reactants": [
+        {
+          "smiles": null,
+          "label": null,
+          "uncertain": true
+        },
+        {
+          "smiles": "O=Nc1ccccc1",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "C#Cc1ccccc1",
+          "label": null,
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "Cc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1",
+          "label": "4daa",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "solvent",
+          "text": "CH3CN",
+          "smiles": "CC#N"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "86%",
+          "smiles": null
+        },
+        {
+          "role": "dr",
+          "text": "3.5:1",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 2. Investigation of Various Sulfoxonium Ylides"
+      ]
+    },
+    {
+      "reaction_id": "0_5",
+      "reactants": [
+        {
+          "smiles": null,
+          "label": null,
+          "uncertain": true
+        },
+        {
+          "smiles": "O=Nc1ccccc1",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "C#Cc1ccccc1",
+          "label": null,
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "CC.CC.CC.CC.CC.CC.CC.CC.CCCCCC.O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc3ccccc3c2)N1c1ccccc1",
+          "label": "4jaa",
+          "uncertain": true
+        }
+      ],
+      "conditions": [
+        {
+          "role": "solvent",
+          "text": "CH3CN",
+          "smiles": "CC#N"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "63%",
+          "smiles": null
+        },
+        {
+          "role": "dr",
+          "text": ">99:1",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 2. Investigation of Various Sulfoxonium Ylides"
+      ]
+    },
+    {
+      "reaction_id": "0_6",
+      "reactants": [
+        {
+          "smiles": null,
+          "label": null,
+          "uncertain": true
+        },
+        {
+          "smiles": "O=Nc1ccccc1",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "C#Cc1ccccc1",
+          "label": null,
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc(F)cc2)N1c1ccccc1",
+          "label": "4haa",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "solvent",
+          "text": "CH3CN",
+          "smiles": "CC#N"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "86%",
+          "smiles": null
+        },
+        {
+          "role": "dr",
+          "text": "2.2:1",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 2. Investigation of Various Sulfoxonium Ylides"
+      ]
+    },
+    {
+      "reaction_id": "0_7",
+      "reactants": [
+        {
+          "smiles": null,
+          "label": null,
+          "uncertain": true
+        },
+        {
+          "smiles": "O=Nc1ccccc1",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "C#Cc1ccccc1",
+          "label": null,
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "CC.CC.CC.CC.CC.CC.Cc1ccccc1C(=O)[C@@H]1[C@@H](C(=O)c2ccccc2)N1c1ccccc1",
+          "label": "4baa",
+          "uncertain": true
+        }
+      ],
+      "conditions": [
+        {
+          "role": "solvent",
+          "text": "CH3CN",
+          "smiles": "CC#N"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "85%",
+          "smiles": null
+        },
+        {
+          "role": "dr",
+          "text": "2.1:1",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 2. Investigation of Various Sulfoxonium Ylides"
+      ]
+    },
+    {
+      "reaction_id": "0_8",
+      "reactants": [
+        {
+          "smiles": null,
+          "label": null,
+          "uncertain": true
+        },
+        {
+          "smiles": "O=Nc1ccccc1",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "C#Cc1ccccc1",
+          "label": null,
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "COc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1",
+          "label": "4eaa",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "solvent",
+          "text": "CH3CN",
+          "smiles": "CC#N"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "77%",
+          "smiles": null
+        },
+        {
+          "role": "dr",
+          "text": "3.3:1",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 2. Investigation of Various Sulfoxonium Ylides"
+      ]
+    },
+    {
+      "reaction_id": "0_9",
+      "reactants": [
+        {
+          "smiles": null,
+          "label": null,
+          "uncertain": true
+        },
+        {
+          "smiles": "O=Nc1ccccc1",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "C#Cc1ccccc1",
+          "label": null,
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccs2)N1c1ccccc1.[CH2+]C.[CH2+][CH2+]",
+          "label": "4kaa",
+          "uncertain": true
+        }
+      ],
+      "conditions": [
+        {
+          "role": "solvent",
+          "text": "CH3CN",
+          "smiles": "CC#N"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "82%",
+          "smiles": null
+        },
+        {
+          "role": "dr",
+          "text": "1.5:1",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 2. Investigation of Various Sulfoxonium Ylides"
+      ]
+    },
+    {
+      "reaction_id": "0_10",
+      "reactants": [
+        {
+          "smiles": null,
+          "label": null,
+          "uncertain": true
+        },
+        {
+          "smiles": "O=Nc1ccccc1",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "C#Cc1ccccc1",
+          "label": null,
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "CC.CC.Cc1cccc(C(=O)[C@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)c1",
+          "label": "4caa",
+          "uncertain": true
+        }
+      ],
+      "conditions": [
+        {
+          "role": "solvent",
+          "text": "CH3CN",
+          "smiles": "CC#N"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "85%",
+          "smiles": null
+        },
+        {
+          "role": "dr",
+          "text": "3.3:1",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 2. Investigation of Various Sulfoxonium Ylides"
+      ]
+    },
+    {
+      "reaction_id": "0_11",
+      "reactants": [
+        {
+          "smiles": null,
+          "label": null,
+          "uncertain": true
+        },
+        {
+          "smiles": "O=Nc1ccccc1",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "C#Cc1ccccc1",
+          "label": null,
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc3ccccc23)N1c1ccccc1",
+          "label": "4iaa",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "solvent",
+          "text": "CH3CN",
+          "smiles": "CC#N"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "83%",
+          "smiles": null
+        },
+        {
+          "role": "dr",
+          "text": "2.1:1",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 2. Investigation of Various Sulfoxonium Ylides"
+      ]
+    },
+    {
+      "reaction_id": "0_12",
+      "reactants": [
+        {
+          "smiles": null,
+          "label": null,
+          "uncertain": true
+        },
+        {
+          "smiles": "O=Nc1ccccc1",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "C#Cc1ccccc1",
+          "label": null,
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=C(c1ccccc1)C1C(C(=O)c2ccccc2F)N1c1ccccc1",
+          "label": "4gaa",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "solvent",
+          "text": "CH3CN",
+          "smiles": "CC#N"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "86%",
+          "smiles": null
+        },
+        {
+          "role": "dr",
+          "text": "2.1:1",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 2. Investigation of Various Sulfoxonium Ylides"
+      ]
+    },
+    {
+      "reaction_id": "0_13",
+      "reactants": [
+        {
+          "smiles": null,
+          "label": null,
+          "uncertain": true
+        },
+        {
+          "smiles": "O=Nc1ccccc1",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "C#Cc1ccccc1",
+          "label": null,
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "CC(C)C(=O)[C@@H]1C(C(=O)c2ccccc2)N1c1ccccc1",
+          "label": "4laa",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "solvent",
+          "text": "CH3CN",
+          "smiles": "CC#N"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "73%",
+          "smiles": null
+        },
+        {
+          "role": "dr",
+          "text": "2.5:1",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 2. Investigation of Various Sulfoxonium Ylides"
+      ]
+    },
+    {
+      "reaction_id": "0_14",
+      "reactants": [
+        {
+          "smiles": null,
+          "label": null,
+          "uncertain": true
+        },
+        {
+          "smiles": "O=Nc1ccccc1",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "C#Cc1ccccc1",
+          "label": null,
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc3ccccc3c2)N1c1ccccc1",
+          "label": "4maa",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "solvent",
+          "text": "CH3CN",
+          "smiles": "CC#N"
+        },
+        {
+          "role": "temperature",
+          "text": "60 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "76%",
+          "smiles": null
+        },
+        {
+          "role": "dr",
+          "text": "3.3:1",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 2. Investigation of Various Sulfoxonium Ylides"
+      ]
+    }
+  ]
+}
+```
+---------- ToolCallRequestEvent (verifier) ----------
+[FunctionCall(id='call_xtoWVXbS2XGQlss0J7KQz8n8', arguments='{}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (verifier) ----------
+[FunctionExecutionResult(content='1 validation error for validate_reaction_jsonargs\nobj\n  Field required [type=missing, input_value={}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing', name='validate_reaction_json', call_id='call_xtoWVXbS2XGQlss0J7KQz8n8', is_error=True)]
+---------- TextMessage (verifier) ----------
+[CRITIQUE verifier]
+schema_errors:
+  - obj: "Field required [type=missing, input_value={}, input_type=dict]    For further information visit https://errors.pydantic.dev/2.13/v/missing"
+[/CRITIQUE]
+---------- ToolCallRequestEvent (verifier) ----------
+[FunctionCall(id='call_wPmFEpYqqIfDT8ZxRHtyQrxw', arguments='{"obj": {"file_name": "acs.joc.3c00062 example 1.png", "reactions": [{"reaction_id": "0_1", "reactants": [{"smiles": null, "label": null, "uncertain": true}, {"smiles": "O=Nc1ccccc1", "label": null, "uncertain": false}, {"smiles": "C#Cc1ccccc1", "label": null, "uncertain": false}], "products": [{"smiles": "O=C(c1ccccc1)C1[C@@H](C(=O)c2ccccc2)N1c1ccccc1", "label": "4aaa", "uncertain": false}], "conditions": [{"role": "solvent", "text": "CH3CN", "smiles": "CC#N"}, {"role": "temperature", "text": "60 °C", "smiles": null}, {"role": "yield", "text": "89%", "smiles": null}, {"role": "dr", "text": "3:1", "smiles": null}], "additional_info": ["Scheme 2. Investigation of Various Sulfoxonium Ylides"]}, {"reaction_id": "0_2", "reactants": [{"smiles": null, "label": null, "uncertain": true}, {"smiles": "O=Nc1ccccc1", "label": null, "uncertain": false}, {"smiles": "C#Cc1ccccc1", "label": null, "uncertain": false}], "products": [{"smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc(F)c2)N1c1ccccc1", "label": "4faa", "uncertain": false}], "conditions": [{"role": "solvent", "text": "CH3CN", "smiles": "CC#N"}, {"role": "temperature", "text": "60 °C", "smiles": null}, {"role": "yield", "text": "85%", "smiles": null}, {"role": "dr", "text": "2.9:1", "smiles": null}], "additional_info": ["Scheme 2. Investigation of Various Sulfoxonium Ylides"]}, {"reaction_id": "0_3", "reactants": [{"smiles": null, "label": null, "uncertain": true}, {"smiles": "O=Nc1ccccc1", "label": null, "uncertain": false}, {"smiles": "C#Cc1ccccc1", "label": null, "uncertain": false}], "products": [{"smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)C2CCCCC2)N1c1ccccc1", "label": "4maa", "uncertain": false}], "conditions": [{"role": "solvent", "text": "CH3CN", "smiles": "CC#N"}, {"role": "temperature", "text": "60 °C", "smiles": null}, {"role": "yield", "text": "76%", "smiles": null}, {"role": "dr", "text": "3.3:1", "smiles": null}], "additional_info": ["Scheme 2. Investigation of Various Sulfoxonium Ylides"]}, {"reaction_id": "0_4", "reactants": [{"smiles": null, "label": null, "uncertain": true}, {"smiles": "O=Nc1ccccc1", "label": null, "uncertain": false}, {"smiles": "C#Cc1ccccc1", "label": null, "uncertain": false}], "products": [{"smiles": "Cc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1", "label": "4daa", "uncertain": false}], "conditions": [{"role": "solvent", "text": "CH3CN", "smiles": "CC#N"}, {"role": "temperature", "text": "60 °C", "smiles": null}, {"role": "yield", "text": "86%", "smiles": null}, {"role": "dr", "text": "3.5:1", "smiles": null}], "additional_info": ["Scheme 2. Investigation of Various Sulfoxonium Ylides"]}, {"reaction_id": "0_5", "reactants": [{"smiles": null, "label": null, "uncertain": true}, {"smiles": "O=Nc1ccccc1", "label": null, "uncertain": false}, {"smiles": "C#Cc1ccccc1", "label": null, "uncertain": false}], "products": [{"smiles": "CC.CC.CC.CC.CC.CC.CC.CC.CCCCCC.O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc3ccccc3c2)N1c1ccccc1", "label": "4jaa", "uncertain": true}], "conditions": [{"role": "solvent", "text": "CH3CN", "smiles": "CC#N"}, {"role": "temperature", "text": "60 °C", "smiles": null}, {"role": "yield", "text": "63%", "smiles": null}, {"role": "dr", "text": ">99:1", "smiles": null}], "additional_info": ["Scheme 2. Investigation of Various Sulfoxonium Ylides"]}, {"reaction_id": "0_6", "reactants": [{"smiles": null, "label": null, "uncertain": true}, {"smiles": "O=Nc1ccccc1", "label": null, "uncertain": false}, {"smiles": "C#Cc1ccccc1", "label": null, "uncertain": false}], "products": [{"smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc(F)cc2)N1c1ccccc1", "label": "4haa", "uncertain": false}], "conditions": [{"role": "solvent", "text": "CH3CN", "smiles": "CC#N"}, {"role": "temperature", "text": "60 °C", "smiles": null}, {"role": "yield", "text": "86%", "smiles": null}, {"role": "dr", "text": "2.2:1", "smiles": null}], "additional_info": ["Scheme 2. Investigation of Various Sulfoxonium Ylides"]}, {"reaction_id": "0_7", "reactants": [{"smiles": null, "label": null, "uncertain": true}, {"smiles": "O=Nc1ccccc1", "label": null, "uncertain": false}, {"smiles": "C#Cc1ccccc1", "label": null, "uncertain": false}], "products": [{"smiles": "CC.CC.CC.CC.CC.CC.Cc1ccccc1C(=O)[C@@H]1[C@@H](C(=O)c2ccccc2)N1c1ccccc1", "label": "4baa", "uncertain": true}], "conditions": [{"role": "solvent", "text": "CH3CN", "smiles": "CC#N"}, {"role": "temperature", "text": "60 °C", "smiles": null}, {"role": "yield", "text": "85%", "smiles": null}, {"role": "dr", "text": "2.1:1", "smiles": null}], "additional_info": ["Scheme 2. Investigation of Various Sulfoxonium Ylides"]}, {"reaction_id": "0_8", "reactants": [{"smiles": null, "label": null, "uncertain": true}, {"smiles": "O=Nc1ccccc1", "label": null, "uncertain": false}, {"smiles": "C#Cc1ccccc1", "label": null, "uncertain": false}], "products": [{"smiles": "COc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1", "label": "4eaa", "uncertain": false}], "conditions": [{"role": "solvent", "text": "CH3CN", "smiles": "CC#N"}, {"role": "temperature", "text": "60 °C", "smiles": null}, {"role": "yield", "text": "77%", "smiles": null}, {"role": "dr", "text": "3.3:1", "smiles": null}], "additional_info": ["Scheme 2. Investigation of Various Sulfoxonium Ylides"]}, {"reaction_id": "0_9", "reactants": [{"smiles": null, "label": null, "uncertain": true}, {"smiles": "O=Nc1ccccc1", "label": null, "uncertain": false}, {"smiles": "C#Cc1ccccc1", "label": null, "uncertain": false}], "products": [{"smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccs2)N1c1ccccc1.[CH2+]C.[CH2+][CH2+]", "label": "4kaa", "uncertain": true}], "conditions": [{"role": "solvent", "text": "CH3CN", "smiles": "CC#N"}, {"role": "temperature", "text": "60 °C", "smiles": null}, {"role": "yield", "text": "82%", "smiles": null}, {"role": "dr", "text": "1.5:1", "smiles": null}], "additional_info": ["Scheme 2. Investigation of Various Sulfoxonium Ylides"]}, {"reaction_id": "0_10", "reactants": [{"smiles": null, "label": null, "uncertain": true}, {"smiles": "O=Nc1ccccc1", "label": null, "uncertain": false}, {"smiles": "C#Cc1ccccc1", "label": null, "uncertain": false}], "products": [{"smiles": "CC.CC.Cc1cccc(C(=O)[C@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)c1", "label": "4caa", "uncertain": true}], "conditions": [{"role": "solvent", "text": "CH3CN", "smiles": "CC#N"}, {"role": "temperature", "text": "60 °C", "smiles": null}, {"role": "yield", "text": "85%", "smiles": null}, {"role": "dr", "text": "3.3:1", "smiles": null}], "additional_info": ["Scheme 2. Investigation of Various Sulfoxonium Ylides"]}, {"reaction_id": "0_11", "reactants": [{"smiles": null, "label": null, "uncertain": true}, {"smiles": "O=Nc1ccccc1", "label": null, "uncertain": false}, {"smiles": "C#Cc1ccccc1", "label": null, "uncertain": false}], "products": [{"smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc3ccccc23)N1c1ccccc1", "label": "4iaa", "uncertain": false}], "conditions": [{"role": "solvent", "text": "CH3CN", "smiles": "CC#N"}, {"role": "temperature", "text": "60 °C", "smiles": null}, {"role": "yield", "text": "83%", "smiles": null}, {"role": "dr", "text": "2.1:1", "smiles": null}], "additional_info": ["Scheme 2. Investigation of Various Sulfoxonium Ylides"]}, {"reaction_id": "0_12", "reactants": [{"smiles": null, "label": null, "uncertain": true}, {"smiles": "O=Nc1ccccc1", "label": null, "uncertain": false}, {"smiles": "C#Cc1ccccc1", "label": null, "uncertain": false}], "products": [{"smiles": "O=C(c1ccccc1)C1C(C(=O)c2ccccc2F)N1c1ccccc1", "label": "4gaa", "uncertain": false}], "conditions": [{"role": "solvent", "text": "CH3CN", "smiles": "CC#N"}, {"role": "temperature", "text": "60 °C", "smiles": null}, {"role": "yield", "text": "86%", "smiles": null}, {"role": "dr", "text": "2.1:1", "smiles": null}], "additional_info": ["Scheme 2. Investigation of Various Sulfoxonium Ylides"]}, {"reaction_id": "0_13", "reactants": [{"smiles": null, "label": null, "uncertain": true}, {"smiles": "O=Nc1ccccc1", "label": null, "uncertain": false}, {"smiles": "C#Cc1ccccc1", "label": null, "uncertain": false}], "products": [{"smiles": "CC(C)C(=O)[C@@H]1C(C(=O)c2ccccc2)N1c1ccccc1", "label": "4laa", "uncertain": false}], "conditions": [{"role": "solvent", "text": "CH3CN", "smiles": "CC#N"}, {"role": "temperature", "text": "60 °C", "smiles": null}, {"role": "yield", "text": "73%", "smiles": null}, {"role": "dr", "text": "2.5:1", "smiles": null}], "additional_info": ["Scheme 2. Investigation of Various Sulfoxonium Ylides"]}, {"reaction_id": "0_14", "reactants": [{"smiles": null, "label": null, "uncertain": true}, {"smiles": "O=Nc1ccccc1", "label": null, "uncertain": false}, {"smiles": "C#Cc1ccccc1", "label": null, "uncertain": false}], "products": [{"smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc3ccccc3c2)N1c1ccccc1", "label": "4maa", "uncertain": false}], "conditions": [{"role": "solvent", "text": "CH3CN", "smiles": "CC#N"}, {"role": "temperature", "text": "60 °C", "smiles": null}, {"role": "yield", "text": "76%", "smiles": null}, {"role": "dr", "text": "3.3:1", "smiles": null}], "additional_info": ["Scheme 2. Investigation of Various Sulfoxonium Ylides"]}]}}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (verifier) ----------
+[FunctionExecutionResult(content="{'valid': True, 'errors': []}", name='validate_reaction_json', call_id='call_wPmFEpYqqIfDT8ZxRHtyQrxw', is_error=False)]
+---------- TextMessage (verifier) ----------
+TERMINATE
+
+[validation] PASSED after 0 retry/retries
+Results saved to /Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/runs/20260428_111347_selector

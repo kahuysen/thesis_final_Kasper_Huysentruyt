@@ -1,0 +1,558 @@
+---------- MultiModalMessage (user) ----------
+Analyse this chemistry reaction image. Each specialist contributes one [FINDINGS ...] card per turn, then data_structure produces JSON, then the verifier audits the JSON and ends the run.
+image_path = /Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/04_JACS.png
+Pass that exact path as the first argument to crop_image_region(image_path, [x,y,w,h]) if you need to zoom in on a region of the image.
+<image>
+/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/agents/_assistant_agent.py:1109: UserWarning: Resolved model mismatch: gpt-5.4 != gpt-5.4-2026-03-05. Model mapping in autogen_ext.models.openai may be incorrect. Set the model to gpt-5.4-2026-03-05 to enhance token/cost estimation and suppress this warning.
+  model_result = await model_client.create(
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_ErOn7acBtOW9xPUd9sZG4gh6', arguments='{"image_path":"/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/04_JACS.png","molecule_only":true,"score_min":0}', name='detect_molecules')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'bboxes': [{'x1': 123, 'y1': 682, 'x2': 804, 'y2': 953, 'w': 681, 'h': 271, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 238, 'y1': 81, 'x2': 371, 'y2': 212, 'w': 133, 'h': 130, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 241, 'y1': 1109, 'x2': 682, 'y2': 1304, 'w': 441, 'h': 195, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 506, 'y1': 36, 'x2': 902, 'y2': 256, 'w': 396, 'h': 221, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 938, 'y1': 1024, 'x2': 1411, 'y2': 1439, 'w': 473, 'h': 414, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 953, 'y1': 292, 'x2': 1255, 'y2': 559, 'w': 301, 'h': 268, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 968, 'y1': 675, 'x2': 1414, 'y2': 891, 'w': 446, 'h': 216, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 1320, 'y1': 40, 'x2': 1516, 'y2': 216, 'w': 196, 'h': 176, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}], 'image_w': 1664, 'image_h': 1480, 'device': 'mps', 'error': None, 'cached': True}", name='detect_molecules', call_id='call_ErOn7acBtOW9xPUd9sZG4gh6', is_error=False)]
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_uIcEsBjEaHlFILIKFQFMIWz7', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/04_JACS.png", "bbox": [238, 81, 133, 130], "pad": 10}', name='predict_molecule_smiles'), FunctionCall(id='call_I9luV2MzO4oyqT7eDylUc6EK', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/04_JACS.png", "bbox": [506, 36, 396, 221], "pad": 10}', name='predict_molecule_smiles'), FunctionCall(id='call_FMS5nmW7peWLmFNESQuifLQT', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/04_JACS.png", "bbox": [1320, 40, 196, 176], "pad": 10}', name='predict_molecule_smiles')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'smiles': '*C(*)=O', 'confidence': 0.8749004088955443, 'atoms_count': 4, 'bonds_count': 3, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_uIcEsBjEaHlFILIKFQFMIWz7', is_error=False), FunctionExecutionResult(content="{'smiles': '[3*]C([4*])(FF)C(=O)ON1C(=O)c2ccccc2C1=O', 'confidence': 0.8766900073671161, 'atoms_count': 18, 'bonds_count': 19, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_I9luV2MzO4oyqT7eDylUc6EK', is_error=False), FunctionExecutionResult(content="{'smiles': '[1*]C(=O)C([2*])([3*])[3*]', 'confidence': 0.8068063245941501, 'atoms_count': 7, 'bonds_count': 6, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_FMS5nmW7peWLmFNESQuifLQT', is_error=False)]
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_l96Y7rHecwBw61RYBe911HHn', arguments='{"smiles": "*C(*)=O"}', name='validate_smiles'), FunctionCall(id='call_WK9UILYXtTwn0kvCPB2kTqgL', arguments='{"smiles": "[3*]C([4*])(FF)C(=O)ON1C(=O)c2ccccc2C1=O"}', name='validate_smiles'), FunctionCall(id='call_uNEKZUYyhztaGoYAxgW118XS', arguments='{"smiles": "[1*]C(=O)C([2*])([3*])[3*]"}', name='validate_smiles'), FunctionCall(id='call_71LfrBZOjgIqwcDGv3ONlTNS', arguments='{"smiles": "*C(*)=O"}', name='canonicalize_smiles'), FunctionCall(id='call_RIhogPDVNiEdi6qHk555qmf8', arguments='{"smiles": "[3*]C([4*])(FF)C(=O)ON1C(=O)c2ccccc2C1=O"}', name='canonicalize_smiles'), FunctionCall(id='call_CiC0ArUzIQiA7n0OfFdHQFdD', arguments='{"smiles": "[1*]C(=O)C([2*])([3*])[3*]"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_l96Y7rHecwBw61RYBe911HHn', is_error=False), FunctionExecutionResult(content="{'valid': False, 'error': 'RDKit could not parse SMILES'}", name='validate_smiles', call_id='call_WK9UILYXtTwn0kvCPB2kTqgL', is_error=False), FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_uNEKZUYyhztaGoYAxgW118XS', is_error=False), FunctionExecutionResult(content="{'canonical': '*C(*)=O', 'valid': True, 'formula': 'C*2O', 'error': None}", name='canonicalize_smiles', call_id='call_71LfrBZOjgIqwcDGv3ONlTNS', is_error=False), FunctionExecutionResult(content="{'canonical': None, 'valid': False, 'formula': None, 'error': 'RDKit could not parse SMILES'}", name='canonicalize_smiles', call_id='call_RIhogPDVNiEdi6qHk555qmf8', is_error=False), FunctionExecutionResult(content="{'canonical': '[1*]C(=O)C([2*])([3*])[3*]', 'valid': True, 'formula': 'C2*4O', 'error': None}", name='canonicalize_smiles', call_id='call_CiC0ArUzIQiA7n0OfFdHQFdD', is_error=False)]
+---------- TextMessage (reaction_template_parser) ----------
+[FINDINGS reaction_template_parser]
+scheme_count: 1
+scheme_1:
+  reactant_template_smiles: *C(*)=O.[3*]C([4*])(FF)C(=O)ON1C(=O)c2ccccc2C1=O
+  product_template_smiles:  [1*]C(=O)C([2*])([3*])[3*]
+  arrow: forward
+  multi_step: no
+  notes: template bboxes #2 (aldehyde, conf 0.87), #4 (N-hydroxyphthalimide ester precursor, conf 0.88), and #8 (ketone product, conf 0.81). Product/top-scheme templates were taken verbatim from MolNexTR; the reactant ester SMILES is tool-derived but invalid as returned, so cited verbatim per workflow.
+[/FINDINGS]
+---------- TextMessage (molecular_recognition) ----------
+[FINDINGS molecular_recognition]
+# scripted agent — one entry per detected bbox, no deduplication
+molecule_count: 8
+molecule:
+  label: bbox_0
+  canonical_smiles: CC(C)(Oc1ccc(CCNC(=O)c2ccc(Cl)cc2)cc1)C(=O)c1ccccc1
+  bbox: [123, 682, 681, 271]
+  confidence: 0.895
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_1
+  canonical_smiles: *C(*)=O
+  bbox: [238, 81, 133, 130]
+  confidence: 0.875
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_2
+  canonical_smiles: C[C@H](C(=O)c1ccccc1)c1ccc(CC2CCCC2=O)cc1
+  bbox: [241, 1109, 441, 195]
+  confidence: 0.896
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_3
+  canonical_smiles: [3*]C([4*])(FF)C(=O)ON1C(=O)c2ccccc2C1=O
+  bbox: [506, 36, 396, 221]
+  confidence: 0.877
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_4
+  canonical_smiles: *[C@]12C(=O)C=C3[C@]4(*)C[C@@](C)(C(=O)c5ccccc5)CC[C@]4(C)CC[C@@]3(C)[C@]1(C)CC[C@@]1(*)C(C)(C)[C@@H](OC(=O)C(C)(C)C)CC[C@]21C
+  bbox: [938, 1024, 473, 414]
+  confidence: 0.857
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_5
+  canonical_smiles: CC(C)C1=CC=CC(C(C)C)=C1N1=CSC2=C1CCCCC2
+  bbox: [953, 292, 301, 268]
+  confidence: 0.513
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_6
+  canonical_smiles: Cc1ccc(C)c(OCCCC(C)(C)C(=O)c2ccccc2)c1
+  bbox: [968, 675, 446, 216]
+  confidence: 0.898
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_7
+  canonical_smiles: [1*]C(=O)C([2*])([3*])[3*]
+  bbox: [1320, 40, 196, 176]
+  confidence: 0.807
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+[/FINDINGS]
+---------- ToolCallRequestEvent (condition_interpretation) ----------
+[FunctionCall(id='call_KUjAkmvveTbefWbHNp6iWPzK', arguments='{"name": "DMSO"}', name='lookup_compound'), FunctionCall(id='call_XUGAcCIF8jcSRGB3sux7jvdE', arguments='{"name": "Cs2CO3"}', name='lookup_compound'), FunctionCall(id='call_L06oN7HiRBjfDwErIKeSsooZ', arguments='{"name": "N1"}', name='lookup_compound')]
+---------- ToolCallExecutionEvent (condition_interpretation) ----------
+[FunctionExecutionResult(content="{'smiles': 'CS(=O)C', 'source': 'opsin', 'query_used': 'dimethyl sulfoxide', 'cached': True, 'error': None}", name='lookup_compound', call_id='call_KUjAkmvveTbefWbHNp6iWPzK', is_error=False), FunctionExecutionResult(content="{'smiles': 'C(=O)([O-])[O-].[Cs+].[Cs+]', 'source': 'pubchem', 'query_used': 'Cs2CO3', 'cached': True, 'error': None}", name='lookup_compound', call_id='call_XUGAcCIF8jcSRGB3sux7jvdE', is_error=False), FunctionExecutionResult(content="{'smiles': 'C(COc1ccc(Nc2ccccc2)cc1)OCCOc3ccc(Nc4ccccc4)cc3', 'source': 'cir', 'query_used': 'N1', 'cached': True, 'error': None}", name='lookup_compound', call_id='call_L06oN7HiRBjfDwErIKeSsooZ', is_error=False)]
+---------- ToolCallRequestEvent (condition_interpretation) ----------
+[FunctionCall(id='call_hMGKaYtr16NI78cVmKfasJsE', arguments='{"smiles": "CS(=O)C"}', name='validate_smiles'), FunctionCall(id='call_ALoGQylBeGgf5NpNlVKMF8aT', arguments='{"smiles": "C(=O)([O-])[O-].[Cs+].[Cs+]"}', name='validate_smiles'), FunctionCall(id='call_jIS1jS0ekLTu57utQTvT3gvj', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/04_JACS.png", "bbox": [900, 220, 420, 380], "pad": 20}', name='crop_image_region')]
+---------- ToolCallExecutionEvent (condition_interpretation) ----------
+[FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_hMGKaYtr16NI78cVmKfasJsE', is_error=False), FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_ALoGQylBeGgf5NpNlVKMF8aT', is_error=False), FunctionExecutionResult(content="{'path': '/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/cache/crops/04_JACS_c5f7a8f4bffbc10e.png', 'width': 460, 'height': 420, 'error': None}", name='crop_image_region', call_id='call_jIS1jS0ekLTu57utQTvT3gvj', is_error=False)]
+---------- TextMessage (condition_interpretation) ----------
+[FINDINGS condition_interpretation]
+applies_to: scheme_1
+conditions:
+  - role: catalyst
+    text: N1 (10 mol %)
+    smiles: null
+  - role: loading
+    text: 10 mol %
+    smiles: null
+  - role: reagent
+    text: Cs2CO3 (20 mol %)
+    smiles: C(=O)([O-])[O-].[Cs+].[Cs+]
+  - role: loading
+    text: 20 mol %
+    smiles: null
+  - role: solvent
+    text: DMSO
+    smiles: CS(=O)C
+  - role: temperature
+    text: 60 °C
+    smiles: null
+  - role: time
+    text: 4 h
+    smiles: null
+[FINDINGS condition_interpretation]
+applies_to: 3an
+conditions:
+  - role: yield
+    text: 49%
+    smiles: null
+[FINDINGS condition_interpretation]
+applies_to: 3ao
+conditions:
+  - role: yield
+    text: 67%
+    smiles: null
+[FINDINGS condition_interpretation]
+applies_to: 3ap
+conditions:
+  - role: yield
+    text: 54%
+    smiles: null
+[FINDINGS condition_interpretation]
+applies_to: 3aq
+conditions:
+  - role: yield
+    text: 55%
+    smiles: null
+[/FINDINGS]
+---------- ToolCallRequestEvent (rgroup_substitution) ----------
+[FunctionCall(id='call_oYQ3MZ3vhE4cGTSXAVerD0Bb', arguments='{"template_smiles":"[1*]C(=O)C([2*])([3*])[3*]","concrete_smiles":["CC(C)(Oc1ccc(CCNC(=O)c2ccc(Cl)cc2)cc1)C(=O)c1ccccc1","Cc1ccc(C)c(OCCCC(C)(C)C(=O)c2ccccc2)c1","C[C@H](C(=O)c1ccccc1)c1ccc(CC2CCCC2=O)cc1","*[C@]12C(=O)C=C3[C@]4(*)C[C@@](C)(C(=O)c5ccccc5)CC[C@]4(C)CC[C@@]3(C)[C@]1(C)CC[C@@]1(*)C(C)(C)[C@@H](OC(=O)C(C)(C)C)CC[C@]21C"]}', name='derive_substituents')]
+---------- ToolCallExecutionEvent (rgroup_substitution) ----------
+[FunctionExecutionResult(content="{'results': [{'smiles': 'CC(C)(Oc1ccc(CCNC(=O)c2ccc(Cl)cc2)cc1)C(=O)c1ccccc1', 'matched': True, 'r_assignments': {'R1': 'c1ccc([*:1])cc1', 'R2': 'O=C(NCCc1ccc(O[*:2])cc1)c1ccc(Cl)cc1', 'R3': 'C[*:3]', 'R4': 'C[*:4]'}, 'core': 'O=C(C([*:2])([*:3])[*:4])[*:1]', 'error': None}, {'smiles': 'Cc1ccc(C)c(OCCCC(C)(C)C(=O)c2ccccc2)c1', 'matched': True, 'r_assignments': {'R1': 'c1ccc([*:1])cc1', 'R2': 'C[*:2]', 'R3': 'C[*:3]', 'R4': 'Cc1ccc(C)c(OCCC[*:4])c1'}, 'core': 'O=C(C([*:2])([*:3])[*:4])[*:1]', 'error': None}, {'smiles': 'C[C@H](C(=O)c1ccccc1)c1ccc(CC2CCCC2=O)cc1', 'matched': True, 'r_assignments': {'R1': 'c1ccc([*:1])cc1', 'R2': 'O=C1CCCC1Cc1ccc([*:2])cc1', 'R3': 'C[*:3]', 'R4': '[H][*:4]'}, 'core': 'O=C([C@]([*:2])([*:3])[*:4])[*:1]', 'error': None}, {'smiles': '*[C@]12C(=O)C=C3[C@]4(*)C[C@@](C)(C(=O)c5ccccc5)CC[C@]4(C)CC[C@@]3(C)[C@]1(C)CC[C@@]1(*)C(C)(C)[C@@H](OC(=O)C(C)(C)C)CC[C@]21C', 'matched': True, 'r_assignments': {'R1': 'c1ccc([*:1])cc1', 'R2': '*[C@]12C(=O)C=C3[C@](*)(C[*:4])[C@](C)(CC[*:2])CC[C@@]3(C)[C@]1(C)CC[C@@]1(*)C(C)(C)[C@@H](OC(=O)C(C)(C)C)CC[C@]21C', 'R3': 'C[*:3]', 'R4': '*[C@]12C(=O)C=C3[C@](*)(C[*:4])[C@](C)(CC[*:2])CC[C@@]3(C)[C@]1(C)CC[C@@]1(*)C(C)(C)[C@@H](OC(=O)C(C)(C)C)CC[C@]21C'}, 'core': 'O=C([C@]([*:2])([*:3])[*:4])[*:1]', 'error': None}], 'unmatched_indices': [], 'template': '[1*]C(=O)C([2*])([3*])[3*]', 'error': None}", name='derive_substituents', call_id='call_oYQ3MZ3vhE4cGTSXAVerD0Bb', is_error=False)]
+---------- ToolCallRequestEvent (rgroup_substitution) ----------
+[FunctionCall(id='call_BnnHaQXXKLLRZkDFLThZLChR', arguments='{"template_smiles": "*C(*)=O.[3*]C([4*])(FF)C(=O)ON1C(=O)c2ccccc2C1=O"}', name='apply_substituents'), FunctionCall(id='call_claRP9alggjZZ2K2S7QY7LNP', arguments='{"template_smiles": "*C(*)=O.[3*]C([4*])(FF)C(=O)ON1C(=O)c2ccccc2C1=O"}', name='apply_substituents'), FunctionCall(id='call_lBC1IFeOeXglG8DgoLCx5SH3', arguments='{"template_smiles": "*C(*)=O.[3*]C([4*])(FF)C(=O)ON1C(=O)c2ccccc2C1=O"}', name='apply_substituents'), FunctionCall(id='call_L4ywv1aUlFQWMJAAfuNGlYBJ', arguments='{"template_smiles": "*C(*)=O.[3*]C([4*])(FF)C(=O)ON1C(=O)c2ccccc2C1=O"}', name='apply_substituents')]
+---------- ToolCallExecutionEvent (rgroup_substitution) ----------
+[FunctionExecutionResult(content="1 validation error for apply_substituentsargs\nr_assignments\n  Field required [type=missing, input_value={'template_smiles': '*C(*...O)ON1C(=O)c2ccccc2C1=O'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing", name='apply_substituents', call_id='call_BnnHaQXXKLLRZkDFLThZLChR', is_error=True), FunctionExecutionResult(content="1 validation error for apply_substituentsargs\nr_assignments\n  Field required [type=missing, input_value={'template_smiles': '*C(*...O)ON1C(=O)c2ccccc2C1=O'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing", name='apply_substituents', call_id='call_claRP9alggjZZ2K2S7QY7LNP', is_error=True), FunctionExecutionResult(content="1 validation error for apply_substituentsargs\nr_assignments\n  Field required [type=missing, input_value={'template_smiles': '*C(*...O)ON1C(=O)c2ccccc2C1=O'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing", name='apply_substituents', call_id='call_lBC1IFeOeXglG8DgoLCx5SH3', is_error=True), FunctionExecutionResult(content="1 validation error for apply_substituentsargs\nr_assignments\n  Field required [type=missing, input_value={'template_smiles': '*C(*...O)ON1C(=O)c2ccccc2C1=O'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing", name='apply_substituents', call_id='call_L4ywv1aUlFQWMJAAfuNGlYBJ', is_error=True)]
+---------- TextMessage (rgroup_substitution) ----------
+[FINDINGS rgroup_substitution]
+reactant_template: *C(*)=O.[3*]C([4*])(FF)C(=O)ON1C(=O)c2ccccc2C1=O
+product_template:  [1*]C(=O)C([2*])([3*])[3*]
+variants:
+  - label: 3an
+    r_assignments: {R1: c1ccc([*:1])cc1, R2: O=C(NCCc1ccc(O[*:2])cc1)c1ccc(Cl)cc1, R3: C[*:3], R4: C[*:4]}
+    reactant_smiles: null
+    product_smiles: CC(C)(Oc1ccc(CCNC(=O)c2ccc(Cl)cc2)cc1)C(=O)c1ccccc1
+    valid: no
+    notes: apply_substituents could not be executed because the provided reactant_template from reaction_template_parser uses unlabeled `*` for the aldehyde fragment but labeled [3*]/[4*] for the NHPI ester fragment, so the required attachment-map correspondence for deterministic molzip fusion is incomplete.
+  - label: 3ao
+    r_assignments: {R1: c1ccc([*:1])cc1, R2: C[*:2], R3: C[*:3], R4: Cc1ccc(C)c(OCCC[*:4])c1}
+    reactant_smiles: null
+    product_smiles: Cc1ccc(C)c(OCCCC(C)(C)C(=O)c2ccccc2)c1
+    valid: no
+    notes: apply_substituents could not be executed because the provided reactant_template from reaction_template_parser uses unlabeled `*` for the aldehyde fragment but labeled [3*]/[4*] for the NHPI ester fragment, so the required attachment-map correspondence for deterministic molzip fusion is incomplete.
+  - label: 3ap
+    r_assignments: {R1: c1ccc([*:1])cc1, R2: O=C1CCCC1Cc1ccc([*:2])cc1, R3: C[*:3], R4: [H][*:4]}
+    reactant_smiles: null
+    product_smiles: C[C@H](C(=O)c1ccccc1)c1ccc(CC2CCCC2=O)cc1
+    valid: no
+    notes: apply_substituents could not be executed because the provided reactant_template from reaction_template_parser uses unlabeled `*` for the aldehyde fragment but labeled [3*]/[4*] for the NHPI ester fragment, so the required attachment-map correspondence for deterministic molzip fusion is incomplete.
+  - label: 3aq
+    r_assignments: {R1: c1ccc([*:1])cc1, R2: *[C@]12C(=O)C=C3[C@](*)(C[*:4])[C@](C)(CC[*:2])CC[C@@]3(C)[C@]1(C)CC[C@@]1(*)C(C)(C)[C@@H](OC(=O)C(C)(C)C)CC[C@]21C, R3: C[*:3], R4: *[C@]12C(=O)C=C3[C@](*)(C[*:4])[C@](C)(CC[*:2])CC[C@@]3(C)[C@]1(C)CC[C@@]1(*)C(C)(C)[C@@H](OC(=O)C(C)(C)C)CC[C@]21C}
+    reactant_smiles: null
+    product_smiles: *[C@]12C(=O)C=C3[C@]4(*)C[C@@](C)(C(=O)c5ccccc5)CC[C@]4(C)CC[C@@]3(C)[C@]1(C)CC[C@@]1(*)C(C)(C)[C@@H](OC(=O)C(C)(C)C)CC[C@]21C
+    valid: no
+    notes: derive_substituents matched formally, but the MolNexTR product itself contains unresolved `*` attachment placeholders in this complex natural-product scaffold, so a specific reactant cannot be deterministically reconstructed from the given templates.
+[/FINDINGS]
+---------- TextMessage (text_extraction) ----------
+[FINDINGS text_extraction]
+items:
+  - kind: other
+    text: "from Bezafibrate"
+    applies_to: 3an
+  - kind: other
+    text: "from Gemfibrozil"
+    applies_to: 3ao
+  - kind: other
+    text: "from Loxoprofen"
+    applies_to: 3ap
+  - kind: other
+    text: "from Glycyrrhetinic acid"
+    applies_to: 3aq
+[/FINDINGS]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_eRAtuL4fYkHF1PoiEW8nvEdB', arguments='{"smiles": "CC(C)(Oc1ccc(CCNC(=O)c2ccc(Cl)cc2)cc1)C(=O)c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_wjdf2DxGY0nOHNJx4TkBiPaF', arguments='{"smiles": "Cc1ccc(C)c(OCCCC(C)(C)C(=O)c2ccccc2)c1"}', name='canonicalize_smiles'), FunctionCall(id='call_f6jyxB91LRHXS9QPHfjgX5QF', arguments='{"smiles": "C[C@H](C(=O)c1ccccc1)c1ccc(CC2CCCC2=O)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_Xfe7Jd1GfwBIn7s5NH7nbKY7', arguments='{"smiles": "*[C@]12C(=O)C=C3[C@]4(*)C[C@@](C)(C(=O)c5ccccc5)CC[C@]4(C)CC[C@@]3(C)[C@]1(C)CC[C@@]1(*)C(C)(C)[C@@H](OC(=O)C(C)(C)C)CC[C@]21C"}', name='canonicalize_smiles'), FunctionCall(id='call_4JjeAYeWXfiWSC0XU7Cbmxz0', arguments='{"smiles": "C(=O)([O-])[O-].[Cs+].[Cs+]"}', name='canonicalize_smiles'), FunctionCall(id='call_kh9CLZdl7UEQ4tq0s7pl4S1t', arguments='{"smiles": "CS(=O)C"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'canonical': 'CC(C)(Oc1ccc(CCNC(=O)c2ccc(Cl)cc2)cc1)C(=O)c1ccccc1', 'valid': True, 'formula': 'C25H24ClNO3', 'error': None}", name='canonicalize_smiles', call_id='call_eRAtuL4fYkHF1PoiEW8nvEdB', is_error=False), FunctionExecutionResult(content="{'canonical': 'Cc1ccc(C)c(OCCCC(C)(C)C(=O)c2ccccc2)c1', 'valid': True, 'formula': 'C21H26O2', 'error': None}", name='canonicalize_smiles', call_id='call_wjdf2DxGY0nOHNJx4TkBiPaF', is_error=False), FunctionExecutionResult(content="{'canonical': 'C[C@H](C(=O)c1ccccc1)c1ccc(CC2CCCC2=O)cc1', 'valid': True, 'formula': 'C21H22O2', 'error': None}", name='canonicalize_smiles', call_id='call_f6jyxB91LRHXS9QPHfjgX5QF', is_error=False), FunctionExecutionResult(content="{'canonical': '*[C@]12C(=O)C=C3[C@]4(*)C[C@@](C)(C(=O)c5ccccc5)CC[C@]4(C)CC[C@@]3(C)[C@]1(C)CC[C@@]1(*)C(C)(C)[C@@H](OC(=O)C(C)(C)C)CC[C@]21C', 'valid': True, 'formula': 'C41H55*3O4', 'error': None}", name='canonicalize_smiles', call_id='call_Xfe7Jd1GfwBIn7s5NH7nbKY7', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=C([O-])[O-].[Cs+].[Cs+]', 'valid': True, 'formula': 'CCs2O3', 'error': None}", name='canonicalize_smiles', call_id='call_4JjeAYeWXfiWSC0XU7Cbmxz0', is_error=False), FunctionExecutionResult(content="{'canonical': 'CS(C)=O', 'valid': True, 'formula': 'C2H6OS', 'error': None}", name='canonicalize_smiles', call_id='call_kh9CLZdl7UEQ4tq0s7pl4S1t', is_error=False)]
+Error processing publish message for data_structure_1e2dfb0c-cadc-4d7c-98c1-4274c2b42e34/1e2dfb0c-cadc-4d7c-98c1-4274c2b42e34
+Traceback (most recent call last):
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 394, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpcore/_async/connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpcore/_async/connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpcore/_async/connection.py", line 101, in handle_async_request
+    raise exc
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpcore/_async/connection.py", line 78, in handle_async_request
+    stream = await self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpcore/_async/connection.py", line 124, in _connect
+    stream = await self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpcore/_backends/auto.py", line 31, in connect_tcp
+    return await self._backend.connect_tcp(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpcore/_backends/anyio.py", line 113, in connect_tcp
+    with map_exceptions(exc_map):
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/.pyenv/versions/3.12.10/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: [Errno 8] nodename nor servname provided, or not known
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/openai/_base_client.py", line 1630, in request
+    response = await self._send_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/openai/_client.py", line 829, in _send_request
+    return await self._send_with_auth_retry(request, stream=stream, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/openai/_client.py", line 807, in _send_with_auth_retry
+    response = await super()._send_request(request, stream=stream, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/openai/_base_client.py", line 1553, in _send_request
+    return await self._client.send(request, stream=stream, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1629, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1657, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1694, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1730, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 393, in handle_async_request
+    with map_httpcore_exceptions():
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/.pyenv/versions/3.12.10/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno 8] nodename nor servname provided, or not known
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_core/_single_threaded_agent_runtime.py", line 606, in _on_message
+    return await agent.on_message(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_core/_base_agent.py", line 119, in on_message
+    return await self.on_message_impl(message, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/teams/_group_chat/_sequential_routed_agent.py", line 67, in on_message_impl
+    return await super().on_message_impl(message, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_core/_routed_agent.py", line 485, in on_message_impl
+    return await h(self, message, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_core/_routed_agent.py", line 268, in wrapper
+    return_value = await func(self, message, ctx)  # type: ignore
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/teams/_group_chat/_chat_agent_container.py", line 133, in handle_request
+    async for msg in self._agent.on_messages_stream(self._message_buffer, ctx.cancellation_token):
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/agents/_assistant_agent.py", line 991, in on_messages_stream
+    async for output_event in self._process_model_result(
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/agents/_assistant_agent.py", line 1263, in _process_model_result
+    async for llm_output in cls._call_llm(
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/agents/_assistant_agent.py", line 1109, in _call_llm
+    model_result = await model_client.create(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_ext/models/openai/_openai_client.py", line 704, in create
+    result: Union[ParsedChatCompletion[BaseModel], ChatCompletion] = await future
+                                                                     ^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/openai/_base_client.py", line 1665, in request
+    raise APIConnectionError(request=request) from err
+openai.APIConnectionError: Connection error.
+Error processing publish message for reaction_template_parser_1e2dfb0c-cadc-4d7c-98c1-4274c2b42e34/1e2dfb0c-cadc-4d7c-98c1-4274c2b42e34
+Traceback (most recent call last):
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_core/_single_threaded_agent_runtime.py", line 606, in _on_message
+    return await agent.on_message(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_core/_base_agent.py", line 119, in on_message
+    return await self.on_message_impl(message, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/teams/_group_chat/_sequential_routed_agent.py", line 72, in on_message_impl
+    return await super().on_message_impl(message, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_core/_routed_agent.py", line 486, in on_message_impl
+    return await self.on_unhandled_message(message, ctx)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/teams/_group_chat/_chat_agent_container.py", line 195, in on_unhandled_message
+    raise ValueError(f"Unhandled message in agent container: {type(message)}")
+ValueError: Unhandled message in agent container: <class 'autogen_agentchat.teams._group_chat._events.GroupChatError'>
+Error processing publish message for molecular_recognition_1e2dfb0c-cadc-4d7c-98c1-4274c2b42e34/1e2dfb0c-cadc-4d7c-98c1-4274c2b42e34
+Traceback (most recent call last):
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_core/_single_threaded_agent_runtime.py", line 606, in _on_message
+    return await agent.on_message(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_core/_base_agent.py", line 119, in on_message
+    return await self.on_message_impl(message, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/teams/_group_chat/_sequential_routed_agent.py", line 72, in on_message_impl
+    return await super().on_message_impl(message, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_core/_routed_agent.py", line 486, in on_message_impl
+    return await self.on_unhandled_message(message, ctx)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/teams/_group_chat/_chat_agent_container.py", line 195, in on_unhandled_message
+    raise ValueError(f"Unhandled message in agent container: {type(message)}")
+ValueError: Unhandled message in agent container: <class 'autogen_agentchat.teams._group_chat._events.GroupChatError'>
+Error processing publish message for rgroup_substitution_1e2dfb0c-cadc-4d7c-98c1-4274c2b42e34/1e2dfb0c-cadc-4d7c-98c1-4274c2b42e34
+Traceback (most recent call last):
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_core/_single_threaded_agent_runtime.py", line 606, in _on_message
+    return await agent.on_message(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_core/_base_agent.py", line 119, in on_message
+    return await self.on_message_impl(message, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/teams/_group_chat/_sequential_routed_agent.py", line 72, in on_message_impl
+    return await super().on_message_impl(message, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_core/_routed_agent.py", line 486, in on_message_impl
+    return await self.on_unhandled_message(message, ctx)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/teams/_group_chat/_chat_agent_container.py", line 195, in on_unhandled_message
+    raise ValueError(f"Unhandled message in agent container: {type(message)}")
+ValueError: Unhandled message in agent container: <class 'autogen_agentchat.teams._group_chat._events.GroupChatError'>
+Error processing publish message for condition_interpretation_1e2dfb0c-cadc-4d7c-98c1-4274c2b42e34/1e2dfb0c-cadc-4d7c-98c1-4274c2b42e34
+Traceback (most recent call last):
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_core/_single_threaded_agent_runtime.py", line 606, in _on_message
+    return await agent.on_message(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_core/_base_agent.py", line 119, in on_message
+    return await self.on_message_impl(message, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/teams/_group_chat/_sequential_routed_agent.py", line 72, in on_message_impl
+    return await super().on_message_impl(message, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_core/_routed_agent.py", line 486, in on_message_impl
+    return await self.on_unhandled_message(message, ctx)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/teams/_group_chat/_chat_agent_container.py", line 195, in on_unhandled_message
+    raise ValueError(f"Unhandled message in agent container: {type(message)}")
+ValueError: Unhandled message in agent container: <class 'autogen_agentchat.teams._group_chat._events.GroupChatError'>
+Error processing publish message for text_extraction_1e2dfb0c-cadc-4d7c-98c1-4274c2b42e34/1e2dfb0c-cadc-4d7c-98c1-4274c2b42e34
+Traceback (most recent call last):
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_core/_single_threaded_agent_runtime.py", line 606, in _on_message
+    return await agent.on_message(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_core/_base_agent.py", line 119, in on_message
+    return await self.on_message_impl(message, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/teams/_group_chat/_sequential_routed_agent.py", line 72, in on_message_impl
+    return await super().on_message_impl(message, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_core/_routed_agent.py", line 486, in on_message_impl
+    return await self.on_unhandled_message(message, ctx)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/teams/_group_chat/_chat_agent_container.py", line 195, in on_unhandled_message
+    raise ValueError(f"Unhandled message in agent container: {type(message)}")
+ValueError: Unhandled message in agent container: <class 'autogen_agentchat.teams._group_chat._events.GroupChatError'>
+Error processing publish message for verifier_1e2dfb0c-cadc-4d7c-98c1-4274c2b42e34/1e2dfb0c-cadc-4d7c-98c1-4274c2b42e34
+Traceback (most recent call last):
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_core/_single_threaded_agent_runtime.py", line 606, in _on_message
+    return await agent.on_message(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_core/_base_agent.py", line 119, in on_message
+    return await self.on_message_impl(message, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/teams/_group_chat/_sequential_routed_agent.py", line 72, in on_message_impl
+    return await super().on_message_impl(message, ctx)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_core/_routed_agent.py", line 486, in on_message_impl
+    return await self.on_unhandled_message(message, ctx)  # type: ignore
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/teams/_group_chat/_chat_agent_container.py", line 195, in on_unhandled_message
+    raise ValueError(f"Unhandled message in agent container: {type(message)}")
+ValueError: Unhandled message in agent container: <class 'autogen_agentchat.teams._group_chat._events.GroupChatError'>
+
+[run] crashed: RuntimeError: APIConnectionError: Connection error.
+Traceback:
+Traceback (most recent call last):
+
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 394, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpcore/_async/connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpcore/_async/connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpcore/_async/connection.py", line 101, in handle_async_request
+    raise exc
+
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpcore/_async/connection.py", line 78, in handle_async_request
+    stream = await self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpcore/_async/connection.py", line 124, in _connect
+    stream = await self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpcore/_backends/auto.py", line 31, in connect_tcp
+    return await self._backend.connect_tcp(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpcore/_backends/anyio.py", line 113, in connect_tcp
+    with map_exceptions(exc_map):
+         ^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/Users/kasperhuysentruyt/.pyenv/versions/3.12.10/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+
+httpcore.ConnectError: [Errno 8] nodename nor servname provided, or not known
+
+
+The above exception was the direct cause of the following exception:
+
+
+Traceback (most recent call last):
+
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/openai/_base_client.py", line 1630, in request
+    response = await self._send_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/openai/_client.py", line 829, in _send_request
+    return await self._send_with_auth_retry(request, stream=stream, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/openai/_client.py", line 807, in _send_with_auth_retry
+    response = await super()._send_request(request, stream=stream, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/openai/_base_client.py", line 1553, in _send_request
+    return await self._client.send(request, stream=stream, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1629, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1657, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1694, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpx/_client.py", line 1730, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 393, in handle_async_request
+    with map_httpcore_exceptions():
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/Users/kasperhuysentruyt/.pyenv/versions/3.12.10/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+
+httpx.ConnectError: [Errno 8] nodename nor servname provided, or not known
+
+
+The above exception was the direct cause of the following exception:
+
+
+Traceback (most recent call last):
+
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/teams/_group_chat/_chat_agent_container.py", line 133, in handle_request
+    async for msg in self._agent.on_messages_stream(self._message_buffer, ctx.cancellation_token):
+
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/agents/_assistant_agent.py", line 991, in on_messages_stream
+    async for output_event in self._process_model_result(
+
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/agents/_assistant_agent.py", line 1263, in _process_model_result
+    async for llm_output in cls._call_llm(
+
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/agents/_assistant_agent.py", line 1109, in _call_llm
+    model_result = await model_client.create(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_ext/models/openai/_openai_client.py", line 704, in create
+    result: Union[ParsedChatCompletion[BaseModel], ChatCompletion] = await future
+                                                                     ^^^^^^^^^^^^
+
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/openai/resources/chat/completions/completions.py", line 2714, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/openai/_base_client.py", line 1913, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  File "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/openai/_base_client.py", line 1665, in request
+    raise APIConnectionError(request=request) from err
+
+openai.APIConnectionError: Connection error.
+
+
+[validation] FAILED after 0 retry/retries; raw output saved (see validation_log.json)
+Results saved to /Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/runs/20260427_180914_selector

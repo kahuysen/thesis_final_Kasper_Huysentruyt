@@ -1,0 +1,630 @@
+---------- MultiModalMessage (user) ----------
+Analyse this chemistry reaction image. Each specialist contributes one [FINDINGS ...] card per turn, then data_structure produces JSON, then the verifier audits the JSON and ends the run.
+image_path = /Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/121.jpg
+Pass that exact path as the first argument to crop_image_region(image_path, [x,y,w,h]) if you need to zoom in on a region of the image.
+<image>
+/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/agents/_assistant_agent.py:1109: UserWarning: Resolved model mismatch: gpt-5.4 != gpt-5.4-2026-03-05. Model mapping in autogen_ext.models.openai may be incorrect. Set the model to gpt-5.4-2026-03-05 to enhance token/cost estimation and suppress this warning.
+  model_result = await model_client.create(
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_xEBVuUUeDhZ7rB0FWNNwf5J8', arguments='{"image_path":"/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/121.jpg","molecule_only":true,"score_min":0}', name='detect_molecules')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'bboxes': [{'x1': 138, 'y1': 114, 'x2': 295, 'y2': 244, 'w': 157, 'h': 129, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 146, 'y1': 548, 'x2': 454, 'y2': 725, 'w': 308, 'h': 177, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 342, 'y1': 86, 'x2': 508, 'y2': 274, 'w': 166, 'h': 188, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 425, 'y1': 510, 'x2': 897, 'y2': 725, 'w': 472, 'h': 215, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 535, 'y1': 228, 'x2': 920, 'y2': 432, 'w': 385, 'h': 204, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 872, 'y1': 510, 'x2': 1372, 'y2': 725, 'w': 500, 'h': 215, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}], 'image_w': 1380, 'image_h': 944, 'device': 'mps', 'error': None, 'cached': False}", name='detect_molecules', call_id='call_xEBVuUUeDhZ7rB0FWNNwf5J8', is_error=False)]
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_S4Gimylc8aMtkaxaTjtwkhhK', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/121.jpg", "bbox": [138, 114, 157, 129], "pad": 10}', name='predict_molecule_smiles'), FunctionCall(id='call_xMDdqMzv1JX5Id1knkr8TlJJ', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/121.jpg", "bbox": [342, 86, 166, 188], "pad": 10}', name='predict_molecule_smiles'), FunctionCall(id='call_sPMqZosNgbr7rDFdpjBQmSRh', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/121.jpg", "bbox": [535, 228, 385, 204], "pad": 10}', name='predict_molecule_smiles'), FunctionCall(id='call_v0F80XTo1u3cw1AEeYdpzzNJ', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/121.jpg", "bbox": [146, 548, 308, 177], "pad": 10}', name='predict_molecule_smiles')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'smiles': '*C(*)=O', 'confidence': 0.8190456474832535, 'atoms_count': 4, 'bonds_count': 3, 'device': 'mps', 'error': None, 'cached': False}", name='predict_molecule_smiles', call_id='call_S4Gimylc8aMtkaxaTjtwkhhK', is_error=False), FunctionExecutionResult(content="{'smiles': '*C=C(C#N)C#N', 'confidence': 0.8757325534449356, 'atoms_count': 5, 'bonds_count': 4, 'device': 'mps', 'error': None, 'cached': False}", name='predict_molecule_smiles', call_id='call_xMDdqMzv1JX5Id1knkr8TlJJ', is_error=False), FunctionExecutionResult(content="{'smiles': 'Cc1c(CCO)sc[n+]1C.[I-]', 'confidence': 0.7976239081397826, 'atoms_count': 11, 'bonds_count': 10, 'device': 'mps', 'error': None, 'cached': False}", name='predict_molecule_smiles', call_id='call_sPMqZosNgbr7rDFdpjBQmSRh', is_error=False), FunctionExecutionResult(content="{'smiles': 'N#Cc1c(N)oc(-c2ccccc2)c1-c1ccccc1', 'confidence': 0.8987455979126135, 'atoms_count': 9, 'bonds_count': 9, 'device': 'mps', 'error': None, 'cached': False}", name='predict_molecule_smiles', call_id='call_v0F80XTo1u3cw1AEeYdpzzNJ', is_error=False)]
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_MuKjjF8ByvpS8SnRnMEYDizL', arguments='{"image_path":"/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/121.jpg","bbox":[425,510,472,215],"pad":10}', name='predict_molecule_smiles')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'smiles': '*.N#Cc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1', 'confidence': 0.8382776504819087, 'atoms_count': 16, 'bonds_count': 16, 'device': 'mps', 'error': None, 'cached': False}", name='predict_molecule_smiles', call_id='call_MuKjjF8ByvpS8SnRnMEYDizL', is_error=False)]
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_N0kOfTGrZfti7bngEfZjKtiX', arguments='{"smiles": "*C(*)=O.*C=C(C#N)C#N"}', name='validate_smiles'), FunctionCall(id='call_VWtIUiGUfhJiPfQOgIrnZrTf', arguments='{"smiles": "N#Cc1c(N)oc(*)c1-*"}', name='validate_smiles'), FunctionCall(id='call_Ye2rB3Yk7a8Cs0VCWtZRrTs3', arguments='{"smiles": "*C(*)=O.*C=C(C#N)C#N"}', name='canonicalize_smiles'), FunctionCall(id='call_7u807924j9G3DaBPyzUZ7Knl', arguments='{"smiles": "N#Cc1c(N)oc(*)c1-*"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_N0kOfTGrZfti7bngEfZjKtiX', is_error=False), FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_VWtIUiGUfhJiPfQOgIrnZrTf', is_error=False), FunctionExecutionResult(content="{'canonical': '*C(*)=O.*C=C(C#N)C#N', 'valid': True, 'formula': 'C5H*3N2O', 'error': None}", name='canonicalize_smiles', call_id='call_Ye2rB3Yk7a8Cs0VCWtZRrTs3', is_error=False), FunctionExecutionResult(content="{'canonical': '*c1oc(N)c(C#N)c1*', 'valid': True, 'formula': 'C5H2*2N2O', 'error': None}", name='canonicalize_smiles', call_id='call_7u807924j9G3DaBPyzUZ7Knl', is_error=False)]
+---------- TextMessage (reaction_template_parser) ----------
+[FINDINGS reaction_template_parser]
+scheme_count: 1
+scheme_1:
+  reactant_template_smiles: *C(*)=O.*C=C(C#N)C#N
+  product_template_smiles:  *c1oc(N)c(C#N)c1*
+  arrow: forward
+  multi_step: no
+  notes: template bboxes #1 aldehyde (conf 0.82) and #3 alkene dinitrile (conf 0.88) react to product template inferred from product examples (#2 conf 0.90, #4 conf 0.84); catalyst bbox #5 is reagent-only and excluded.
+[/FINDINGS]
+---------- TextMessage (molecular_recognition) ----------
+[FINDINGS molecular_recognition]
+# scripted agent — one entry per detected bbox, no deduplication
+molecule_count: 6
+molecule:
+  label: bbox_0
+  canonical_smiles: *C(*)=O
+  bbox: [138, 114, 157, 129]
+  confidence: 0.819
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_1
+  canonical_smiles: N#Cc1c(N)oc(-c2ccccc2)c1-c1ccccc1
+  bbox: [146, 548, 308, 177]
+  confidence: 0.899
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_2
+  canonical_smiles: *C=C(C#N)C#N
+  bbox: [342, 86, 166, 188]
+  confidence: 0.876
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_3
+  canonical_smiles: *.N#Cc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1
+  bbox: [425, 510, 472, 215]
+  confidence: 0.838
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_4
+  canonical_smiles: Cc1c(CCO)sc[n+]1C.[I-]
+  bbox: [535, 228, 385, 204]
+  confidence: 0.798
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_5
+  canonical_smiles: COc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1
+  bbox: [872, 510, 500, 215]
+  confidence: 0.785
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+[/FINDINGS]
+---------- ToolCallRequestEvent (rgroup_substitution) ----------
+[FunctionCall(id='call_LGeZSR4fzyXJol4jNLgGaMkH', arguments='{"template_smiles":"*c1oc(N)c(C#N)c1*","concrete_smiles":["N#Cc1c(N)oc(-c2ccccc2)c1-c1ccccc1","*.N#Cc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1","COc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1"]}', name='derive_substituents')]
+---------- ToolCallExecutionEvent (rgroup_substitution) ----------
+[FunctionExecutionResult(content="{'results': [{'smiles': 'N#Cc1c(N)oc(-c2ccccc2)c1-c1ccccc1', 'matched': True, 'r_assignments': {'R1': 'c1ccc([*:1])cc1', 'R2': 'c1ccc([*:2])cc1'}, 'core': 'N#Cc1c(N)oc([*:1])c1[*:2]', 'error': None}, {'smiles': '*.N#Cc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1', 'matched': True, 'r_assignments': {'R1': 'N#Cc1ccc([*:1])cc1', 'R2': 'c1ccc([*:2])cc1'}, 'core': 'N#Cc1c(N)oc([*:1])c1[*:2]', 'error': None}, {'smiles': 'COc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1', 'matched': True, 'r_assignments': {'R1': 'COc1ccc([*:1])cc1', 'R2': 'c1ccc([*:2])cc1'}, 'core': 'N#Cc1c(N)oc([*:1])c1[*:2]', 'error': None}], 'unmatched_indices': [], 'template': '*c1oc(N)c(C#N)c1*', 'error': None}", name='derive_substituents', call_id='call_LGeZSR4fzyXJol4jNLgGaMkH', is_error=False)]
+---------- ToolCallRequestEvent (rgroup_substitution) ----------
+[FunctionCall(id='call_7nP7OOkDEJQDXDeFA1pDfwci', arguments='{"template_smiles": "*C(*)=O.*C=C(C#N)C#N", "r_assignments": {"R1": "c1ccc([*:1])cc1", "R2": "c1ccc([*:2])cc1"}}', name='apply_substituents'), FunctionCall(id='call_AjwCv8yU3bNLQqS8XcyGwNJY', arguments='{"template_smiles": "*C(*)=O.*C=C(C#N)C#N", "r_assignments": {"R1": "N#Cc1ccc([*:1])cc1", "R2": "c1ccc([*:2])cc1"}}', name='apply_substituents'), FunctionCall(id='call_j0GAsrrkofd4GifMbYyUSXhi', arguments='{"template_smiles": "*C(*)=O.*C=C(C#N)C#N", "r_assignments": {"R1": "COc1ccc([*:1])cc1", "R2": "c1ccc([*:2])cc1"}}', name='apply_substituents')]
+---------- ToolCallExecutionEvent (rgroup_substitution) ----------
+[FunctionExecutionResult(content="{'smiles': 'N#CC(C#N)=C[*:3].O=C(c1ccccc1)c1ccccc1', 'valid': True, 'error': None}", name='apply_substituents', call_id='call_7nP7OOkDEJQDXDeFA1pDfwci', is_error=False), FunctionExecutionResult(content="{'smiles': 'N#CC(C#N)=C[*:3].N#Cc1ccc(C(=O)c2ccccc2)cc1', 'valid': True, 'error': None}", name='apply_substituents', call_id='call_AjwCv8yU3bNLQqS8XcyGwNJY', is_error=False), FunctionExecutionResult(content="{'smiles': 'COc1ccc(C(=O)c2ccccc2)cc1.N#CC(C#N)=C[*:3]', 'valid': True, 'error': None}", name='apply_substituents', call_id='call_j0GAsrrkofd4GifMbYyUSXhi', is_error=False)]
+---------- TextMessage (rgroup_substitution) ----------
+[FINDINGS rgroup_substitution]
+reactant_template: *C(*)=O.*C=C(C#N)C#N
+product_template:  *c1oc(N)c(C#N)c1*
+variants:
+  - label: bbox_1
+    r_assignments: {R1: c1ccc([*:1])cc1, R2: c1ccc([*:2])cc1}
+    reactant_smiles: N#CC(C#N)=C[*:3].O=C(c1ccccc1)c1ccccc1
+    product_smiles:  N#Cc1c(N)oc(-c2ccccc2)c1-c1ccccc1
+    valid: yes
+  - label: bbox_3
+    r_assignments: {R1: N#Cc1ccc([*:1])cc1, R2: c1ccc([*:2])cc1}
+    reactant_smiles: N#CC(C#N)=C[*:3].N#Cc1ccc(C(=O)c2ccccc2)cc1
+    product_smiles:  *.N#Cc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1
+    valid: yes
+  - label: bbox_5
+    r_assignments: {R1: COc1ccc([*:1])cc1, R2: c1ccc([*:2])cc1}
+    reactant_smiles: COc1ccc(C(=O)c2ccccc2)cc1.N#CC(C#N)=C[*:3]
+    product_smiles:  COc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1
+    valid: yes
+[/FINDINGS]
+---------- ToolCallRequestEvent (condition_interpretation) ----------
+[FunctionCall(id='call_3RXFNIu03vwGaSQ1A2X0doHZ', arguments='{"name": "EtOH"}', name='lookup_compound'), FunctionCall(id='call_ZlSVdx9CEwmZnwBJEXa1mrFk', arguments='{"name": "tBuOK"}', name='lookup_compound'), FunctionCall(id='call_pKxrHpjPWbw6Z5xxcRDmXux6', arguments='{"smiles": "Cc1c(CCO)sc[n+]1C.[I-]"}', name='validate_smiles')]
+---------- ToolCallExecutionEvent (condition_interpretation) ----------
+[FunctionExecutionResult(content="{'smiles': 'C(C)O', 'source': 'opsin', 'query_used': 'ethanol', 'cached': True, 'error': None}", name='lookup_compound', call_id='call_3RXFNIu03vwGaSQ1A2X0doHZ', is_error=False), FunctionExecutionResult(content="{'smiles': 'CC(C)(C)[O-].[K+]', 'source': 'pubchem', 'query_used': 'tBuOK', 'cached': True, 'error': None}", name='lookup_compound', call_id='call_ZlSVdx9CEwmZnwBJEXa1mrFk', is_error=False), FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_pKxrHpjPWbw6Z5xxcRDmXux6', is_error=False)]
+---------- ToolCallRequestEvent (condition_interpretation) ----------
+[FunctionCall(id='call_A4EjbNzddMvBJypJh6WTG6Bx', arguments='{"smiles": "C(C)O"}', name='validate_smiles'), FunctionCall(id='call_GnI3HFV3ZJ7vAP5bfm4zqnin', arguments='{"smiles": "CC(C)(C)[O-].[K+]"}', name='validate_smiles')]
+---------- ToolCallExecutionEvent (condition_interpretation) ----------
+[FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_A4EjbNzddMvBJypJh6WTG6Bx', is_error=False), FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_GnI3HFV3ZJ7vAP5bfm4zqnin', is_error=False)]
+---------- TextMessage (condition_interpretation) ----------
+[FINDINGS condition_interpretation]
+applies_to: all
+conditions:
+  - role: catalyst
+    text: 50 mol% G4
+    smiles: Cc1c(CCO)sc[n+]1C.[I-]
+  - role: loading
+    text: 50 mol%
+    smiles: null
+  - role: reagent
+    text: tBuOK (1 equiv)
+    smiles: CC(C)(C)[O-].[K+]
+  - role: loading
+    text: 1 equiv
+    smiles: null
+  - role: solvent
+    text: EtOH
+    smiles: C(C)O
+  - role: temperature
+    text: rt
+    smiles: null
+  - role: time
+    text: 0.5 h
+    smiles: null
+  - role: yield
+    text: 34 - 85%
+    smiles: null
+[/FINDINGS]
+---------- TextMessage (text_extraction) ----------
+[FINDINGS text_extraction]
+items:
+  - kind: heading
+    text: "Selected Examples"
+    applies_to: figure
+  - kind: caption
+    text: "Scheme 42. Synthesis of Diaryl-Aminofurans"
+    applies_to: figure
+[/FINDINGS]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_fuqjXQ51Ue2e0x8FOs1sNln6', arguments='{"smiles": "N#CC(C#N)=C[*:3]"}', name='canonicalize_smiles'), FunctionCall(id='call_tVVidkSq586V1NOjUf1xnYXj', arguments='{"smiles": "O=C(c1ccccc1)c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_2oYL8Fa4jC3OTzhZT7USAnH6', arguments='{"smiles": "N#Cc1c(N)oc(-c2ccccc2)c1-c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_f0StWNnWyNZieizKAD4lmz3f', arguments='{"smiles": "N#Cc1ccc(C(=O)c2ccccc2)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_vCvMMUK6vTIxYPW3ECGUh0Rs', arguments='{"smiles": "*.N#Cc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_78GGXPxi4HTAHZ6egcp0mOLO', arguments='{"smiles": "COc1ccc(C(=O)c2ccccc2)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_Pz8GUP3tzUgstOi9APeAO10f', arguments='{"smiles": "COc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_Di9bEFLat936b52ZkEK7oh51', arguments='{"smiles": "Cc1c(CCO)sc[n+]1C.[I-]"}', name='canonicalize_smiles'), FunctionCall(id='call_aJAnAogkDjjrCzD9yv9OdIpI', arguments='{"smiles": "CC(C)(C)[O-].[K+]"}', name='canonicalize_smiles'), FunctionCall(id='call_mf8T6I8BU4v35yofNBD5uydP', arguments='{"smiles": "C(C)O"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'canonical': 'N#CC(C#N)=C[*:3]', 'valid': True, 'formula': 'C4H*N2', 'error': None}", name='canonicalize_smiles', call_id='call_fuqjXQ51Ue2e0x8FOs1sNln6', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=C(c1ccccc1)c1ccccc1', 'valid': True, 'formula': 'C13H10O', 'error': None}", name='canonicalize_smiles', call_id='call_tVVidkSq586V1NOjUf1xnYXj', is_error=False), FunctionExecutionResult(content="{'canonical': 'N#Cc1c(N)oc(-c2ccccc2)c1-c1ccccc1', 'valid': True, 'formula': 'C17H12N2O', 'error': None}", name='canonicalize_smiles', call_id='call_2oYL8Fa4jC3OTzhZT7USAnH6', is_error=False), FunctionExecutionResult(content="{'canonical': 'N#Cc1ccc(C(=O)c2ccccc2)cc1', 'valid': True, 'formula': 'C14H9NO', 'error': None}", name='canonicalize_smiles', call_id='call_f0StWNnWyNZieizKAD4lmz3f', is_error=False), FunctionExecutionResult(content="{'canonical': '*.N#Cc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1', 'valid': True, 'formula': 'C18H11*N3O', 'error': None}", name='canonicalize_smiles', call_id='call_vCvMMUK6vTIxYPW3ECGUh0Rs', is_error=False), FunctionExecutionResult(content="{'canonical': 'COc1ccc(C(=O)c2ccccc2)cc1', 'valid': True, 'formula': 'C14H12O2', 'error': None}", name='canonicalize_smiles', call_id='call_78GGXPxi4HTAHZ6egcp0mOLO', is_error=False), FunctionExecutionResult(content="{'canonical': 'COc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1', 'valid': True, 'formula': 'C18H14N2O2', 'error': None}", name='canonicalize_smiles', call_id='call_Pz8GUP3tzUgstOi9APeAO10f', is_error=False), FunctionExecutionResult(content="{'canonical': 'Cc1c(CCO)sc[n+]1C.[I-]', 'valid': True, 'formula': 'C7H12INOS', 'error': None}", name='canonicalize_smiles', call_id='call_Di9bEFLat936b52ZkEK7oh51', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC(C)(C)[O-].[K+]', 'valid': True, 'formula': 'C4H9KO', 'error': None}", name='canonicalize_smiles', call_id='call_aJAnAogkDjjrCzD9yv9OdIpI', is_error=False), FunctionExecutionResult(content="{'canonical': 'CCO', 'valid': True, 'formula': 'C2H6O', 'error': None}", name='canonicalize_smiles', call_id='call_mf8T6I8BU4v35yofNBD5uydP', is_error=False)]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_TXhv5wdCUf27yvSo0O7WxDbb', arguments='{"smiles":"*C=C(C#N)C#N"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'canonical': '*C=C(C#N)C#N', 'valid': True, 'formula': 'C4H*N2', 'error': None}", name='canonicalize_smiles', call_id='call_TXhv5wdCUf27yvSo0O7WxDbb', is_error=False)]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_VufEuvbEGDFSUWJkzNfhtjiJ', arguments='{}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content='1 validation error for validate_reaction_jsonargs\nobj\n  Field required [type=missing, input_value={}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing', name='validate_reaction_json', call_id='call_VufEuvbEGDFSUWJkzNfhtjiJ', is_error=True)]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_Wi8HMosRHyIg19yJd8sf9Gp9', arguments='{"obj":{"file_name":"121.jpg","reactions":[{"reaction_id":"0_1","reactants":[{"smiles":null,"label":"bbox_1_alkene","uncertain":true},{"smiles":"O=C(c1ccccc1)c1ccccc1","label":"bbox_1_benzoyl","uncertain":false}],"products":[{"smiles":"N#Cc1c(N)oc(-c2ccccc2)c1-c1ccccc1","label":"bbox_1","uncertain":false}],"conditions":[{"role":"catalyst","text":"50 mol% G4","smiles":"Cc1c(CCO)sc[n+]1C.[I-]"},{"role":"loading","text":"50 mol%","smiles":null},{"role":"reagent","text":"tBuOK (1 equiv)","smiles":"CC(C)(C)[O-].[K+]"},{"role":"loading","text":"1 equiv","smiles":null},{"role":"solvent","text":"EtOH","smiles":"CCO"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"0.5 h","smiles":null},{"role":"yield","text":"34 - 85%","smiles":null}],"additional_info":["Scheme 42. Synthesis of Diaryl-Aminofurans"]},{"reaction_id":"0_2","reactants":[{"smiles":null,"label":"bbox_3_alkene","uncertain":true},{"smiles":"N#Cc1ccc(C(=O)c2ccccc2)cc1","label":"bbox_3_benzoyl","uncertain":false}],"products":[{"smiles":"*.N#Cc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1","label":"bbox_3","uncertain":true}],"conditions":[{"role":"catalyst","text":"50 mol% G4","smiles":"Cc1c(CCO)sc[n+]1C.[I-]"},{"role":"loading","text":"50 mol%","smiles":null},{"role":"reagent","text":"tBuOK (1 equiv)","smiles":"CC(C)(C)[O-].[K+]"},{"role":"loading","text":"1 equiv","smiles":null},{"role":"solvent","text":"EtOH","smiles":"CCO"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"0.5 h","smiles":null},{"role":"yield","text":"34 - 85%","smiles":null}],"additional_info":["Scheme 42. Synthesis of Diaryl-Aminofurans"]},{"reaction_id":"0_3","reactants":[{"smiles":null,"label":"bbox_5_alkene","uncertain":true},{"smiles":"COc1ccc(C(=O)c2ccccc2)cc1","label":"bbox_5_benzoyl","uncertain":false}],"products":[{"smiles":"COc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1","label":"bbox_5","uncertain":false}],"conditions":[{"role":"catalyst","text":"50 mol% G4","smiles":"Cc1c(CCO)sc[n+]1C.[I-]"},{"role":"loading","text":"50 mol%","smiles":null},{"role":"reagent","text":"tBuOK (1 equiv)","smiles":"CC(C)(C)[O-].[K+]"},{"role":"loading","text":"1 equiv","smiles":null},{"role":"solvent","text":"EtOH","smiles":"CCO"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"0.5 h","smiles":null},{"role":"yield","text":"34 - 85%","smiles":null}],"additional_info":["Scheme 42. Synthesis of Diaryl-Aminofurans"]}]} }', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'valid': True, 'errors': []}", name='validate_reaction_json', call_id='call_Wi8HMosRHyIg19yJd8sf9Gp9', is_error=False)]
+---------- TextMessage (data_structure) ----------
+```json
+{
+  "file_name": "121.jpg",
+  "reactions": [
+    {
+      "reaction_id": "0_1",
+      "reactants": [
+        {
+          "smiles": null,
+          "label": "bbox_1_alkene",
+          "uncertain": true
+        },
+        {
+          "smiles": "O=C(c1ccccc1)c1ccccc1",
+          "label": "bbox_1_benzoyl",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "N#Cc1c(N)oc(-c2ccccc2)c1-c1ccccc1",
+          "label": "bbox_1",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "50 mol% G4",
+          "smiles": "Cc1c(CCO)sc[n+]1C.[I-]"
+        },
+        {
+          "role": "loading",
+          "text": "50 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "tBuOK (1 equiv)",
+          "smiles": "CC(C)(C)[O-].[K+]"
+        },
+        {
+          "role": "loading",
+          "text": "1 equiv",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "EtOH",
+          "smiles": "CCO"
+        },
+        {
+          "role": "temperature",
+          "text": "rt",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "0.5 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "34 - 85%",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 42. Synthesis of Diaryl-Aminofurans"
+      ]
+    },
+    {
+      "reaction_id": "0_2",
+      "reactants": [
+        {
+          "smiles": null,
+          "label": "bbox_3_alkene",
+          "uncertain": true
+        },
+        {
+          "smiles": "N#Cc1ccc(C(=O)c2ccccc2)cc1",
+          "label": "bbox_3_benzoyl",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "*.N#Cc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1",
+          "label": "bbox_3",
+          "uncertain": true
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "50 mol% G4",
+          "smiles": "Cc1c(CCO)sc[n+]1C.[I-]"
+        },
+        {
+          "role": "loading",
+          "text": "50 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "tBuOK (1 equiv)",
+          "smiles": "CC(C)(C)[O-].[K+]"
+        },
+        {
+          "role": "loading",
+          "text": "1 equiv",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "EtOH",
+          "smiles": "CCO"
+        },
+        {
+          "role": "temperature",
+          "text": "rt",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "0.5 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "34 - 85%",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 42. Synthesis of Diaryl-Aminofurans"
+      ]
+    },
+    {
+      "reaction_id": "0_3",
+      "reactants": [
+        {
+          "smiles": null,
+          "label": "bbox_5_alkene",
+          "uncertain": true
+        },
+        {
+          "smiles": "COc1ccc(C(=O)c2ccccc2)cc1",
+          "label": "bbox_5_benzoyl",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "COc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1",
+          "label": "bbox_5",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "50 mol% G4",
+          "smiles": "Cc1c(CCO)sc[n+]1C.[I-]"
+        },
+        {
+          "role": "loading",
+          "text": "50 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "tBuOK (1 equiv)",
+          "smiles": "CC(C)(C)[O-].[K+]"
+        },
+        {
+          "role": "loading",
+          "text": "1 equiv",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "EtOH",
+          "smiles": "CCO"
+        },
+        {
+          "role": "temperature",
+          "text": "rt",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "0.5 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "34 - 85%",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 42. Synthesis of Diaryl-Aminofurans"
+      ]
+    }
+  ]
+}
+```
+---------- ToolCallRequestEvent (verifier) ----------
+[FunctionCall(id='call_3OmBglyyQlPhuNFMh5i3rFgt', arguments='{}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (verifier) ----------
+[FunctionExecutionResult(content='1 validation error for validate_reaction_jsonargs\nobj\n  Field required [type=missing, input_value={}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing', name='validate_reaction_json', call_id='call_3OmBglyyQlPhuNFMh5i3rFgt', is_error=True)]
+---------- TextMessage (verifier) ----------
+[CRITIQUE verifier]
+schema_errors:
+  - obj: "1 validation error for validate_reaction_jsonargs\nobj\n  Field required [type=missing, input_value={}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing"
+[/CRITIQUE]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_TDshZgowKzAzQILsTEn0T4XU', arguments='{"smiles": "N#CC(C#N)=C[*:3].O=C(c1ccccc1)c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_jSzPadhyNKKRvDwRhK2usFEK', arguments='{"smiles": "N#CC(C#N)=C[*:3].N#Cc1ccc(C(=O)c2ccccc2)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_NbFiY85sKlae5QnxkgGQ04E1', arguments='{"smiles": "COc1ccc(C(=O)c2ccccc2)cc1.N#CC(C#N)=C[*:3]"}', name='canonicalize_smiles'), FunctionCall(id='call_2oO86NqOLOhfKQ9ra9QY5C2E', arguments='{"smiles": "N#Cc1c(N)oc(-c2ccccc2)c1-c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_mVVjYmTUfYW9gxapNaYo3hlw', arguments='{"smiles": "*.N#Cc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_pk3ZK7b5qg3Eif118WlivQZa', arguments='{"smiles": "COc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'canonical': 'N#CC(C#N)=C[*:3].O=C(c1ccccc1)c1ccccc1', 'valid': True, 'formula': 'C17H11*N2O', 'error': None}", name='canonicalize_smiles', call_id='call_TDshZgowKzAzQILsTEn0T4XU', is_error=False), FunctionExecutionResult(content="{'canonical': 'N#CC(C#N)=C[*:3].N#Cc1ccc(C(=O)c2ccccc2)cc1', 'valid': True, 'formula': 'C18H10*N3O', 'error': None}", name='canonicalize_smiles', call_id='call_jSzPadhyNKKRvDwRhK2usFEK', is_error=False), FunctionExecutionResult(content="{'canonical': 'COc1ccc(C(=O)c2ccccc2)cc1.N#CC(C#N)=C[*:3]', 'valid': True, 'formula': 'C18H13*N2O2', 'error': None}", name='canonicalize_smiles', call_id='call_NbFiY85sKlae5QnxkgGQ04E1', is_error=False), FunctionExecutionResult(content="{'canonical': 'N#Cc1c(N)oc(-c2ccccc2)c1-c1ccccc1', 'valid': True, 'formula': 'C17H12N2O', 'error': None}", name='canonicalize_smiles', call_id='call_2oO86NqOLOhfKQ9ra9QY5C2E', is_error=False), FunctionExecutionResult(content="{'canonical': '*.N#Cc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1', 'valid': True, 'formula': 'C18H11*N3O', 'error': None}", name='canonicalize_smiles', call_id='call_mVVjYmTUfYW9gxapNaYo3hlw', is_error=False), FunctionExecutionResult(content="{'canonical': 'COc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1', 'valid': True, 'formula': 'C18H14N2O2', 'error': None}", name='canonicalize_smiles', call_id='call_pk3ZK7b5qg3Eif118WlivQZa', is_error=False)]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_UiGelo1hoLMaxQZmiUVh4RIX', arguments='{"obj":{"file_name":"121.jpg","reactions":[{"reaction_id":"0_1","reactants":[{"smiles":"N#CC(C#N)=C[*:3].O=C(c1ccccc1)c1ccccc1","label":"bbox_1","uncertain":false}],"products":[{"smiles":"N#Cc1c(N)oc(-c2ccccc2)c1-c1ccccc1","label":"bbox_1","uncertain":false}],"conditions":[{"role":"catalyst","text":"50 mol% G4","smiles":"Cc1c(CCO)sc[n+]1C.[I-]"},{"role":"loading","text":"50 mol%","smiles":null},{"role":"reagent","text":"tBuOK (1 equiv)","smiles":"CC(C)(C)[O-].[K+]"},{"role":"loading","text":"1 equiv","smiles":null},{"role":"solvent","text":"EtOH","smiles":"CCO"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"0.5 h","smiles":null},{"role":"yield","text":"34 - 85%","smiles":null}],"additional_info":["Scheme 42. Synthesis of Diaryl-Aminofurans"]},{"reaction_id":"0_2","reactants":[{"smiles":"N#CC(C#N)=C[*:3].N#Cc1ccc(C(=O)c2ccccc2)cc1","label":"bbox_3","uncertain":false}],"products":[{"smiles":"*.N#Cc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1","label":"bbox_3","uncertain":true}],"conditions":[{"role":"catalyst","text":"50 mol% G4","smiles":"Cc1c(CCO)sc[n+]1C.[I-]"},{"role":"loading","text":"50 mol%","smiles":null},{"role":"reagent","text":"tBuOK (1 equiv)","smiles":"CC(C)(C)[O-].[K+]"},{"role":"loading","text":"1 equiv","smiles":null},{"role":"solvent","text":"EtOH","smiles":"CCO"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"0.5 h","smiles":null},{"role":"yield","text":"34 - 85%","smiles":null}],"additional_info":["Scheme 42. Synthesis of Diaryl-Aminofurans"]},{"reaction_id":"0_3","reactants":[{"smiles":"COc1ccc(C(=O)c2ccccc2)cc1.N#CC(C#N)=C[*:3]","label":"bbox_5","uncertain":false}],"products":[{"smiles":"COc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1","label":"bbox_5","uncertain":false}],"conditions":[{"role":"catalyst","text":"50 mol% G4","smiles":"Cc1c(CCO)sc[n+]1C.[I-]"},{"role":"loading","text":"50 mol%","smiles":null},{"role":"reagent","text":"tBuOK (1 equiv)","smiles":"CC(C)(C)[O-].[K+]"},{"role":"loading","text":"1 equiv","smiles":null},{"role":"solvent","text":"EtOH","smiles":"CCO"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"0.5 h","smiles":null},{"role":"yield","text":"34 - 85%","smiles":null}],"additional_info":["Scheme 42. Synthesis of Diaryl-Aminofurans"]}]}}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content='{\'valid\': False, \'errors\': [{\'loc\': [\'reactions\', 0, \'reactants\', 0, \'smiles\'], \'msg\': "Value error, SMILES contains an attachment-point marker `[*:N]` (\'N#CC(C#N)=C[*:3].O=C(c1ccccc1)c1ccccc1\'). This looks like a raw R-fragment from derive_substituents — you forgot to feed it through apply_substituents(template, r_assignments) to fuse it into the reactant or product template before emitting JSON."}, {\'loc\': [\'reactions\', 1, \'reactants\', 0, \'smiles\'], \'msg\': "Value error, SMILES contains an attachment-point marker `[*:N]` (\'N#CC(C#N)=C[*:3].N#Cc1ccc(C(=O)c2ccccc2)cc1\'). This looks like a raw R-fragment from derive_substituents — you forgot to feed it through apply_substituents(template, r_assignments) to fuse it into the reactant or product template before emitting JSON."}, {\'loc\': [\'reactions\', 2, \'reactants\', 0, \'smiles\'], \'msg\': "Value error, SMILES contains an attachment-point marker `[*:N]` (\'COc1ccc(C(=O)c2ccccc2)cc1.N#CC(C#N)=C[*:3]\'). This looks like a raw R-fragment from derive_substituents — you forgot to feed it through apply_substituents(template, r_assignments) to fuse it into the reactant or product template before emitting JSON."}]}', name='validate_reaction_json', call_id='call_UiGelo1hoLMaxQZmiUVh4RIX', is_error=False)]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_aC8qG7apFfZgoGyuiDahs2dh', arguments='{"smiles": "*C=C(C#N)C#N"}', name='canonicalize_smiles'), FunctionCall(id='call_EeNUskrdOoS60rRAdkSonNd8', arguments='{"smiles": "O=C(c1ccccc1)c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_qPHSr0QlEZ2nEbIFpQk4ugQT', arguments='{"smiles": "N#Cc1ccc(C(=O)c2ccccc2)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_CypM6SjfYvomE4M5TGqFUwbx', arguments='{"smiles": "COc1ccc(C(=O)c2ccccc2)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_DQf3Vd5XeMaqKawbfLt7FCsj', arguments='{"smiles": "N#Cc1c(N)oc(-c2ccccc2)c1-c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_IDb6BwC8VOY0GVcbOMkVddWx', arguments='{"smiles": "*.N#Cc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_M9dMbnFLJecUhWzvnr5LPHcZ', arguments='{"smiles": "COc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'canonical': '*C=C(C#N)C#N', 'valid': True, 'formula': 'C4H*N2', 'error': None}", name='canonicalize_smiles', call_id='call_aC8qG7apFfZgoGyuiDahs2dh', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=C(c1ccccc1)c1ccccc1', 'valid': True, 'formula': 'C13H10O', 'error': None}", name='canonicalize_smiles', call_id='call_EeNUskrdOoS60rRAdkSonNd8', is_error=False), FunctionExecutionResult(content="{'canonical': 'N#Cc1ccc(C(=O)c2ccccc2)cc1', 'valid': True, 'formula': 'C14H9NO', 'error': None}", name='canonicalize_smiles', call_id='call_qPHSr0QlEZ2nEbIFpQk4ugQT', is_error=False), FunctionExecutionResult(content="{'canonical': 'COc1ccc(C(=O)c2ccccc2)cc1', 'valid': True, 'formula': 'C14H12O2', 'error': None}", name='canonicalize_smiles', call_id='call_CypM6SjfYvomE4M5TGqFUwbx', is_error=False), FunctionExecutionResult(content="{'canonical': 'N#Cc1c(N)oc(-c2ccccc2)c1-c1ccccc1', 'valid': True, 'formula': 'C17H12N2O', 'error': None}", name='canonicalize_smiles', call_id='call_DQf3Vd5XeMaqKawbfLt7FCsj', is_error=False), FunctionExecutionResult(content="{'canonical': '*.N#Cc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1', 'valid': True, 'formula': 'C18H11*N3O', 'error': None}", name='canonicalize_smiles', call_id='call_IDb6BwC8VOY0GVcbOMkVddWx', is_error=False), FunctionExecutionResult(content="{'canonical': 'COc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1', 'valid': True, 'formula': 'C18H14N2O2', 'error': None}", name='canonicalize_smiles', call_id='call_M9dMbnFLJecUhWzvnr5LPHcZ', is_error=False)]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_yQ4TjWMYCUliMGTWfkQFF9bB', arguments='{"obj":{"file_name":"121.jpg","reactions":[{"reaction_id":"0_1","reactants":[{"smiles":"*C=C(C#N)C#N","label":"bbox_1_alkene","uncertain":true},{"smiles":"O=C(c1ccccc1)c1ccccc1","label":"bbox_1_benzoyl","uncertain":false}],"products":[{"smiles":"N#Cc1c(N)oc(-c2ccccc2)c1-c1ccccc1","label":"bbox_1","uncertain":false}],"conditions":[{"role":"catalyst","text":"50 mol% G4","smiles":"Cc1c(CCO)sc[n+]1C.[I-]"},{"role":"loading","text":"50 mol%","smiles":null},{"role":"reagent","text":"tBuOK (1 equiv)","smiles":"CC(C)(C)[O-].[K+]"},{"role":"loading","text":"1 equiv","smiles":null},{"role":"solvent","text":"EtOH","smiles":"CCO"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"0.5 h","smiles":null},{"role":"yield","text":"34 - 85%","smiles":null}],"additional_info":["Scheme 42. Synthesis of Diaryl-Aminofurans"]},{"reaction_id":"0_2","reactants":[{"smiles":"*C=C(C#N)C#N","label":"bbox_3_alkene","uncertain":true},{"smiles":"N#Cc1ccc(C(=O)c2ccccc2)cc1","label":"bbox_3_benzoyl","uncertain":false}],"products":[{"smiles":"*.N#Cc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1","label":"bbox_3","uncertain":true}],"conditions":[{"role":"catalyst","text":"50 mol% G4","smiles":"Cc1c(CCO)sc[n+]1C.[I-]"},{"role":"loading","text":"50 mol%","smiles":null},{"role":"reagent","text":"tBuOK (1 equiv)","smiles":"CC(C)(C)[O-].[K+]"},{"role":"loading","text":"1 equiv","smiles":null},{"role":"solvent","text":"EtOH","smiles":"CCO"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"0.5 h","smiles":null},{"role":"yield","text":"34 - 85%","smiles":null}],"additional_info":["Scheme 42. Synthesis of Diaryl-Aminofurans"]},{"reaction_id":"0_3","reactants":[{"smiles":"*C=C(C#N)C#N","label":"bbox_5_alkene","uncertain":true},{"smiles":"COc1ccc(C(=O)c2ccccc2)cc1","label":"bbox_5_benzoyl","uncertain":false}],"products":[{"smiles":"COc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1","label":"bbox_5","uncertain":false}],"conditions":[{"role":"catalyst","text":"50 mol% G4","smiles":"Cc1c(CCO)sc[n+]1C.[I-]"},{"role":"loading","text":"50 mol%","smiles":null},{"role":"reagent","text":"tBuOK (1 equiv)","smiles":"CC(C)(C)[O-].[K+]"},{"role":"loading","text":"1 equiv","smiles":null},{"role":"solvent","text":"EtOH","smiles":"CCO"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"0.5 h","smiles":null},{"role":"yield","text":"34 - 85%","smiles":null}],"additional_info":["Scheme 42. Synthesis of Diaryl-Aminofurans"]}]}}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'valid': True, 'errors': []}", name='validate_reaction_json', call_id='call_yQ4TjWMYCUliMGTWfkQFF9bB', is_error=False)]
+---------- TextMessage (data_structure) ----------
+```json
+{
+  "file_name": "121.jpg",
+  "reactions": [
+    {
+      "reaction_id": "0_1",
+      "reactants": [
+        {
+          "smiles": "*C=C(C#N)C#N",
+          "label": "bbox_1_alkene",
+          "uncertain": true
+        },
+        {
+          "smiles": "O=C(c1ccccc1)c1ccccc1",
+          "label": "bbox_1_benzoyl",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "N#Cc1c(N)oc(-c2ccccc2)c1-c1ccccc1",
+          "label": "bbox_1",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "50 mol% G4",
+          "smiles": "Cc1c(CCO)sc[n+]1C.[I-]"
+        },
+        {
+          "role": "loading",
+          "text": "50 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "tBuOK (1 equiv)",
+          "smiles": "CC(C)(C)[O-].[K+]"
+        },
+        {
+          "role": "loading",
+          "text": "1 equiv",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "EtOH",
+          "smiles": "CCO"
+        },
+        {
+          "role": "temperature",
+          "text": "rt",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "0.5 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "34 - 85%",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 42. Synthesis of Diaryl-Aminofurans"
+      ]
+    },
+    {
+      "reaction_id": "0_2",
+      "reactants": [
+        {
+          "smiles": "*C=C(C#N)C#N",
+          "label": "bbox_3_alkene",
+          "uncertain": true
+        },
+        {
+          "smiles": "N#Cc1ccc(C(=O)c2ccccc2)cc1",
+          "label": "bbox_3_benzoyl",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "*.N#Cc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1",
+          "label": "bbox_3",
+          "uncertain": true
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "50 mol% G4",
+          "smiles": "Cc1c(CCO)sc[n+]1C.[I-]"
+        },
+        {
+          "role": "loading",
+          "text": "50 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "tBuOK (1 equiv)",
+          "smiles": "CC(C)(C)[O-].[K+]"
+        },
+        {
+          "role": "loading",
+          "text": "1 equiv",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "EtOH",
+          "smiles": "CCO"
+        },
+        {
+          "role": "temperature",
+          "text": "rt",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "0.5 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "34 - 85%",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 42. Synthesis of Diaryl-Aminofurans"
+      ]
+    },
+    {
+      "reaction_id": "0_3",
+      "reactants": [
+        {
+          "smiles": "*C=C(C#N)C#N",
+          "label": "bbox_5_alkene",
+          "uncertain": true
+        },
+        {
+          "smiles": "COc1ccc(C(=O)c2ccccc2)cc1",
+          "label": "bbox_5_benzoyl",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "COc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1",
+          "label": "bbox_5",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "50 mol% G4",
+          "smiles": "Cc1c(CCO)sc[n+]1C.[I-]"
+        },
+        {
+          "role": "loading",
+          "text": "50 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "tBuOK (1 equiv)",
+          "smiles": "CC(C)(C)[O-].[K+]"
+        },
+        {
+          "role": "loading",
+          "text": "1 equiv",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "EtOH",
+          "smiles": "CCO"
+        },
+        {
+          "role": "temperature",
+          "text": "rt",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "0.5 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "34 - 85%",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 42. Synthesis of Diaryl-Aminofurans"
+      ]
+    }
+  ]
+}
+```
+---------- ToolCallRequestEvent (verifier) ----------
+[FunctionCall(id='call_RwhhEhIr1O90PY6ooyawyC5u', arguments='{"obj":{"file_name":"121.jpg","reactions":[{"reaction_id":"0_1","reactants":[{"smiles":"*C=C(C#N)C#N","label":"bbox_1_alkene","uncertain":true},{"smiles":"O=C(c1ccccc1)c1ccccc1","label":"bbox_1_benzoyl","uncertain":false}],"products":[{"smiles":"N#Cc1c(N)oc(-c2ccccc2)c1-c1ccccc1","label":"bbox_1","uncertain":false}],"conditions":[{"role":"catalyst","text":"50 mol% G4","smiles":"Cc1c(CCO)sc[n+]1C.[I-]"},{"role":"loading","text":"50 mol%","smiles":null},{"role":"reagent","text":"tBuOK (1 equiv)","smiles":"CC(C)(C)[O-].[K+]"},{"role":"loading","text":"1 equiv","smiles":null},{"role":"solvent","text":"EtOH","smiles":"CCO"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"0.5 h","smiles":null},{"role":"yield","text":"34 - 85%","smiles":null}],"additional_info":["Scheme 42. Synthesis of Diaryl-Aminofurans"]},{"reaction_id":"0_2","reactants":[{"smiles":"*C=C(C#N)C#N","label":"bbox_3_alkene","uncertain":true},{"smiles":"N#Cc1ccc(C(=O)c2ccccc2)cc1","label":"bbox_3_benzoyl","uncertain":false}],"products":[{"smiles":"*.N#Cc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1","label":"bbox_3","uncertain":true}],"conditions":[{"role":"catalyst","text":"50 mol% G4","smiles":"Cc1c(CCO)sc[n+]1C.[I-]"},{"role":"loading","text":"50 mol%","smiles":null},{"role":"reagent","text":"tBuOK (1 equiv)","smiles":"CC(C)(C)[O-].[K+]"},{"role":"loading","text":"1 equiv","smiles":null},{"role":"solvent","text":"EtOH","smiles":"CCO"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"0.5 h","smiles":null},{"role":"yield","text":"34 - 85%","smiles":null}],"additional_info":["Scheme 42. Synthesis of Diaryl-Aminofurans"]},{"reaction_id":"0_3","reactants":[{"smiles":"*C=C(C#N)C#N","label":"bbox_5_alkene","uncertain":true},{"smiles":"COc1ccc(C(=O)c2ccccc2)cc1","label":"bbox_5_benzoyl","uncertain":false}],"products":[{"smiles":"COc1ccc(-c2oc(N)c(C#N)c2-c2ccccc2)cc1","label":"bbox_5","uncertain":false}],"conditions":[{"role":"catalyst","text":"50 mol% G4","smiles":"Cc1c(CCO)sc[n+]1C.[I-]"},{"role":"loading","text":"50 mol%","smiles":null},{"role":"reagent","text":"tBuOK (1 equiv)","smiles":"CC(C)(C)[O-].[K+]"},{"role":"loading","text":"1 equiv","smiles":null},{"role":"solvent","text":"EtOH","smiles":"CCO"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"0.5 h","smiles":null},{"role":"yield","text":"34 - 85%","smiles":null}],"additional_info":["Scheme 42. Synthesis of Diaryl-Aminofurans"]}]}}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (verifier) ----------
+[FunctionExecutionResult(content="{'valid': True, 'errors': []}", name='validate_reaction_json', call_id='call_RwhhEhIr1O90PY6ooyawyC5u', is_error=False)]
+---------- TextMessage (verifier) ----------
+TERMINATE
+
+[validation] PASSED after 0 retry/retries
+Results saved to /Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/runs/20260428_151353_selector

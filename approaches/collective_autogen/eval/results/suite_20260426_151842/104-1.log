@@ -1,0 +1,437 @@
+---------- MultiModalMessage (user) ----------
+Analyse this chemistry reaction image. Each specialist contributes one [FINDINGS ...] card per turn, then data_structure produces JSON, then the verifier audits the JSON and ends the run.
+image_path = /Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/104-1.jpg
+Pass that exact path as the first argument to crop_image_region(image_path, [x,y,w,h]) if you need to zoom in on a region of the image.
+<image>
+---------- TextMessage (molecular_recognition) ----------
+[FINDINGS molecular_recognition]
+# scripted agent — one entry per detected bbox, no deduplication
+molecule_count: 6
+molecule:
+  label: bbox_0
+  canonical_smiles: [1*]C([2*])=O
+  bbox: [83, 59, 148, 125]
+  confidence: 0.816
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_1
+  canonical_smiles: CC(O[Si](C)(C)C)(C(=O)c1ccccc1)c1ccccc1
+  bbox: [85, 290, 287, 173]
+  confidence: 0.893
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_2
+  canonical_smiles: [3*]C([4*])=O
+  bbox: [364, 63, 150, 125]
+  confidence: 0.871
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_3
+  canonical_smiles: CC.COc1ccc(C(=O)C(O[Si](C)(C)C)(c2ccccc2)C2CCC2)cc1
+  bbox: [436, 290, 459, 231]
+  confidence: 0.752
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_4
+  canonical_smiles: CCC(=O)C(C)(O[Si](C)(C)C)c1ccccc1
+  bbox: [960, 290, 281, 172]
+  confidence: 0.898
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_5
+  canonical_smiles: [2*]C([3*])([4*])C([7*])=O
+  bbox: [990, 38, 201, 174]
+  confidence: 0.854
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+[/FINDINGS]
+/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/agents/_assistant_agent.py:1109: UserWarning: Resolved model mismatch: gpt-5.4 != gpt-5.4-2026-03-05. Model mapping in autogen_ext.models.openai may be incorrect. Set the model to gpt-5.4-2026-03-05 to enhance token/cost estimation and suppress this warning.
+  model_result = await model_client.create(
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_gNyKMGuRCquEf1KoIGESxaOD', arguments='{"image_path":"/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/104-1.jpg","molecule_only":true,"score_min":0}', name='detect_molecules')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'bboxes': [{'x1': 83, 'y1': 59, 'x2': 230, 'y2': 183, 'w': 148, 'h': 125, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 85, 'y1': 290, 'x2': 373, 'y2': 463, 'w': 287, 'h': 173, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 364, 'y1': 63, 'x2': 514, 'y2': 187, 'w': 150, 'h': 125, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 436, 'y1': 290, 'x2': 895, 'y2': 521, 'w': 459, 'h': 231, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 960, 'y1': 290, 'x2': 1241, 'y2': 462, 'w': 281, 'h': 172, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 990, 'y1': 38, 'x2': 1190, 'y2': 212, 'w': 201, 'h': 174, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}], 'image_w': 1294, 'image_h': 580, 'device': 'mps', 'error': None, 'cached': True}", name='detect_molecules', call_id='call_gNyKMGuRCquEf1KoIGESxaOD', is_error=False)]
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_pcJrQQwuG808GRxb9ivElzvh', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/104-1.jpg", "bbox": [83, 59, 148, 125], "pad": 10}', name='predict_molecule_smiles'), FunctionCall(id='call_xwPJZVUnUWDdjABTPxeRWB6m', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/104-1.jpg", "bbox": [364, 63, 150, 125], "pad": 10}', name='predict_molecule_smiles'), FunctionCall(id='call_X8jiGiOYEaUKG5W6ZFv9RuPS', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/104-1.jpg", "bbox": [990, 38, 201, 174], "pad": 10}', name='predict_molecule_smiles')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'smiles': '[1*]C([2*])=O', 'confidence': 0.8162664445836754, 'atoms_count': 4, 'bonds_count': 3, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_pcJrQQwuG808GRxb9ivElzvh', is_error=False), FunctionExecutionResult(content="{'smiles': '[3*]C([4*])=O', 'confidence': 0.8707429450479384, 'atoms_count': 4, 'bonds_count': 3, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_xwPJZVUnUWDdjABTPxeRWB6m', is_error=False), FunctionExecutionResult(content="{'smiles': '[2*]C([3*])([4*])C([7*])=O', 'confidence': 0.8541168794905011, 'atoms_count': 7, 'bonds_count': 6, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_X8jiGiOYEaUKG5W6ZFv9RuPS', is_error=False)]
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_coymffHVNa6smh4I2qXaOtDn', arguments='{"smiles": "[1*]C([2*])=O"}', name='validate_smiles'), FunctionCall(id='call_jEncZ5Ly6asGToXGj1X925Jg', arguments='{"smiles": "[1*]C([2*])=O"}', name='canonicalize_smiles'), FunctionCall(id='call_pM0zIR39ps6shwK9i5VNIVEQ', arguments='{"smiles": "[3*]C([4*])=O"}', name='validate_smiles'), FunctionCall(id='call_DFpGDTiLxGwvJFjufKWx5czA', arguments='{"smiles": "[3*]C([4*])=O"}', name='canonicalize_smiles'), FunctionCall(id='call_IE3g3uylZngL7VDPPAVGQp46', arguments='{"smiles": "[2*]C([3*])([4*])C([7*])=O"}', name='validate_smiles'), FunctionCall(id='call_EORPZ5wtBwJCsBwWG0f0S3S5', arguments='{"smiles": "[2*]C([3*])([4*])C([7*])=O"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_coymffHVNa6smh4I2qXaOtDn', is_error=False), FunctionExecutionResult(content="{'canonical': '[1*]C([2*])=O', 'valid': True, 'formula': 'C*2O', 'error': None}", name='canonicalize_smiles', call_id='call_jEncZ5Ly6asGToXGj1X925Jg', is_error=False), FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_pM0zIR39ps6shwK9i5VNIVEQ', is_error=False), FunctionExecutionResult(content="{'canonical': '[3*]C([4*])=O', 'valid': True, 'formula': 'C*2O', 'error': None}", name='canonicalize_smiles', call_id='call_DFpGDTiLxGwvJFjufKWx5czA', is_error=False), FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_IE3g3uylZngL7VDPPAVGQp46', is_error=False), FunctionExecutionResult(content="{'canonical': '[2*]C([3*])([4*])C([7*])=O', 'valid': True, 'formula': 'C2*4O', 'error': None}", name='canonicalize_smiles', call_id='call_EORPZ5wtBwJCsBwWG0f0S3S5', is_error=False)]
+---------- TextMessage (reaction_template_parser) ----------
+[FINDINGS reaction_template_parser]
+scheme_count: 1
+scheme_1:
+  reactant_template_smiles: [1*]C([2*])=O + [3*]C([4*])=O
+  product_template_smiles:  [2*]C([3*])([4*])C([7*])=O
+  arrow: forward
+  multi_step: no
+  notes: template bboxes #0 (reactant 1, conf 0.816), #2 (reactant 2, conf 0.871), and #5 (product, conf 0.854) from detect_molecules/predict_molecule_smiles; top scheme shows coupling of two carbonyl partners to an acyl-silane-derived product template.
+[/FINDINGS]
+---------- ToolCallRequestEvent (rgroup_substitution) ----------
+[FunctionCall(id='call_pxtZWe1oahL7gGPXTXzGfWdL', arguments='{"template_smiles":"[2*]C([3*])([4*])C([7*])=O","concrete_smiles":["CC(O[Si](C)(C)C)(C(=O)c1ccccc1)c1ccccc1","CC.COc1ccc(C(=O)C(O[Si](C)(C)C)(c2ccccc2)C2CCC2)cc1","CCC(=O)C(C)(O[Si](C)(C)C)c1ccccc1"]}', name='derive_substituents')]
+---------- ToolCallExecutionEvent (rgroup_substitution) ----------
+[FunctionExecutionResult(content="{'results': [{'smiles': 'CC(O[Si](C)(C)C)(C(=O)c1ccccc1)c1ccccc1', 'matched': True, 'r_assignments': {'R2': 'c1ccc([*:2])cc1', 'R3': 'C[Si](C)(C)O[*:3]', 'R4': 'C[*:4]', 'R7': 'c1ccc([*:7])cc1'}, 'core': 'O=C(C([*:2])([*:3])[*:4])[*:7]', 'error': None}, {'smiles': 'CC.COc1ccc(C(=O)C(O[Si](C)(C)C)(c2ccccc2)C2CCC2)cc1', 'matched': True, 'r_assignments': {'R2': 'c1ccc([*:2])cc1', 'R3': 'C[Si](C)(C)O[*:3]', 'R4': 'C1CC([*:4])C1', 'R7': 'COc1ccc([*:7])cc1'}, 'core': 'O=C(C([*:2])([*:3])[*:4])[*:7]', 'error': None}, {'smiles': 'CCC(=O)C(C)(O[Si](C)(C)C)c1ccccc1', 'matched': True, 'r_assignments': {'R2': 'c1ccc([*:2])cc1', 'R3': 'C[Si](C)(C)O[*:3]', 'R4': 'C[*:4]', 'R7': 'CC[*:7]'}, 'core': 'O=C(C([*:2])([*:3])[*:4])[*:7]', 'error': None}], 'unmatched_indices': [], 'template': '[2*]C([3*])([4*])C([7*])=O', 'error': None}", name='derive_substituents', call_id='call_pxtZWe1oahL7gGPXTXzGfWdL', is_error=False)]
+---------- TextMessage (rgroup_substitution) ----------
+[FINDINGS rgroup_substitution]
+reactant_template: [1*]C([2*])=O + [3*]C([4*])=O
+product_template:  [2*]C([3*])([4*])C([7*])=O
+variants:
+  - label: bbox_1
+    r_assignments: {R2: 'c1ccc([*:2])cc1', R3: 'C[Si](C)(C)O[*:3]', R4: 'C[*:4]', R7: 'c1ccc([*:7])cc1'}
+    reactant_smiles: [1*]C(c1ccccc1)=O + C[Si](C)(C)OC
+    product_smiles: CC(O[Si](C)(C)C)(C(=O)c1ccccc1)c1ccccc1
+    valid: yes
+  - label: bbox_3
+    r_assignments: {R2: 'c1ccc([*:2])cc1', R3: 'C[Si](C)(C)O[*:3]', R4: 'C1CC([*:4])C1', R7: 'COc1ccc([*:7])cc1'}
+    reactant_smiles: [1*]C(c1ccccc1)=O + C[Si](C)(C)OC1CCC1
+    product_smiles: CC.COc1ccc(C(=O)C(O[Si](C)(C)C)(c2ccccc2)C2CCC2)cc1
+    valid: yes
+  - label: bbox_4
+    r_assignments: {R2: 'c1ccc([*:2])cc1', R3: 'C[Si](C)(C)O[*:3]', R4: 'C[*:4]', R7: 'CC[*:7]'}
+    reactant_smiles: [1*]C(c1ccccc1)=O + C[Si](C)(C)OCC
+    product_smiles: CCC(=O)C(C)(O[Si](C)(C)C)c1ccccc1
+    valid: yes
+[/FINDINGS]
+---------- ToolCallRequestEvent (condition_interpretation) ----------
+[FunctionCall(id='call_TMBU6tQo6EkbHyyrBn0on4g0', arguments='{"name": "La(CN)3"}', name='lookup_compound'), FunctionCall(id='call_huwTbdYA7rKGn226tSvY5swU', arguments='{"name": "THF"}', name='lookup_compound')]
+---------- ToolCallExecutionEvent (condition_interpretation) ----------
+[FunctionExecutionResult(content="{'smiles': '[C-]#N.[C-]#N.[C-]#N.[La+3]', 'source': 'pubchem', 'query_used': 'La(CN)3', 'cached': True, 'error': None}", name='lookup_compound', call_id='call_TMBU6tQo6EkbHyyrBn0on4g0', is_error=False), FunctionExecutionResult(content="{'smiles': 'O1CCCC1', 'source': 'opsin', 'query_used': 'oxolane', 'cached': True, 'error': None}", name='lookup_compound', call_id='call_huwTbdYA7rKGn226tSvY5swU', is_error=False)]
+---------- ToolCallRequestEvent (condition_interpretation) ----------
+[FunctionCall(id='call_IsBIdDEeyeI765hREv08NTrM', arguments='{"smiles": "[C-]#N.[C-]#N.[C-]#N.[La+3]"}', name='validate_smiles'), FunctionCall(id='call_fz1kQvAPjs3zuuf3znLoCgrs', arguments='{"smiles": "O1CCCC1"}', name='validate_smiles')]
+---------- ToolCallExecutionEvent (condition_interpretation) ----------
+[FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_IsBIdDEeyeI765hREv08NTrM', is_error=False), FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_fz1kQvAPjs3zuuf3znLoCgrs', is_error=False)]
+---------- TextMessage (condition_interpretation) ----------
+[FINDINGS condition_interpretation]
+applies_to: scheme_1
+conditions:
+  - role: catalyst
+    text: 10 mol% La(CN)3
+    smiles: [C-]#N.[C-]#N.[C-]#N.[La+3]
+  - role: loading
+    text: 10 mol%
+    smiles: null
+  - role: solvent
+    text: THF
+    smiles: O1CCCC1
+  - role: temperature
+    text: rt
+    smiles: null
+  - role: time
+    text: 20 min
+    smiles: null
+  - role: yield
+    text: 40 - 96%
+    smiles: null
+  - role: yield
+    text: 78% yield
+    smiles: null
+  - role: yield
+    text: 63% yield
+    smiles: null
+  - role: yield
+    text: 58% yield
+    smiles: null
+[/FINDINGS]
+---------- TextMessage (text_extraction) ----------
+[FINDINGS text_extraction]
+items:
+  - kind: heading
+    text: "Johnson, Acyl-silanes:"
+    applies_to: figure
+  - kind: heading
+    text: "Selected Examples"
+    applies_to: figure
+  - kind: other
+    text: "+"
+    applies_to: scheme_1
+  - kind: other
+    text: "R¹"
+    applies_to: scheme_1
+  - kind: other
+    text: "R²"
+    applies_to: scheme_1
+  - kind: other
+    text: "R³"
+    applies_to: scheme_1
+  - kind: other
+    text: "R⁴"
+    applies_to: scheme_1
+  - kind: other
+    text: "R¹"
+    applies_to: scheme_1
+  - kind: other
+    text: "R²"
+    applies_to: scheme_1
+  - kind: other
+    text: "R³"
+    applies_to: scheme_1
+  - kind: other
+    text: "R⁴"
+    applies_to: scheme_1
+[/FINDINGS]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_UZtK57742wbr5ooOGSx5hiQ8', arguments='{"smiles": "[1*]C(c1ccccc1)=O"}', name='canonicalize_smiles'), FunctionCall(id='call_ooekFzemT7Qm5gAaiBHSg3Pr', arguments='{"smiles": "C[Si](C)(C)OC"}', name='canonicalize_smiles'), FunctionCall(id='call_cLj6LstfMDaodUIWT1Mc4U5a', arguments='{"smiles": "CC(O[Si](C)(C)C)(C(=O)c1ccccc1)c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_uixfyCotfEy8KJah9iB73kX1', arguments='{"smiles": "C[Si](C)(C)OC1CCC1"}', name='canonicalize_smiles'), FunctionCall(id='call_oerOkuFJJhZ2F9aosY6Q837U', arguments='{"smiles": "CC.COc1ccc(C(=O)C(O[Si](C)(C)C)(c2ccccc2)C2CCC2)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_p2FlVrsSh59ewdH4JOzyu6NX', arguments='{"smiles": "C[Si](C)(C)OCC"}', name='canonicalize_smiles'), FunctionCall(id='call_w2ns4WXUsoZlYsLCM59KLGHr', arguments='{"smiles": "CCC(=O)C(C)(O[Si](C)(C)C)c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_Rk39ywdoBl4AWAonRpLWliLC', arguments='{"smiles": "[C-]#N.[C-]#N.[C-]#N.[La+3]"}', name='canonicalize_smiles'), FunctionCall(id='call_kpsXRWCg8uJJiFXCi56gC6UG', arguments='{"smiles": "O1CCCC1"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'canonical': '[1*]C(=O)c1ccccc1', 'valid': True, 'formula': 'C7H5*O', 'error': None}", name='canonicalize_smiles', call_id='call_UZtK57742wbr5ooOGSx5hiQ8', is_error=False), FunctionExecutionResult(content="{'canonical': 'CO[Si](C)(C)C', 'valid': True, 'formula': 'C4H12OSi', 'error': None}", name='canonicalize_smiles', call_id='call_ooekFzemT7Qm5gAaiBHSg3Pr', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC(O[Si](C)(C)C)(C(=O)c1ccccc1)c1ccccc1', 'valid': True, 'formula': 'C18H22O2Si', 'error': None}", name='canonicalize_smiles', call_id='call_cLj6LstfMDaodUIWT1Mc4U5a', is_error=False), FunctionExecutionResult(content="{'canonical': 'C[Si](C)(C)OC1CCC1', 'valid': True, 'formula': 'C7H16OSi', 'error': None}", name='canonicalize_smiles', call_id='call_uixfyCotfEy8KJah9iB73kX1', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC.COc1ccc(C(=O)C(O[Si](C)(C)C)(c2ccccc2)C2CCC2)cc1', 'valid': True, 'formula': 'C24H34O3Si', 'error': None}", name='canonicalize_smiles', call_id='call_oerOkuFJJhZ2F9aosY6Q837U', is_error=False), FunctionExecutionResult(content="{'canonical': 'CCO[Si](C)(C)C', 'valid': True, 'formula': 'C5H14OSi', 'error': None}", name='canonicalize_smiles', call_id='call_p2FlVrsSh59ewdH4JOzyu6NX', is_error=False), FunctionExecutionResult(content="{'canonical': 'CCC(=O)C(C)(O[Si](C)(C)C)c1ccccc1', 'valid': True, 'formula': 'C14H22O2Si', 'error': None}", name='canonicalize_smiles', call_id='call_w2ns4WXUsoZlYsLCM59KLGHr', is_error=False), FunctionExecutionResult(content="{'canonical': '[C-]#N.[C-]#N.[C-]#N.[La+3]', 'valid': True, 'formula': 'C3LaN3', 'error': None}", name='canonicalize_smiles', call_id='call_Rk39ywdoBl4AWAonRpLWliLC', is_error=False), FunctionExecutionResult(content="{'canonical': 'C1CCOC1', 'valid': True, 'formula': 'C4H8O', 'error': None}", name='canonicalize_smiles', call_id='call_kpsXRWCg8uJJiFXCi56gC6UG', is_error=False)]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_9PB6LO1FSpxAz67DsZXyfN2U', arguments='{"smiles": "[1*]C(=O)c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_YLlkXd7dfyW3GHwZuDeCWcWO', arguments='{"smiles": "CO[Si](C)(C)C"}', name='canonicalize_smiles'), FunctionCall(id='call_dejUeLCxzEfAnpT4OOSDkXwF', arguments='{"smiles": "CC(O[Si](C)(C)C)(C(=O)c1ccccc1)c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_JX27Wa16PHdTpbVMZvbaQCcj', arguments='{"smiles": "C[Si](C)(C)OC1CCC1"}', name='canonicalize_smiles'), FunctionCall(id='call_D31ldmsdPDF8JK13sK9nhHP4', arguments='{"smiles": "CC.COc1ccc(C(=O)C(O[Si](C)(C)C)(c2ccccc2)C2CCC2)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_zsjDSYRLToRVX7ufq2GXWwbi', arguments='{"smiles": "CCO[Si](C)(C)C"}', name='canonicalize_smiles'), FunctionCall(id='call_XOM465is22hRRoYRrYtLubE4', arguments='{"smiles": "CCC(=O)C(C)(O[Si](C)(C)C)c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_Xr7bD9r2ZE8zuIVbhtlUU4Gg', arguments='{"smiles": "[C-]#N.[C-]#N.[C-]#N.[La+3]"}', name='canonicalize_smiles'), FunctionCall(id='call_ywq0Kdk7fBBE6tJySjrFYh3V', arguments='{"smiles": "C1CCOC1"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'canonical': '[1*]C(=O)c1ccccc1', 'valid': True, 'formula': 'C7H5*O', 'error': None}", name='canonicalize_smiles', call_id='call_9PB6LO1FSpxAz67DsZXyfN2U', is_error=False), FunctionExecutionResult(content="{'canonical': 'CO[Si](C)(C)C', 'valid': True, 'formula': 'C4H12OSi', 'error': None}", name='canonicalize_smiles', call_id='call_YLlkXd7dfyW3GHwZuDeCWcWO', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC(O[Si](C)(C)C)(C(=O)c1ccccc1)c1ccccc1', 'valid': True, 'formula': 'C18H22O2Si', 'error': None}", name='canonicalize_smiles', call_id='call_dejUeLCxzEfAnpT4OOSDkXwF', is_error=False), FunctionExecutionResult(content="{'canonical': 'C[Si](C)(C)OC1CCC1', 'valid': True, 'formula': 'C7H16OSi', 'error': None}", name='canonicalize_smiles', call_id='call_JX27Wa16PHdTpbVMZvbaQCcj', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC.COc1ccc(C(=O)C(O[Si](C)(C)C)(c2ccccc2)C2CCC2)cc1', 'valid': True, 'formula': 'C24H34O3Si', 'error': None}", name='canonicalize_smiles', call_id='call_D31ldmsdPDF8JK13sK9nhHP4', is_error=False), FunctionExecutionResult(content="{'canonical': 'CCO[Si](C)(C)C', 'valid': True, 'formula': 'C5H14OSi', 'error': None}", name='canonicalize_smiles', call_id='call_zsjDSYRLToRVX7ufq2GXWwbi', is_error=False), FunctionExecutionResult(content="{'canonical': 'CCC(=O)C(C)(O[Si](C)(C)C)c1ccccc1', 'valid': True, 'formula': 'C14H22O2Si', 'error': None}", name='canonicalize_smiles', call_id='call_XOM465is22hRRoYRrYtLubE4', is_error=False), FunctionExecutionResult(content="{'canonical': '[C-]#N.[C-]#N.[C-]#N.[La+3]', 'valid': True, 'formula': 'C3LaN3', 'error': None}", name='canonicalize_smiles', call_id='call_Xr7bD9r2ZE8zuIVbhtlUU4Gg', is_error=False), FunctionExecutionResult(content="{'canonical': 'C1CCOC1', 'valid': True, 'formula': 'C4H8O', 'error': None}", name='canonicalize_smiles', call_id='call_ywq0Kdk7fBBE6tJySjrFYh3V', is_error=False)]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_ccZ6Trk6teAsnM2vnH92DdQy', arguments='{"obj":{"file_name":"104-1.jpg","reactions":[{"reaction_id":"0_1","reactants":[{"smiles":"[1*]C(=O)c1ccccc1","label":null,"uncertain":false},{"smiles":"CO[Si](C)(C)C","label":null,"uncertain":false}],"products":[{"smiles":"CC(O[Si](C)(C)C)(C(=O)c1ccccc1)c1ccccc1","label":"bbox_1","uncertain":false}],"conditions":[{"role":"catalyst","text":"10 mol% La(CN)3","smiles":"[C-]#N.[C-]#N.[C-]#N.[La+3]"},{"role":"loading","text":"10 mol%","smiles":null},{"role":"solvent","text":"THF","smiles":"C1CCOC1"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"20 min","smiles":null},{"role":"yield","text":"40 - 96%","smiles":null},{"role":"yield","text":"78% yield","smiles":null},{"role":"yield","text":"63% yield","smiles":null},{"role":"yield","text":"58% yield","smiles":null}],"additional_info":["Johnson, Acyl-silanes: Selected Examples"]},{"reaction_id":"0_2","reactants":[{"smiles":"[1*]C(=O)c1ccccc1","label":null,"uncertain":false},{"smiles":"C[Si](C)(C)OC1CCC1","label":null,"uncertain":false}],"products":[{"smiles":"CC.COc1ccc(C(=O)C(O[Si](C)(C)C)(c2ccccc2)C2CCC2)cc1","label":"bbox_3","uncertain":false}],"conditions":[{"role":"catalyst","text":"10 mol% La(CN)3","smiles":"[C-]#N.[C-]#N.[C-]#N.[La+3]"},{"role":"loading","text":"10 mol%","smiles":null},{"role":"solvent","text":"THF","smiles":"C1CCOC1"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"20 min","smiles":null},{"role":"yield","text":"40 - 96%","smiles":null},{"role":"yield","text":"78% yield","smiles":null},{"role":"yield","text":"63% yield","smiles":null},{"role":"yield","text":"58% yield","smiles":null}],"additional_info":["Johnson, Acyl-silanes: Selected Examples"]},{"reaction_id":"0_3","reactants":[{"smiles":"[1*]C(=O)c1ccccc1","label":null,"uncertain":false},{"smiles":"CCO[Si](C)(C)C","label":null,"uncertain":false}],"products":[{"smiles":"CCC(=O)C(C)(O[Si](C)(C)C)c1ccccc1","label":"bbox_4","uncertain":false}],"conditions":[{"role":"catalyst","text":"10 mol% La(CN)3","smiles":"[C-]#N.[C-]#N.[C-]#N.[La+3]"},{"role":"loading","text":"10 mol%","smiles":null},{"role":"solvent","text":"THF","smiles":"C1CCOC1"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"20 min","smiles":null},{"role":"yield","text":"40 - 96%","smiles":null},{"role":"yield","text":"78% yield","smiles":null},{"role":"yield","text":"63% yield","smiles":null},{"role":"yield","text":"58% yield","smiles":null}],"additional_info":["Johnson, Acyl-silanes: Selected Examples"]}]}}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'valid': True, 'errors': []}", name='validate_reaction_json', call_id='call_ccZ6Trk6teAsnM2vnH92DdQy', is_error=False)]
+---------- TextMessage (data_structure) ----------
+```json
+{
+  "file_name": "104-1.jpg",
+  "reactions": [
+    {
+      "reaction_id": "0_1",
+      "reactants": [
+        {
+          "smiles": "[1*]C(=O)c1ccccc1",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "CO[Si](C)(C)C",
+          "label": null,
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "CC(O[Si](C)(C)C)(C(=O)c1ccccc1)c1ccccc1",
+          "label": "bbox_1",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "10 mol% La(CN)3",
+          "smiles": "[C-]#N.[C-]#N.[C-]#N.[La+3]"
+        },
+        {
+          "role": "loading",
+          "text": "10 mol%",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "THF",
+          "smiles": "C1CCOC1"
+        },
+        {
+          "role": "temperature",
+          "text": "rt",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "20 min",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "40 - 96%",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "78% yield",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "63% yield",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "58% yield",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Johnson, Acyl-silanes: Selected Examples"
+      ]
+    },
+    {
+      "reaction_id": "0_2",
+      "reactants": [
+        {
+          "smiles": "[1*]C(=O)c1ccccc1",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "C[Si](C)(C)OC1CCC1",
+          "label": null,
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "CC.COc1ccc(C(=O)C(O[Si](C)(C)C)(c2ccccc2)C2CCC2)cc1",
+          "label": "bbox_3",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "10 mol% La(CN)3",
+          "smiles": "[C-]#N.[C-]#N.[C-]#N.[La+3]"
+        },
+        {
+          "role": "loading",
+          "text": "10 mol%",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "THF",
+          "smiles": "C1CCOC1"
+        },
+        {
+          "role": "temperature",
+          "text": "rt",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "20 min",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "40 - 96%",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "78% yield",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "63% yield",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "58% yield",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Johnson, Acyl-silanes: Selected Examples"
+      ]
+    },
+    {
+      "reaction_id": "0_3",
+      "reactants": [
+        {
+          "smiles": "[1*]C(=O)c1ccccc1",
+          "label": null,
+          "uncertain": false
+        },
+        {
+          "smiles": "CCO[Si](C)(C)C",
+          "label": null,
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "CCC(=O)C(C)(O[Si](C)(C)C)c1ccccc1",
+          "label": "bbox_4",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "10 mol% La(CN)3",
+          "smiles": "[C-]#N.[C-]#N.[C-]#N.[La+3]"
+        },
+        {
+          "role": "loading",
+          "text": "10 mol%",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "THF",
+          "smiles": "C1CCOC1"
+        },
+        {
+          "role": "temperature",
+          "text": "rt",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "20 min",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "40 - 96%",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "78% yield",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "63% yield",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "58% yield",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Johnson, Acyl-silanes: Selected Examples"
+      ]
+    }
+  ]
+}
+```
+---------- ToolCallRequestEvent (verifier) ----------
+[FunctionCall(id='call_s4WLPVvbKdXxYPKjIjR57vhM', arguments='{}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (verifier) ----------
+[FunctionExecutionResult(content='1 validation error for validate_reaction_jsonargs\nobj\n  Field required [type=missing, input_value={}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing', name='validate_reaction_json', call_id='call_s4WLPVvbKdXxYPKjIjR57vhM', is_error=True)]
+---------- ToolCallRequestEvent (verifier) ----------
+[FunctionCall(id='call_MMYG3ewnCMKlKafi2g29qoQh', arguments='{"obj":{"file_name":"104-1.jpg","reactions":[{"reaction_id":"0_1","reactants":[{"smiles":"[1*]C(=O)c1ccccc1","label":null,"uncertain":false},{"smiles":"CO[Si](C)(C)C","label":null,"uncertain":false}],"products":[{"smiles":"CC(O[Si](C)(C)C)(C(=O)c1ccccc1)c1ccccc1","label":"bbox_1","uncertain":false}],"conditions":[{"role":"catalyst","text":"10 mol% La(CN)3","smiles":"[C-]#N.[C-]#N.[C-]#N.[La+3]"},{"role":"loading","text":"10 mol%","smiles":null},{"role":"solvent","text":"THF","smiles":"C1CCOC1"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"20 min","smiles":null},{"role":"yield","text":"40 - 96%","smiles":null},{"role":"yield","text":"78% yield","smiles":null},{"role":"yield","text":"63% yield","smiles":null},{"role":"yield","text":"58% yield","smiles":null}],"additional_info":["Johnson, Acyl-silanes: Selected Examples"]},{"reaction_id":"0_2","reactants":[{"smiles":"[1*]C(=O)c1ccccc1","label":null,"uncertain":false},{"smiles":"C[Si](C)(C)OC1CCC1","label":null,"uncertain":false}],"products":[{"smiles":"CC.COc1ccc(C(=O)C(O[Si](C)(C)C)(c2ccccc2)C2CCC2)cc1","label":"bbox_3","uncertain":false}],"conditions":[{"role":"catalyst","text":"10 mol% La(CN)3","smiles":"[C-]#N.[C-]#N.[C-]#N.[La+3]"},{"role":"loading","text":"10 mol%","smiles":null},{"role":"solvent","text":"THF","smiles":"C1CCOC1"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"20 min","smiles":null},{"role":"yield","text":"40 - 96%","smiles":null},{"role":"yield","text":"78% yield","smiles":null},{"role":"yield","text":"63% yield","smiles":null},{"role":"yield","text":"58% yield","smiles":null}],"additional_info":["Johnson, Acyl-silanes: Selected Examples"]},{"reaction_id":"0_3","reactants":[{"smiles":"[1*]C(=O)c1ccccc1","label":null,"uncertain":false},{"smiles":"CCO[Si](C)(C)C","label":null,"uncertain":false}],"products":[{"smiles":"CCC(=O)C(C)(O[Si](C)(C)C)c1ccccc1","label":"bbox_4","uncertain":false}],"conditions":[{"role":"catalyst","text":"10 mol% La(CN)3","smiles":"[C-]#N.[C-]#N.[C-]#N.[La+3]"},{"role":"loading","text":"10 mol%","smiles":null},{"role":"solvent","text":"THF","smiles":"C1CCOC1"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"20 min","smiles":null},{"role":"yield","text":"40 - 96%","smiles":null},{"role":"yield","text":"78% yield","smiles":null},{"role":"yield","text":"63% yield","smiles":null},{"role":"yield","text":"58% yield","smiles":null}],"additional_info":["Johnson, Acyl-silanes: Selected Examples"]}]}}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (verifier) ----------
+[FunctionExecutionResult(content="{'valid': True, 'errors': []}", name='validate_reaction_json', call_id='call_MMYG3ewnCMKlKafi2g29qoQh', is_error=False)]
+---------- ToolCallRequestEvent (verifier) ----------
+[FunctionCall(id='call_LOI0xaFJoSzeQFz7syWDAX4W', arguments='{"obj":{"file_name":"104-1.jpg","reactions":[{"reaction_id":"0_1","reactants":[{"smiles":"[1*]C(=O)c1ccccc1","label":null,"uncertain":false},{"smiles":"CO[Si](C)(C)C","label":null,"uncertain":false}],"products":[{"smiles":"CC(O[Si](C)(C)C)(C(=O)c1ccccc1)c1ccccc1","label":"bbox_1","uncertain":false}],"conditions":[{"role":"catalyst","text":"10 mol% La(CN)3","smiles":"[C-]#N.[C-]#N.[C-]#N.[La+3]"},{"role":"loading","text":"10 mol%","smiles":null},{"role":"solvent","text":"THF","smiles":"C1CCOC1"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"20 min","smiles":null},{"role":"yield","text":"40 - 96%","smiles":null},{"role":"yield","text":"78% yield","smiles":null},{"role":"yield","text":"63% yield","smiles":null},{"role":"yield","text":"58% yield","smiles":null}],"additional_info":["Johnson, Acyl-silanes: Selected Examples"]},{"reaction_id":"0_2","reactants":[{"smiles":"[1*]C(=O)c1ccccc1","label":null,"uncertain":false},{"smiles":"C[Si](C)(C)OC1CCC1","label":null,"uncertain":false}],"products":[{"smiles":"CC.COc1ccc(C(=O)C(O[Si](C)(C)C)(c2ccccc2)C2CCC2)cc1","label":"bbox_3","uncertain":false}],"conditions":[{"role":"catalyst","text":"10 mol% La(CN)3","smiles":"[C-]#N.[C-]#N.[C-]#N.[La+3]"},{"role":"loading","text":"10 mol%","smiles":null},{"role":"solvent","text":"THF","smiles":"C1CCOC1"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"20 min","smiles":null},{"role":"yield","text":"40 - 96%","smiles":null},{"role":"yield","text":"78% yield","smiles":null},{"role":"yield","text":"63% yield","smiles":null},{"role":"yield","text":"58% yield","smiles":null}],"additional_info":["Johnson, Acyl-silanes: Selected Examples"]},{"reaction_id":"0_3","reactants":[{"smiles":"[1*]C(=O)c1ccccc1","label":null,"uncertain":false},{"smiles":"CCO[Si](C)(C)C","label":null,"uncertain":false}],"products":[{"smiles":"CCC(=O)C(C)(O[Si](C)(C)C)c1ccccc1","label":"bbox_4","uncertain":false}],"conditions":[{"role":"catalyst","text":"10 mol% La(CN)3","smiles":"[C-]#N.[C-]#N.[C-]#N.[La+3]"},{"role":"loading","text":"10 mol%","smiles":null},{"role":"solvent","text":"THF","smiles":"C1CCOC1"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"20 min","smiles":null},{"role":"yield","text":"40 - 96%","smiles":null},{"role":"yield","text":"78% yield","smiles":null},{"role":"yield","text":"63% yield","smiles":null},{"role":"yield","text":"58% yield","smiles":null}],"additional_info":["Johnson, Acyl-silanes: Selected Examples"]}]}}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (verifier) ----------
+[FunctionExecutionResult(content="{'valid': True, 'errors': []}", name='validate_reaction_json', call_id='call_LOI0xaFJoSzeQFz7syWDAX4W', is_error=False)]
+---------- TextMessage (verifier) ----------
+TERMINATE
+
+[validation] PASSED after 0 retry/retries
+Results saved to /Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/runs/20260426_152527_selector

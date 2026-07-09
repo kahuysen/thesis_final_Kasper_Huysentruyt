@@ -1,0 +1,426 @@
+---------- MultiModalMessage (user) ----------
+Analyse this chemistry reaction image end-to-end and emit one ReactionRecord JSON.
+image_path = /Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/107.jpg
+Pass that exact path as the first argument to detect_molecules, predict_molecule_smiles, and crop_image_region.
+<image>
+/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/agents/_assistant_agent.py:1109: UserWarning: Resolved model mismatch: gpt-5.4 != gpt-5.4-2026-03-05. Model mapping in autogen_ext.models.openai may be incorrect. Set the model to gpt-5.4-2026-03-05 to enhance token/cost estimation and suppress this warning.
+  model_result = await model_client.create(
+---------- ToolCallRequestEvent (single_agent) ----------
+[FunctionCall(id='call_JdiQrYsrBwYlaBO7wavRiZIl', arguments='{"image_path":"/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/107.jpg","molecule_only":true,"score_min":0}', name='detect_molecules')]
+---------- ToolCallExecutionEvent (single_agent) ----------
+[FunctionExecutionResult(content="{'bboxes': [{'x1': 188, 'y1': 71, 'x2': 324, 'y2': 198, 'w': 136, 'h': 127, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 192, 'y1': 480, 'x2': 458, 'y2': 658, 'w': 266, 'h': 178, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 192, 'y1': 816, 'x2': 459, 'y2': 1159, 'w': 267, 'h': 343, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 477, 'y1': 58, 'x2': 661, 'y2': 217, 'w': 184, 'h': 160, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 483, 'y1': 481, 'x2': 889, 'y2': 686, 'w': 406, 'h': 205, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 491, 'y1': 813, 'x2': 880, 'y2': 1161, 'w': 388, 'h': 347, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 663, 'y1': 202, 'x2': 1031, 'y2': 397, 'w': 369, 'h': 195, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 913, 'y1': 481, 'x2': 1356, 'y2': 820, 'w': 443, 'h': 339, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 912, 'y1': 815, 'x2': 1361, 'y2': 1159, 'w': 450, 'h': 345, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 1098, 'y1': 71, 'x2': 1354, 'y2': 251, 'w': 256, 'h': 181, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}], 'image_w': 1392, 'image_h': 1412, 'device': 'mps', 'error': None, 'cached': True}", name='detect_molecules', call_id='call_JdiQrYsrBwYlaBO7wavRiZIl', is_error=False)]
+---------- ToolCallRequestEvent (single_agent) ----------
+[FunctionCall(id='call_b1wDC24pCkUcE2jTzJkJRXEY', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/107.jpg", "bbox": [188, 71, 136, 127]}', name='predict_molecule_smiles'), FunctionCall(id='call_Fnvx7XVnshX52faM5ozvqsPx', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/107.jpg", "bbox": [192, 480, 266, 178]}', name='predict_molecule_smiles'), FunctionCall(id='call_1wnrzUVxWzlb02ZlcNxQ3NoW', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/107.jpg", "bbox": [192, 816, 267, 343]}', name='predict_molecule_smiles'), FunctionCall(id='call_mXiQwAUXVNY4oz5G5AcDfcDE', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/107.jpg", "bbox": [477, 58, 184, 160]}', name='predict_molecule_smiles'), FunctionCall(id='call_DRqoPqGNh7zadsZqBMyTfX6D', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/107.jpg", "bbox": [483, 481, 406, 205]}', name='predict_molecule_smiles'), FunctionCall(id='call_jtnQcQsHgDkG6JPFRfvD2TP0', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/107.jpg", "bbox": [491, 813, 388, 347]}', name='predict_molecule_smiles'), FunctionCall(id='call_uqO06j59OV3Eso6HS3ecQgHw', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/107.jpg", "bbox": [663, 202, 369, 195]}', name='predict_molecule_smiles'), FunctionCall(id='call_l9ln9x70jyxgsPmsJSzNOzqQ', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/107.jpg", "bbox": [913, 481, 443, 339]}', name='predict_molecule_smiles'), FunctionCall(id='call_NSVmzs16fDEbYDywxJl8zZbS', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/107.jpg", "bbox": [912, 815, 450, 345]}', name='predict_molecule_smiles'), FunctionCall(id='call_8FaKGvXT3bGVpzRkNuFeV4FH', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/107.jpg", "bbox": [1098, 71, 256, 181]}', name='predict_molecule_smiles')]
+---------- ToolCallExecutionEvent (single_agent) ----------
+[FunctionExecutionResult(content="{'smiles': '*C(*)=O', 'confidence': 0.841189409058191, 'atoms_count': 4, 'bonds_count': 3, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_b1wDC24pCkUcE2jTzJkJRXEY', is_error=False), FunctionExecutionResult(content="{'smiles': 'O=C(c1ccccc1)C(Nc1ccccc1)c1ccccc1', 'confidence': 0.8967952581922767, 'atoms_count': 7, 'bonds_count': 6, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_Fnvx7XVnshX52faM5ozvqsPx', is_error=False), FunctionExecutionResult(content="{'smiles': 'COc1ccc(C(Nc2ccccc2)C(=O)c2ccccc2)cc1', 'confidence': 0.9041761103781666, 'atoms_count': 13, 'bonds_count': 13, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_1wnrzUVxWzlb02ZlcNxQ3NoW', is_error=False), FunctionExecutionResult(content="{'smiles': '*N=C(*)*', 'confidence': 0.8587148181702575, 'atoms_count': 5, 'bonds_count': 4, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_mXiQwAUXVNY4oz5G5AcDfcDE', is_error=False), FunctionExecutionResult(content="{'smiles': 'O=C(c1ccc(Br)cc1)C(Nc1ccccc1)c1ccccc1', 'confidence': 0.8272859235722302, 'atoms_count': 13, 'bonds_count': 13, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_DRqoPqGNh7zadsZqBMyTfX6D', is_error=False), FunctionExecutionResult(content="{'smiles': 'COc1ccc(C(Nc2ccccc2)C(=O)c2occ3ccccc23)cc1', 'confidence': 0.9135333448423574, 'atoms_count': 21, 'bonds_count': 23, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_jtnQcQsHgDkG6JPFRfvD2TP0', is_error=False), FunctionExecutionResult(content="{'smiles': 'Cl.Cl.OCCc1sc[n+](Cc2ccccc2)c1[CH3]O', 'confidence': 0.7943439690002443, 'atoms_count': 13, 'bonds_count': 11, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_uqO06j59OV3Eso6HS3ecQgHw', is_error=False), FunctionExecutionResult(content="{'smiles': 'COc1ccc(C(=O)C(Nc2ccccc2)c2ccc(OC)cc2)cc1', 'confidence': 0.778178839126311, 'atoms_count': 26, 'bonds_count': 28, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_l9ln9x70jyxgsPmsJSzNOzqQ', is_error=False), FunctionExecutionResult(content="{'smiles': 'COc1ccc(C(Nc2ccccc2Cl)C(=O)c2occ3ccccc23)cc1', 'confidence': 0.8838662833369717, 'atoms_count': 27, 'bonds_count': 30, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_NSVmzs16fDEbYDywxJl8zZbS', is_error=False), FunctionExecutionResult(content="{'smiles': '*NC(*)C(*)=O', 'confidence': 0.899995761828296, 'atoms_count': 7, 'bonds_count': 6, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_8FaKGvXT3bGVpzRkNuFeV4FH', is_error=False)]
+---------- ToolCallRequestEvent (single_agent) ----------
+[FunctionCall(id='call_m2vBAwOtuCN9j9fDjCziJV8P', arguments='{"name": "EtOH"}', name='lookup_compound'), FunctionCall(id='call_s1y1cenOjgP05GXNtlyiqyDU', arguments='{"name": "Et3N"}', name='lookup_compound'), FunctionCall(id='call_4NufX9pDr3rWiqF8wsGOYr9l', arguments='{"smiles": "O=C(c1ccccc1)C(Nc1ccccc1)c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_jDlSswKoXtYGbhZr2kqHyY6E', arguments='{"smiles": "COc1ccc(C(Nc2ccccc2)C(=O)c2ccccc2)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_cY2fj2cVR4KyrGqopr0E0Mjt', arguments='{"smiles": "O=C(c1ccc(Br)cc1)C(Nc1ccccc1)c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_rqBqM7qZvR1PIgnO7Oo5brdp', arguments='{"smiles": "COc1ccc(C(Nc2ccccc2)C(=O)c2occ3ccccc23)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_AdrxdKbOAUraOA8c9suPWZbe', arguments='{"smiles": "COc1ccc(C(=O)C(Nc2ccccc2)c2ccc(OC)cc2)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_iHfLhvqSTYWpYS8O5rAxq2NH', arguments='{"smiles": "COc1ccc(C(Nc2ccccc2Cl)C(=O)c2occ3ccccc23)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_qb5Qon4RzeZNgUZZZG0xme4u', arguments='{"smiles": "*C(*)=O"}', name='canonicalize_smiles'), FunctionCall(id='call_UnL4QvvS0s6zM3er7LGuJsj3', arguments='{"smiles": "*N=C(*)*"}', name='canonicalize_smiles'), FunctionCall(id='call_7tYxIWdRpLEnNNum90xsXqgw', arguments='{"smiles": "*NC(*)C(*)=O"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (single_agent) ----------
+[FunctionExecutionResult(content="{'smiles': 'C(C)O', 'source': 'opsin', 'query_used': 'ethanol', 'cached': True, 'error': None}", name='lookup_compound', call_id='call_m2vBAwOtuCN9j9fDjCziJV8P', is_error=False), FunctionExecutionResult(content="{'smiles': 'CCN(CC)CC', 'source': 'pubchem', 'query_used': 'Et3N', 'cached': True, 'error': None}", name='lookup_compound', call_id='call_s1y1cenOjgP05GXNtlyiqyDU', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=C(c1ccccc1)C(Nc1ccccc1)c1ccccc1', 'valid': True, 'formula': 'C20H17NO', 'error': None}", name='canonicalize_smiles', call_id='call_4NufX9pDr3rWiqF8wsGOYr9l', is_error=False), FunctionExecutionResult(content="{'canonical': 'COc1ccc(C(Nc2ccccc2)C(=O)c2ccccc2)cc1', 'valid': True, 'formula': 'C21H19NO2', 'error': None}", name='canonicalize_smiles', call_id='call_jDlSswKoXtYGbhZr2kqHyY6E', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=C(c1ccc(Br)cc1)C(Nc1ccccc1)c1ccccc1', 'valid': True, 'formula': 'C20H16BrNO', 'error': None}", name='canonicalize_smiles', call_id='call_cY2fj2cVR4KyrGqopr0E0Mjt', is_error=False), FunctionExecutionResult(content="{'canonical': 'COc1ccc(C(Nc2ccccc2)C(=O)c2occ3ccccc23)cc1', 'valid': True, 'formula': 'C23H19NO3', 'error': None}", name='canonicalize_smiles', call_id='call_rqBqM7qZvR1PIgnO7Oo5brdp', is_error=False), FunctionExecutionResult(content="{'canonical': 'COc1ccc(C(=O)C(Nc2ccccc2)c2ccc(OC)cc2)cc1', 'valid': True, 'formula': 'C22H21NO3', 'error': None}", name='canonicalize_smiles', call_id='call_AdrxdKbOAUraOA8c9suPWZbe', is_error=False), FunctionExecutionResult(content="{'canonical': 'COc1ccc(C(Nc2ccccc2Cl)C(=O)c2occ3ccccc23)cc1', 'valid': True, 'formula': 'C23H18ClNO3', 'error': None}", name='canonicalize_smiles', call_id='call_iHfLhvqSTYWpYS8O5rAxq2NH', is_error=False), FunctionExecutionResult(content="{'canonical': '*C(*)=O', 'valid': True, 'formula': 'C*2O', 'error': None}", name='canonicalize_smiles', call_id='call_qb5Qon4RzeZNgUZZZG0xme4u', is_error=False), FunctionExecutionResult(content="{'canonical': '*N=C(*)*', 'valid': True, 'formula': 'C*3N', 'error': None}", name='canonicalize_smiles', call_id='call_UnL4QvvS0s6zM3er7LGuJsj3', is_error=False), FunctionExecutionResult(content="{'canonical': '*NC(*)C(*)=O', 'valid': True, 'formula': 'C2H2*3NO', 'error': None}", name='canonicalize_smiles', call_id='call_7tYxIWdRpLEnNNum90xsXqgw', is_error=False)]
+---------- ToolCallRequestEvent (single_agent) ----------
+[FunctionCall(id='call_km1RdNaxYypUSkanMkfHZ1Cy', arguments='{"obj":{"file_name":"107.jpg","reactions":[{"reaction_id":"0_1","reactants":[{"smiles":"O=C(c1ccccc1)C(Nc1ccccc1)c1ccccc1","label":"1","uncertain":false}],"products":[{"smiles":"O=C(c1ccccc1)C(Nc1ccccc1)c1ccccc1","label":"2","uncertain":false}],"conditions":[{"role":"catalyst","text":"20 mol% G3","smiles":null},{"role":"loading","text":"20 mol% G3","smiles":null},{"role":"reagent","text":"Et3N","smiles":"CCN(CC)CC"},{"role":"loading","text":"20 mol% Et3N","smiles":"CCN(CC)CC"},{"role":"solvent","text":"EtOH","smiles":"CCO"},{"role":"temperature","text":"70 °C","smiles":null},{"role":"time","text":"2 d","smiles":null},{"role":"yield","text":"82%","smiles":null}],"additional_info":["Scheme 28","Cross-Aza-Benzoin Reaction","Selected Examples","General reaction: aldehyde + imine -> beta-amino ketone"]},{"reaction_id":"0_2","reactants":[{"smiles":"O=C(c1ccc(Br)cc1)C(Nc1ccccc1)c1ccccc1","label":"1","uncertain":false}],"products":[{"smiles":"O=C(c1ccc(Br)cc1)C(Nc1ccccc1)c1ccccc1","label":"2","uncertain":false}],"conditions":[{"role":"catalyst","text":"20 mol% G3","smiles":null},{"role":"loading","text":"20 mol% G3","smiles":null},{"role":"reagent","text":"Et3N","smiles":"CCN(CC)CC"},{"role":"loading","text":"20 mol% Et3N","smiles":"CCN(CC)CC"},{"role":"solvent","text":"EtOH","smiles":"CCO"},{"role":"temperature","text":"70 °C","smiles":null},{"role":"time","text":"2 d","smiles":null},{"role":"yield","text":"72%","smiles":null}],"additional_info":["Scheme 28","Cross-Aza-Benzoin Reaction","Selected Examples","General reaction: aldehyde + imine -> beta-amino ketone"]},{"reaction_id":"0_3","reactants":[{"smiles":"COc1ccc(C(=O)C(Nc2ccccc2)c2ccc(OC)cc2)cc1","label":"1","uncertain":false}],"products":[{"smiles":"COc1ccc(C(=O)C(Nc2ccccc2)c2ccc(OC)cc2)cc1","label":"2","uncertain":false}],"conditions":[{"role":"catalyst","text":"20 mol% G3","smiles":null},{"role":"loading","text":"20 mol% G3","smiles":null},{"role":"reagent","text":"Et3N","smiles":"CCN(CC)CC"},{"role":"loading","text":"20 mol% Et3N","smiles":"CCN(CC)CC"},{"role":"solvent","text":"EtOH","smiles":"CCO"},{"role":"temperature","text":"70 °C","smiles":null},{"role":"time","text":"2 d","smiles":null},{"role":"yield","text":"58%","smiles":null}],"additional_info":["Scheme 28","Cross-Aza-Benzoin Reaction","Selected Examples","General reaction: aldehyde + imine -> beta-amino ketone"]},{"reaction_id":"0_4","reactants":[{"smiles":"COc1ccc(C(Nc2ccccc2)C(=O)c2ccccc2)cc1","label":"1","uncertain":false}],"products":[{"smiles":"COc1ccc(C(Nc2ccccc2)C(=O)c2ccccc2)cc1","label":"2","uncertain":false}],"conditions":[{"role":"catalyst","text":"20 mol% G3","smiles":null},{"role":"loading","text":"20 mol% G3","smiles":null},{"role":"reagent","text":"Et3N","smiles":"CCN(CC)CC"},{"role":"loading","text":"20 mol% Et3N","smiles":"CCN(CC)CC"},{"role":"solvent","text":"EtOH","smiles":"CCO"},{"role":"temperature","text":"70 °C","smiles":null},{"role":"time","text":"2 d","smiles":null},{"role":"yield","text":"67%","smiles":null}],"additional_info":["Scheme 28","Cross-Aza-Benzoin Reaction","Selected Examples","General reaction: aldehyde + imine -> beta-amino ketone"]},{"reaction_id":"0_5","reactants":[{"smiles":"COc1ccc(C(Nc2ccccc2)C(=O)c2occ3ccccc23)cc1","label":"1","uncertain":false}],"products":[{"smiles":"COc1ccc(C(Nc2ccccc2)C(=O)c2occ3ccccc23)cc1","label":"2","uncertain":false}],"conditions":[{"role":"catalyst","text":"20 mol% G3","smiles":null},{"role":"loading","text":"20 mol% G3","smiles":null},{"role":"reagent","text":"Et3N","smiles":"CCN(CC)CC"},{"role":"loading","text":"20 mol% Et3N","smiles":"CCN(CC)CC"},{"role":"solvent","text":"EtOH","smiles":"CCO"},{"role":"temperature","text":"70 °C","smiles":null},{"role":"time","text":"2 d","smiles":null},{"role":"yield","text":"95%","smiles":null}],"additional_info":["Scheme 28","Cross-Aza-Benzoin Reaction","Selected Examples","General reaction: aldehyde + imine -> beta-amino ketone"]},{"reaction_id":"0_6","reactants":[{"smiles":"COc1ccc(C(Nc2ccccc2Cl)C(=O)c2occ3ccccc23)cc1","label":"1","uncertain":false}],"products":[{"smiles":"COc1ccc(C(Nc2ccccc2Cl)C(=O)c2occ3ccccc23)cc1","label":"2","uncertain":false}],"conditions":[{"role":"catalyst","text":"20 mol% G3","smiles":null},{"role":"loading","text":"20 mol% G3","smiles":null},{"role":"reagent","text":"Et3N","smiles":"CCN(CC)CC"},{"role":"loading","text":"20 mol% Et3N","smiles":"CCN(CC)CC"},{"role":"solvent","text":"EtOH","smiles":"CCO"},{"role":"temperature","text":"70 °C","smiles":null},{"role":"time","text":"2 d","smiles":null},{"role":"yield","text":"64%","smiles":null}],"additional_info":["Scheme 28","Cross-Aza-Benzoin Reaction","Selected Examples","General reaction: aldehyde + imine -> beta-amino ketone"]}]}}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (single_agent) ----------
+[FunctionExecutionResult(content="{'valid': True, 'errors': []}", name='validate_reaction_json', call_id='call_km1RdNaxYypUSkanMkfHZ1Cy', is_error=False)]
+---------- TextMessage (single_agent) ----------
+Found 10 molecule boxes: 3 general-scheme structures, catalyst G3, and 6 example products. Template SMILES from MolNexTR are `*C(*)=O`, `*N=C(*)*`, and `*NC(*)C(*)=O`. Emitted 6 example reactions with shared conditions: G3/Et3N in EtOH, 70 °C, 2 d, individual yields.
+
+```json
+{
+  "file_name": "107.jpg",
+  "reactions": [
+    {
+      "reaction_id": "0_1",
+      "reactants": [
+        {
+          "smiles": "O=C(c1ccccc1)C(Nc1ccccc1)c1ccccc1",
+          "label": "1",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=C(c1ccccc1)C(Nc1ccccc1)c1ccccc1",
+          "label": "2",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "20 mol% G3",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "20 mol% G3",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "Et3N",
+          "smiles": "CCN(CC)CC"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol% Et3N",
+          "smiles": "CCN(CC)CC"
+        },
+        {
+          "role": "solvent",
+          "text": "EtOH",
+          "smiles": "CCO"
+        },
+        {
+          "role": "temperature",
+          "text": "70 °C",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "2 d",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "82%",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 28",
+        "Cross-Aza-Benzoin Reaction",
+        "Selected Examples",
+        "General reaction: aldehyde + imine -> beta-amino ketone"
+      ]
+    },
+    {
+      "reaction_id": "0_2",
+      "reactants": [
+        {
+          "smiles": "O=C(c1ccc(Br)cc1)C(Nc1ccccc1)c1ccccc1",
+          "label": "1",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=C(c1ccc(Br)cc1)C(Nc1ccccc1)c1ccccc1",
+          "label": "2",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "20 mol% G3",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "20 mol% G3",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "Et3N",
+          "smiles": "CCN(CC)CC"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol% Et3N",
+          "smiles": "CCN(CC)CC"
+        },
+        {
+          "role": "solvent",
+          "text": "EtOH",
+          "smiles": "CCO"
+        },
+        {
+          "role": "temperature",
+          "text": "70 °C",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "2 d",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "72%",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 28",
+        "Cross-Aza-Benzoin Reaction",
+        "Selected Examples",
+        "General reaction: aldehyde + imine -> beta-amino ketone"
+      ]
+    },
+    {
+      "reaction_id": "0_3",
+      "reactants": [
+        {
+          "smiles": "COc1ccc(C(=O)C(Nc2ccccc2)c2ccc(OC)cc2)cc1",
+          "label": "1",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "COc1ccc(C(=O)C(Nc2ccccc2)c2ccc(OC)cc2)cc1",
+          "label": "2",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "20 mol% G3",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "20 mol% G3",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "Et3N",
+          "smiles": "CCN(CC)CC"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol% Et3N",
+          "smiles": "CCN(CC)CC"
+        },
+        {
+          "role": "solvent",
+          "text": "EtOH",
+          "smiles": "CCO"
+        },
+        {
+          "role": "temperature",
+          "text": "70 °C",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "2 d",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "58%",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 28",
+        "Cross-Aza-Benzoin Reaction",
+        "Selected Examples",
+        "General reaction: aldehyde + imine -> beta-amino ketone"
+      ]
+    },
+    {
+      "reaction_id": "0_4",
+      "reactants": [
+        {
+          "smiles": "COc1ccc(C(Nc2ccccc2)C(=O)c2ccccc2)cc1",
+          "label": "1",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "COc1ccc(C(Nc2ccccc2)C(=O)c2ccccc2)cc1",
+          "label": "2",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "20 mol% G3",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "20 mol% G3",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "Et3N",
+          "smiles": "CCN(CC)CC"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol% Et3N",
+          "smiles": "CCN(CC)CC"
+        },
+        {
+          "role": "solvent",
+          "text": "EtOH",
+          "smiles": "CCO"
+        },
+        {
+          "role": "temperature",
+          "text": "70 °C",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "2 d",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "67%",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 28",
+        "Cross-Aza-Benzoin Reaction",
+        "Selected Examples",
+        "General reaction: aldehyde + imine -> beta-amino ketone"
+      ]
+    },
+    {
+      "reaction_id": "0_5",
+      "reactants": [
+        {
+          "smiles": "COc1ccc(C(Nc2ccccc2)C(=O)c2occ3ccccc23)cc1",
+          "label": "1",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "COc1ccc(C(Nc2ccccc2)C(=O)c2occ3ccccc23)cc1",
+          "label": "2",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "20 mol% G3",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "20 mol% G3",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "Et3N",
+          "smiles": "CCN(CC)CC"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol% Et3N",
+          "smiles": "CCN(CC)CC"
+        },
+        {
+          "role": "solvent",
+          "text": "EtOH",
+          "smiles": "CCO"
+        },
+        {
+          "role": "temperature",
+          "text": "70 °C",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "2 d",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "95%",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 28",
+        "Cross-Aza-Benzoin Reaction",
+        "Selected Examples",
+        "General reaction: aldehyde + imine -> beta-amino ketone"
+      ]
+    },
+    {
+      "reaction_id": "0_6",
+      "reactants": [
+        {
+          "smiles": "COc1ccc(C(Nc2ccccc2Cl)C(=O)c2occ3ccccc23)cc1",
+          "label": "1",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "COc1ccc(C(Nc2ccccc2Cl)C(=O)c2occ3ccccc23)cc1",
+          "label": "2",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "20 mol% G3",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "20 mol% G3",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "Et3N",
+          "smiles": "CCN(CC)CC"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol% Et3N",
+          "smiles": "CCN(CC)CC"
+        },
+        {
+          "role": "solvent",
+          "text": "EtOH",
+          "smiles": "CCO"
+        },
+        {
+          "role": "temperature",
+          "text": "70 °C",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "2 d",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "64%",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "Scheme 28",
+        "Cross-Aza-Benzoin Reaction",
+        "Selected Examples",
+        "General reaction: aldehyde + imine -> beta-amino ketone"
+      ]
+    }
+  ]
+}
+```
+
+[validation] PASSED after 0 retry/retries
+Results saved to /Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/runs/20260428_114844_single

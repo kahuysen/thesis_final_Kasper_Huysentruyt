@@ -1,0 +1,674 @@
+---------- MultiModalMessage (user) ----------
+Analyse this chemistry reaction image. First, figure_classifier inspects the image and emits a [FIGURE_CLASSIFICATION] tag describing the figure type. Each downstream specialist reads that tag and adapts its behaviour, then contributes one [FINDINGS ...] card per turn. Finally data_structure produces JSON, then the verifier audits the JSON and ends the run.
+image_path = /Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/Benchmark_kasper_GT3_Maarten/NC_2017.pdf_page005_picture_01_s0.90.png
+Pass that exact path as the first argument to crop_image_region(image_path, [x,y,w,h]) if you need to zoom in on a region of the image.
+<image>
+/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/agents/_assistant_agent.py:1109: UserWarning: Resolved model mismatch: gpt-5.4 != gpt-5.4-2026-03-05. Model mapping in autogen_ext.models.openai may be incorrect. Set the model to gpt-5.4-2026-03-05 to enhance token/cost estimation and suppress this warning.
+  model_result = await model_client.create(
+---------- TextMessage (figure_classifier) ----------
+[FIGURE_CLASSIFICATION]
+type: optimization_table
+confidence: medium
+row_count: 3
+variant_count: null
+substrate_column_varies: false
+text_rgroup_table_present: false
+notes: comparative conditions table for a single reaction 10p + 11r → 39; columns are conditions vs reaction outcome with yields/stereochemical outcome.
+[/FIGURE_CLASSIFICATION]
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_oeHth5bjCxOXWV4dweD0AluH', arguments='{"image_path":"/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/Benchmark_kasper_GT3_Maarten/NC_2017.pdf_page005_picture_01_s0.90.png","molecule_only":true,"score_min":0}', name='detect_molecules')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'bboxes': [{'x1': 49, 'y1': 83, 'x2': 212, 'y2': 179, 'w': 163, 'h': 97, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 211, 'y1': 432, 'x2': 425, 'y2': 486, 'w': 215, 'h': 54, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 231, 'y1': 58, 'x2': 372, 'y2': 182, 'w': 141, 'h': 123, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 435, 'y1': 403, 'x2': 544, 'y2': 523, 'w': 109, 'h': 121, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 479, 'y1': 48, 'x2': 721, 'y2': 179, 'w': 242, 'h': 130, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}], 'image_w': 769, 'image_h': 569, 'device': 'mps', 'error': None, 'cached': True}", name='detect_molecules', call_id='call_oeHth5bjCxOXWV4dweD0AluH', is_error=False)]
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_G9h6nI5eM3I8ZVdXhi9Rku5w', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/Benchmark_kasper_GT3_Maarten/NC_2017.pdf_page005_picture_01_s0.90.png", "bbox": [49, 83, 163, 97], "pad": 10}', name='predict_molecule_smiles'), FunctionCall(id='call_fywU1ml05FcEtRwk9eKfsZvt', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/Benchmark_kasper_GT3_Maarten/NC_2017.pdf_page005_picture_01_s0.90.png", "bbox": [231, 58, 141, 123], "pad": 10}', name='predict_molecule_smiles'), FunctionCall(id='call_vcxQ8yTg34Nj5llJnS1oBaHG', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/Benchmark_kasper_GT3_Maarten/NC_2017.pdf_page005_picture_01_s0.90.png", "bbox": [479, 48, 242, 130], "pad": 10}', name='predict_molecule_smiles')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'smiles': 'CC(C)[C@H](NC(=O)c1ccccc1)C(=O)O', 'confidence': 0.7836369914604668, 'atoms_count': 11, 'bonds_count': 10, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_G9h6nI5eM3I8ZVdXhi9Rku5w', is_error=False), FunctionExecutionResult(content="{'smiles': '*N[C@@H](CC(C)C)C(N)=O', 'confidence': 0.8657173386029688, 'atoms_count': 10, 'bonds_count': 9, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_fywU1ml05FcEtRwk9eKfsZvt', is_error=False), FunctionExecutionResult(content="{'smiles': 'CC(C)C[C@H](NC(=O)[C@@H](NC(=O)c1ccccc1)C(C)C)C(N)=O.CCC.CCC', 'confidence': 0.41273184701618043, 'atoms_count': 25, 'bonds_count': 22, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_vcxQ8yTg34Nj5llJnS1oBaHG', is_error=False)]
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_pR2C3ojU1ZQDTx2IkVIkL7gu', arguments='{"smiles": "CC(C)[C@H](NC(=O)c1ccccc1)C(=O)O"}', name='validate_smiles'), FunctionCall(id='call_wwN0aWnGzytbupOQ4nuhsJ90', arguments='{"smiles": "CC(C)[C@H](NC(=O)c1ccccc1)C(=O)O"}', name='canonicalize_smiles'), FunctionCall(id='call_LXQlJ0zVxbKCZfejODmr1Sn9', arguments='{"smiles": "*N[C@@H](CC(C)C)C(N)=O"}', name='validate_smiles'), FunctionCall(id='call_ewAeM72IaImoz7S3wBbXsNC8', arguments='{"smiles": "*N[C@@H](CC(C)C)C(N)=O"}', name='canonicalize_smiles'), FunctionCall(id='call_C1ruxjmPrmHMHQpI6cieyIsM', arguments='{"smiles": "CC(C)C[C@H](NC(=O)[C@@H](NC(=O)c1ccccc1)C(C)C)C(N)=O"}', name='validate_smiles'), FunctionCall(id='call_Pp9D7psKuaZpgz4pmCScuxq3', arguments='{"smiles": "CC(C)C[C@H](NC(=O)[C@@H](NC(=O)c1ccccc1)C(C)C)C(N)=O"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_pR2C3ojU1ZQDTx2IkVIkL7gu', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC(C)[C@H](NC(=O)c1ccccc1)C(=O)O', 'valid': True, 'formula': 'C12H15NO3', 'error': None}", name='canonicalize_smiles', call_id='call_wwN0aWnGzytbupOQ4nuhsJ90', is_error=False), FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_LXQlJ0zVxbKCZfejODmr1Sn9', is_error=False), FunctionExecutionResult(content="{'canonical': '*N[C@@H](CC(C)C)C(N)=O', 'valid': True, 'formula': 'C6H13*N2O', 'error': None}", name='canonicalize_smiles', call_id='call_ewAeM72IaImoz7S3wBbXsNC8', is_error=False), FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_C1ruxjmPrmHMHQpI6cieyIsM', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC(C)C[C@H](NC(=O)[C@@H](NC(=O)c1ccccc1)C(C)C)C(N)=O', 'valid': True, 'formula': 'C18H27N3O3', 'error': None}", name='canonicalize_smiles', call_id='call_Pp9D7psKuaZpgz4pmCScuxq3', is_error=False)]
+---------- TextMessage (reaction_template_parser) ----------
+[FINDINGS reaction_template_parser]
+scheme_count: 1
+scheme_1:
+  reactant_template_smiles: CC(C)[C@H](NC(=O)c1ccccc1)C(=O)O.*N[C@@H](CC(C)C)C(N)=O
+  product_template_smiles:  CC(C)C[C@H](NC(=O)[C@@H](NC(=O)c1ccccc1)C(C)C)C(N)=O
+  arrow: forward
+  multi_step: no
+  notes: optimization_table header shows one generic coupling 10p + 11r → 39. Used bbox #1 for 10p (conf 0.78), bbox #3 for 11r (conf 0.87), and bbox #5 for product; product MolNexTR had low confidence and extra solvent fragments, so solvent was removed before validation.
+[/FINDINGS]
+/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/teams/_group_chat/_selector_group_chat.py:269: UserWarning: Resolved model mismatch: gpt-5.4 != gpt-5.4-2026-03-05. Model mapping in autogen_ext.models.openai may be incorrect. Set the model to gpt-5.4-2026-03-05 to enhance token/cost estimation and suppress this warning.
+  response = await self._model_client.create(messages=select_speaker_messages)
+---------- TextMessage (molecular_recognition) ----------
+[FINDINGS molecular_recognition]
+# scripted agent — one entry per detected bbox, no deduplication
+molecule_count: 5
+molecule:
+  label: bbox_0
+  canonical_smiles: CC(C)[C@H](NC(=O)c1ccccc1)C(=O)O
+  bbox: [49, 83, 163, 97]
+  confidence: 0.784
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_1
+  canonical_smiles: CN(C)CCCN=C=[O-][N+](=O)OCC(O[N+](=O)[O-])C(CO[N+](=O)[O-])O[N+](=O)[O-]
+  bbox: [211, 432, 215, 54]
+  confidence: 0.835
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_2
+  canonical_smiles: *N[C@@H](CC(C)C)C(N)=O
+  bbox: [231, 58, 141, 123]
+  confidence: 0.866
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_3
+  canonical_smiles: CC(C)C1N=C(c2ccccc2)OC1=O
+  bbox: [435, 403, 109, 121]
+  confidence: 0.562
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_4
+  canonical_smiles: CC(C)C[C@H](NC(=O)[C@@H](NC(=O)c1ccccc1)C(C)C)C(N)=O.CCC.CCC
+  bbox: [479, 48, 242, 130]
+  confidence: 0.413
+  stereochemistry: from MolNexTR
+  uncertain: yes
+  notes: extracted via MolNexTR per-bbox
+[/FINDINGS]
+---------- TextMessage (rgroup_substitution) ----------
+No R-groups detected.
+---------- ToolCallRequestEvent (condition_interpretation) ----------
+[FunctionCall(id='call_eKcId6ZfUcviRHDDO39XxWtL', arguments='{"name": "toluene"}', name='lookup_compound'), FunctionCall(id='call_N8xJEiPm7BY3Wt0qsfp4mQig', arguments='{"name": "CH2Cl2"}', name='lookup_compound'), FunctionCall(id='call_keN4t1cKN2KDBhOXBgTXAB66', arguments='{"name": "EDCI"}', name='lookup_compound')]
+---------- ToolCallExecutionEvent (condition_interpretation) ----------
+[FunctionExecutionResult(content="{'smiles': 'CC1=CC=CC=C1', 'source': 'opsin', 'query_used': 'Toluene', 'cached': True, 'error': None}", name='lookup_compound', call_id='call_eKcId6ZfUcviRHDDO39XxWtL', is_error=False), FunctionExecutionResult(content="{'smiles': 'C(Cl)Cl', 'source': 'pubchem', 'query_used': 'CH2Cl2', 'cached': True, 'error': None}", name='lookup_compound', call_id='call_N8xJEiPm7BY3Wt0qsfp4mQig', is_error=False), FunctionExecutionResult(content="{'smiles': 'CCN=C=NCCCN(C)C', 'source': 'pubchem', 'query_used': 'EDCI', 'cached': True, 'error': None}", name='lookup_compound', call_id='call_keN4t1cKN2KDBhOXBgTXAB66', is_error=False)]
+---------- ToolCallRequestEvent (condition_interpretation) ----------
+[FunctionCall(id='call_w8lnZiIvLkIU5e0kRlS3HmE7', arguments='{"smiles": "CC1=CC=CC=C1"}', name='validate_smiles'), FunctionCall(id='call_l4wy3Pey9Nw6LLrrHg3RjnMO', arguments='{"smiles": "C(Cl)Cl"}', name='validate_smiles'), FunctionCall(id='call_Clgii7KyCSw2MeNMthZn6zz4', arguments='{"smiles": "CCN=C=NCCCN(C)C"}', name='validate_smiles')]
+---------- ToolCallExecutionEvent (condition_interpretation) ----------
+[FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_w8lnZiIvLkIU5e0kRlS3HmE7', is_error=False), FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_l4wy3Pey9Nw6LLrrHg3RjnMO', is_error=False), FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_Clgii7KyCSw2MeNMthZn6zz4', is_error=False)]
+---------- TextMessage (condition_interpretation) ----------
+[FINDINGS condition_interpretation]
+applies_to: scheme_1
+conditions:
+  - role: reagent
+    text: 10p
+    smiles: CC(C)[C@H](NC(=O)c1ccccc1)C(=O)O
+  - role: loading
+    text: 1.0 equiv
+    smiles: null
+  - role: reagent
+    text: 11r
+    smiles: *N[C@@H](CC(C)C)C(N)=O
+  - role: time
+    text: 4 h
+    smiles: null
+  - role: loading
+    text: 10 mol%
+    smiles: null
+  - role: temperature
+    text: 50 °C (bath temperature)
+    smiles: null
+  - role: time
+    text: 24 h*
+    smiles: null
+  - role: atmosphere
+    text: MS4Å was used for the reactions with 8a and 14
+    smiles: null
+[FINDINGS condition_interpretation]
+applies_to: entry 1
+conditions:
+  - role: catalyst
+    text: 8a: 5 mol%
+    smiles: null
+  - role: loading
+    text: 5 mol%
+    smiles: null
+  - role: solvent
+    text: toluene
+    smiles: CC1=CC=CC=C1
+  - role: temperature
+    text: 50 °C
+    smiles: null
+  - role: time
+    text: 14 h*
+    smiles: null
+  - role: yield
+    text: 75% yield
+    smiles: null
+[FINDINGS condition_interpretation]
+applies_to: entry 2
+conditions:
+  - role: reagent
+    text: EDCI
+    smiles: CCN=C=NCCCN(C)C
+  - role: loading
+    text: 1.0 equiv
+    smiles: null
+  - role: solvent
+    text: CH2Cl2
+    smiles: C(Cl)Cl
+  - role: temperature
+    text: RT
+    smiles: null
+  - role: time
+    text: 4 h
+    smiles: null
+  - role: yield
+    text: 89% yield
+    smiles: null
+[FINDINGS condition_interpretation]
+applies_to: entry 3
+conditions:
+  - role: catalyst
+    text: Catalyst 14 or 15 (10 mol%)
+    smiles: null
+  - role: loading
+    text: 10 mol%
+    smiles: null
+  - role: solvent
+    text: Toluene or CH2Cl2
+    smiles: null
+  - role: temperature
+    text: 50 °C (bath temperature)
+    smiles: null
+  - role: time
+    text: 24 h*
+    smiles: null
+[/FINDINGS]
+---------- ToolCallRequestEvent (text_extraction) ----------
+[FunctionCall(id='call_Vi9sentDhWDkB4HXxNsQUBln', arguments='{"image_path":"/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/Benchmark_kasper_GT3_Maarten/NC_2017.pdf_page005_picture_01_s0.90.png","lang":"eng","psm":6}', name='ocr_image')]
+---------- ToolCallExecutionEvent (text_extraction) ----------
+[FunctionExecutionResult(content='{\'raw_text\': \'a re r\\n10p and Tir using DATB 8a.\\n]\\nmy my Wi\\nPrN hoy 4H. NHp Conditions PrN Ay NH) j\\ni N 2 oH\\n\\nOA H 6 OA fo}\\n10p 446 39\\nConditions Reaction outcome\\n\\n8a: 5 mol%, toluene, 50 °C, 14 h* 75% yield, stereochemically puret\\nc\\nEDCI: 1.0 equiv, CH2Clp, RT, 4h 89% yield, diastereomixture (53/47)t 1\\nCatalyst 14 or 15 (10 mol%) i\\nToluene or CH2Clz No conversion ‘\\n50 °C (bath temperature), 24 h* (\\nPm \\\'\\n\\nie}\\nEtN. if 1\\nEDCI: Sey Oxazolone 43\\n\\n( Sn~™nen NV “So 1\\nJ\\n*MS4A was used for the reactions with 8a and 14. "HPLC traces are provided in Supplementary\\n\', \'lines\': [\'a re r\', \'10p and Tir using DATB 8a.\', \']\', \'my my Wi\', \'PrN hoy 4H. NHp Conditions PrN Ay NH) j\', \'i N 2 oH\', \'OA H 6 OA fo}\', \'10p 446 39\', \'Conditions Reaction outcome\', \'8a: 5 mol%, toluene, 50 °C, 14 h* 75% yield, stereochemically puret\', \'c\', \'EDCI: 1.0 equiv, CH2Clp, RT, 4h 89% yield, diastereomixture (53/47)t 1\', \'Catalyst 14 or 15 (10 mol%) i\', \'Toluene or CH2Clz No conversion ‘\', \'50 °C (bath temperature), 24 h* (\', "Pm \'", \'ie}\', \'EtN. if 1\', \'EDCI: Sey Oxazolone 43\', \'( Sn~™nen NV “So 1\', \'J\', \'*MS4A was used for the reactions with 8a and 14. "HPLC traces are provided in Supplementary\'], \'char_count\': 545, \'cached\': True, \'error\': None}', name='ocr_image', call_id='call_Vi9sentDhWDkB4HXxNsQUBln', is_error=False)]
+---------- TextMessage (text_extraction) ----------
+[FINDINGS text_extraction]
+items:
+  - kind: heading
+    text: "Table 2 | Comparative study in the amidation of amino acids 10p and 11r using DATB 8a."
+    applies_to: figure
+  - kind: heading
+    text: "Conditions"
+    applies_to: figure
+  - kind: heading
+    text: "Reaction outcome"
+    applies_to: figure
+  - kind: other
+    text: "Oxazolone 43"
+    applies_to: 43
+  - kind: footnote
+    text: "*MS4Å was used for the reactions with 8a and 14."
+    applies_to: figure
+  - kind: footnote
+    text: "†HPLC traces are provided in Supplementary"
+    applies_to: figure
+[/FINDINGS]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_LQFaV35JC4XiSb4Tu2eXv4yX', arguments='{"smiles": "CC(C)[C@H](NC(=O)c1ccccc1)C(=O)O"}', name='canonicalize_smiles'), FunctionCall(id='call_57h8GObzJhgIJWMocrq7jLWK', arguments='{"smiles": "*N[C@@H](CC(C)C)C(N)=O"}', name='canonicalize_smiles'), FunctionCall(id='call_OgTBEHrVH63FBTrGWMKYVfI6', arguments='{"smiles": "CC(C)C[C@H](NC(=O)[C@@H](NC(=O)c1ccccc1)C(C)C)C(N)=O"}', name='canonicalize_smiles'), FunctionCall(id='call_vmrUDVaYa3uMkIIwQLXaW5L7', arguments='{"smiles": "CC1=CC=CC=C1"}', name='canonicalize_smiles'), FunctionCall(id='call_zuV6Tgr8q1G65sVDOn4K4Y4o', arguments='{"smiles": "CCN=C=NCCCN(C)C"}', name='canonicalize_smiles'), FunctionCall(id='call_ajulcQRo91A6jLGjB1nnNIYY', arguments='{"smiles": "C(Cl)Cl"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'canonical': 'CC(C)[C@H](NC(=O)c1ccccc1)C(=O)O', 'valid': True, 'formula': 'C12H15NO3', 'error': None}", name='canonicalize_smiles', call_id='call_LQFaV35JC4XiSb4Tu2eXv4yX', is_error=False), FunctionExecutionResult(content="{'canonical': '*N[C@@H](CC(C)C)C(N)=O', 'valid': True, 'formula': 'C6H13*N2O', 'error': None}", name='canonicalize_smiles', call_id='call_57h8GObzJhgIJWMocrq7jLWK', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC(C)C[C@H](NC(=O)[C@@H](NC(=O)c1ccccc1)C(C)C)C(N)=O', 'valid': True, 'formula': 'C18H27N3O3', 'error': None}", name='canonicalize_smiles', call_id='call_OgTBEHrVH63FBTrGWMKYVfI6', is_error=False), FunctionExecutionResult(content="{'canonical': 'Cc1ccccc1', 'valid': True, 'formula': 'C7H8', 'error': None}", name='canonicalize_smiles', call_id='call_vmrUDVaYa3uMkIIwQLXaW5L7', is_error=False), FunctionExecutionResult(content="{'canonical': 'CCN=C=NCCCN(C)C', 'valid': True, 'formula': 'C8H17N3', 'error': None}", name='canonicalize_smiles', call_id='call_zuV6Tgr8q1G65sVDOn4K4Y4o', is_error=False), FunctionExecutionResult(content="{'canonical': 'ClCCl', 'valid': True, 'formula': 'CH2Cl2', 'error': None}", name='canonicalize_smiles', call_id='call_ajulcQRo91A6jLGjB1nnNIYY', is_error=False)]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_wvGI78NltCo15UpIJ3NthT1O', arguments='{"obj":{"file_name":"NC_2017.pdf_page005_picture_01_s0.90.png","reactions":[{"reaction_id":"0_1","reactants":[{"smiles":"CC(C)[C@H](NC(=O)c1ccccc1)C(=O)O","label":"10p","uncertain":false,"bbox":[49,83,163,97]},{"smiles":"*N[C@@H](CC(C)C)C(N)=O","label":"11r","uncertain":false,"bbox":[231,58,141,123]}],"products":[{"smiles":"CC(C)C[C@H](NC(=O)[C@@H](NC(=O)c1ccccc1)C(C)C)C(N)=O","label":"39","uncertain":true,"bbox":[479,48,242,130]}],"conditions":[{"role":"catalyst","text":"8a: 5 mol%","smiles":null,"bbox":null},{"role":"loading","text":"5 mol%","smiles":null,"bbox":null},{"role":"solvent","text":"toluene","smiles":"Cc1ccccc1","bbox":null},{"role":"temperature","text":"50 °C","smiles":null,"bbox":null},{"role":"time","text":"14 h*","smiles":null,"bbox":null},{"role":"yield","text":"75% yield","smiles":null,"bbox":null},{"role":"atmosphere","text":"MS4Å was used for the reactions with 8a and 14","smiles":null,"bbox":null}],"additional_info":["entry 1: 8a catalyst, toluene, 50 °C, 14 h, 75% yield, stereochemically pure"]},{"reaction_id":"0_2","reactants":[{"smiles":"CC(C)[C@H](NC(=O)c1ccccc1)C(=O)O","label":"10p","uncertain":false,"bbox":[49,83,163,97]},{"smiles":"*N[C@@H](CC(C)C)C(N)=O","label":"11r","uncertain":false,"bbox":[231,58,141,123]}],"products":[{"smiles":"CC(C)C[C@H](NC(=O)[C@@H](NC(=O)c1ccccc1)C(C)C)C(N)=O","label":"39","uncertain":true,"bbox":[479,48,242,130]}],"conditions":[{"role":"reagent","text":"EDCI","smiles":"CCN=C=NCCCN(C)C","bbox":null},{"role":"loading","text":"1.0 equiv","smiles":null,"bbox":null},{"role":"solvent","text":"CH2Cl2","smiles":"ClCCl","bbox":null},{"role":"temperature","text":"RT","smiles":null,"bbox":null},{"role":"time","text":"4 h","smiles":null,"bbox":null},{"role":"yield","text":"89% yield","smiles":null,"bbox":null}],"additional_info":["entry 2: EDCI, CH2Cl2, RT, 4 h, 89% yield, diastereomixture (53/47)"]},{"reaction_id":"0_3","reactants":[{"smiles":"CC(C)[C@H](NC(=O)c1ccccc1)C(=O)O","label":"10p","uncertain":false,"bbox":[49,83,163,97]},{"smiles":"*N[C@@H](CC(C)C)C(N)=O","label":"11r","uncertain":false,"bbox":[231,58,141,123]}],"products":[{"smiles":"CC(C)C[C@H](NC(=O)[C@@H](NC(=O)c1ccccc1)C(C)C)C(N)=O","label":"39","uncertain":true,"bbox":[479,48,242,130]}],"conditions":[{"role":"catalyst","text":"Catalyst 14 or 15 (10 mol%)","smiles":null,"bbox":null},{"role":"loading","text":"10 mol%","smiles":null,"bbox":null},{"role":"solvent","text":"Toluene or CH2Cl2","smiles":null,"bbox":null},{"role":"temperature","text":"50 °C (bath temperature)","smiles":null,"bbox":null},{"role":"time","text":"24 h*","smiles":null,"bbox":null},{"role":"atmosphere","text":"MS4Å was used for the reactions with 8a and 14","smiles":null,"bbox":null}],"additional_info":["entry 3: catalyst 14 or 15, toluene or CH2Cl2, 50 °C bath temperature, 24 h, no conversion"]}]}}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'valid': True, 'errors': []}", name='validate_reaction_json', call_id='call_wvGI78NltCo15UpIJ3NthT1O', is_error=False)]
+---------- TextMessage (data_structure) ----------
+```json
+{
+  "file_name": "NC_2017.pdf_page005_picture_01_s0.90.png",
+  "reactions": [
+    {
+      "reaction_id": "0_1",
+      "reactants": [
+        {
+          "smiles": "CC(C)[C@H](NC(=O)c1ccccc1)C(=O)O",
+          "label": "10p",
+          "uncertain": false,
+          "bbox": [49, 83, 163, 97]
+        },
+        {
+          "smiles": "*N[C@@H](CC(C)C)C(N)=O",
+          "label": "11r",
+          "uncertain": false,
+          "bbox": [231, 58, 141, 123]
+        }
+      ],
+      "products": [
+        {
+          "smiles": "CC(C)C[C@H](NC(=O)[C@@H](NC(=O)c1ccccc1)C(C)C)C(N)=O",
+          "label": "39",
+          "uncertain": true,
+          "bbox": [479, 48, 242, 130]
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "8a: 5 mol%",
+          "smiles": null,
+          "bbox": null
+        },
+        {
+          "role": "loading",
+          "text": "5 mol%",
+          "smiles": null,
+          "bbox": null
+        },
+        {
+          "role": "solvent",
+          "text": "toluene",
+          "smiles": "Cc1ccccc1",
+          "bbox": null
+        },
+        {
+          "role": "temperature",
+          "text": "50 °C",
+          "smiles": null,
+          "bbox": null
+        },
+        {
+          "role": "time",
+          "text": "14 h*",
+          "smiles": null,
+          "bbox": null
+        },
+        {
+          "role": "yield",
+          "text": "75% yield",
+          "smiles": null,
+          "bbox": null
+        },
+        {
+          "role": "atmosphere",
+          "text": "MS4Å was used for the reactions with 8a and 14",
+          "smiles": null,
+          "bbox": null
+        }
+      ],
+      "additional_info": [
+        "entry 1: 8a catalyst, toluene, 50 °C, 14 h, 75% yield, stereochemically pure"
+      ]
+    },
+    {
+      "reaction_id": "0_2",
+      "reactants": [
+        {
+          "smiles": "CC(C)[C@H](NC(=O)c1ccccc1)C(=O)O",
+          "label": "10p",
+          "uncertain": false,
+          "bbox": [49, 83, 163, 97]
+        },
+        {
+          "smiles": "*N[C@@H](CC(C)C)C(N)=O",
+          "label": "11r",
+          "uncertain": false,
+          "bbox": [231, 58, 141, 123]
+        }
+      ],
+      "products": [
+        {
+          "smiles": "CC(C)C[C@H](NC(=O)[C@@H](NC(=O)c1ccccc1)C(C)C)C(N)=O",
+          "label": "39",
+          "uncertain": true,
+          "bbox": [479, 48, 242, 130]
+        }
+      ],
+      "conditions": [
+        {
+          "role": "reagent",
+          "text": "EDCI",
+          "smiles": "CCN=C=NCCCN(C)C",
+          "bbox": null
+        },
+        {
+          "role": "loading",
+          "text": "1.0 equiv",
+          "smiles": null,
+          "bbox": null
+        },
+        {
+          "role": "solvent",
+          "text": "CH2Cl2",
+          "smiles": "ClCCl",
+          "bbox": null
+        },
+        {
+          "role": "temperature",
+          "text": "RT",
+          "smiles": null,
+          "bbox": null
+        },
+        {
+          "role": "time",
+          "text": "4 h",
+          "smiles": null,
+          "bbox": null
+        },
+        {
+          "role": "yield",
+          "text": "89% yield",
+          "smiles": null,
+          "bbox": null
+        }
+      ],
+      "additional_info": [
+        "entry 2: EDCI, CH2Cl2, RT, 4 h, 89% yield, diastereomixture (53/47)"
+      ]
+    },
+    {
+      "reaction_id": "0_3",
+      "reactants": [
+        {
+          "smiles": "CC(C)[C@H](NC(=O)c1ccccc1)C(=O)O",
+          "label": "10p",
+          "uncertain": false,
+          "bbox": [49, 83, 163, 97]
+        },
+        {
+          "smiles": "*N[C@@H](CC(C)C)C(N)=O",
+          "label": "11r",
+          "uncertain": false,
+          "bbox": [231, 58, 141, 123]
+        }
+      ],
+      "products": [
+        {
+          "smiles": "CC(C)C[C@H](NC(=O)[C@@H](NC(=O)c1ccccc1)C(C)C)C(N)=O",
+          "label": "39",
+          "uncertain": true,
+          "bbox": [479, 48, 242, 130]
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "Catalyst 14 or 15 (10 mol%)",
+          "smiles": null,
+          "bbox": null
+        },
+        {
+          "role": "loading",
+          "text": "10 mol%",
+          "smiles": null,
+          "bbox": null
+        },
+        {
+          "role": "solvent",
+          "text": "Toluene or CH2Cl2",
+          "smiles": null,
+          "bbox": null
+        },
+        {
+          "role": "temperature",
+          "text": "50 °C (bath temperature)",
+          "smiles": null,
+          "bbox": null
+        },
+        {
+          "role": "time",
+          "text": "24 h*",
+          "smiles": null,
+          "bbox": null
+        },
+        {
+          "role": "atmosphere",
+          "text": "MS4Å was used for the reactions with 8a and 14",
+          "smiles": null,
+          "bbox": null
+        }
+      ],
+      "additional_info": [
+        "entry 3: catalyst 14 or 15, toluene or CH2Cl2, 50 °C bath temperature, 24 h, no conversion"
+      ]
+    }
+  ]
+}
+```
+/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/tools/structural_verifier.py:249: UserWarning: Resolved model mismatch: gpt-5.4 != gpt-5.4-2026-03-05. Model mapping in autogen_ext.models.openai may be incorrect. Set the model to gpt-5.4-2026-03-05 to enhance token/cost estimation and suppress this warning.
+  llm_result = await self._client.create(
+---------- TextMessage (structural_verifier) ----------
+[STRUCT_OK]
+notes: label 39 maps to the product crop and matches; stereochemistry is shown but no structural mismatch detected
+---------- ToolCallRequestEvent (verifier) ----------
+[FunctionCall(id='call_SookLNaVYkghdhzi9sYssR9o', arguments='{}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (verifier) ----------
+[FunctionExecutionResult(content='1 validation error for validate_reaction_jsonargs\nobj\n  Field required [type=missing, input_value={}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing', name='validate_reaction_json', call_id='call_SookLNaVYkghdhzi9sYssR9o', is_error=True)]
+---------- TextMessage (verifier) ----------
+[CRITIQUE verifier]
+schema_errors:
+  - obj: Field required
+[/CRITIQUE]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_8anHHKHSXZxieV85zTG3hE17', arguments='{"obj":{"file_name":"NC_2017.pdf_page005_picture_01_s0.90.png","reactions":[{"reaction_id":"0_1","reactants":[{"smiles":"CC(C)[C@H](NC(=O)c1ccccc1)C(=O)O","label":"10p","uncertain":false,"bbox":[49,83,163,97]},{"smiles":"*N[C@@H](CC(C)C)C(N)=O","label":"11r","uncertain":false,"bbox":[231,58,141,123]}],"products":[{"smiles":"CC(C)C[C@H](NC(=O)[C@@H](NC(=O)c1ccccc1)C(C)C)C(N)=O","label":"39","uncertain":true,"bbox":[479,48,242,130]}],"conditions":[{"role":"catalyst","text":"8a: 5 mol%","smiles":null,"bbox":null},{"role":"loading","text":"5 mol%","smiles":null,"bbox":null},{"role":"solvent","text":"toluene","smiles":"Cc1ccccc1","bbox":null},{"role":"temperature","text":"50 °C","smiles":null,"bbox":null},{"role":"time","text":"14 h*","smiles":null,"bbox":null},{"role":"yield","text":"75% yield","smiles":null,"bbox":null},{"role":"atmosphere","text":"MS4Å was used for the reactions with 8a and 14","smiles":null,"bbox":null}],"additional_info":["entry 1: 8a catalyst, toluene, 50 °C, 14 h, 75% yield, stereochemically pure"]},{"reaction_id":"0_2","reactants":[{"smiles":"CC(C)[C@H](NC(=O)c1ccccc1)C(=O)O","label":"10p","uncertain":false,"bbox":[49,83,163,97]},{"smiles":"*N[C@@H](CC(C)C)C(N)=O","label":"11r","uncertain":false,"bbox":[231,58,141,123]}],"products":[{"smiles":"CC(C)C[C@H](NC(=O)[C@@H](NC(=O)c1ccccc1)C(C)C)C(N)=O","label":"39","uncertain":true,"bbox":[479,48,242,130]}],"conditions":[{"role":"reagent","text":"EDCI","smiles":"CCN=C=NCCCN(C)C","bbox":null},{"role":"loading","text":"1.0 equiv","smiles":null,"bbox":null},{"role":"solvent","text":"CH2Cl2","smiles":"ClCCl","bbox":null},{"role":"temperature","text":"RT","smiles":null,"bbox":null},{"role":"time","text":"4 h","smiles":null,"bbox":null},{"role":"yield","text":"89% yield","smiles":null,"bbox":null}],"additional_info":["entry 2: EDCI, CH2Cl2, RT, 4 h, 89% yield, diastereomixture (53/47)"]},{"reaction_id":"0_3","reactants":[{"smiles":"CC(C)[C@H](NC(=O)c1ccccc1)C(=O)O","label":"10p","uncertain":false,"bbox":[49,83,163,97]},{"smiles":"*N[C@@H](CC(C)C)C(N)=O","label":"11r","uncertain":false,"bbox":[231,58,141,123]}],"products":[{"smiles":"CC(C)C[C@H](NC(=O)[C@@H](NC(=O)c1ccccc1)C(C)C)C(N)=O","label":"39","uncertain":true,"bbox":[479,48,242,130]}],"conditions":[{"role":"catalyst","text":"Catalyst 14 or 15 (10 mol%)","smiles":null,"bbox":null},{"role":"loading","text":"10 mol%","smiles":null,"bbox":null},{"role":"solvent","text":"Toluene or CH2Cl2","smiles":null,"bbox":null},{"role":"temperature","text":"50 °C (bath temperature)","smiles":null,"bbox":null},{"role":"time","text":"24 h*","smiles":null,"bbox":null},{"role":"atmosphere","text":"MS4Å was used for the reactions with 8a and 14","smiles":null,"bbox":null}],"additional_info":["entry 3: catalyst 14 or 15, toluene or CH2Cl2, 50 °C bath temperature, 24 h, no conversion"]}]}}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'valid': True, 'errors': []}", name='validate_reaction_json', call_id='call_8anHHKHSXZxieV85zTG3hE17', is_error=False)]
+---------- TextMessage (data_structure) ----------
+```json
+{
+  "file_name": "NC_2017.pdf_page005_picture_01_s0.90.png",
+  "reactions": [
+    {
+      "reaction_id": "0_1",
+      "reactants": [
+        {
+          "smiles": "CC(C)[C@H](NC(=O)c1ccccc1)C(=O)O",
+          "label": "10p",
+          "uncertain": false,
+          "bbox": [49, 83, 163, 97]
+        },
+        {
+          "smiles": "*N[C@@H](CC(C)C)C(N)=O",
+          "label": "11r",
+          "uncertain": false,
+          "bbox": [231, 58, 141, 123]
+        }
+      ],
+      "products": [
+        {
+          "smiles": "CC(C)C[C@H](NC(=O)[C@@H](NC(=O)c1ccccc1)C(C)C)C(N)=O",
+          "label": "39",
+          "uncertain": true,
+          "bbox": [479, 48, 242, 130]
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "8a: 5 mol%",
+          "smiles": null,
+          "bbox": null
+        },
+        {
+          "role": "loading",
+          "text": "5 mol%",
+          "smiles": null,
+          "bbox": null
+        },
+        {
+          "role": "solvent",
+          "text": "toluene",
+          "smiles": "Cc1ccccc1",
+          "bbox": null
+        },
+        {
+          "role": "temperature",
+          "text": "50 °C",
+          "smiles": null,
+          "bbox": null
+        },
+        {
+          "role": "time",
+          "text": "14 h*",
+          "smiles": null,
+          "bbox": null
+        },
+        {
+          "role": "yield",
+          "text": "75% yield",
+          "smiles": null,
+          "bbox": null
+        },
+        {
+          "role": "atmosphere",
+          "text": "MS4Å was used for the reactions with 8a and 14",
+          "smiles": null,
+          "bbox": null
+        }
+      ],
+      "additional_info": [
+        "entry 1: 8a catalyst, toluene, 50 °C, 14 h, 75% yield, stereochemically pure"
+      ]
+    },
+    {
+      "reaction_id": "0_2",
+      "reactants": [
+        {
+          "smiles": "CC(C)[C@H](NC(=O)c1ccccc1)C(=O)O",
+          "label": "10p",
+          "uncertain": false,
+          "bbox": [49, 83, 163, 97]
+        },
+        {
+          "smiles": "*N[C@@H](CC(C)C)C(N)=O",
+          "label": "11r",
+          "uncertain": false,
+          "bbox": [231, 58, 141, 123]
+        }
+      ],
+      "products": [
+        {
+          "smiles": "CC(C)C[C@H](NC(=O)[C@@H](NC(=O)c1ccccc1)C(C)C)C(N)=O",
+          "label": "39",
+          "uncertain": true,
+          "bbox": [479, 48, 242, 130]
+        }
+      ],
+      "conditions": [
+        {
+          "role": "reagent",
+          "text": "EDCI",
+          "smiles": "CCN=C=NCCCN(C)C",
+          "bbox": null
+        },
+        {
+          "role": "loading",
+          "text": "1.0 equiv",
+          "smiles": null,
+          "bbox": null
+        },
+        {
+          "role": "solvent",
+          "text": "CH2Cl2",
+          "smiles": "ClCCl",
+          "bbox": null
+        },
+        {
+          "role": "temperature",
+          "text": "RT",
+          "smiles": null,
+          "bbox": null
+        },
+        {
+          "role": "time",
+          "text": "4 h",
+          "smiles": null,
+          "bbox": null
+        },
+        {
+          "role": "yield",
+          "text": "89% yield",
+          "smiles": null,
+          "bbox": null
+        }
+      ],
+      "additional_info": [
+        "entry 2: EDCI, CH2Cl2, RT, 4 h, 89% yield, diastereomixture (53/47)"
+      ]
+    },
+    {
+      "reaction_id": "0_3",
+      "reactants": [
+        {
+          "smiles": "CC(C)[C@H](NC(=O)c1ccccc1)C(=O)O",
+          "label": "10p",
+          "uncertain": false,
+          "bbox": [49, 83, 163, 97]
+        },
+        {
+          "smiles": "*N[C@@H](CC(C)C)C(N)=O",
+          "label": "11r",
+          "uncertain": false,
+          "bbox": [231, 58, 141, 123]
+        }
+      ],
+      "products": [
+        {
+          "smiles": "CC(C)C[C@H](NC(=O)[C@@H](NC(=O)c1ccccc1)C(C)C)C(N)=O",
+          "label": "39",
+          "uncertain": true,
+          "bbox": [479, 48, 242, 130]
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "Catalyst 14 or 15 (10 mol%)",
+          "smiles": null,
+          "bbox": null
+        },
+        {
+          "role": "loading",
+          "text": "10 mol%",
+          "smiles": null,
+          "bbox": null
+        },
+        {
+          "role": "solvent",
+          "text": "Toluene or CH2Cl2",
+          "smiles": null,
+          "bbox": null
+        },
+        {
+          "role": "temperature",
+          "text": "50 °C (bath temperature)",
+          "smiles": null,
+          "bbox": null
+        },
+        {
+          "role": "time",
+          "text": "24 h*",
+          "smiles": null,
+          "bbox": null
+        },
+        {
+          "role": "atmosphere",
+          "text": "MS4Å was used for the reactions with 8a and 14",
+          "smiles": null,
+          "bbox": null
+        }
+      ],
+      "additional_info": [
+        "entry 3: catalyst 14 or 15, toluene or CH2Cl2, 50 °C bath temperature, 24 h, no conversion"
+      ]
+    }
+  ]
+}
+```
+---------- TextMessage (structural_verifier) ----------
+[STRUCT_OK]
+notes: label 39 maps to the product crop and matches; stereochemistry is shown but no structural mismatch detected
+notes: products unchanged since the previous structural pass; skipping detect/crop/render and replaying that verdict.
+---------- ToolCallRequestEvent (verifier) ----------
+[FunctionCall(id='call_NUSgk2tZ8iCAFX74u2qAeDQt', arguments='{"obj":{"file_name":"NC_2017.pdf_page005_picture_01_s0.90.png","reactions":[{"reaction_id":"0_1","reactants":[{"smiles":"CC(C)[C@H](NC(=O)c1ccccc1)C(=O)O","label":"10p","uncertain":false,"bbox":[49,83,163,97]},{"smiles":"*N[C@@H](CC(C)C)C(N)=O","label":"11r","uncertain":false,"bbox":[231,58,141,123]}],"products":[{"smiles":"CC(C)C[C@H](NC(=O)[C@@H](NC(=O)c1ccccc1)C(C)C)C(N)=O","label":"39","uncertain":true,"bbox":[479,48,242,130]}],"conditions":[{"role":"catalyst","text":"8a: 5 mol%","smiles":null,"bbox":null},{"role":"loading","text":"5 mol%","smiles":null,"bbox":null},{"role":"solvent","text":"toluene","smiles":"Cc1ccccc1","bbox":null},{"role":"temperature","text":"50 °C","smiles":null,"bbox":null},{"role":"time","text":"14 h*","smiles":null,"bbox":null},{"role":"yield","text":"75% yield","smiles":null,"bbox":null},{"role":"atmosphere","text":"MS4Å was used for the reactions with 8a and 14","smiles":null,"bbox":null}],"additional_info":["entry 1: 8a catalyst, toluene, 50 °C, 14 h, 75% yield, stereochemically pure"]},{"reaction_id":"0_2","reactants":[{"smiles":"CC(C)[C@H](NC(=O)c1ccccc1)C(=O)O","label":"10p","uncertain":false,"bbox":[49,83,163,97]},{"smiles":"*N[C@@H](CC(C)C)C(N)=O","label":"11r","uncertain":false,"bbox":[231,58,141,123]}],"products":[{"smiles":"CC(C)C[C@H](NC(=O)[C@@H](NC(=O)c1ccccc1)C(C)C)C(N)=O","label":"39","uncertain":true,"bbox":[479,48,242,130]}],"conditions":[{"role":"reagent","text":"EDCI","smiles":"CCN=C=NCCCN(C)C","bbox":null},{"role":"loading","text":"1.0 equiv","smiles":null,"bbox":null},{"role":"solvent","text":"CH2Cl2","smiles":"ClCCl","bbox":null},{"role":"temperature","text":"RT","smiles":null,"bbox":null},{"role":"time","text":"4 h","smiles":null,"bbox":null},{"role":"yield","text":"89% yield","smiles":null,"bbox":null}],"additional_info":["entry 2: EDCI, CH2Cl2, RT, 4 h, 89% yield, diastereomixture (53/47)"]},{"reaction_id":"0_3","reactants":[{"smiles":"CC(C)[C@H](NC(=O)c1ccccc1)C(=O)O","label":"10p","uncertain":false,"bbox":[49,83,163,97]},{"smiles":"*N[C@@H](CC(C)C)C(N)=O","label":"11r","uncertain":false,"bbox":[231,58,141,123]}],"products":[{"smiles":"CC(C)C[C@H](NC(=O)[C@@H](NC(=O)c1ccccc1)C(C)C)C(N)=O","label":"39","uncertain":true,"bbox":[479,48,242,130]}],"conditions":[{"role":"catalyst","text":"Catalyst 14 or 15 (10 mol%)","smiles":null,"bbox":null},{"role":"loading","text":"10 mol%","smiles":null,"bbox":null},{"role":"solvent","text":"Toluene or CH2Cl2","smiles":null,"bbox":null},{"role":"temperature","text":"50 °C (bath temperature)","smiles":null,"bbox":null},{"role":"time","text":"24 h*","smiles":null,"bbox":null},{"role":"atmosphere","text":"MS4Å was used for the reactions with 8a and 14","smiles":null,"bbox":null}],"additional_info":["entry 3: catalyst 14 or 15, toluene or CH2Cl2, 50 °C bath temperature, 24 h, no conversion"]}]}}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (verifier) ----------
+[FunctionExecutionResult(content="{'valid': True, 'errors': []}", name='validate_reaction_json', call_id='call_NUSgk2tZ8iCAFX74u2qAeDQt', is_error=False)]
+---------- TextMessage (verifier) ----------
+TERMINATE
+
+[validation] PASSED after 0 retry/retries
+Results saved to /Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/runs/20260504_193809_selector

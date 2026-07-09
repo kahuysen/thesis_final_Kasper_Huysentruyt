@@ -1,0 +1,485 @@
+{
+  "metadata": {
+    "database": "../data/reaction_db.parquet",
+    "n_reactions": 665901,
+    "n_classes": 6,
+    "class_column": "tier_4",
+    "test_fraction": 0.2,
+    "min_class_size": 5,
+    "seed": 42
+  },
+  "classes": {
+    "5.1.4.1": {
+      "reaction_class": "5.1.4.1 - Cleavage of Carboxylic Acid Protecting Groups: Cleavage of Methyl and Ethyl Esters",
+      "smirks_initial": [
+        "[C;H0;+0:1]-[O;H0;D2;+0:2]-[C;H3;+0]>>[C;H0;+0:1]-[O;H1;D1;+0:2]",
+        "[C;H0;+0:1]-[O;H0;D2;+0:2]-[C;H2;+0]-[C;H3;+0]>>[C;H0;+0:1]-[O;H1;D1;+0:2]"
+      ],
+      "smirks_final": [
+        "[#6;!$(C(=O)[#6,H]),$(C(=O)N):3]-[C;H0;+0:1](=[O;H0;D1;+0:4])-[O;H0;D2;+0:2]-[C;H3;+0]>>[#6:3]-[C;H0;+0:1](=[O;H0;D1;+0:4])-[O;H1;D1;+0:2]",
+        "[#7:5]-[#6:3](=[O:6])-[C;H0;+0:1](=[O;H0;D1;+0:4])-[O;H0;D2;+0:2]-[C;H2;+0]-[C;H3;+0]>>[#7:5]-[#6:3](=[O:6])-[C;H0;+0:1](=[O;H0;D1;+0:4])-[O;H1;D1;+0:2]"
+      ],
+      "n_train": 18531,
+      "n_test": 4632,
+      "train_tp_initial": 0.2,
+      "train_tp_final": 0.94,
+      "n_fp_initial": 12389,
+      "n_fp_final": 0,
+      "fp_hierarchy_train": {
+        "n_total": 12389,
+        "n_cross_tier1": 12384,
+        "n_same_tier1": 0,
+        "n_same_tier2": 5,
+        "n_same_tier3": 0,
+        "n_same_tier4": 0,
+        "by_tier1": {
+          "8": 12384,
+          "5": 5
+        },
+        "by_true_class": {
+          "8.7.2.1": 12300,
+          "CONFLICT:8.1.1.1": 84,
+          "5.1.15.3": 5
+        }
+      },
+      "finetune_rounds": 3,
+      "rollback": false,
+      "test_recall": 0.8983160621761658,
+      "test_fp": 0,
+      "test_fp_hierarchy": {
+        "n_total": 0,
+        "n_cross_tier1": 0,
+        "n_same_tier1": 0,
+        "n_same_tier2": 0,
+        "n_same_tier3": 0,
+        "n_same_tier4": 0,
+        "by_tier1": {},
+        "by_true_class": {}
+      },
+      "reasoning": "A. CORE TRANSFORMATION: The reaction is the cleavage of methyl and ethyl esters to carboxylic acids. This involves breaking the O-alkyl bond (O-CH3 or O-CH2CH3) and forming an O-H bond.\n\nB. REACTION CENTER ATOMS: The ester oxygen is the primary reaction center. In the reactant, it is neutral, has zero hydrogens, and a degree of 2 (bonded to the carbonyl carbon and the alkyl group): [O;H0;D2;+0:2]. In the product, it is neutral, has one hydrogen, and a degree of 1 (bonded only to the carbonyl carbon): [O;H1;D1;+0:2].\n\nC. DISTINCT PATTERNS: There are two distinct patterns based on the leaving group: methyl esters (leaving group is a single methyl carbon) and ethyl esters (leaving group is a two-carbon ethyl chain). These require separate SMIRKS because the structure of the leaving group differs.\n\nD. VARIABLE POSITIONS: The carbonyl carbon (C:1) is a context atom. It is always an aliphatic carbon with zero hydrogens and neutral charge: [C;H0;+0:1]. The alkyl leaving groups are generalized as [C;H3;+0] for methyl and [C;H2;+0]-[C;H3;+0] for ethyl.\n\nE. CONTEXT LEVEL: The carbonyl carbon is included as a context atom to specify the ester functional group. No further context is needed as the transformation is specific to these ester types.\n\nF. WRITE THE SMIRKS: Two SMIRKS are produced to cover both methyl and ethyl ester cleavage, following the patterns identified in the templates."
+    },
+    "1.7.1.1": {
+      "reaction_class": "1.7.1.1 - Williamson Ether Synthesis (Alkoxide + Organohalide/Sulfonate): Intermolecular Alkylation of Alcohols and Phenols",
+      "smirks_initial": [
+        "[#6;+0:1]-[O;H1;D1;+0:2].[C;H2,H3;D1,D2;+0:3]-[F,Cl,Br,I;H0;+0]>>[#6;+0:1]-[O;H0;D2;+0:2]-[C;H2,H3;D1,D2;+0:3]",
+        "[#6;+0:1]-[O;H1;D1;+0:2].[C;H0,H1;D3,D4;+0:3]-[F,Cl,Br,I;H0;+0]>>[#6;+0:1]-[O;H0;D2;+0:2]-[C;H0,H1;D3,D4;+0:3]",
+        "[#6;+0:1]-[O;H1;D1;+0:2].[C;H2,H3;D1,D2;+0:3]-[O;H0;+0]-[S;H0;+0](=[O;H0;+0])=[O;H0;+0]>>[#6;+0:1]-[O;H0;D2;+0:2]-[C;H2,H3;D1,D2;+0:3]"
+      ],
+      "smirks_final": [
+        "[#6;+0:1]-[O;H1;D1;+0:2].[C;H2,H3;D1,D2;+0:3]-[F,Cl,Br,I;H0;+0]>>[#6;+0:1]-[O;H0;D2;+0:2]-[C;H2,H3;D1,D2;+0:3]",
+        "[#6;+0:1]-[O;H1;D1;+0:2].[C;H0,H1;D3,D4;+0:3]-[F,Cl,Br,I;H0;+0]>>[#6;+0:1]-[O;H0;D2;+0:2]-[C;H0,H1;D3,D4;+0:3]",
+        "[#6;+0:1]-[O;H1;D1;+0:2].[C;H2,H3;D1,D2;+0:3]-[O;H0;+0]-[S;H0;+0](=[O;H0;+0])=[O;H0;+0]>>[#6;+0:1]-[O;H0;D2;+0:2]-[C;H2,H3;D1,D2;+0:3]"
+      ],
+      "n_train": 17588,
+      "n_test": 4396,
+      "train_tp_initial": 0.76,
+      "train_tp_final": 0.9,
+      "n_fp_initial": 5394,
+      "n_fp_final": 5394,
+      "fp_hierarchy_train": {
+        "n_total": 5394,
+        "n_cross_tier1": 3103,
+        "n_same_tier1": 111,
+        "n_same_tier2": 2156,
+        "n_same_tier3": 24,
+        "n_same_tier4": 0,
+        "by_tier1": {
+          "2": 3103,
+          "1": 2291
+        },
+        "by_true_class": {
+          "2.6.2": 1390,
+          "1.7.5.1": 965,
+          "1.7.7.1": 727,
+          "2.6.2.3": 595,
+          "2.4.2.1": 365,
+          "2.4.1.5": 241,
+          "2.6.4.1": 238,
+          "1.7.7.3": 197,
+          "CONFLICT:1.4.1.1": 96,
+          "1.7.5.7": 52,
+          "2.4.4.1": 48,
+          "1.7.9.1": 45,
+          "1.7.5.6": 36,
+          "2.6.2.1": 36,
+          "2.6.2.7": 36,
+          "1.7.5.19": 31,
+          "2.4.8.2": 31,
+          "1.7.5.13": 28,
+          "1.7.1": 24,
+          "1.7.5.22": 17,
+          "1.7.5.10": 16,
+          "2.6.2.14": 16,
+          "1.1.1.34": 15,
+          "2.6.2.6": 13,
+          "1.7.22.5": 11,
+          "2.6.2.2": 11,
+          "2.4.7.2": 10,
+          "2.6.2.17": 10,
+          "1.7.5.5": 9,
+          "2.4.8.1": 9,
+          "2.8.15.3": 9,
+          "1.7.35.1": 8,
+          "2.6.2.21": 8,
+          "2.6.2.4": 8,
+          "2.8.15.4": 8,
+          "2.6.2.10": 7,
+          "2.4.10.1": 5,
+          "2.6.2.8": 5,
+          "1.7.5.11": 4,
+          "1.7.5.8": 4,
+          "1.7.9.4": 4,
+          "2.6.2.13": 4,
+          "1.7.9.2": 2
+        }
+      },
+      "finetune_rounds": 0,
+      "rollback": true,
+      "test_recall": 0.8491810737033667,
+      "test_fp": 1320,
+      "test_fp_hierarchy": {
+        "n_total": 1320,
+        "n_cross_tier1": 764,
+        "n_same_tier1": 26,
+        "n_same_tier2": 524,
+        "n_same_tier3": 6,
+        "n_same_tier4": 0,
+        "by_tier1": {
+          "2": 764,
+          "1": 556
+        },
+        "by_true_class": {
+          "2.6.2": 347,
+          "1.7.5.1": 238,
+          "1.7.7.1": 183,
+          "2.6.2.3": 148,
+          "2.4.2.1": 91,
+          "2.4.1.5": 60,
+          "2.6.4.1": 59,
+          "1.7.7.3": 45,
+          "CONFLICT:1.4.1.1": 23,
+          "1.7.5.7": 12,
+          "2.4.4.1": 11,
+          "1.7.5.6": 9,
+          "2.6.2.7": 9,
+          "1.7.9.1": 8,
+          "2.6.2.1": 8,
+          "1.7.5.13": 7,
+          "2.4.8.2": 7,
+          "1.7.1": 6,
+          "1.7.5.19": 6,
+          "1.7.5.22": 4,
+          "2.6.2.14": 4,
+          "1.1.1.34": 3,
+          "1.7.5.10": 3,
+          "2.6.2.6": 3,
+          "1.7.22.5": 2,
+          "1.7.5.5": 2,
+          "1.7.9.4": 2,
+          "2.4.7.2": 2,
+          "2.4.8.1": 2,
+          "2.6.2.17": 2,
+          "2.6.2.2": 2,
+          "2.6.2.4": 2,
+          "2.8.15.3": 2,
+          "1.7.35.1": 1,
+          "1.7.5.11": 1,
+          "1.7.5.8": 1,
+          "2.4.10.1": 1,
+          "2.6.2.10": 1,
+          "2.6.2.21": 1,
+          "2.6.2.8": 1,
+          "2.8.15.4": 1
+        }
+      },
+      "reasoning": "A. CORE TRANSFORMATION: Williamson ether synthesis. An alcohol or phenol (R-OH) reacts with an alkylating agent (R'-X) to form an ether (R-O-R'). The O-H bond breaks, the C-X bond breaks, and a new C-O bond forms.\n\nB. REACTION CENTER ATOMS: \n   - Oxygen: Starts as [O;H1;D1;+0] and ends as [O;H0;D2;+0].\n   - Alkyl Carbon: Connectivity changes from C-X to C-O. The H-count and degree (D) of this carbon depend on its substitution level (methyl, primary, secondary, or tertiary) but do not change during the reaction itself (e.g., a primary carbon starts as H2,D2 and ends as H2,D2).\n   - Leaving Group (X): A halide (Cl, Br, I) or a sulfonate/sulfate oxygen (O-S(=O)2-R).\n\nC. DISTINCT PATTERNS: The templates cover four substitution levels for the alkyl carbon: methyl ([C;H3;D1]), primary ([C;H2;D2]), secondary ([C;H1;D3]), and tertiary ([C;H0;D4]). They also cover two main classes of leaving groups: halides and sulfonates. To maintain specificity and follow the rules for RC descriptors, we group these into Methyl/Primary and Secondary/Tertiary for halides, and a separate pattern for sulfonates (which are only shown with Methyl/Primary carbons in the templates).\n\nD. VARIABLE POSITIONS: The context atom on the alcohol/phenol side varies between aromatic (c) and aliphatic (C), so it is generalized to [#6;+0]. The leaving group is generalized to [F,Cl,Br,I] for halides and [O]-[S](=O)=O for sulfonates.\n\nE. CONTEXT LEVEL: One context atom on the alcohol/phenol side is included to ensure correct matching. The alkyl carbon's degree (D) descriptor implicitly requires the correct number of context neighbors, so they do not need to be explicitly mapped on the alkyl side.\n\nF. WRITE THE SMIRKS: Three SMIRKS are produced to cover all substitution levels and leaving groups found in the templates."
+    },
+    "5.1.2.1": {
+      "reaction_class": "5.1.2.1 - Cleavage of Amine Protecting Groups: Carbamate Cleavage",
+      "smirks_initial": [
+        "[#6;+0:1]-[#7;H1;D2;+0:2]-[C;H0;+0](=[O;H0;+0])-[O;H0;+0]>>[#6;+0:1]-[#7;H2;D1;+0:2]",
+        "[#6;+0:1]-[#7;H0;D3;+0:2](-[#6;+0:3])-[C;H0;+0](=[O;H0;+0])-[O;H0;+0]>>[#6;+0:1]-[#7;H1;D2;+0:2]-[#6;+0:3]"
+      ],
+      "smirks_final": [
+        "[#6;+0:1]-[#7;H1;D2;+0:2]-[C;H0;+0](=[O;H0;+0])-[O;H0;+0]-[#6;!D1;+0]>>[#6;+0:1]-[#7;H2;D1;+0:2]",
+        "[#6;+0:1]-[#7;H0;D3;+0:2](-[#6;+0:3])-[C;H0;+0](=[O;H0;+0])-[O;H0;+0]-[#6;!D1;+0]>>[#6;+0:1]-[#7;H1;D2;+0:2]-[#6;+0:3]"
+      ],
+      "n_train": 16083,
+      "n_test": 4020,
+      "train_tp_initial": 0.825,
+      "train_tp_final": 0.96,
+      "n_fp_initial": 40,
+      "n_fp_final": 0,
+      "fp_hierarchy_train": {
+        "n_total": 40,
+        "n_cross_tier1": 40,
+        "n_same_tier1": 0,
+        "n_same_tier2": 0,
+        "n_same_tier3": 0,
+        "n_same_tier4": 0,
+        "by_tier1": {
+          "2": 40
+        },
+        "by_true_class": {
+          "2.4.3.1": 40
+        }
+      },
+      "finetune_rounds": 2,
+      "rollback": false,
+      "test_recall": 0.9507462686567164,
+      "test_fp": 0,
+      "test_fp_hierarchy": {
+        "n_total": 0,
+        "n_cross_tier1": 0,
+        "n_same_tier1": 0,
+        "n_same_tier2": 0,
+        "n_same_tier3": 0,
+        "n_same_tier4": 0,
+        "by_tier1": {},
+        "by_true_class": {}
+      },
+      "reasoning": "A. CORE TRANSFORMATION: Cleavage of a carbamate protecting group (such as Boc, Cbz, Fmoc, or alkyl carbamates) to release a free primary or secondary amine.\nB. REACTION CENTER ATOMS: The nitrogen atom (N) and the carbonyl carbon (C=O) of the carbamate. The nitrogen loses its bond to the carbonyl carbon and gains one or more hydrogens. The entire carbamate fragment (-C(=O)OR) acts as a leaving group.\nC. DISTINCT PATTERNS: Two distinct patterns are required based on the substitution of the starting nitrogen:\n   - Group 1: Carbamate-protected primary amines (N starts with 1 H and 2 bonds, ends with 2 H and 1 bond).\n   - Group 2: Carbamate-protected secondary amines (N starts with 0 H and 3 bonds, ends with 1 H and 2 bonds).\nD. VARIABLE POSITIONS: The R group on the carbamate oxygen (t-butyl, benzyl, methyl, ethyl, etc.) and the substituents on the nitrogen (aliphatic or aromatic carbons) vary across templates.\nE. CONTEXT LEVEL: Generalize the nitrogen atom using [#7] to cover both aliphatic [N] and aromatic [n]. Generalize the nitrogen's carbon neighbors using [#6] to cover both aliphatic [C] and aromatic [c].\nF. WRITE THE SMIRKS: Two SMIRKS are produced to handle the primary and secondary amine cases separately, ensuring H-count and degree changes are correctly mapped."
+    },
+    "2.1.2.1": {
+      "reaction_class": "2.1.2.1 - Amidation using Carboxylic Acids: Primary Amine + Carboxylic Acid to Secondary Amide",
+      "smirks_initial": [
+        "[#6;+0:1]-[N;H2;D1;+0:2].[#6;+0:3]-[C;H0;D3;+0:4](-[O;H1;+0])=[O;H0;+0:5]>>[#6;+0:1]-[N;H1;D2;+0:2]-[C;H0;D3;+0:4](-[#6;+0:3])=[O;H0;+0:5]",
+        "[#6;+0:1]-[N;H2;D1;+0:2].[C;H1;D2;+0:3](-[O;H1;+0])=[O;H0;+0:4]>>[#6;+0:1]-[N;H1;D2;+0:2]-[C;H1;D2;+0:3]=[O;H0;+0:4]"
+      ],
+      "smirks_final": [
+        "[C;!$(C=[O,N,S]);!$(C-C(=O)O[C,c]);!$(C-C(=O)[#6,#7]);+0:1]-[N;H2;D1;+0:2].[#6;!$(C=O);!$(C=C);!$(C#C);!$(c[n,o,s,p]);+0:3]-[C;H0;D3;+0:4](-[O;H1;+0])=[O;H0;+0:5]>>[C;+0:1]-[N;H1;D2;+0:2]-[C;H0;D3;+0:4](-[#6;+0:3])=[O;H0;+0:5]",
+        "[C;!$(C=[O,N,S]);!$(C-C(=O)O[C,c]);!$(C-C(=O)[#6,#7]);+0:1]-[N;H2;D1;+0:2].[C;H1;D2;+0:3](-[O;H1;+0])=[O;H0;+0:4]>>[C;+0:1]-[N;H1;D2;+0:2]-[C;H1;D2;+0:3]=[O;H0;+0:4]"
+      ],
+      "n_train": 14788,
+      "n_test": 3696,
+      "train_tp_initial": 0.975,
+      "train_tp_final": 0.94,
+      "n_fp_initial": 17119,
+      "n_fp_final": 1291,
+      "fp_hierarchy_train": {
+        "n_total": 17119,
+        "n_cross_tier1": 0,
+        "n_same_tier1": 0,
+        "n_same_tier2": 0,
+        "n_same_tier3": 17119,
+        "n_same_tier4": 0,
+        "by_tier1": {
+          "2": 17119
+        },
+        "by_true_class": {
+          "2.1.2.11": 5276,
+          "2.1.2.4": 5099,
+          "2.1.2.7": 2659,
+          "2.1.2.13": 940,
+          "2.1.2.17": 720,
+          "2.1.2.14": 582,
+          "2.1.2.16": 491,
+          "2.1.2.22": 276,
+          "2.1.2.20": 240,
+          "2.1.2.21": 171,
+          "2.1.2": 154,
+          "2.1.2.23": 152,
+          "2.1.2.57": 111,
+          "2.1.2.24": 40,
+          "2.1.2.122": 36,
+          "2.1.2.99": 30,
+          "2.1.2.102": 22,
+          "2.1.2.91": 18,
+          "2.1.2.104": 15,
+          "2.1.2.39": 15,
+          "2.1.2.38": 13,
+          "2.1.2.82": 12,
+          "2.1.2.112": 9,
+          "2.1.2.107": 8,
+          "2.1.2.131": 7,
+          "2.1.2.64": 7,
+          "2.1.2.68": 6,
+          "2.1.2.87": 5,
+          "2.1.2.79": 4,
+          "2.1.2.3": 1
+        }
+      },
+      "finetune_rounds": 3,
+      "rollback": false,
+      "test_recall": 0.8795995670995671,
+      "test_fp": 323,
+      "test_fp_hierarchy": {
+        "n_total": 323,
+        "n_cross_tier1": 0,
+        "n_same_tier1": 0,
+        "n_same_tier2": 0,
+        "n_same_tier3": 323,
+        "n_same_tier4": 0,
+        "by_tier1": {
+          "2": 323
+        },
+        "by_true_class": {
+          "2.1.2.11": 290,
+          "2.1.2.57": 28,
+          "2.1.2.39": 4,
+          "2.1.2.79": 1
+        }
+      },
+      "reasoning": "A. CORE TRANSFORMATION: Amidation of a primary amine with a carboxylic acid to form a secondary amide. The C-OH bond of the acid and one N-H bond of the amine are broken, and a new C-N bond is formed.\n\nB. REACTION CENTER ATOMS: \n   - Amine Nitrogen: Starts as [N;H2;D1;+0], loses one hydrogen and gains one bond to the carbonyl carbon to become [N;H1;D2;+0].\n   - Carbonyl Carbon: In standard carboxylic acids, it starts as [C;H0;D3;+0], loses the bond to the hydroxyl group and gains a bond to the nitrogen, remaining [C;H0;D3;+0]. In formic acid (Template 36), it starts as [C;H1;D2;+0] and remains [C;H1;D2;+0].\n   - Carbonyl Oxygen: Remains [O;H0;+0] throughout.\n   - Hydroxyl Group: The [O;H1;+0] departs and has no map number.\n\nC. DISTINCT PATTERNS: Two distinct patterns are identified based on the carboxylic acid reactant:\n   - Group 1: Standard carboxylic acids (R-COOH) where the carbonyl carbon is bonded to a carbon substituent (Templates 1-35, 37-40).\n   - Group 2: Formic acid (H-COOH) where the carbonyl carbon is bonded to a hydrogen (Template 36).\n   These require separate SMIRKS because the RC carbon has different H-counts and degrees.\n\nD. VARIABLE POSITIONS: The substituents on the amine and the carboxylic acid vary between aliphatic (C) and aromatic (c). These are generalized to [#6;+0].\n\nE. CONTEXT LEVEL: Context atoms are required on both the amine and the carboxylic acid (for Group 1) to satisfy the degree (D) requirements of the reaction center atoms and to ensure correct substructure matching.\n\nF. WRITE THE SMIRKS: \n   - SMIRKS 1 (Standard acids): [#6;+0:1]-[N;H2;D1;+0:2].[#6;+0:3]-[C;H0;D3;+0:4](-[O;H1;+0])=[O;H0;+0:5]>>[#6;+0:1]-[N;H1;D2;+0:2]-[C;H0;D3;+0:4](-[#6;+0:3])=[O;H0;+0:5]\n   - SMIRKS 2 (Formic acid): [#6;+0:1]-[N;H2;D1;+0:2].[C;H1;D2;+0:3](-[O;H1;+0])=[O;H0;+0:4]>>[#6;+0:1]-[N;H1;D2;+0:2]-[C;H1;D2;+0:3]=[O;H0;+0:4]"
+    },
+    "3.1.1.1": {
+      "reaction_class": "3.1.1.1 - C(sp²)-C(sp²) Coupling (e.g., Biaryl or Styrene Synthesis): With Boronic Acids",
+      "smirks_initial": [
+        "[c;H0;D3;+0:1]-[F,Cl,Br,I;H0;+0].[c;H0;D3;+0:2]-[B;H0;+0](-[O;H1;+0])-[O;H1;+0]>>[c;H0;D3;+0:1]-[c;H0;D3;+0:2]",
+        "[c;H0;D3;+0:1]-[F,Cl,Br,I;H0;+0].[c;H0;D3;+0:2]-[O;H0;+0]-[B;H0;+0](-[O;H1;+0])-[O;H1;+0]>>[c;H0;D3;+0:1]-[c;H0;D3;+0:2]",
+        "[c;H0;D3;+0:1]-[O;H0;+0]-[S;H0;+0](-[C;H0;+0](-[F;H0;+0])(-[F;H0;+0])-[F;H0;+0])(=[O;H0;+0])=[O;H0;+0].[c;H0;D3;+0:2]-[B;H0;+0](-[O;H1;+0])-[O;H1;+0]>>[c;H0;D3;+0:1]-[c;H0;D3;+0:2]"
+      ],
+      "smirks_final": [
+        "[c;H0;D3;+0:1]-[Cl,Br;H0;+0].[c;H0;D3;+0:2]-[B;H0;+0](-[O;H1;+0])-[O;H1;+0]>>[c;H0;D3;+0:1]-[c;H0;D3;+0:2]",
+        "[c;H0;D3;+0:1]-[Cl,Br;H0;+0].[c;H0;D3;+0:2]-[O;H0;+0]-[B;H0;+0](-[O;H1;+0])-[O;H1;+0]>>[c;H0;D3;+0:1]-[c;H0;D3;+0:2]",
+        "[c;H0;D3;+0:1]-[O;H0;+0]-[S;H0;+0](-[C;H0;+0](-[F;H0;+0])(-[F;H0;+0])-[F;H0;+0])(=[O;H0;+0])=[O;H0;+0].[c;H0;D3;+0:2]-[B;H0;+0](-[O;H1;+0])-[O;H1;+0]>>[c;H0;D3;+0:1]-[c;H0;D3;+0:2]"
+      ],
+      "n_train": 14351,
+      "n_test": 3587,
+      "train_tp_initial": 1.0,
+      "train_tp_final": 0.84,
+      "n_fp_initial": 3,
+      "n_fp_final": 0,
+      "fp_hierarchy_train": {
+        "n_total": 3,
+        "n_cross_tier1": 0,
+        "n_same_tier1": 0,
+        "n_same_tier2": 0,
+        "n_same_tier3": 0,
+        "n_same_tier4": 3,
+        "by_tier1": {
+          "3": 3
+        },
+        "by_true_class": {
+          "CONFLICT:3.1.1.1": 3
+        }
+      },
+      "finetune_rounds": 2,
+      "rollback": false,
+      "test_recall": 0.8684137161973794,
+      "test_fp": 0,
+      "test_fp_hierarchy": {
+        "n_total": 0,
+        "n_cross_tier1": 0,
+        "n_same_tier1": 0,
+        "n_same_tier2": 0,
+        "n_same_tier3": 0,
+        "n_same_tier4": 0,
+        "by_tier1": {},
+        "by_true_class": {}
+      },
+      "reasoning": "A. CORE TRANSFORMATION: Suzuki-Miyaura coupling between an aryl/heteroaryl halide (or triflate) and an aryl/heteroaryl boronic acid (or boronate). A C(sp2)-X bond and a C(sp2)-B bond are broken, and a new C(sp2)-C(sp2) single bond is formed between the two aromatic rings.\n\nB. REACTION CENTER ATOMS: \n   - Carbon 1 (halide side): [c;H0;D3;+0]. It is an aromatic carbon bonded to a leaving group (Cl, Br, I, or Triflate) in the reactants and to Carbon 2 in the product. Its degree remains D3 (two bonds in the ring + one bond to the other carbon).\n   - Carbon 2 (boron side): [c;H0;D3;+0]. It is an aromatic carbon bonded to a boron-containing group in the reactants and to Carbon 1 in the product. Its degree remains D3.\n\nC. DISTINCT PATTERNS: The templates fall into three distinct groups based on the leaving groups:\n   - Group 1: Aryl Halide + Aryl Boronic Acid (most templates).\n   - Group 2: Aryl Halide + Aryl Boronate (Templates 25, 44).\n   - Group 3: Aryl Triflate + Aryl Boronic Acid (Template 40).\n   These require separate SMIRKS because the leaving group fragments differ significantly in their connection to the reaction center carbon.\n\nD. VARIABLE POSITIONS: \n   - Halide leaving group: Cl, Br, I. Merged into [F,Cl,Br,I;H0;+0].\n   - Boronic acid group: [B;H0;+0](-[O;H1;+0])-[O;H1;+0].\n   - Boronate group: [O;H0;+0]-[B;H0;+0](-[O;H1;+0])-[O;H1;+0].\n   - Triflate group: [O;H0;+0]-[S;H0;+0](-[C;H0;+0](-[F;H0;+0])(-[F;H0;+0])-[F;H0;+0])(=[O;H0;+0])=[O;H0;+0].\n\nE. CONTEXT LEVEL: Minimal RC-only SMIRKS are sufficient because the [c;H0;D3;+0] reaction center is specific to the aromatic ring positions involved in this coupling class.\n\nF. WRITE THE SMIRKS: Three SMIRKS are generated to cover the distinct leaving group combinations found in the templates."
+    },
+    "2.1.2.2": {
+      "reaction_class": "2.1.2.2 - Amidation using Carboxylic Acids: Secondary Amine + Carboxylic Acid to Tertiary Amide",
+      "smirks_initial": [
+        "[#6;+0:1]-[N;H1;D2;+0:2]-[#6;+0:3].[#6;+0:4]-[C;H0;D3;+0:5](-[O;H1;+0])=[O;H0;+0:6]>>[#6;+0:4]-[C;H0;D3;+0:5](=[O;H0;+0:6])-[N;H0;D3;+0:2](-[#6;+0:1])-[#6;+0:3]"
+      ],
+      "smirks_final": [
+        "[#6;+0:1]-[N;H1;D2;+0:2]-[#6;+0:3].[#6;+0:4]-[C;H0;D3;+0:5](-[O;H1;+0])=[O;H0;+0:6]>>[#6;+0:4]-[C;H0;D3;+0:5](=[O;H0;+0:6])-[N;H0;D3;+0:2](-[#6;+0:1])-[#6;+0:3]"
+      ],
+      "n_train": 13887,
+      "n_test": 3471,
+      "train_tp_initial": 0.98,
+      "train_tp_final": 0.96,
+      "n_fp_initial": 817,
+      "n_fp_final": 817,
+      "fp_hierarchy_train": {
+        "n_total": 817,
+        "n_cross_tier1": 0,
+        "n_same_tier1": 0,
+        "n_same_tier2": 0,
+        "n_same_tier3": 817,
+        "n_same_tier4": 0,
+        "by_tier1": {
+          "2": 817
+        },
+        "by_true_class": {
+          "2.1.2.55": 265,
+          "2.1.2.13": 83,
+          "2.1.2.45": 75,
+          "2.1.2.40": 70,
+          "2.1.2.98": 65,
+          "2.1.2.10": 53,
+          "2.1.2.65": 48,
+          "2.1.2.59": 41,
+          "2.1.2.76": 40,
+          "2.1.2.14": 28,
+          "2.1.2.63": 24,
+          "2.1.2.39": 20,
+          "2.1.2.52": 5
+        }
+      },
+      "finetune_rounds": 0,
+      "rollback": true,
+      "test_recall": 0.9876116392970326,
+      "test_fp": 190,
+      "test_fp_hierarchy": {
+        "n_total": 190,
+        "n_cross_tier1": 0,
+        "n_same_tier1": 0,
+        "n_same_tier2": 0,
+        "n_same_tier3": 190,
+        "n_same_tier4": 0,
+        "by_tier1": {
+          "2": 190
+        },
+        "by_true_class": {
+          "2.1.2.55": 66,
+          "2.1.2.45": 19,
+          "2.1.2.40": 17,
+          "2.1.2.13": 16,
+          "2.1.2.98": 16,
+          "2.1.2.10": 13,
+          "2.1.2.65": 11,
+          "2.1.2.76": 9,
+          "2.1.2.59": 8,
+          "2.1.2.14": 5,
+          "2.1.2.63": 5,
+          "2.1.2.39": 4,
+          "2.1.2.52": 1
+        }
+      },
+      "reasoning": "A. CORE TRANSFORMATION: Amidation of a secondary amine with a carboxylic acid to form a tertiary amide. A C-O bond in the carboxylic acid is broken, and a new C-N bond is formed. The amine nitrogen loses its hydrogen, and the hydroxyl group of the acid is lost as a leaving group.\n\nB. REACTION CENTER ATOMS: The reaction center involves the amine nitrogen and the carboxylic acid carbonyl carbon. \n- Amine Nitrogen (N): Starts as [N;H1;D2;+0] (secondary amine) and ends as [N;H0;D3;+0] (tertiary amide nitrogen).\n- Carbonyl Carbon (C): Starts as [C;H0;D3;+0] (bonded to context, carbonyl oxygen, and hydroxyl) and ends as [C;H0;D3;+0] (bonded to context, carbonyl oxygen, and nitrogen).\n- Carbonyl Oxygen (O): Remains double-bonded to the carbonyl carbon [O;H0;D1;+0].\n- Hydroxyl Oxygen: The leaving group [O;H1;+0] departs and does not appear in the product.\n\nC. DISTINCT PATTERNS: All 50 templates describe the same transformation (secondary amine + carboxylic acid). While the context atoms vary, the reaction center itself is consistent across all templates.\n\nD. VARIABLE POSITIONS: The substituents on the amine nitrogen and the carboxylic acid carbonyl carbon vary between aliphatic (C) and aromatic (c) carbons with different hydrogen counts. These are generalized to [#6;+0].\n\nE. CONTEXT LEVEL: To ensure correct matching for a secondary amine and a carboxylic acid, one context atom is retained for each substituent on the RC atoms. This distinguishes the secondary amine from primary or tertiary amines and the carboxylic acid from other carbonyl compounds.\n\nF. WRITE THE SMIRKS: The generalized SMIRKS combines the secondary amine and carboxylic acid reactants into a tertiary amide product, ensuring all mapped atoms are tracked and H/D counts are updated to reflect the new bonding state."
+    }
+  },
+  "summary": {
+    "n_classes_total": 6,
+    "n_classes_with_smirks": 6,
+    "mean_test_recall": 0.9056447211883714,
+    "total_fp_before": 35762,
+    "total_fp_after": 7502,
+    "train_fp_hierarchy": {
+      "n_total": 35762,
+      "n_cross_tier1": 15527,
+      "n_same_tier1": 111,
+      "n_same_tier2": 2161,
+      "n_same_tier3": 17960,
+      "n_same_tier4": 3
+    },
+    "test_fp_hierarchy": {
+      "n_total": 1833,
+      "n_cross_tier1": 764,
+      "n_same_tier1": 26,
+      "n_same_tier2": 524,
+      "n_same_tier3": 519,
+      "n_same_tier4": 0
+    },
+    "n_classes_finetuned": 4,
+    "n_rollbacks": 2,
+    "token_usage": {
+      "phase2": {
+        "total_calls": 8,
+        "prompt_tokens": 105145,
+        "completion_tokens": 5514,
+        "total_tokens": 110659
+      },
+      "phase4": {
+        "total_calls": 12,
+        "prompt_tokens": 31525,
+        "completion_tokens": 6837,
+        "total_tokens": 38362
+      }
+    }
+  }
+}

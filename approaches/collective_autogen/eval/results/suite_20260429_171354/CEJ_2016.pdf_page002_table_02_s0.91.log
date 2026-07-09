@@ -1,0 +1,1992 @@
+---------- MultiModalMessage (user) ----------
+Analyse this chemistry reaction image. First, figure_classifier inspects the image and emits a [FIGURE_CLASSIFICATION] tag describing the figure type. Each downstream specialist reads that tag and adapts its behaviour, then contributes one [FINDINGS ...] card per turn. Finally data_structure produces JSON, then the verifier audits the JSON and ends the run.
+image_path = /Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/Benchmark_kasper_GT3_Maarten/CEJ_2016.pdf_page002_table_02_s0.91.png
+Pass that exact path as the first argument to crop_image_region(image_path, [x,y,w,h]) if you need to zoom in on a region of the image.
+<image>
+/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/agents/_assistant_agent.py:1109: UserWarning: Resolved model mismatch: gpt-5.4 != gpt-5.4-2026-03-05. Model mapping in autogen_ext.models.openai may be incorrect. Set the model to gpt-5.4-2026-03-05 to enhance token/cost estimation and suppress this warning.
+  model_result = await model_client.create(
+---------- TextMessage (figure_classifier) ----------
+[FIGURE_CLASSIFICATION]
+type: optimization_table
+confidence: high
+row_count: 14
+variant_count: null
+substrate_column_varies: false
+text_rgroup_table_present: false
+notes: reaction-header optimization table with entry/deviation from standard conditions/yield columns; single fixed substrate pair and 14 entries.
+[/FIGURE_CLASSIFICATION]
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_OpGgFljA3fGEaJGf6LQOwO3o', arguments='{"image_path":"/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/Benchmark_kasper_GT3_Maarten/CEJ_2016.pdf_page002_table_02_s0.91.png","molecule_only":true,"score_min":0}', name='detect_molecules')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'bboxes': [{'x1': 78, 'y1': 186, 'x2': 161, 'y2': 214, 'w': 83, 'h': 28, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 187, 'y1': 119, 'x2': 313, 'y2': 201, 'w': 125, 'h': 82, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 389, 'y1': 168, 'x2': 493, 'y2': 233, 'w': 104, 'h': 65, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 519, 'y1': 94, 'x2': 691, 'y2': 181, 'w': 172, 'h': 87, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 539, 'y1': 214, 'x2': 664, 'y2': 296, 'w': 125, 'h': 82, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}], 'image_w': 768, 'image_h': 821, 'device': 'mps', 'error': None, 'cached': True}", name='detect_molecules', call_id='call_OpGgFljA3fGEaJGf6LQOwO3o', is_error=False)]
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_q1qC3cJIMuhdJ9RHPmj0Qtn4', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/Benchmark_kasper_GT3_Maarten/CEJ_2016.pdf_page002_table_02_s0.91.png", "bbox": [78, 186, 83, 28], "pad": 10}', name='predict_molecule_smiles'), FunctionCall(id='call_9VbrcH3pVoroAQN0ndS2vjxd', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/Benchmark_kasper_GT3_Maarten/CEJ_2016.pdf_page002_table_02_s0.91.png", "bbox": [389, 168, 104, 65], "pad": 10}', name='predict_molecule_smiles'), FunctionCall(id='call_9izGYLpbSINoj4yWQrUF948H', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/Benchmark_kasper_GT3_Maarten/CEJ_2016.pdf_page002_table_02_s0.91.png", "bbox": [187, 119, 125, 82], "pad": 10}', name='predict_molecule_smiles')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'smiles': 'NCc1ccccc1', 'confidence': 0.8937238644854836, 'atoms_count': 3, 'bonds_count': 2, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_q1qC3cJIMuhdJ9RHPmj0Qtn4', is_error=False), FunctionExecutionResult(content="{'smiles': '*C(=O)NCc1ccccc1', 'confidence': 0.8954205126082401, 'atoms_count': 6, 'bonds_count': 5, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_9VbrcH3pVoroAQN0ndS2vjxd', is_error=False), FunctionExecutionResult(content="{'smiles': 'OB(c1ccccc1Cl)c1ccccc1Cl', 'confidence': 0.8348103280643995, 'atoms_count': 16, 'bonds_count': 17, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_9izGYLpbSINoj4yWQrUF948H', is_error=False)]
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_sexyMuPuyccipDsVcu3JWINg', arguments='{"smiles": "NCc1ccccc1"}', name='validate_smiles'), FunctionCall(id='call_32c32Vqkck7WHUSQjqTSQMHU', arguments='{"smiles": "*C(=O)NCc1ccccc1"}', name='validate_smiles'), FunctionCall(id='call_Y0tzSuOfok1KFg78ShyYvTT3', arguments='{"smiles": "NCc1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_4Qp9RrfNoCqT3T6ACNUGCCum', arguments='{"smiles": "*C(=O)NCc1ccccc1"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_sexyMuPuyccipDsVcu3JWINg', is_error=False), FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_32c32Vqkck7WHUSQjqTSQMHU', is_error=False), FunctionExecutionResult(content="{'canonical': 'NCc1ccccc1', 'valid': True, 'formula': 'C7H9N', 'error': None}", name='canonicalize_smiles', call_id='call_Y0tzSuOfok1KFg78ShyYvTT3', is_error=False), FunctionExecutionResult(content="{'canonical': '*C(=O)NCc1ccccc1', 'valid': True, 'formula': 'C8H8*NO', 'error': None}", name='canonicalize_smiles', call_id='call_4Qp9RrfNoCqT3T6ACNUGCCum', is_error=False)]
+---------- TextMessage (reaction_template_parser) ----------
+[FINDINGS reaction_template_parser]
+scheme_count: 1
+scheme_1:
+  reactant_template_smiles: NCc1ccccc1
+  product_template_smiles:  *C(=O)NCc1ccccc1
+  arrow: forward
+  multi_step: no
+  notes: optimization-table header shows one fixed scheme only; used bbox #1 for benzylamine (conf 0.89) and bbox #3 for N-benzylformamide product (conf 0.90). Bbox #2 is catalyst 1 above the arrow, not a reactant template.
+[/FINDINGS]
+---------- TextMessage (molecular_recognition) ----------
+[FINDINGS molecular_recognition]
+# scripted agent — one entry per detected bbox, no deduplication
+molecule_count: 5
+molecule:
+  label: bbox_0
+  canonical_smiles: NCc1ccccc1
+  bbox: [78, 186, 83, 28]
+  confidence: 0.894
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_1
+  canonical_smiles: OB(c1ccccc1Cl)c1ccccc1Cl
+  bbox: [187, 119, 125, 82]
+  confidence: 0.835
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_2
+  canonical_smiles: *C(=O)NCc1ccccc1
+  bbox: [389, 168, 104, 65]
+  confidence: 0.895
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_3
+  canonical_smiles: OB(c1ccc(F)cc1Cl)c1ccc(F)cc1Cl
+  bbox: [519, 94, 172, 87]
+  confidence: 0.880
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_4
+  canonical_smiles: OB(c1ccccc1)c1ccccc1
+  bbox: [539, 214, 125, 82]
+  confidence: 0.912
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+[/FINDINGS]
+---------- TextMessage (rgroup_substitution) ----------
+No R-groups detected.
+---------- TextMessage (condition_interpretation) ----------
+[FINDINGS condition_interpretation]
+applies_to: scheme_1
+conditions:
+  - role: catalyst
+    text: 1 (10 mol %)
+    smiles: OB(c1ccccc1Cl)c1ccccc1Cl
+  - role: loading
+    text: 10 mol %
+    smiles: null
+  - role: reagent
+    text: AcOH 20 mol %
+    smiles: CC(=O)O
+  - role: loading
+    text: 20 mol %
+    smiles: null
+  - role: solvent
+    text: DMF
+    smiles: CN(C)C=O
+  - role: temperature
+    text: rt
+    smiles: null
+  - role: time
+    text: 24 h
+    smiles: null
+[/FINDINGS]
+[FINDINGS condition_interpretation]
+applies_to: entry 1
+conditions:
+  - role: yield
+    text: 73
+    smiles: null
+[/FINDINGS]
+[FINDINGS condition_interpretation]
+applies_to: entry 2
+conditions:
+  - role: catalyst
+    text: 2-Cl-4-F-(C6H3)2B(OH) 4[b]
+    smiles: OB(c1ccc(F)cc1Cl)c1ccc(F)cc1Cl
+  - role: yield
+    text: 54
+    smiles: null
+[/FINDINGS]
+[FINDINGS condition_interpretation]
+applies_to: entry 3
+conditions:
+  - role: catalyst
+    text: Ph2B(OH) 5[b]
+    smiles: OB(c1ccccc1)c1ccccc1
+  - role: yield
+    text: 6
+    smiles: null
+[/FINDINGS]
+[FINDINGS condition_interpretation]
+applies_to: entry 4
+conditions:
+  - role: catalyst
+    text: 2-Cl-C6H4B(OH)2 6[b]
+    smiles: null
+  - role: yield
+    text: 22
+    smiles: null
+[/FINDINGS]
+[FINDINGS condition_interpretation]
+applies_to: entry 5
+conditions:
+  - role: time
+    text: reaction run for 72 h
+    smiles: null
+  - role: yield
+    text: 82
+    smiles: null
+[/FINDINGS]
+[FINDINGS condition_interpretation]
+applies_to: entry 6
+conditions:
+  - role: temperature
+    text: reaction run at 45 °C
+    smiles: null
+  - role: yield
+    text: 98
+    smiles: null
+[/FINDINGS]
+[FINDINGS condition_interpretation]
+applies_to: entry 7
+conditions:
+  - role: temperature
+    text: reaction run at 65 °C
+    smiles: null
+  - role: time
+    text: for 4 h
+    smiles: null
+  - role: yield
+    text: 99
+    smiles: null
+[/FINDINGS]
+[FINDINGS condition_interpretation]
+applies_to: entry 8
+conditions:
+  - role: catalyst
+    text: no 1
+    smiles: null
+  - role: reagent
+    text: no AcOH
+    smiles: null
+  - role: yield
+    text: 0
+    smiles: null
+[/FINDINGS]
+[FINDINGS condition_interpretation]
+applies_to: entry 9
+conditions:
+  - role: catalyst
+    text: only 1
+    smiles: OB(c1ccccc1Cl)c1ccccc1Cl
+  - role: yield
+    text: 34
+    smiles: null
+[/FINDINGS]
+[FINDINGS condition_interpretation]
+applies_to: entry 10
+conditions:
+  - role: reagent
+    text: only AcOH
+    smiles: CC(=O)O
+  - role: yield
+    text: 19
+    smiles: null
+[/FINDINGS]
+[FINDINGS condition_interpretation]
+applies_to: entry 11
+conditions:
+  - role: reagent
+    text: only BnCO2H[c]
+    smiles: O=C(O)Cc1ccccc1
+  - role: yield
+    text: 15
+    smiles: null
+[/FINDINGS]
+[FINDINGS condition_interpretation]
+applies_to: entry 12
+conditions:
+  - role: reagent
+    text: only HCO2H[c]
+    smiles: O=CO
+  - role: yield
+    text: 11
+    smiles: null
+[/FINDINGS]
+[FINDINGS condition_interpretation]
+applies_to: entry 13
+conditions:
+  - role: reagent
+    text: only CCl3CO2H[c]
+    smiles: OC(=O)C(Cl)(Cl)Cl
+  - role: yield
+    text: 9
+    smiles: null
+[/FINDINGS]
+[FINDINGS condition_interpretation]
+applies_to: entry 14
+conditions:
+  - role: reagent
+    text: only CF3CO2H[c]
+    smiles: O=C(O)C(F)(F)F
+  - role: yield
+    text: 1
+    smiles: null
+[/FINDINGS]
+---------- TextMessage (text_extraction) ----------
+[FINDINGS text_extraction]
+items:
+  - kind: heading
+    text: "Table 1. Optimisation of the transamidation of DMF with benzylamine."
+    applies_to: figure
+  - kind: heading
+    text: "Entry"
+    applies_to: figure
+  - kind: heading
+    text: "Deviation from standard conditions"
+    applies_to: figure
+  - kind: heading
+    text: "Yield [%][a]"
+    applies_to: figure
+  - kind: footnote
+    text: "[a] Isolated yields."
+    applies_to: figure
+  - kind: footnote
+    text: "[b] Instead of 1."
+    applies_to: figure
+  - kind: footnote
+    text: "[c] Instead of AcOH."
+    applies_to: figure
+[/FINDINGS]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_fIuDC7kDj6oLeMPGvVzdJ7wM', arguments='{"smiles": "NCc1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_MdtDW9NDeKefcuhriE7sG3xj', arguments='{"smiles": "*C(=O)NCc1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_qCf71aQKYtx7dRF6eoN09bgW', arguments='{"smiles": "OB(c1ccccc1Cl)c1ccccc1Cl"}', name='canonicalize_smiles'), FunctionCall(id='call_Wxjc8I7R7U6rr8iLlBid03Oy', arguments='{"smiles": "OB(c1ccc(F)cc1Cl)c1ccc(F)cc1Cl"}', name='canonicalize_smiles'), FunctionCall(id='call_ep8bjbueQ91xL3cngwR2DOsm', arguments='{"smiles": "OB(c1ccccc1)c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_W0df83tULLb3fzrpE0ui4HmD', arguments='{"smiles": "CC(=O)O"}', name='canonicalize_smiles'), FunctionCall(id='call_D5TICgJlkjdnJMf3hGSKLDrc', arguments='{"smiles": "O=C(O)Cc1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_vgU5g4XC0VcPujsfmUK5j8Jy', arguments='{"smiles": "O=CO"}', name='canonicalize_smiles'), FunctionCall(id='call_smMP0q22dYW6mHjVdx3xm02B', arguments='{"smiles": "OC(=O)C(Cl)(Cl)Cl"}', name='canonicalize_smiles'), FunctionCall(id='call_FMlDnhLiDHRulS6MlV29i3Gq', arguments='{"smiles": "O=C(O)C(F)(F)F"}', name='canonicalize_smiles'), FunctionCall(id='call_8HwlYthoUyY93wd8wA122BJa', arguments='{"smiles": "CN(C)C=O"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'canonical': 'NCc1ccccc1', 'valid': True, 'formula': 'C7H9N', 'error': None}", name='canonicalize_smiles', call_id='call_fIuDC7kDj6oLeMPGvVzdJ7wM', is_error=False), FunctionExecutionResult(content="{'canonical': '*C(=O)NCc1ccccc1', 'valid': True, 'formula': 'C8H8*NO', 'error': None}", name='canonicalize_smiles', call_id='call_MdtDW9NDeKefcuhriE7sG3xj', is_error=False), FunctionExecutionResult(content="{'canonical': 'OB(c1ccccc1Cl)c1ccccc1Cl', 'valid': True, 'formula': 'C12H9BCl2O', 'error': None}", name='canonicalize_smiles', call_id='call_qCf71aQKYtx7dRF6eoN09bgW', is_error=False), FunctionExecutionResult(content="{'canonical': 'OB(c1ccc(F)cc1Cl)c1ccc(F)cc1Cl', 'valid': True, 'formula': 'C12H7BCl2F2O', 'error': None}", name='canonicalize_smiles', call_id='call_Wxjc8I7R7U6rr8iLlBid03Oy', is_error=False), FunctionExecutionResult(content="{'canonical': 'OB(c1ccccc1)c1ccccc1', 'valid': True, 'formula': 'C12H11BO', 'error': None}", name='canonicalize_smiles', call_id='call_ep8bjbueQ91xL3cngwR2DOsm', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC(=O)O', 'valid': True, 'formula': 'C2H4O2', 'error': None}", name='canonicalize_smiles', call_id='call_W0df83tULLb3fzrpE0ui4HmD', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=C(O)Cc1ccccc1', 'valid': True, 'formula': 'C8H8O2', 'error': None}", name='canonicalize_smiles', call_id='call_D5TICgJlkjdnJMf3hGSKLDrc', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=CO', 'valid': True, 'formula': 'CH2O2', 'error': None}", name='canonicalize_smiles', call_id='call_vgU5g4XC0VcPujsfmUK5j8Jy', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=C(O)C(Cl)(Cl)Cl', 'valid': True, 'formula': 'C2HCl3O2', 'error': None}", name='canonicalize_smiles', call_id='call_smMP0q22dYW6mHjVdx3xm02B', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=C(O)C(F)(F)F', 'valid': True, 'formula': 'C2HF3O2', 'error': None}", name='canonicalize_smiles', call_id='call_FMlDnhLiDHRulS6MlV29i3Gq', is_error=False), FunctionExecutionResult(content="{'canonical': 'CN(C)C=O', 'valid': True, 'formula': 'C3H7NO', 'error': None}", name='canonicalize_smiles', call_id='call_8HwlYthoUyY93wd8wA122BJa', is_error=False)]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_TeLieFI1v6TbpxmtRNsmBoez', arguments='{"smiles":"O=CNCC1ccccc1"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'canonical': None, 'valid': False, 'formula': None, 'error': 'RDKit could not parse SMILES'}", name='canonicalize_smiles', call_id='call_TeLieFI1v6TbpxmtRNsmBoez', is_error=False)]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_60CAv5g5nkXNG4v1KvuLuHC1', arguments='{"obj":{"file_name":"CEJ_2016.pdf_page002_table_02_s0.91.png","reactions":[{"reaction_id":"0_1","reactants":[{"smiles":"NCc1ccccc1","label":"benzylamine","uncertain":false}],"products":[{"smiles":"*C(=O)NCc1ccccc1","label":"N-benzylformamide","uncertain":false}],"conditions":[{"role":"catalyst","text":"1 (10 mol %)","smiles":"OB(c1ccccc1Cl)c1ccccc1Cl"},{"role":"loading","text":"10 mol %","smiles":null},{"role":"reagent","text":"AcOH 20 mol %","smiles":"CC(=O)O"},{"role":"loading","text":"20 mol %","smiles":null},{"role":"solvent","text":"DMF","smiles":"CN(C)C=O"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"24 h","smiles":null},{"role":"yield","text":"73","smiles":null}],"additional_info":["entry 1: standard conditions, 73% yield"]},{"reaction_id":"0_2","reactants":[{"smiles":"NCc1ccccc1","label":"benzylamine","uncertain":false}],"products":[{"smiles":"*C(=O)NCc1ccccc1","label":"N-benzylformamide","uncertain":false}],"conditions":[{"role":"catalyst","text":"2-Cl-4-F-(C6H3)2B(OH)","smiles":"OB(c1ccc(F)cc1Cl)c1ccc(F)cc1Cl"},{"role":"loading","text":"10 mol %","smiles":null},{"role":"reagent","text":"AcOH 20 mol %","smiles":"CC(=O)O"},{"role":"loading","text":"20 mol %","smiles":null},{"role":"solvent","text":"DMF","smiles":"CN(C)C=O"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"24 h","smiles":null},{"role":"yield","text":"54","smiles":null}],"additional_info":["entry 2: catalyst 2-Cl-4-F-(C6H3)2B(OH), 54% yield"]},{"reaction_id":"0_3","reactants":[{"smiles":"NCc1ccccc1","label":"benzylamine","uncertain":false}],"products":[{"smiles":"*C(=O)NCc1ccccc1","label":"N-benzylformamide","uncertain":false}],"conditions":[{"role":"catalyst","text":"Ph2B(OH)","smiles":"OB(c1ccccc1)c1ccccc1"},{"role":"loading","text":"10 mol %","smiles":null},{"role":"reagent","text":"AcOH 20 mol %","smiles":"CC(=O)O"},{"role":"loading","text":"20 mol %","smiles":null},{"role":"solvent","text":"DMF","smiles":"CN(C)C=O"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"24 h","smiles":null},{"role":"yield","text":"6","smiles":null}],"additional_info":["entry 3: catalyst Ph2B(OH), 6% yield"]},{"reaction_id":"0_4","reactants":[{"smiles":"NCc1ccccc1","label":"benzylamine","uncertain":false}],"products":[{"smiles":"*C(=O)NCc1ccccc1","label":"N-benzylformamide","uncertain":false}],"conditions":[{"role":"catalyst","text":"2-Cl-C6H4B(OH)2","smiles":null},{"role":"loading","text":"10 mol %","smiles":null},{"role":"reagent","text":"AcOH 20 mol %","smiles":"CC(=O)O"},{"role":"loading","text":"20 mol %","smiles":null},{"role":"solvent","text":"DMF","smiles":"CN(C)C=O"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"24 h","smiles":null},{"role":"yield","text":"22","smiles":null}],"additional_info":["entry 4: catalyst 2-Cl-C6H4B(OH)2, 22% yield"]},{"reaction_id":"0_5","reactants":[{"smiles":"NCc1ccccc1","label":"benzylamine","uncertain":false}],"products":[{"smiles":"*C(=O)NCc1ccccc1","label":"N-benzylformamide","uncertain":false}],"conditions":[{"role":"catalyst","text":"1 (10 mol %)","smiles":"OB(c1ccccc1Cl)c1ccccc1Cl"},{"role":"loading","text":"10 mol %","smiles":null},{"role":"reagent","text":"AcOH 20 mol %","smiles":"CC(=O)O"},{"role":"loading","text":"20 mol %","smiles":null},{"role":"solvent","text":"DMF","smiles":"CN(C)C=O"},{"role":"time","text":"reaction run for 72 h","smiles":null},{"role":"yield","text":"82","smiles":null}],"additional_info":["entry 5: reaction run for 72 h, 82% yield"]},{"reaction_id":"0_6","reactants":[{"smiles":"NCc1ccccc1","label":"benzylamine","uncertain":false}],"products":[{"smiles":"*C(=O)NCc1ccccc1","label":"N-benzylformamide","uncertain":false}],"conditions":[{"role":"catalyst","text":"1 (10 mol %)","smiles":"OB(c1ccccc1Cl)c1ccccc1Cl"},{"role":"loading","text":"10 mol %","smiles":null},{"role":"reagent","text":"AcOH 20 mol %","smiles":"CC(=O)O"},{"role":"loading","text":"20 mol %","smiles":null},{"role":"solvent","text":"DMF","smiles":"CN(C)C=O"},{"role":"temperature","text":"reaction run at 45 °C","smiles":null},{"role":"yield","text":"98","smiles":null}],"additional_info":["entry 6: reaction run at 45 °C, 98% yield"]},{"reaction_id":"0_7","reactants":[{"smiles":"NCc1ccccc1","label":"benzylamine","uncertain":false}],"products":[{"smiles":"*C(=O)NCc1ccccc1","label":"N-benzylformamide","uncertain":false}],"conditions":[{"role":"catalyst","text":"1 (10 mol %)","smiles":"OB(c1ccccc1Cl)c1ccccc1Cl"},{"role":"loading","text":"10 mol %","smiles":null},{"role":"reagent","text":"AcOH 20 mol %","smiles":"CC(=O)O"},{"role":"loading","text":"20 mol %","smiles":null},{"role":"solvent","text":"DMF","smiles":"CN(C)C=O"},{"role":"temperature","text":"reaction run at 65 °C","smiles":null},{"role":"time","text":"for 4 h","smiles":null},{"role":"yield","text":"99","smiles":null}],"additional_info":["entry 7: reaction run at 65 °C for 4 h, 99% yield"]},{"reaction_id":"0_8","reactants":[{"smiles":"NCc1ccccc1","label":"benzylamine","uncertain":false}],"products":[{"smiles":"*C(=O)NCc1ccccc1","label":"N-benzylformamide","uncertain":false}],"conditions":[{"role":"solvent","text":"DMF","smiles":"CN(C)C=O"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"24 h","smiles":null},{"role":"yield","text":"0","smiles":null}],"additional_info":["entry 8: no catalyst, no AcOH, 0% yield"]},{"reaction_id":"0_9","reactants":[{"smiles":"NCc1ccccc1","label":"benzylamine","uncertain":false}],"products":[{"smiles":"*C(=O)NCc1ccccc1","label":"N-benzylformamide","uncertain":false}],"conditions":[{"role":"catalyst","text":"only 1","smiles":"OB(c1ccccc1Cl)c1ccccc1Cl"},{"role":"loading","text":"10 mol %","smiles":null},{"role":"solvent","text":"DMF","smiles":"CN(C)C=O"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"24 h","smiles":null},{"role":"yield","text":"34","smiles":null}],"additional_info":["entry 9: only catalyst 1 present, 34% yield"]},{"reaction_id":"0_10","reactants":[{"smiles":"NCc1ccccc1","label":"benzylamine","uncertain":false}],"products":[{"smiles":"*C(=O)NCc1ccccc1","label":"N-benzylformamide","uncertain":false}],"conditions":[{"role":"reagent","text":"only AcOH","smiles":"CC(=O)O"},{"role":"loading","text":"20 mol %","smiles":null},{"role":"solvent","text":"DMF","smiles":"CN(C)C=O"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"24 h","smiles":null},{"role":"yield","text":"19","smiles":null}],"additional_info":["entry 10: only AcOH present, 19% yield"]},{"reaction_id":"0_11","reactants":[{"smiles":"NCc1ccccc1","label":"benzylamine","uncertain":false}],"products":[{"smiles":"*C(=O)NCc1ccccc1","label":"N-benzylformamide","uncertain":false}],"conditions":[{"role":"catalyst","text":"1 (10 mol %)","smiles":"OB(c1ccccc1Cl)c1ccccc1Cl"},{"role":"loading","text":"10 mol %","smiles":null},{"role":"reagent","text":"only BnCO2H","smiles":"O=C(O)Cc1ccccc1"},{"role":"loading","text":"20 mol %","smiles":null},{"role":"solvent","text":"DMF","smiles":"CN(C)C=O"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"24 h","smiles":null},{"role":"yield","text":"15","smiles":null}],"additional_info":["entry 11: only BnCO2H instead of AcOH, 15% yield"]},{"reaction_id":"0_12","reactants":[{"smiles":"NCc1ccccc1","label":"benzylamine","uncertain":false}],"products":[{"smiles":"*C(=O)NCc1ccccc1","label":"N-benzylformamide","uncertain":false}],"conditions":[{"role":"catalyst","text":"1 (10 mol %)","smiles":"OB(c1ccccc1Cl)c1ccccc1Cl"},{"role":"loading","text":"10 mol %","smiles":null},{"role":"reagent","text":"only HCO2H","smiles":"O=CO"},{"role":"loading","text":"20 mol %","smiles":null},{"role":"solvent","text":"DMF","smiles":"CN(C)C=O"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"24 h","smiles":null},{"role":"yield","text":"11","smiles":null}],"additional_info":["entry 12: only HCO2H instead of AcOH, 11% yield"]},{"reaction_id":"0_13","reactants":[{"smiles":"NCc1ccccc1","label":"benzylamine","uncertain":false}],"products":[{"smiles":"*C(=O)NCc1ccccc1","label":"N-benzylformamide","uncertain":false}],"conditions":[{"role":"catalyst","text":"1 (10 mol %)","smiles":"OB(c1ccccc1Cl)c1ccccc1Cl"},{"role":"loading","text":"10 mol %","smiles":null},{"role":"reagent","text":"only CCl3CO2H","smiles":"O=C(O)C(Cl)(Cl)Cl"},{"role":"loading","text":"20 mol %","smiles":null},{"role":"solvent","text":"DMF","smiles":"CN(C)C=O"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"24 h","smiles":null},{"role":"yield","text":"9","smiles":null}],"additional_info":["entry 13: only CCl3CO2H instead of AcOH, 9% yield"]},{"reaction_id":"0_14","reactants":[{"smiles":"NCc1ccccc1","label":"benzylamine","uncertain":false}],"products":[{"smiles":"*C(=O)NCc1ccccc1","label":"N-benzylformamide","uncertain":false}],"conditions":[{"role":"catalyst","text":"1 (10 mol %)","smiles":"OB(c1ccccc1Cl)c1ccccc1Cl"},{"role":"loading","text":"10 mol %","smiles":null},{"role":"reagent","text":"only CF3CO2H","smiles":"O=C(O)C(F)(F)F"},{"role":"loading","text":"20 mol %","smiles":null},{"role":"solvent","text":"DMF","smiles":"CN(C)C=O"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"24 h","smiles":null},{"role":"yield","text":"1","smiles":null}],"additional_info":["entry 14: only CF3CO2H instead of AcOH, 1% yield"]}]}}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'valid': True, 'errors': []}", name='validate_reaction_json', call_id='call_60CAv5g5nkXNG4v1KvuLuHC1', is_error=False)]
+---------- TextMessage (data_structure) ----------
+```json
+{
+  "file_name": "CEJ_2016.pdf_page002_table_02_s0.91.png",
+  "reactions": [
+    {
+      "reaction_id": "0_1",
+      "reactants": [
+        {
+          "smiles": "NCc1ccccc1",
+          "label": "benzylamine",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "*C(=O)NCc1ccccc1",
+          "label": "N-benzylformamide",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "1 (10 mol %)",
+          "smiles": "OB(c1ccccc1Cl)c1ccccc1Cl"
+        },
+        {
+          "role": "loading",
+          "text": "10 mol %",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "AcOH 20 mol %",
+          "smiles": "CC(=O)O"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol %",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMF",
+          "smiles": "CN(C)C=O"
+        },
+        {
+          "role": "temperature",
+          "text": "rt",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "24 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "73",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 1: standard conditions, 73% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_2",
+      "reactants": [
+        {
+          "smiles": "NCc1ccccc1",
+          "label": "benzylamine",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "*C(=O)NCc1ccccc1",
+          "label": "N-benzylformamide",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "2-Cl-4-F-(C6H3)2B(OH)",
+          "smiles": "OB(c1ccc(F)cc1Cl)c1ccc(F)cc1Cl"
+        },
+        {
+          "role": "loading",
+          "text": "10 mol %",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "AcOH 20 mol %",
+          "smiles": "CC(=O)O"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol %",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMF",
+          "smiles": "CN(C)C=O"
+        },
+        {
+          "role": "temperature",
+          "text": "rt",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "24 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "54",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 2: catalyst 2-Cl-4-F-(C6H3)2B(OH), 54% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_3",
+      "reactants": [
+        {
+          "smiles": "NCc1ccccc1",
+          "label": "benzylamine",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "*C(=O)NCc1ccccc1",
+          "label": "N-benzylformamide",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "Ph2B(OH)",
+          "smiles": "OB(c1ccccc1)c1ccccc1"
+        },
+        {
+          "role": "loading",
+          "text": "10 mol %",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "AcOH 20 mol %",
+          "smiles": "CC(=O)O"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol %",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMF",
+          "smiles": "CN(C)C=O"
+        },
+        {
+          "role": "temperature",
+          "text": "rt",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "24 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "6",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 3: catalyst Ph2B(OH), 6% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_4",
+      "reactants": [
+        {
+          "smiles": "NCc1ccccc1",
+          "label": "benzylamine",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "*C(=O)NCc1ccccc1",
+          "label": "N-benzylformamide",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "2-Cl-C6H4B(OH)2",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "10 mol %",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "AcOH 20 mol %",
+          "smiles": "CC(=O)O"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol %",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMF",
+          "smiles": "CN(C)C=O"
+        },
+        {
+          "role": "temperature",
+          "text": "rt",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "24 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "22",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 4: catalyst 2-Cl-C6H4B(OH)2, 22% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_5",
+      "reactants": [
+        {
+          "smiles": "NCc1ccccc1",
+          "label": "benzylamine",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "*C(=O)NCc1ccccc1",
+          "label": "N-benzylformamide",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "1 (10 mol %)",
+          "smiles": "OB(c1ccccc1Cl)c1ccccc1Cl"
+        },
+        {
+          "role": "loading",
+          "text": "10 mol %",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "AcOH 20 mol %",
+          "smiles": "CC(=O)O"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol %",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMF",
+          "smiles": "CN(C)C=O"
+        },
+        {
+          "role": "time",
+          "text": "reaction run for 72 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "82",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 5: reaction run for 72 h, 82% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_6",
+      "reactants": [
+        {
+          "smiles": "NCc1ccccc1",
+          "label": "benzylamine",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "*C(=O)NCc1ccccc1",
+          "label": "N-benzylformamide",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "1 (10 mol %)",
+          "smiles": "OB(c1ccccc1Cl)c1ccccc1Cl"
+        },
+        {
+          "role": "loading",
+          "text": "10 mol %",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "AcOH 20 mol %",
+          "smiles": "CC(=O)O"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol %",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMF",
+          "smiles": "CN(C)C=O"
+        },
+        {
+          "role": "temperature",
+          "text": "reaction run at 45 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "98",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 6: reaction run at 45 °C, 98% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_7",
+      "reactants": [
+        {
+          "smiles": "NCc1ccccc1",
+          "label": "benzylamine",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "*C(=O)NCc1ccccc1",
+          "label": "N-benzylformamide",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "1 (10 mol %)",
+          "smiles": "OB(c1ccccc1Cl)c1ccccc1Cl"
+        },
+        {
+          "role": "loading",
+          "text": "10 mol %",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "AcOH 20 mol %",
+          "smiles": "CC(=O)O"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol %",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMF",
+          "smiles": "CN(C)C=O"
+        },
+        {
+          "role": "temperature",
+          "text": "reaction run at 65 °C",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "for 4 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "99",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 7: reaction run at 65 °C for 4 h, 99% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_8",
+      "reactants": [
+        {
+          "smiles": "NCc1ccccc1",
+          "label": "benzylamine",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "*C(=O)NCc1ccccc1",
+          "label": "N-benzylformamide",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "no 1",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "no AcOH",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMF",
+          "smiles": "CN(C)C=O"
+        },
+        {
+          "role": "temperature",
+          "text": "rt",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "24 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "0",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 8: no catalyst and no AcOH, 0% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_9",
+      "reactants": [
+        {
+          "smiles": "NCc1ccccc1",
+          "label": "benzylamine",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "*C(=O)NCc1ccccc1",
+          "label": "N-benzylformamide",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "only 1",
+          "smiles": "OB(c1ccccc1Cl)c1ccccc1Cl"
+        },
+        {
+          "role": "loading",
+          "text": "10 mol %",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMF",
+          "smiles": "CN(C)C=O"
+        },
+        {
+          "role": "temperature",
+          "text": "rt",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "24 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "34",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 9: only catalyst 1 present, 34% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_10",
+      "reactants": [
+        {
+          "smiles": "NCc1ccccc1",
+          "label": "benzylamine",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "*C(=O)NCc1ccccc1",
+          "label": "N-benzylformamide",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "reagent",
+          "text": "only AcOH",
+          "smiles": "CC(=O)O"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol %",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMF",
+          "smiles": "CN(C)C=O"
+        },
+        {
+          "role": "temperature",
+          "text": "rt",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "24 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "19",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 10: only AcOH present, 19% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_11",
+      "reactants": [
+        {
+          "smiles": "NCc1ccccc1",
+          "label": "benzylamine",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "*C(=O)NCc1ccccc1",
+          "label": "N-benzylformamide",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "1 (10 mol %)",
+          "smiles": "OB(c1ccccc1Cl)c1ccccc1Cl"
+        },
+        {
+          "role": "loading",
+          "text": "10 mol %",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "only BnCO2H",
+          "smiles": "O=C(O)Cc1ccccc1"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol %",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMF",
+          "smiles": "CN(C)C=O"
+        },
+        {
+          "role": "temperature",
+          "text": "rt",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "24 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "15",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 11: only BnCO2H instead of AcOH, 15% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_12",
+      "reactants": [
+        {
+          "smiles": "NCc1ccccc1",
+          "label": "benzylamine",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "*C(=O)NCc1ccccc1",
+          "label": "N-benzylformamide",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "1 (10 mol %)",
+          "smiles": "OB(c1ccccc1Cl)c1ccccc1Cl"
+        },
+        {
+          "role": "loading",
+          "text": "10 mol %",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "only HCO2H",
+          "smiles": "O=CO"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol %",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMF",
+          "smiles": "CN(C)C=O"
+        },
+        {
+          "role": "temperature",
+          "text": "rt",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "24 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "11",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 12: only HCO2H instead of AcOH, 11% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_13",
+      "reactants": [
+        {
+          "smiles": "NCc1ccccc1",
+          "label": "benzylamine",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "*C(=O)NCc1ccccc1",
+          "label": "N-benzylformamide",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "1 (10 mol %)",
+          "smiles": "OB(c1ccccc1Cl)c1ccccc1Cl"
+        },
+        {
+          "role": "loading",
+          "text": "10 mol %",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "only CCl3CO2H",
+          "smiles": "O=C(O)C(Cl)(Cl)Cl"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol %",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMF",
+          "smiles": "CN(C)C=O"
+        },
+        {
+          "role": "temperature",
+          "text": "rt",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "24 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "9",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 13: only CCl3CO2H instead of AcOH, 9% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_14",
+      "reactants": [
+        {
+          "smiles": "NCc1ccccc1",
+          "label": "benzylamine",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "*C(=O)NCc1ccccc1",
+          "label": "N-benzylformamide",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "1 (10 mol %)",
+          "smiles": "OB(c1ccccc1Cl)c1ccccc1Cl"
+        },
+        {
+          "role": "loading",
+          "text": "10 mol %",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "only CF3CO2H",
+          "smiles": "O=C(O)C(F)(F)F"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol %",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMF",
+          "smiles": "CN(C)C=O"
+        },
+        {
+          "role": "temperature",
+          "text": "rt",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "24 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "1",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 14: only CF3CO2H instead of AcOH, 1% yield"
+      ]
+    }
+  ]
+}
+```
+/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/tools/structural_verifier.py:226: UserWarning: Resolved model mismatch: gpt-5.4 != gpt-5.4-2026-03-05. Model mapping in autogen_ext.models.openai may be incorrect. Set the model to gpt-5.4-2026-03-05 to enhance token/cost estimation and suppress this warning.
+  llm_result = await self._client.create(
+---------- TextMessage (structural_verifier) ----------
+[CRITIQUE structural_verifier]
+- label N-benzylformamide: label-mapping failure — no crop with matching printed label; only product crop visible is 3a
+- label N-benzylformamide: rendered SMILES has wildcard attachment (*C(=O)N...) whereas crop 3a is formamide (HC(=O)N...)
+suggested_fix: preserve figure labels on product renders (e.g. 3a) and replace wildcard acyl terminus with explicit formyl hydrogen for N-benzylformamide
+[/CRITIQUE]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_Z13L1hlLVtyfKi9x7aQwFMUy', arguments='{"smiles":"O=C(NCc1ccccc1)"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'canonical': 'O=CNCc1ccccc1', 'valid': True, 'formula': 'C8H9NO', 'error': None}", name='canonicalize_smiles', call_id='call_Z13L1hlLVtyfKi9x7aQwFMUy', is_error=False)]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_QR8PVSQOloZ3j5CDnlGo8CVv', arguments='{"obj":{"file_name":"CEJ_2016.pdf_page002_table_02_s0.91.png","reactions":[{"reaction_id":"0_1","reactants":[{"smiles":"NCc1ccccc1","label":"benzylamine","uncertain":false}],"products":[{"smiles":"O=CNCc1ccccc1","label":"3a","uncertain":false}],"conditions":[{"role":"catalyst","text":"1 (10 mol %)","smiles":"OB(c1ccccc1Cl)c1ccccc1Cl"},{"role":"loading","text":"10 mol %","smiles":null},{"role":"reagent","text":"AcOH 20 mol %","smiles":"CC(=O)O"},{"role":"loading","text":"20 mol %","smiles":null},{"role":"solvent","text":"DMF","smiles":"CN(C)C=O"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"24 h","smiles":null},{"role":"yield","text":"73","smiles":null}],"additional_info":["entry 1: standard conditions, 73% yield"]},{"reaction_id":"0_2","reactants":[{"smiles":"NCc1ccccc1","label":"benzylamine","uncertain":false}],"products":[{"smiles":"O=CNCc1ccccc1","label":"3a","uncertain":false}],"conditions":[{"role":"catalyst","text":"2-Cl-4-F-(C6H3)2B(OH)","smiles":"OB(c1ccc(F)cc1Cl)c1ccc(F)cc1Cl"},{"role":"loading","text":"10 mol %","smiles":null},{"role":"reagent","text":"AcOH 20 mol %","smiles":"CC(=O)O"},{"role":"loading","text":"20 mol %","smiles":null},{"role":"solvent","text":"DMF","smiles":"CN(C)C=O"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"24 h","smiles":null},{"role":"yield","text":"54","smiles":null}],"additional_info":["entry 2: catalyst 2-Cl-4-F-(C6H3)2B(OH), 54% yield"]},{"reaction_id":"0_3","reactants":[{"smiles":"NCc1ccccc1","label":"benzylamine","uncertain":false}],"products":[{"smiles":"O=CNCc1ccccc1","label":"3a","uncertain":false}],"conditions":[{"role":"catalyst","text":"Ph2B(OH)","smiles":"OB(c1ccccc1)c1ccccc1"},{"role":"loading","text":"10 mol %","smiles":null},{"role":"reagent","text":"AcOH 20 mol %","smiles":"CC(=O)O"},{"role":"loading","text":"20 mol %","smiles":null},{"role":"solvent","text":"DMF","smiles":"CN(C)C=O"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"24 h","smiles":null},{"role":"yield","text":"6","smiles":null}],"additional_info":["entry 3: catalyst Ph2B(OH), 6% yield"]},{"reaction_id":"0_4","reactants":[{"smiles":"NCc1ccccc1","label":"benzylamine","uncertain":false}],"products":[{"smiles":"O=CNCc1ccccc1","label":"3a","uncertain":false}],"conditions":[{"role":"catalyst","text":"2-Cl-C6H4B(OH)2","smiles":null},{"role":"loading","text":"10 mol %","smiles":null},{"role":"reagent","text":"AcOH 20 mol %","smiles":"CC(=O)O"},{"role":"loading","text":"20 mol %","smiles":null},{"role":"solvent","text":"DMF","smiles":"CN(C)C=O"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"24 h","smiles":null},{"role":"yield","text":"22","smiles":null}],"additional_info":["entry 4: catalyst 2-Cl-C6H4B(OH)2, 22% yield"]},{"reaction_id":"0_5","reactants":[{"smiles":"NCc1ccccc1","label":"benzylamine","uncertain":false}],"products":[{"smiles":"O=CNCc1ccccc1","label":"3a","uncertain":false}],"conditions":[{"role":"catalyst","text":"1 (10 mol %)","smiles":"OB(c1ccccc1Cl)c1ccccc1Cl"},{"role":"loading","text":"10 mol %","smiles":null},{"role":"reagent","text":"AcOH 20 mol %","smiles":"CC(=O)O"},{"role":"loading","text":"20 mol %","smiles":null},{"role":"solvent","text":"DMF","smiles":"CN(C)C=O"},{"role":"time","text":"reaction run for 72 h","smiles":null},{"role":"yield","text":"82","smiles":null}],"additional_info":["entry 5: reaction run for 72 h, 82% yield"]},{"reaction_id":"0_6","reactants":[{"smiles":"NCc1ccccc1","label":"benzylamine","uncertain":false}],"products":[{"smiles":"O=CNCc1ccccc1","label":"3a","uncertain":false}],"conditions":[{"role":"catalyst","text":"1 (10 mol %)","smiles":"OB(c1ccccc1Cl)c1ccccc1Cl"},{"role":"loading","text":"10 mol %","smiles":null},{"role":"reagent","text":"AcOH 20 mol %","smiles":"CC(=O)O"},{"role":"loading","text":"20 mol %","smiles":null},{"role":"solvent","text":"DMF","smiles":"CN(C)C=O"},{"role":"temperature","text":"reaction run at 45 °C","smiles":null},{"role":"yield","text":"98","smiles":null}],"additional_info":["entry 6: reaction run at 45 °C, 98% yield"]},{"reaction_id":"0_7","reactants":[{"smiles":"NCc1ccccc1","label":"benzylamine","uncertain":false}],"products":[{"smiles":"O=CNCc1ccccc1","label":"3a","uncertain":false}],"conditions":[{"role":"catalyst","text":"1 (10 mol %)","smiles":"OB(c1ccccc1Cl)c1ccccc1Cl"},{"role":"loading","text":"10 mol %","smiles":null},{"role":"reagent","text":"AcOH 20 mol %","smiles":"CC(=O)O"},{"role":"loading","text":"20 mol %","smiles":null},{"role":"solvent","text":"DMF","smiles":"CN(C)C=O"},{"role":"temperature","text":"reaction run at 65 °C","smiles":null},{"role":"time","text":"for 4 h","smiles":null},{"role":"yield","text":"99","smiles":null}],"additional_info":["entry 7: reaction run at 65 °C for 4 h, 99% yield"]},{"reaction_id":"0_8","reactants":[{"smiles":"NCc1ccccc1","label":"benzylamine","uncertain":false}],"products":[{"smiles":"O=CNCc1ccccc1","label":"3a","uncertain":false}],"conditions":[{"role":"catalyst","text":"no 1","smiles":null},{"role":"reagent","text":"no AcOH","smiles":null},{"role":"solvent","text":"DMF","smiles":"CN(C)C=O"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"24 h","smiles":null},{"role":"yield","text":"0","smiles":null}],"additional_info":["entry 8: no catalyst and no AcOH, 0% yield"]},{"reaction_id":"0_9","reactants":[{"smiles":"NCc1ccccc1","label":"benzylamine","uncertain":false}],"products":[{"smiles":"O=CNCc1ccccc1","label":"3a","uncertain":false}],"conditions":[{"role":"catalyst","text":"only 1","smiles":"OB(c1ccccc1Cl)c1ccccc1Cl"},{"role":"loading","text":"10 mol %","smiles":null},{"role":"solvent","text":"DMF","smiles":"CN(C)C=O"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"24 h","smiles":null},{"role":"yield","text":"34","smiles":null}],"additional_info":["entry 9: only catalyst 1 present, 34% yield"]},{"reaction_id":"0_10","reactants":[{"smiles":"NCc1ccccc1","label":"benzylamine","uncertain":false}],"products":[{"smiles":"O=CNCc1ccccc1","label":"3a","uncertain":false}],"conditions":[{"role":"reagent","text":"only AcOH","smiles":"CC(=O)O"},{"role":"loading","text":"20 mol %","smiles":null},{"role":"solvent","text":"DMF","smiles":"CN(C)C=O"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"24 h","smiles":null},{"role":"yield","text":"19","smiles":null}],"additional_info":["entry 10: only AcOH present, 19% yield"]},{"reaction_id":"0_11","reactants":[{"smiles":"NCc1ccccc1","label":"benzylamine","uncertain":false}],"products":[{"smiles":"O=CNCc1ccccc1","label":"3a","uncertain":false}],"conditions":[{"role":"catalyst","text":"1 (10 mol %)","smiles":"OB(c1ccccc1Cl)c1ccccc1Cl"},{"role":"loading","text":"10 mol %","smiles":null},{"role":"reagent","text":"only BnCO2H","smiles":"O=C(O)Cc1ccccc1"},{"role":"loading","text":"20 mol %","smiles":null},{"role":"solvent","text":"DMF","smiles":"CN(C)C=O"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"24 h","smiles":null},{"role":"yield","text":"15","smiles":null}],"additional_info":["entry 11: only BnCO2H instead of AcOH, 15% yield"]},{"reaction_id":"0_12","reactants":[{"smiles":"NCc1ccccc1","label":"benzylamine","uncertain":false}],"products":[{"smiles":"O=CNCc1ccccc1","label":"3a","uncertain":false}],"conditions":[{"role":"catalyst","text":"1 (10 mol %)","smiles":"OB(c1ccccc1Cl)c1ccccc1Cl"},{"role":"loading","text":"10 mol %","smiles":null},{"role":"reagent","text":"only HCO2H","smiles":"O=CO"},{"role":"loading","text":"20 mol %","smiles":null},{"role":"solvent","text":"DMF","smiles":"CN(C)C=O"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"24 h","smiles":null},{"role":"yield","text":"11","smiles":null}],"additional_info":["entry 12: only HCO2H instead of AcOH, 11% yield"]},{"reaction_id":"0_13","reactants":[{"smiles":"NCc1ccccc1","label":"benzylamine","uncertain":false}],"products":[{"smiles":"O=CNCc1ccccc1","label":"3a","uncertain":false}],"conditions":[{"role":"catalyst","text":"1 (10 mol %)","smiles":"OB(c1ccccc1Cl)c1ccccc1Cl"},{"role":"loading","text":"10 mol %","smiles":null},{"role":"reagent","text":"only CCl3CO2H","smiles":"O=C(O)C(Cl)(Cl)Cl"},{"role":"loading","text":"20 mol %","smiles":null},{"role":"solvent","text":"DMF","smiles":"CN(C)C=O"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"24 h","smiles":null},{"role":"yield","text":"9","smiles":null}],"additional_info":["entry 13: only CCl3CO2H instead of AcOH, 9% yield"]},{"reaction_id":"0_14","reactants":[{"smiles":"NCc1ccccc1","label":"benzylamine","uncertain":false}],"products":[{"smiles":"O=CNCc1ccccc1","label":"3a","uncertain":false}],"conditions":[{"role":"catalyst","text":"1 (10 mol %)","smiles":"OB(c1ccccc1Cl)c1ccccc1Cl"},{"role":"loading","text":"10 mol %","smiles":null},{"role":"reagent","text":"only CF3CO2H","smiles":"O=C(O)C(F)(F)F"},{"role":"loading","text":"20 mol %",\n"smiles":null},{"role":"solvent","text":"DMF","smiles":"CN(C)C=O"},{"role":"temperature","text":"rt","smiles":null},{"role":"time","text":"24 h","smiles":null},{"role":"yield","text":"1","smiles":null}],"additional_info":["entry 14: only CF3CO2H instead of AcOH, 1% yield"]}]}}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'valid': True, 'errors': []}", name='validate_reaction_json', call_id='call_QR8PVSQOloZ3j5CDnlGo8CVv', is_error=False)]
+---------- TextMessage (data_structure) ----------
+```json
+{
+  "file_name": "CEJ_2016.pdf_page002_table_02_s0.91.png",
+  "reactions": [
+    {
+      "reaction_id": "0_1",
+      "reactants": [
+        {
+          "smiles": "NCc1ccccc1",
+          "label": "benzylamine",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=CNCc1ccccc1",
+          "label": "3a",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "1 (10 mol %)",
+          "smiles": "OB(c1ccccc1Cl)c1ccccc1Cl"
+        },
+        {
+          "role": "loading",
+          "text": "10 mol %",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "AcOH 20 mol %",
+          "smiles": "CC(=O)O"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol %",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMF",
+          "smiles": "CN(C)C=O"
+        },
+        {
+          "role": "temperature",
+          "text": "rt",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "24 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "73",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 1: standard conditions, 73% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_2",
+      "reactants": [
+        {
+          "smiles": "NCc1ccccc1",
+          "label": "benzylamine",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=CNCc1ccccc1",
+          "label": "3a",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "2-Cl-4-F-(C6H3)2B(OH)",
+          "smiles": "OB(c1ccc(F)cc1Cl)c1ccc(F)cc1Cl"
+        },
+        {
+          "role": "loading",
+          "text": "10 mol %",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "AcOH 20 mol %",
+          "smiles": "CC(=O)O"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol %",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMF",
+          "smiles": "CN(C)C=O"
+        },
+        {
+          "role": "temperature",
+          "text": "rt",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "24 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "54",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 2: catalyst 2-Cl-4-F-(C6H3)2B(OH), 54% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_3",
+      "reactants": [
+        {
+          "smiles": "NCc1ccccc1",
+          "label": "benzylamine",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=CNCc1ccccc1",
+          "label": "3a",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "Ph2B(OH)",
+          "smiles": "OB(c1ccccc1)c1ccccc1"
+        },
+        {
+          "role": "loading",
+          "text": "10 mol %",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "AcOH 20 mol %",
+          "smiles": "CC(=O)O"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol %",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMF",
+          "smiles": "CN(C)C=O"
+        },
+        {
+          "role": "temperature",
+          "text": "rt",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "24 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "6",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 3: catalyst Ph2B(OH), 6% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_4",
+      "reactants": [
+        {
+          "smiles": "NCc1ccccc1",
+          "label": "benzylamine",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=CNCc1ccccc1",
+          "label": "3a",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "2-Cl-C6H4B(OH)2",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "10 mol %",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "AcOH 20 mol %",
+          "smiles": "CC(=O)O"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol %",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMF",
+          "smiles": "CN(C)C=O"
+        },
+        {
+          "role": "temperature",
+          "text": "rt",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "24 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "22",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 4: catalyst 2-Cl-C6H4B(OH)2, 22% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_5",
+      "reactants": [
+        {
+          "smiles": "NCc1ccccc1",
+          "label": "benzylamine",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=CNCc1ccccc1",
+          "label": "3a",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "1 (10 mol %)",
+          "smiles": "OB(c1ccccc1Cl)c1ccccc1Cl"
+        },
+        {
+          "role": "loading",
+          "text": "10 mol %",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "AcOH 20 mol %",
+          "smiles": "CC(=O)O"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol %",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMF",
+          "smiles": "CN(C)C=O"
+        },
+        {
+          "role": "time",
+          "text": "reaction run for 72 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "82",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 5: reaction run for 72 h, 82% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_6",
+      "reactants": [
+        {
+          "smiles": "NCc1ccccc1",
+          "label": "benzylamine",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=CNCc1ccccc1",
+          "label": "3a",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "1 (10 mol %)",
+          "smiles": "OB(c1ccccc1Cl)c1ccccc1Cl"
+        },
+        {
+          "role": "loading",
+          "text": "10 mol %",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "AcOH 20 mol %",
+          "smiles": "CC(=O)O"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol %",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMF",
+          "smiles": "CN(C)C=O"
+        },
+        {
+          "role": "temperature",
+          "text": "reaction run at 45 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "98",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 6: reaction run at 45 °C, 98% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_7",
+      "reactants": [
+        {
+          "smiles": "NCc1ccccc1",
+          "label": "benzylamine",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=CNCc1ccccc1",
+          "label": "3a",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "1 (10 mol %)",
+          "smiles": "OB(c1ccccc1Cl)c1ccccc1Cl"
+        },
+        {
+          "role": "loading",
+          "text": "10 mol %",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "AcOH 20 mol %",
+          "smiles": "CC(=O)O"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol %",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMF",
+          "smiles": "CN(C)C=O"
+        },
+        {
+          "role": "temperature",
+          "text": "reaction run at 65 °C",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "for 4 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "99",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 7: reaction run at 65 °C for 4 h, 99% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_8",
+      "reactants": [
+        {
+          "smiles": "NCc1ccccc1",
+          "label": "benzylamine",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=CNCc1ccccc1",
+          "label": "3a",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "no 1",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "no AcOH",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMF",
+          "smiles": "CN(C)C=O"
+        },
+        {
+          "role": "temperature",
+          "text": "rt",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "24 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "0",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 8: no catalyst and no AcOH, 0% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_9",
+      "reactants": [
+        {
+          "smiles": "NCc1ccccc1",
+          "label": "benzylamine",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=CNCc1ccccc1",
+          "label": "3a",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "only 1",
+          "smiles": "OB(c1ccccc1Cl)c1ccccc1Cl"
+        },
+        {
+          "role": "loading",
+          "text": "10 mol %",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMF",
+          "smiles": "CN(C)C=O"
+        },
+        {
+          "role": "temperature",
+          "text": "rt",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "24 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "34",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 9: only catalyst 1 present, 34% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_10",
+      "reactants": [
+        {
+          "smiles": "NCc1ccccc1",
+          "label": "benzylamine",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=CNCc1ccccc1",
+          "label": "3a",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "reagent",
+          "text": "only AcOH",
+          "smiles": "CC(=O)O"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol %",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMF",
+          "smiles": "CN(C)C=O"
+        },
+        {
+          "role": "temperature",
+          "text": "rt",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "24 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "19",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 10: only AcOH present, 19% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_11",
+      "reactants": [
+        {
+          "smiles": "NCc1ccccc1",
+          "label": "benzylamine",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=CNCc1ccccc1",
+          "label": "3a",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "1 (10 mol %)",
+          "smiles": "OB(c1ccccc1Cl)c1ccccc1Cl"
+        },
+        {
+          "role": "loading",
+          "text": "10 mol %",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "only BnCO2H",
+          "smiles": "O=C(O)Cc1ccccc1"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol %",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMF",
+          "smiles": "CN(C)C=O"
+        },
+        {
+          "role": "temperature",
+          "text": "rt",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "24 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "15",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 11: only BnCO2H instead of AcOH, 15% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_12",
+      "reactants": [
+        {
+          "smiles": "NCc1ccccc1",
+          "label": "benzylamine",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=CNCc1ccccc1",
+          "label": "3a",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "1 (10 mol %)",
+          "smiles": "OB(c1ccccc1Cl)c1ccccc1Cl"
+        },
+        {
+          "role": "loading",
+          "text": "10 mol %",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "only HCO2H",
+          "smiles": "O=CO"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol %",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMF",
+          "smiles": "CN(C)C=O"
+        },
+        {
+          "role": "temperature",
+          "text": "rt",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "24 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "11",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 12: only HCO2H instead of AcOH, 11% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_13",
+      "reactants": [
+        {
+          "smiles": "NCc1ccccc1",
+          "label": "benzylamine",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=CNCc1ccccc1",
+          "label": "3a",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "1 (10 mol %)",
+          "smiles": "OB(c1ccccc1Cl)c1ccccc1Cl"
+        },
+        {
+          "role": "loading",
+          "text": "10 mol %",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "only CCl3CO2H",
+          "smiles": "O=C(O)C(Cl)(Cl)Cl"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol %",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMF",
+          "smiles": "CN(C)C=O"
+        },
+        {
+          "role": "temperature",
+          "text": "rt",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "24 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "9",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 13: only CCl3CO2H instead of AcOH, 9% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_14",
+      "reactants": [
+        {
+          "smiles": "NCc1ccccc1",
+          "label": "benzylamine",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=CNCc1ccccc1",
+          "label": "3a",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "1 (10 mol %)",
+          "smiles": "OB(c1ccccc1Cl)c1ccccc1Cl"
+        },
+        {
+          "role": "loading",
+          "text": "10 mol %",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "only CF3CO2H",
+          "smiles": "O=C(O)C(F)(F)F"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol %",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "DMF",
+          "smiles": "CN(C)C=O"
+        },
+        {
+          "role": "temperature",
+          "text": "rt",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "24 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "1",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 14: only CF3CO2H instead of AcOH, 1% yield"
+      ]
+    }
+  ]
+}
+```
+---------- TextMessage (structural_verifier) ----------
+[STRUCT_OK]
+notes: label 3a maps to the product crop and matches the rendered N-benzylformamide; duplicate renders only
+---------- ToolCallRequestEvent (verifier) ----------
+[FunctionCall(id='call_1q6jHxGMuePYiWwTcAlPh2ld', arguments='{"obj": {"file_name": "CEJ_2016.pdf_page002_table_02_s0.91.png", "reactions": [{"reaction_id": "0_1", "reactants": [{"smiles": "NCc1ccccc1", "label": "benzylamine", "uncertain": false}], "products": [{"smiles": "O=CNCc1ccccc1", "label": "3a", "uncertain": false}], "conditions": [{"role": "catalyst", "text": "1 (10 mol %)", "smiles": "OB(c1ccccc1Cl)c1ccccc1Cl"}, {"role": "loading", "text": "10 mol %", "smiles": null}, {"role": "reagent", "text": "AcOH 20 mol %", "smiles": "CC(=O)O"}, {"role": "loading", "text": "20 mol %", "smiles": null}, {"role": "solvent", "text": "DMF", "smiles": "CN(C)C=O"}, {"role": "temperature", "text": "rt", "smiles": null}, {"role": "time", "text": "24 h", "smiles": null}, {"role": "yield", "text": "73", "smiles": null}], "additional_info": ["entry 1: standard conditions, 73% yield"]}, {"reaction_id": "0_2", "reactants": [{"smiles": "NCc1ccccc1", "label": "benzylamine", "uncertain": false}], "products": [{"smiles": "O=CNCc1ccccc1", "label": "3a", "uncertain": false}], "conditions": [{"role": "catalyst", "text": "2-Cl-4-F-(C6H3)2B(OH)", "smiles": "OB(c1ccc(F)cc1Cl)c1ccc(F)cc1Cl"}, {"role": "loading", "text": "10 mol %", "smiles": null}, {"role": "reagent", "text": "AcOH 20 mol %", "smiles": "CC(=O)O"}, {"role": "loading", "text": "20 mol %", "smiles": null}, {"role": "solvent", "text": "DMF", "smiles": "CN(C)C=O"}, {"role": "temperature", "text": "rt", "smiles": null}, {"role": "time", "text": "24 h", "smiles": null}, {"role": "yield", "text": "54", "smiles": null}], "additional_info": ["entry 2: catalyst 2-Cl-4-F-(C6H3)2B(OH), 54% yield"]}, {"reaction_id": "0_3", "reactants": [{"smiles": "NCc1ccccc1", "label": "benzylamine", "uncertain": false}], "products": [{"smiles": "O=CNCc1ccccc1", "label": "3a", "uncertain": false}], "conditions": [{"role": "catalyst", "text": "Ph2B(OH)", "smiles": "OB(c1ccccc1)c1ccccc1"}, {"role": "loading", "text": "10 mol %", "smiles": null}, {"role": "reagent", "text": "AcOH 20 mol %", "smiles": "CC(=O)O"}, {"role": "loading", "text": "20 mol %", "smiles": null}, {"role": "solvent", "text": "DMF", "smiles": "CN(C)C=O"}, {"role": "temperature", "text": "rt", "smiles": null}, {"role": "time", "text": "24 h", "smiles": null}, {"role": "yield", "text": "6", "smiles": null}], "additional_info": ["entry 3: catalyst Ph2B(OH), 6% yield"]}, {"reaction_id": "0_4", "reactants": [{"smiles": "NCc1ccccc1", "label": "benzylamine", "uncertain": false}], "products": [{"smiles": "O=CNCc1ccccc1", "label": "3a", "uncertain": false}], "conditions": [{"role": "catalyst", "text": "2-Cl-C6H4B(OH)2", "smiles": null}, {"role": "loading", "text": "10 mol %", "smiles": null}, {"role": "reagent", "text": "AcOH 20 mol %", "smiles": "CC(=O)O"}, {"role": "loading", "text": "20 mol %", "smiles": null}, {"role": "solvent", "text": "DMF", "smiles": "CN(C)C=O"}, {"role": "temperature", "text": "rt", "smiles": null}, {"role": "time", "text": "24 h", "smiles": null}, {"role": "yield", "text": "22", "smiles": null}], "additional_info": ["entry 4: catalyst 2-Cl-C6H4B(OH)2, 22% yield"]}, {"reaction_id": "0_5", "reactants": [{"smiles": "NCc1ccccc1", "label": "benzylamine", "uncertain": false}], "products": [{"smiles": "O=CNCc1ccccc1", "label": "3a", "uncertain": false}], "conditions": [{"role": "catalyst", "text": "1 (10 mol %)", "smiles": "OB(c1ccccc1Cl)c1ccccc1Cl"}, {"role": "loading", "text": "10 mol %", "smiles": null}, {"role": "reagent", "text": "AcOH 20 mol %", "smiles": "CC(=O)O"}, {"role": "loading", "text": "20 mol %", "smiles": null}, {"role": "solvent", "text": "DMF", "smiles": "CN(C)C=O"}, {"role": "time", "text": "reaction run for 72 h", "smiles": null}, {"role": "yield", "text": "82", "smiles": null}], "additional_info": ["entry 5: reaction run for 72 h, 82% yield"]}, {"reaction_id": "0_6", "reactants": [{"smiles": "NCc1ccccc1", "label": "benzylamine", "uncertain": false}], "products": [{"smiles": "O=CNCc1ccccc1", "label": "3a", "uncertain": false}], "conditions": [{"role": "catalyst", "text": "1 (10 mol %)", "smiles": "OB(c1ccccc1Cl)c1ccccc1Cl"}, {"role": "loading", "text": "10 mol %", "smiles": null}, {"role": "reagent", "text": "AcOH 20 mol %", "smiles": "CC(=O)O"}, {"role": "loading", "text": "20 mol %", "smiles": null}, {"role": "solvent", "text": "DMF", "smiles": "CN(C)C=O"}, {"role": "temperature", "text": "reaction run at 45 °C", "smiles": null}, {"role": "yield", "text": "98", "smiles": null}], "additional_info": ["entry 6: reaction run at 45 °C, 98% yield"]}, {"reaction_id": "0_7", "reactants": [{"smiles": "NCc1ccccc1", "label": "benzylamine", "uncertain": false}], "products": [{"smiles": "O=CNCc1ccccc1", "label": "3a", "uncertain": false}], "conditions": [{"role": "catalyst", "text": "1 (10 mol %)", "smiles": "OB(c1ccccc1Cl)c1ccccc1Cl"}, {"role": "loading", "text": "10 mol %", "smiles": null}, {"role": "reagent", "text": "AcOH 20 mol %", "smiles": "CC(=O)O"}, {"role": "loading", "text": "20 mol %", "smiles": null}, {"role": "solvent", "text": "DMF", "smiles": "CN(C)C=O"}, {"role": "temperature", "text": "reaction run at 65 °C", "smiles": null}, {"role": "time", "text": "for 4 h", "smiles": null}, {"role": "yield", "text": "99", "smiles": null}], "additional_info": ["entry 7: reaction run at 65 °C for 4 h, 99% yield"]}, {"reaction_id": "0_8", "reactants": [{"smiles": "NCc1ccccc1", "label": "benzylamine", "uncertain": false}], "products": [{"smiles": "O=CNCc1ccccc1", "label": "3a", "uncertain": false}], "conditions": [{"role": "catalyst", "text": "no 1", "smiles": null}, {"role": "reagent", "text": "no AcOH", "smiles": null}, {"role": "solvent", "text": "DMF", "smiles": "CN(C)C=O"}, {"role": "temperature", "text": "rt", "smiles": null}, {"role": "time", "text": "24 h", "smiles": null}, {"role": "yield", "text": "0", "smiles": null}], "additional_info": ["entry 8: no catalyst and no AcOH, 0% yield"]}, {"reaction_id": "0_9", "reactants": [{"smiles": "NCc1ccccc1", "label": "benzylamine", "uncertain": false}], "products": [{"smiles": "O=CNCc1ccccc1", "label": "3a", "uncertain": false}], "conditions": [{"role": "catalyst", "text": "only 1", "smiles": "OB(c1ccccc1Cl)c1ccccc1Cl"}, {"role": "loading", "text": "10 mol %", "smiles": null}, {"role": "solvent", "text": "DMF", "smiles": "CN(C)C=O"}, {"role": "temperature", "text": "rt", "smiles": null}, {"role": "time", "text": "24 h", "smiles": null}, {"role": "yield", "text": "34", "smiles": null}], "additional_info": ["entry 9: only catalyst 1 present, 34% yield"]}, {"reaction_id": "0_10", "reactants": [{"smiles": "NCc1ccccc1", "label": "benzylamine", "uncertain": false}], "products": [{"smiles": "O=CNCc1ccccc1", "label": "3a", "uncertain": false}], "conditions": [{"role": "reagent", "text": "only AcOH", "smiles": "CC(=O)O"}, {"role": "loading", "text": "20 mol %", "smiles": null}, {"role": "solvent", "text": "DMF", "smiles": "CN(C)C=O"}, {"role": "temperature", "text": "rt", "smiles": null}, {"role": "time", "text": "24 h", "smiles": null}, {"role": "yield", "text": "19", "smiles": null}], "additional_info": ["entry 10: only AcOH present, 19% yield"]}, {"reaction_id": "0_11", "reactants": [{"smiles": "NCc1ccccc1", "label": "benzylamine", "uncertain": false}], "products": [{"smiles": "O=CNCc1ccccc1", "label": "3a", "uncertain": false}], "conditions": [{"role": "catalyst", "text": "1 (10 mol %)", "smiles": "OB(c1ccccc1Cl)c1ccccc1Cl"}, {"role": "loading", "text": "10 mol %", "smiles": null}, {"role": "reagent", "text": "only BnCO2H", "smiles": "O=C(O)Cc1ccccc1"}, {"role": "loading", "text": "20 mol %", "smiles": null}, {"role": "solvent", "text": "DMF", "smiles": "CN(C)C=O"}, {"role": "temperature", "text": "rt", "smiles": null}, {"role": "time", "text": "24 h", "smiles": null}, {"role": "yield", "text": "15", "smiles": null}], "additional_info": ["entry 11: only BnCO2H instead of AcOH, 15% yield"]}, {"reaction_id": "0_12", "reactants": [{"smiles": "NCc1ccccc1", "label": "benzylamine", "uncertain": false}], "products": [{"smiles": "O=CNCc1ccccc1", "label": "3a", "uncertain": false}], "conditions": [{"role": "catalyst", "text": "1 (10 mol %)", "smiles": "OB(c1ccccc1Cl)c1ccccc1Cl"}, {"role": "loading", "text": "10 mol %", "smiles": null}, {"role": "reagent", "text": "only HCO2H", "smiles": "O=CO"}, {"role": "loading", "text": "20 mol %", "smiles": null}, {"role": "solvent", "text": "DMF", "smiles": "CN(C)C=O"}, {"role": "temperature", "text": "rt", "smiles": null}, {"role": "time", "text": "24 h", "smiles": null}, {"role": "yield", "text": "11", "smiles": null}], "additional_info": ["entry 12: only HCO2H instead of AcOH, 11% yield"]}, {"reaction_id": "0_13", "reactants": [{"smiles": "NCc1ccccc1", "label": "benzylamine", "uncertain": false}], "products": [{"smiles": "O=CNCc1ccccc1", "label": "3a", "uncertain": false}], "conditions": [{"role": "catalyst", "text": "1 (10 mol %)", "smiles": "OB(c1ccccc1Cl)c1ccccc1Cl"}, {"role": "loading", "text": "10 mol %", "smiles": null}, {"role": "reagent", "text": "only CCl3CO2H", "smiles": "O=C(O)C(Cl)(Cl)Cl"}, {"role": "loading", "text": "20 mol %", "smiles": null}, {"role": "solvent", "text": "DMF", "smiles": "CN(C)C=O"}, {"role": "temperature", "text": "rt", "smiles": null}, {"role": "time", "text": "24 h", "smiles": null}, {"role": "yield", "text": "9", "smiles": null}], "additional_info": ["entry 13: only CCl3CO2H instead of AcOH, 9% yield"]}, {"reaction_id": "0_14", "reactants": [{"smiles": "NCc1ccccc1", "label": "benzylamine", "uncertain": false}], "products": [{"smiles": "O=CNCc1ccccc1", "label": "3a", "uncertain": false}], "conditions": [{"role": "catalyst", "text": "1 (10 mol %)", "smiles": "OB(c1ccccc1Cl)c1ccccc1Cl"}, {"role": "loading", "text": "10 mol %", "smiles": null}, {"role": "reagent", "text": "only CF3CO2H", "smiles": "O=C(O)C(F)(F)F"}, {"role": "loading", "text": "20 mol %", "smiles": null}, {"role": "solvent", "text": "DMF", "smiles": "CN(C)C=O"}, {"role": "temperature", "text": "rt", "smiles": null}, {"role": "time", "text": "24 h", "smiles": null}, {"role": "yield", "text": "1", "smiles": null}], "additional_info": ["entry 14: only CF3CO2H instead of AcOH, 1% yield"]}]}}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (verifier) ----------
+[FunctionExecutionResult(content="{'valid': True, 'errors': []}", name='validate_reaction_json', call_id='call_1q6jHxGMuePYiWwTcAlPh2ld', is_error=False)]
+---------- TextMessage (verifier) ----------
+TERMINATE
+
+[validation] PASSED after 0 retry/retries
+Results saved to /Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/runs/20260429_175035_selector

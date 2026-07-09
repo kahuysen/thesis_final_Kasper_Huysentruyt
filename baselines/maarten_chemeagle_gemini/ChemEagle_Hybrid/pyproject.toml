@@ -1,0 +1,73 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "chemeagle"
+version = "0.1.0"
+description = "Chemical PDF -> reactions JSON via molnextr + Gemini (hybrid v2 backend)"
+readme = "README_chemeagle_pkg.md"
+requires-python = ">=3.9"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Maarten Dobbelaere", email = "maarten.dobbelaere@epfl.ch" }]
+dependencies = [
+  "pydantic==2.10.6",
+  "numpy==1.26.4",
+  "torch==2.2.0",
+  "transformers==4.47.0",
+  "layoutparser[effdet]",
+  "opencv-python==4.5.5.64",
+  "opencv-python-headless==4.5.4.60",
+  "Pillow==9.5.0",
+  "openai",
+  "google-genai",
+  "albumentations==1.1.0",
+  "matplotlib>=3.5.3",
+  "SmilesPE==0.0.3",
+  "OpenNMT-py==2.2.0",
+  "rdkit-pypi>=2021.03.2",
+  "timm==0.4.12",
+  "pandas>=1.2.4",
+  "pycocotools>=2.0.4",
+  "pytorch-lightning>=1.8.6",
+  "huggingface-hub>=0.11.0",
+  "easyocr>=1.6.2",
+  "cairosvg",
+  "PyPDF2",
+  "pdfminer",
+  "pdf2image",
+  "pytesseract",
+  "safetensors",
+  "einops",
+  "pymupdf",
+  "chemrxnextractor @ git+https://github.com/CrystalEye42/ChemRxnExtractor.git@0f9529dbe3656e4ef5ea96c5b5ba990f7481700b",
+]
+
+[project.scripts]
+chemeagle = "chemeagle.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = [
+  "chemeagle*",
+  "chemietoolkit*",
+  "molnextr*",
+  "rxnim*",
+  "chemiener*",
+  "utils*",
+  "pdfmodel*",
+]
+
+[tool.setuptools]
+py-modules = [
+  "main",
+  "gemini_hybrid",
+  "gemini_extractor",
+  "pdf_extraction",
+  "shared_models",
+  "get_molecular_agent",
+  "get_reaction_agent",
+  "get_R_group_sub_agent",
+  "get_text_agent",
+  "get_observer",
+]

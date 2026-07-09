@@ -1,0 +1,223 @@
+---------- MultiModalMessage (user) ----------
+Analyse this chemistry reaction image. Each specialist contributes one [FINDINGS ...] card per turn, then data_structure produces JSON, then the verifier audits the JSON and ends the run.
+image_path = /Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/116-1.jpg
+Pass that exact path as the first argument to crop_image_region(image_path, [x,y,w,h]) if you need to zoom in on a region of the image.
+<image>
+/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/agents/_assistant_agent.py:1109: UserWarning: Resolved model mismatch: gpt-5.4 != gpt-5.4-2026-03-05. Model mapping in autogen_ext.models.openai may be incorrect. Set the model to gpt-5.4-2026-03-05 to enhance token/cost estimation and suppress this warning.
+  model_result = await model_client.create(
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_jCvxDy5QkGJ9mhp5skfiqyNE', arguments='{"image_path":"/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/116-1.jpg","molecule_only":true,"score_min":0.0}', name='detect_molecules')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'bboxes': [{'x1': 54, 'y1': 68, 'x2': 193, 'y2': 199, 'w': 140, 'h': 132, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 225, 'y1': 102, 'x2': 430, 'y2': 163, 'w': 204, 'h': 61, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 557, 'y1': 226, 'x2': 836, 'y2': 453, 'w': 279, 'h': 227, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 965, 'y1': 85, 'x2': 1282, 'y2': 228, 'w': 318, 'h': 143, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}], 'image_w': 1534, 'image_h': 508, 'device': 'mps', 'error': None, 'cached': True}", name='detect_molecules', call_id='call_jCvxDy5QkGJ9mhp5skfiqyNE', is_error=False)]
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_JSy9SqZXrRRM5TcOfMTjdNrF', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/116-1.jpg", "bbox": [54, 68, 140, 132], "pad": 10}', name='predict_molecule_smiles'), FunctionCall(id='call_zN5ylBVV12L9chCFPEk3Ffr6', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/116-1.jpg", "bbox": [225, 102, 204, 61], "pad": 10}', name='predict_molecule_smiles'), FunctionCall(id='call_7TZPnL2Ewgu9wbQsl1tEXl0f', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/116-1.jpg", "bbox": [965, 85, 318, 143], "pad": 10}', name='predict_molecule_smiles')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'smiles': '*C(*)=O', 'confidence': 0.8742222409707144, 'atoms_count': 4, 'bonds_count': 3, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_JSy9SqZXrRRM5TcOfMTjdNrF', is_error=False), FunctionExecutionResult(content="{'smiles': '*S(=O)(=O)C=C', 'confidence': 0.8783662617007636, 'atoms_count': 3, 'bonds_count': 2, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_zN5ylBVV12L9chCFPEk3Ffr6', is_error=False), FunctionExecutionResult(content="{'smiles': '*C(=O)CCS(*)(=O)=O', 'confidence': 0.8493923649109469, 'atoms_count': 6, 'bonds_count': 5, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_7TZPnL2Ewgu9wbQsl1tEXl0f', is_error=False)]
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_g1ktm38YMySA0X23rYZY6iPc', arguments='{"smiles": "*C(*)=O"}', name='validate_smiles'), FunctionCall(id='call_j3PLcq4xOQPpxL8QsA1Qb0cp', arguments='{"smiles": "*S(=O)(=O)C=C"}', name='validate_smiles'), FunctionCall(id='call_yHoHBc7Fp3yzYE9KoQakp9Gh', arguments='{"smiles": "*C(=O)CCS(*)(=O)=O"}', name='validate_smiles'), FunctionCall(id='call_D1iD5UO2tZFlWaV4j9pS2W28', arguments='{"smiles": "*C(*)=O"}', name='canonicalize_smiles'), FunctionCall(id='call_sXRGM1CNzydXGCcz0kORKVTq', arguments='{"smiles": "*S(=O)(=O)C=C"}', name='canonicalize_smiles'), FunctionCall(id='call_qHiYqaF28FpZRHBfdwpHgLOX', arguments='{"smiles": "*C(=O)CCS(*)(=O)=O"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_g1ktm38YMySA0X23rYZY6iPc', is_error=False), FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_j3PLcq4xOQPpxL8QsA1Qb0cp', is_error=False), FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_yHoHBc7Fp3yzYE9KoQakp9Gh', is_error=False), FunctionExecutionResult(content="{'canonical': '*C(*)=O', 'valid': True, 'formula': 'C*2O', 'error': None}", name='canonicalize_smiles', call_id='call_D1iD5UO2tZFlWaV4j9pS2W28', is_error=False), FunctionExecutionResult(content="{'canonical': '*S(=O)(=O)C=C', 'valid': True, 'formula': 'C2H3*O2S', 'error': None}", name='canonicalize_smiles', call_id='call_sXRGM1CNzydXGCcz0kORKVTq', is_error=False), FunctionExecutionResult(content="{'canonical': '*C(=O)CCS(*)(=O)=O', 'valid': True, 'formula': 'C3H4*2O3S', 'error': None}", name='canonicalize_smiles', call_id='call_qHiYqaF28FpZRHBfdwpHgLOX', is_error=False)]
+---------- TextMessage (reaction_template_parser) ----------
+[FINDINGS reaction_template_parser]
+scheme_count: 1
+scheme_1:
+  reactant_template_smiles: *C(*)=O + *S(=O)(=O)C=C
+  product_template_smiles:  *C(=O)CCS(*)(=O)=O
+  arrow: forward
+  multi_step: no
+  notes: template bboxes #0 (aldehyde, conf 0.87), #1 (vinyl sulfone, conf 0.88), and #3 (product, conf 0.85) from detect_molecules; catalyst drawing at bbox #2 is not part of the reaction template.
+[/FINDINGS]
+---------- TextMessage (molecular_recognition) ----------
+[FINDINGS molecular_recognition]
+# scripted agent — one entry per detected bbox, no deduplication
+molecule_count: 4
+molecule:
+  label: bbox_0
+  canonical_smiles: *C(*)=O
+  bbox: [54, 68, 140, 132]
+  confidence: 0.874
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_1
+  canonical_smiles: *S(=O)(=O)C=C
+  bbox: [225, 102, 204, 61]
+  confidence: 0.878
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_2
+  canonical_smiles: Cc1cc(C)c(-[n+]2csc3c2CCCCC3)c(C)c1
+  bbox: [557, 226, 279, 227]
+  confidence: 0.880
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_3
+  canonical_smiles: *C(=O)CCS(*)(=O)=O
+  bbox: [965, 85, 318, 143]
+  confidence: 0.849
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+[/FINDINGS]
+---------- TextMessage (rgroup_substitution) ----------
+No R-groups detected.
+---------- ToolCallRequestEvent (condition_interpretation) ----------
+[FunctionCall(id='call_8i1bfPBXgfzsOU9tV0zKtA0W', arguments='{"name": "1,4-dioxane"}', name='lookup_compound'), FunctionCall(id='call_WLV8EkA8pzRVMJD4nWa4jYOF', arguments='{"smiles": "Cc1cc(C)c(-[n+]2csc3c2CCCCC3)c(C)c1"}', name='validate_smiles'), FunctionCall(id='call_KpUe2xTeoambzhGwQcYSNJoc', arguments='{"name": "tBuOK"}', name='lookup_compound'), FunctionCall(id='call_9L33CsBb84YHqPG1S2lTYajF', arguments='{"smiles": "*S(=O)(=O)C=C"}', name='validate_smiles')]
+---------- ToolCallExecutionEvent (condition_interpretation) ----------
+[FunctionExecutionResult(content="{'smiles': 'O1CCOCC1', 'source': 'opsin', 'query_used': '1,4-dioxane', 'cached': True, 'error': None}", name='lookup_compound', call_id='call_8i1bfPBXgfzsOU9tV0zKtA0W', is_error=False), FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_WLV8EkA8pzRVMJD4nWa4jYOF', is_error=False), FunctionExecutionResult(content="{'smiles': 'CC(C)(C)[O-].[K+]', 'source': 'pubchem', 'query_used': 'tBuOK', 'cached': True, 'error': None}", name='lookup_compound', call_id='call_KpUe2xTeoambzhGwQcYSNJoc', is_error=False), FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_9L33CsBb84YHqPG1S2lTYajF', is_error=False)]
+---------- TextMessage (condition_interpretation) ----------
+[FINDINGS condition_interpretation]
+applies_to: scheme_1
+conditions:
+  - role: catalyst
+    text: G24
+    smiles: Cc1cc(C)c(-[n+]2csc3c2CCCCC3)c(C)c1
+  - role: loading
+    text: 20 mol%
+    smiles: null
+  - role: reagent
+    text: tBuOK
+    smiles: CC(C)(C)[O-].[K+]
+  - role: loading
+    text: 15 mol% tBuOK
+    smiles: null
+  - role: solvent
+    text: 1,4-dioxane
+    smiles: O1CCOCC1
+  - role: temperature
+    text: 70 °C
+    smiles: null
+  - role: time
+    text: 22 h
+    smiles: null
+  - role: yield
+    text: 38 - 94% yield
+    smiles: null
+[/FINDINGS]
+---------- TextMessage (text_extraction) ----------
+[FINDINGS text_extraction]
+items:
+  - kind: reference
+    text: "G24"
+    applies_to: figure
+  - kind: other
+    text: "Mes"
+    applies_to: figure
+  - kind: other
+    text: "ClO4"
+    applies_to: figure
+[/FINDINGS]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_nDdJMECANcnFdBII00bFiqgR', arguments='{"smiles": "*C(*)=O"}', name='canonicalize_smiles'), FunctionCall(id='call_SwTpXDqgruWBXsc79XQYpXIK', arguments='{"smiles": "*S(=O)(=O)C=C"}', name='canonicalize_smiles'), FunctionCall(id='call_59FPZMZkzWQpvmwLwJmhAaX6', arguments='{"smiles": "*C(=O)CCS(*)(=O)=O"}', name='canonicalize_smiles'), FunctionCall(id='call_gqeJbccqCVOG78IZxXVHTdWf', arguments='{"smiles": "Cc1cc(C)c(-[n+]2csc3c2CCCCC3)c(C)c1"}', name='canonicalize_smiles'), FunctionCall(id='call_mbly9uFKqIducmLTGRUm4pER', arguments='{"smiles": "CC(C)(C)[O-].[K+]"}', name='canonicalize_smiles'), FunctionCall(id='call_suiOQx8jSm1GCK0PtPgFIuOW', arguments='{"smiles": "O1CCOCC1"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'canonical': '*C(*)=O', 'valid': True, 'formula': 'C*2O', 'error': None}", name='canonicalize_smiles', call_id='call_nDdJMECANcnFdBII00bFiqgR', is_error=False), FunctionExecutionResult(content="{'canonical': '*S(=O)(=O)C=C', 'valid': True, 'formula': 'C2H3*O2S', 'error': None}", name='canonicalize_smiles', call_id='call_SwTpXDqgruWBXsc79XQYpXIK', is_error=False), FunctionExecutionResult(content="{'canonical': '*C(=O)CCS(*)(=O)=O', 'valid': True, 'formula': 'C3H4*2O3S', 'error': None}", name='canonicalize_smiles', call_id='call_59FPZMZkzWQpvmwLwJmhAaX6', is_error=False), FunctionExecutionResult(content="{'canonical': 'Cc1cc(C)c(-[n+]2csc3c2CCCCC3)c(C)c1', 'valid': True, 'formula': 'C17H22NS+', 'error': None}", name='canonicalize_smiles', call_id='call_gqeJbccqCVOG78IZxXVHTdWf', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC(C)(C)[O-].[K+]', 'valid': True, 'formula': 'C4H9KO', 'error': None}", name='canonicalize_smiles', call_id='call_mbly9uFKqIducmLTGRUm4pER', is_error=False), FunctionExecutionResult(content="{'canonical': 'C1COCCO1', 'valid': True, 'formula': 'C4H8O2', 'error': None}", name='canonicalize_smiles', call_id='call_suiOQx8jSm1GCK0PtPgFIuOW', is_error=False)]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_P8z50wSTR6cY32t6qjHMUE9P', arguments='{}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content='1 validation error for validate_reaction_jsonargs\nobj\n  Field required [type=missing, input_value={}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing', name='validate_reaction_json', call_id='call_P8z50wSTR6cY32t6qjHMUE9P', is_error=True)]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_UFGpWIinNWNyBWwcyxG6s3vn', arguments='{"obj":{"file_name":"116-1.jpg","reactions":[{"reaction_id":"0_1","reactants":[{"smiles":"*C(*)=O","label":"bbox_0","uncertain":false},{"smiles":"*S(=O)(=O)C=C","label":"bbox_1","uncertain":false}],"products":[{"smiles":"*C(=O)CCS(*)(=O)=O","label":"bbox_3","uncertain":false}],"conditions":[{"role":"catalyst","text":"G24","smiles":"Cc1cc(C)c(-[n+]2csc3c2CCCCC3)c(C)c1"},{"role":"loading","text":"20 mol%","smiles":null},{"role":"reagent","text":"tBuOK","smiles":"CC(C)(C)[O-].[K+]"},{"role":"loading","text":"15 mol% tBuOK","smiles":null},{"role":"solvent","text":"1,4-dioxane","smiles":"C1COCCO1"},{"role":"temperature","text":"70 °C","smiles":null},{"role":"time","text":"22 h","smiles":null},{"role":"yield","text":"38 - 94% yield","smiles":null}],"additional_info":["template bboxes #0 (aldehyde, conf 0.87), #1 (vinyl sulfone, conf 0.88), and #3 (product, conf 0.85) from detect_molecules","text mentions: Mes; ClO4"]}]}}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'valid': True, 'errors': []}", name='validate_reaction_json', call_id='call_UFGpWIinNWNyBWwcyxG6s3vn', is_error=False)]
+---------- TextMessage (data_structure) ----------
+```json
+{
+  "file_name": "116-1.jpg",
+  "reactions": [
+    {
+      "reaction_id": "0_1",
+      "reactants": [
+        {
+          "smiles": "*C(*)=O",
+          "label": "bbox_0",
+          "uncertain": false
+        },
+        {
+          "smiles": "*S(=O)(=O)C=C",
+          "label": "bbox_1",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "*C(=O)CCS(*)(=O)=O",
+          "label": "bbox_3",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "G24",
+          "smiles": "Cc1cc(C)c(-[n+]2csc3c2CCCCC3)c(C)c1"
+        },
+        {
+          "role": "loading",
+          "text": "20 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "tBuOK",
+          "smiles": "CC(C)(C)[O-].[K+]"
+        },
+        {
+          "role": "loading",
+          "text": "15 mol% tBuOK",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "1,4-dioxane",
+          "smiles": "C1COCCO1"
+        },
+        {
+          "role": "temperature",
+          "text": "70 °C",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "22 h",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "38 - 94% yield",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "template bboxes #0 (aldehyde, conf 0.87), #1 (vinyl sulfone, conf 0.88), and #3 (product, conf 0.85) from detect_molecules",
+        "text mentions: Mes; ClO4"
+      ]
+    }
+  ]
+}
+```
+---------- ToolCallRequestEvent (verifier) ----------
+[FunctionCall(id='call_12ZxkOPp7kkFzdXgx7o1zEwe', arguments='{}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (verifier) ----------
+[FunctionExecutionResult(content='1 validation error for validate_reaction_jsonargs\nobj\n  Field required [type=missing, input_value={}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing', name='validate_reaction_json', call_id='call_12ZxkOPp7kkFzdXgx7o1zEwe', is_error=True)]
+---------- ToolCallRequestEvent (verifier) ----------
+[FunctionCall(id='call_fRMFQeRZuJIoIk6nPIASYgto', arguments='{\n  "file_name": "116-1.jpg",\n  "reactions": [\n    {\n      "reaction_id": "0_1",\n      "reactants": [\n        {\n          "smiles": "*C(*)=O",\n          "label": "bbox_0",\n          "uncertain": false\n        },\n        {\n          "smiles": "*S(=O)(=O)C=C",\n          "label": "bbox_1",\n          "uncertain": false\n        }\n      ],\n      "products": [\n        {\n          "smiles": "*C(=O)CCS(*)(=O)=O",\n          "label": "bbox_3",\n          "uncertain": false\n        }\n      ],\n      "conditions": [\n        {\n          "role": "catalyst",\n          "text": "G24",\n          "smiles": "Cc1cc(C)c(-[n+]2csc3c2CCCCC3)c(C)c1"\n        },\n        {\n          "role": "loading",\n          "text": "20 mol%",\n          "smiles": null\n        },\n        {\n          "role": "reagent",\n          "text": "tBuOK",\n          "smiles": "CC(C)(C)[O-].[K+]"\n        },\n        {\n          "role": "loading",\n          "text": "15 mol% tBuOK",\n          "smiles": null\n        },\n        {\n          "role": "solvent",\n          "text": "1,4-dioxane",\n          "smiles": "C1COCCO1"\n        },\n        {\n          "role": "temperature",\n          "text": "70 °C",\n          "smiles": null\n        },\n        {\n          "role": "time",\n          "text": "22 h",\n          "smiles": null\n        },\n        {\n          "role": "yield",\n          "text": "38 - 94% yield",\n          "smiles": null\n        }\n      ],\n      "additional_info": [\n        "template bboxes #0 (aldehyde, conf 0.87), #1 (vinyl sulfone, conf 0.88), and #3 (product, conf 0.85) from detect_molecules",\n        "text mentions: Mes; ClO4"\n      ]\n    }\n  ]\n}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (verifier) ----------
+[FunctionExecutionResult(content="1 validation error for validate_reaction_jsonargs\nobj\n  Field required [type=missing, input_value={'file_name': '116-1.jpg'...mentions: Mes; ClO4']}]}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing", name='validate_reaction_json', call_id='call_fRMFQeRZuJIoIk6nPIASYgto', is_error=True)]
+---------- ToolCallRequestEvent (verifier) ----------
+[FunctionCall(id='call_dUIaDW049Oeqx0WoF5XMrayS', arguments='{}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (verifier) ----------
+[FunctionExecutionResult(content='1 validation error for validate_reaction_jsonargs\nobj\n  Field required [type=missing, input_value={}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing', name='validate_reaction_json', call_id='call_dUIaDW049Oeqx0WoF5XMrayS', is_error=True)]
+---------- ToolCallRequestEvent (verifier) ----------
+[FunctionCall(id='call_vpKb8kDqpYPmNQoiyYnmgb53', arguments='{"obj":{"file_name":"116-1.jpg","reactions":[{"reaction_id":"0_1","reactants":[{"smiles":"*C(*)=O","label":"bbox_0","uncertain":false},{"smiles":"*S(=O)(=O)C=C","label":"bbox_1","uncertain":false}],"products":[{"smiles":"*C(=O)CCS(*)(=O)=O","label":"bbox_3","uncertain":false}],"conditions":[{"role":"catalyst","text":"G24","smiles":"Cc1cc(C)c(-[n+]2csc3c2CCCCC3)c(C)c1"},{"role":"loading","text":"20 mol%","smiles":null},{"role":"reagent","text":"tBuOK","smiles":"CC(C)(C)[O-].[K+]"},{"role":"loading","text":"15 mol% tBuOK","smiles":null},{"role":"solvent","text":"1,4-dioxane","smiles":"C1COCCO1"},{"role":"temperature","text":"70 °C","smiles":null},{"role":"time","text":"22 h","smiles":null},{"role":"yield","text":"38 - 94% yield","smiles":null}],"additional_info":["template bboxes #0 (aldehyde, conf 0.87), #1 (vinyl sulfone, conf 0.88), and #3 (product, conf 0.85) from detect_molecules","text mentions: Mes; ClO4"]}]}}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (verifier) ----------
+[FunctionExecutionResult(content="{'valid': True, 'errors': []}", name='validate_reaction_json', call_id='call_vpKb8kDqpYPmNQoiyYnmgb53', is_error=False)]
+---------- TextMessage (verifier) ----------
+TERMINATE
+
+[validation] PASSED after 0 retry/retries
+Results saved to /Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/runs/20260426_153714_selector

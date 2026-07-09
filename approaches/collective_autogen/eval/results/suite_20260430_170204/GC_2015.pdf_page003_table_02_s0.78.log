@@ -1,0 +1,803 @@
+---------- MultiModalMessage (user) ----------
+Analyse this chemistry reaction image. First, figure_classifier inspects the image and emits a [FIGURE_CLASSIFICATION] tag describing the figure type. Each downstream specialist reads that tag and adapts its behaviour, then contributes one [FINDINGS ...] card per turn. Finally data_structure produces JSON, then the verifier audits the JSON and ends the run.
+image_path = /Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/Benchmark_kasper_GT3_Maarten/GC_2015.pdf_page003_table_02_s0.78.png
+Pass that exact path as the first argument to crop_image_region(image_path, [x,y,w,h]) if you need to zoom in on a region of the image.
+<image>
+/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/agents/_assistant_agent.py:1109: UserWarning: Resolved model mismatch: gpt-5.4 != gpt-5.4-2026-03-05. Model mapping in autogen_ext.models.openai may be incorrect. Set the model to gpt-5.4-2026-03-05 to enhance token/cost estimation and suppress this warning.
+  model_result = await model_client.create(
+---------- TextMessage (figure_classifier) ----------
+[FIGURE_CLASSIFICATION]
+type: optimization_table
+confidence: high
+row_count: 4
+variant_count: null
+substrate_column_varies: false
+text_rgroup_table_present: false
+notes: reaction header with fixed substrates/catalyst and condition placeholders; 4 entry rows varying solvent and temperature with yield column.
+[/FIGURE_CLASSIFICATION]
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_hJxmvpbBTSrHJ6jsJeHRFsk8', arguments='{"image_path":"/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/Benchmark_kasper_GT3_Maarten/GC_2015.pdf_page003_table_02_s0.78.png","molecule_only":true,"score_min":0}', name='detect_molecules')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'bboxes': [{'x1': 63, 'y1': 53, 'x2': 199, 'y2': 129, 'w': 136, 'h': 75, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 252, 'y1': 58, 'x2': 319, 'y2': 145, 'w': 67, 'h': 87, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 552, 'y1': 58, 'x2': 721, 'y2': 171, 'w': 169, 'h': 113, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}], 'image_w': 784, 'image_h': 449, 'device': 'mps', 'error': None, 'cached': True}", name='detect_molecules', call_id='call_hJxmvpbBTSrHJ6jsJeHRFsk8', is_error=False)]
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_tqdmUHvvI0hd9STGR2vljXlt', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/Benchmark_kasper_GT3_Maarten/GC_2015.pdf_page003_table_02_s0.78.png", "bbox": [63, 53, 136, 75], "pad": 10}', name='predict_molecule_smiles'), FunctionCall(id='call_OB3M98NWqy7XCUAPOrOQSWH4', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/Benchmark_kasper_GT3_Maarten/GC_2015.pdf_page003_table_02_s0.78.png", "bbox": [252, 58, 67, 87], "pad": 10}', name='predict_molecule_smiles'), FunctionCall(id='call_QntBkbpl9hdMTlabV2yErzaj', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/Benchmark_kasper_GT3_Maarten/GC_2015.pdf_page003_table_02_s0.78.png", "bbox": [552, 58, 169, 113], "pad": 10}', name='predict_molecule_smiles')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'smiles': 'O=C(O)Cc1ccccc1', 'confidence': 0.9117741198471406, 'atoms_count': 5, 'bonds_count': 4, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_tqdmUHvvI0hd9STGR2vljXlt', is_error=False), FunctionExecutionResult(content="{'smiles': 'C1CCNC1', 'confidence': 0.7546458015366406, 'atoms_count': 5, 'bonds_count': 5, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_OB3M98NWqy7XCUAPOrOQSWH4', is_error=False), FunctionExecutionResult(content="{'smiles': 'O=C(Cc1ccccc1)N1CCCC1', 'confidence': 0.9040156482261691, 'atoms_count': 9, 'bonds_count': 9, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_QntBkbpl9hdMTlabV2yErzaj', is_error=False)]
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_GNIEhnoAGN7NW1SRyjZDRufa', arguments='{"smiles": "O=C(O)Cc1ccccc1.C1CCNC1"}', name='validate_smiles'), FunctionCall(id='call_t2kDoVKabtR6KUqvHmh50g5H', arguments='{"smiles": "O=C(Cc1ccccc1)N1CCCC1"}', name='validate_smiles'), FunctionCall(id='call_MKHhilrzbO2s0Bp0EzzBbiBh', arguments='{"smiles": "O=C(O)Cc1ccccc1.C1CCNC1"}', name='canonicalize_smiles'), FunctionCall(id='call_iTpNXS7ycb4BkckfFNeDyL7c', arguments='{"smiles": "O=C(Cc1ccccc1)N1CCCC1"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_GNIEhnoAGN7NW1SRyjZDRufa', is_error=False), FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_t2kDoVKabtR6KUqvHmh50g5H', is_error=False), FunctionExecutionResult(content="{'canonical': 'C1CCNC1.O=C(O)Cc1ccccc1', 'valid': True, 'formula': 'C12H17NO2', 'error': None}", name='canonicalize_smiles', call_id='call_MKHhilrzbO2s0Bp0EzzBbiBh', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=C(Cc1ccccc1)N1CCCC1', 'valid': True, 'formula': 'C12H15NO', 'error': None}", name='canonicalize_smiles', call_id='call_iTpNXS7ycb4BkckfFNeDyL7c', is_error=False)]
+---------- TextMessage (reaction_template_parser) ----------
+[FINDINGS reaction_template_parser]
+scheme_count: 1
+scheme_1:
+  reactant_template_smiles: C1CCNC1.O=C(O)Cc1ccccc1
+  product_template_smiles:  O=C(Cc1ccccc1)N1CCCC1
+  arrow: forward
+  multi_step: no
+  notes: optimization-table header gives one fixed scheme only; used bbox #1 (carboxylic acid, conf 0.91), bbox #2 (pyrrolidine, conf 0.75), and bbox #3 (amide product, conf 0.90).
+[/FINDINGS]
+/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/teams/_group_chat/_selector_group_chat.py:269: UserWarning: Resolved model mismatch: gpt-5.4 != gpt-5.4-2026-03-05. Model mapping in autogen_ext.models.openai may be incorrect. Set the model to gpt-5.4-2026-03-05 to enhance token/cost estimation and suppress this warning.
+  response = await self._model_client.create(messages=select_speaker_messages)
+---------- TextMessage (molecular_recognition) ----------
+[FINDINGS molecular_recognition]
+# scripted agent — one entry per detected bbox, no deduplication
+molecule_count: 3
+molecule:
+  label: bbox_0
+  canonical_smiles: O=C(O)Cc1ccccc1
+  bbox: [63, 53, 136, 75]
+  confidence: 0.912
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_1
+  canonical_smiles: C1CCNC1
+  bbox: [252, 58, 67, 87]
+  confidence: 0.755
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_2
+  canonical_smiles: O=C(Cc1ccccc1)N1CCCC1
+  bbox: [552, 58, 169, 113]
+  confidence: 0.904
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+[/FINDINGS]
+---------- TextMessage (rgroup_substitution) ----------
+No R-groups detected.
+---------- ToolCallRequestEvent (condition_interpretation) ----------
+[FunctionCall(id='call_QDSAZ5g5y55uS2sncDu1tGfl', arguments='{"name": "4A MS"}', name='lookup_compound'), FunctionCall(id='call_7bbmBBmWB0d9Rbspsve42nfu', arguments='{"name": "CH2Cl2"}', name='lookup_compound'), FunctionCall(id='call_q2APHEH9PHfD2GHD24cc9cNI', arguments='{"name": "Toluene"}', name='lookup_compound'), FunctionCall(id='call_ljUxdgmO9lBEThevRtSjh8jt', arguments='{"name": "pyrrolidine"}', name='lookup_compound'), FunctionCall(id='call_boRDVG3D9kkVIhEfv7TvYxh7', arguments='{"smiles": "ClCCl"}', name='validate_smiles'), FunctionCall(id='call_QhpZObyW9dbgatirJ4gAFeZ6', arguments='{"smiles": "Cc1ccccc1"}', name='validate_smiles')]
+---------- ToolCallExecutionEvent (condition_interpretation) ----------
+[FunctionExecutionResult(content="{'smiles': None, 'source': '', 'query_used': '', 'cached': False, 'error': 'not found'}", name='lookup_compound', call_id='call_QDSAZ5g5y55uS2sncDu1tGfl', is_error=False), FunctionExecutionResult(content="{'smiles': 'C(Cl)Cl', 'source': 'pubchem', 'query_used': 'CH2Cl2', 'cached': True, 'error': None}", name='lookup_compound', call_id='call_7bbmBBmWB0d9Rbspsve42nfu', is_error=False), FunctionExecutionResult(content="{'smiles': 'CC1=CC=CC=C1', 'source': 'opsin', 'query_used': 'Toluene', 'cached': True, 'error': None}", name='lookup_compound', call_id='call_q2APHEH9PHfD2GHD24cc9cNI', is_error=False), FunctionExecutionResult(content="{'smiles': 'N1CCCC1', 'source': 'opsin', 'query_used': 'pyrrolidine', 'cached': False, 'error': None}", name='lookup_compound', call_id='call_ljUxdgmO9lBEThevRtSjh8jt', is_error=False), FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_boRDVG3D9kkVIhEfv7TvYxh7', is_error=False), FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_QhpZObyW9dbgatirJ4gAFeZ6', is_error=False)]
+---------- TextMessage (condition_interpretation) ----------
+[FINDINGS condition_interpretation]
+applies_to: scheme_1
+conditions:
+  - role: catalyst
+    text: 6 (10 mol%)
+    smiles: null
+  - role: loading
+    text: 10 mol%
+    smiles: null
+  - role: reagent
+    text: 7 (0.55 mmol)
+    smiles: O=C(O)Cc1ccccc1
+  - role: reagent
+    text: 8 (0.5 mmol)
+    smiles: N1CCCC1
+  - role: reagent
+    text: 4A MS (0.5 g)
+    smiles: null
+  - role: solvent
+    text: solvent [1 M]
+    smiles: null
+  - role: time
+    text: 18 h
+    smiles: null
+[/FINDINGS]
+[FINDINGS condition_interpretation]
+applies_to: entry 1
+conditions:
+  - role: solvent
+    text: CH2Cl2
+    smiles: C(Cl)Cl
+  - role: temperature
+    text: 25 °C
+    smiles: null
+  - role: yield
+    text: 25%
+    smiles: null
+[/FINDINGS]
+[FINDINGS condition_interpretation]
+applies_to: entry 2
+conditions:
+  - role: solvent
+    text: CH2Cl2
+    smiles: C(Cl)Cl
+  - role: temperature
+    text: 50 °C
+    smiles: null
+  - role: yield
+    text: 33%
+    smiles: null
+[/FINDINGS]
+[FINDINGS condition_interpretation]
+applies_to: entry 3
+conditions:
+  - role: solvent
+    text: Toluene
+    smiles: CC1=CC=CC=C1
+  - role: temperature
+    text: 25 °C
+    smiles: null
+  - role: yield
+    text: 38%
+    smiles: null
+[/FINDINGS]
+[FINDINGS condition_interpretation]
+applies_to: entry 4
+conditions:
+  - role: solvent
+    text: Toluene
+    smiles: CC1=CC=CC=C1
+  - role: temperature
+    text: 50 °C
+    smiles: null
+  - role: yield
+    text: 45%
+    smiles: null
+[/FINDINGS]
+---------- ToolCallRequestEvent (text_extraction) ----------
+[FunctionCall(id='call_5sjeBSUdDVsflpGibQOuCFNE', arguments='{"image_path":"/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/Benchmark_kasper_GT3_Maarten/GC_2015.pdf_page003_table_02_s0.78.png","lang":"eng","psm":6}', name='ocr_image')]
+---------- ToolCallExecutionEvent (text_extraction) ----------
+[FunctionExecutionResult(content="{'raw_text': 'reaction catalyzed by 6\\nit N 6 (10 mol%) if\\nork mole\\nOH + { . Ph JH\\n4AMS (0.5 g), >\\n7 (0.55 mmol) 8 solvent [1 M]\\n(0.5 mmol) temp, 18h 9\\nEntry Solvent* Temperature (°C) Yield? (%)\\n1 CH,Cl, 25 25\\n2 CH,Cl, 50° 33\\n3 Toluene 25 38\\n4 Toluene 50° 45\\n“Dry solvent. Molecular sieves: powdered 4A type dried at 300 °C for\\n', 'lines': ['reaction catalyzed by 6', 'it N 6 (10 mol%) if', 'ork mole', 'OH + { . Ph JH', '4AMS (0.5 g), >', '7 (0.55 mmol) 8 solvent [1 M]', '(0.5 mmol) temp, 18h 9', 'Entry Solvent* Temperature (°C) Yield? (%)', '1 CH,Cl, 25 25', '2 CH,Cl, 50° 33', '3 Toluene 25 38', '4 Toluene 50° 45', '“Dry solvent. Molecular sieves: powdered 4A type dried at 300 °C for'], 'char_count': 313, 'cached': False, 'error': None}", name='ocr_image', call_id='call_5sjeBSUdDVsflpGibQOuCFNE', is_error=False)]
+/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/agents/_assistant_agent.py:1109: UserWarning: Resolved model mismatch: gpt-5.4 != gpt-5.4-2026-03-05. Model mapping in autogen_ext.models.openai may be incorrect. Set the model to gpt-5.4-2026-03-05 to enhance token/cost estimation and suppress this warning.
+  model_result = await model_client.create(
+---------- TextMessage (text_extraction) ----------
+[FINDINGS text_extraction]
+items:
+  - kind: heading
+    text: "reaction catalyzed by 6"
+    applies_to: figure
+  - kind: heading
+    text: "Entry  Solventᵃ  Temperature (°C)  Yieldᵇ (%)"
+    applies_to: figure
+  - kind: footnote
+    text: "ᵃ Dry solvent. Molecular sieves: powdered 4A type dried at 300 °C for"
+    applies_to: figure
+[/FINDINGS]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_DDdfZGcVDGpoDd85aFUGFn5h', arguments='{"smiles": "O=C(O)Cc1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_QziMdNDVX3h1K4HBQgQ8lH4S', arguments='{"smiles": "C1CCNC1"}', name='canonicalize_smiles'), FunctionCall(id='call_kFQ3w0lmyfyubcdDjmxZvFid', arguments='{"smiles": "O=C(Cc1ccccc1)N1CCCC1"}', name='canonicalize_smiles'), FunctionCall(id='call_Me3BB2YL52ti1r7sDoX7ZKje', arguments='{"smiles": "N1CCCC1"}', name='canonicalize_smiles'), FunctionCall(id='call_CSnodKm6X0OPJz6jziI2rvWl', arguments='{"smiles": "C(Cl)Cl"}', name='canonicalize_smiles'), FunctionCall(id='call_DSg2G7Ul93vgWLbPBcVsiMmE', arguments='{"smiles": "CC1=CC=CC=C1"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'canonical': 'O=C(O)Cc1ccccc1', 'valid': True, 'formula': 'C8H8O2', 'error': None}", name='canonicalize_smiles', call_id='call_DDdfZGcVDGpoDd85aFUGFn5h', is_error=False), FunctionExecutionResult(content="{'canonical': 'C1CCNC1', 'valid': True, 'formula': 'C4H9N', 'error': None}", name='canonicalize_smiles', call_id='call_QziMdNDVX3h1K4HBQgQ8lH4S', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=C(Cc1ccccc1)N1CCCC1', 'valid': True, 'formula': 'C12H15NO', 'error': None}", name='canonicalize_smiles', call_id='call_kFQ3w0lmyfyubcdDjmxZvFid', is_error=False), FunctionExecutionResult(content="{'canonical': 'C1CCNC1', 'valid': True, 'formula': 'C4H9N', 'error': None}", name='canonicalize_smiles', call_id='call_Me3BB2YL52ti1r7sDoX7ZKje', is_error=False), FunctionExecutionResult(content="{'canonical': 'ClCCl', 'valid': True, 'formula': 'CH2Cl2', 'error': None}", name='canonicalize_smiles', call_id='call_CSnodKm6X0OPJz6jziI2rvWl', is_error=False), FunctionExecutionResult(content="{'canonical': 'Cc1ccccc1', 'valid': True, 'formula': 'C7H8', 'error': None}", name='canonicalize_smiles', call_id='call_DSg2G7Ul93vgWLbPBcVsiMmE', is_error=False)]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_tc1ZgU2mFLiyxinrFqiohYYY', arguments='{"obj":{"file_name":"GC_2015.pdf_page003_table_02_s0.78.png","reactions":[{"reaction_id":"0_1","reactants":[{"smiles":"O=C(O)Cc1ccccc1","label":"7","uncertain":false},{"smiles":"C1CCNC1","label":"8","uncertain":false}],"products":[{"smiles":"O=C(Cc1ccccc1)N1CCCC1","label":"9","uncertain":false}],"conditions":[{"role":"catalyst","text":"6 (10 mol%)","smiles":null},{"role":"loading","text":"10 mol%","smiles":null},{"role":"reagent","text":"7 (0.55 mmol)","smiles":"O=C(O)Cc1ccccc1"},{"role":"reagent","text":"8 (0.5 mmol)","smiles":"C1CCNC1"},{"role":"reagent","text":"4A MS (0.5 g)","smiles":null},{"role":"time","text":"18 h","smiles":null},{"role":"solvent","text":"CH2Cl2","smiles":"ClCCl"},{"role":"temperature","text":"25 °C","smiles":null},{"role":"yield","text":"25%","smiles":null}],"additional_info":["entry 1: CH2Cl2, 25 °C, 25% yield"]},{"reaction_id":"0_2","reactants":[{"smiles":"O=C(O)Cc1ccccc1","label":"7","uncertain":false},{"smiles":"C1CCNC1","label":"8","uncertain":false}],"products":[{"smiles":"O=C(Cc1ccccc1)N1CCCC1","label":"9","uncertain":false}],"conditions":[{"role":"catalyst","text":"6 (10 mol%)","smiles":null},{"role":"loading","text":"10 mol%","smiles":null},{"role":"reagent","text":"7 (0.55 mmol)","smiles":"O=C(O)Cc1ccccc1"},{"role":"reagent","text":"8 (0.5 mmol)","smiles":"C1CCNC1"},{"role":"reagent","text":"4A MS (0.5 g)","smiles":null},{"role":"time","text":"18 h","smiles":null},{"role":"solvent","text":"CH2Cl2","smiles":"ClCCl"},{"role":"temperature","text":"50 °C","smiles":null},{"role":"yield","text":"33%","smiles":null}],"additional_info":["entry 2: CH2Cl2, 50 °C, 33% yield"]},{"reaction_id":"0_3","reactants":[{"smiles":"O=C(O)Cc1ccccc1","label":"7","uncertain":false},{"smiles":"C1CCNC1","label":"8","uncertain":false}],"products":[{"smiles":"O=C(Cc1ccccc1)N1CCCC1","label":"9","uncertain":false}],"conditions":[{"role":"catalyst","text":"6 (10 mol%)","smiles":null},{"role":"loading","text":"10 mol%","smiles":null},{"role":"reagent","text":"7 (0.55 mmol)","smiles":"O=C(O)Cc1ccccc1"},{"role":"reagent","text":"8 (0.5 mmol)","smiles":"C1CCNC1"},{"role":"reagent","text":"4A MS (0.5 g)","smiles":null},{"role":"time","text":"18 h","smiles":null},{"role":"solvent","text":"Toluene","smiles":"Cc1ccccc1"},{"role":"temperature","text":"25 °C","smiles":null},{"role":"yield","text":"38%","smiles":null}],"additional_info":["entry 3: Toluene, 25 °C, 38% yield"]},{"reaction_id":"0_4","reactants":[{"smiles":"O=C(O)Cc1ccccc1","label":"7","uncertain":false},{"smiles":"C1CCNC1","label":"8","uncertain":false}],"products":[{"smiles":"O=C(Cc1ccccc1)N1CCCC1","label":"9","uncertain":false}],"conditions":[{"role":"catalyst","text":"6 (10 mol%)","smiles":null},{"role":"loading","text":"10 mol%","smiles":null},{"role":"reagent","text":"7 (0.55 mmol)","smiles":"O=C(O)Cc1ccccc1"},{"role":"reagent","text":"8 (0.5 mmol)","smiles":"C1CCNC1"},{"role":"reagent","text":"4A MS (0.5 g)","smiles":null},{"role":"time","text":"18 h","smiles":null},{"role":"solvent","text":"Toluene","smiles":"Cc1ccccc1"},{"role":"temperature","text":"50 °C","smiles":null},{"role":"yield","text":"45%","smiles":null}],"additional_info":["entry 4: Toluene, 50 °C, 45% yield"]}]}}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'valid': True, 'errors': []}", name='validate_reaction_json', call_id='call_tc1ZgU2mFLiyxinrFqiohYYY', is_error=False)]
+---------- TextMessage (data_structure) ----------
+```json
+{
+  "file_name": "GC_2015.pdf_page003_table_02_s0.78.png",
+  "reactions": [
+    {
+      "reaction_id": "0_1",
+      "reactants": [
+        {
+          "smiles": "O=C(O)Cc1ccccc1",
+          "label": "7",
+          "uncertain": false
+        },
+        {
+          "smiles": "C1CCNC1",
+          "label": "8",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=C(Cc1ccccc1)N1CCCC1",
+          "label": "9",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "6 (10 mol%)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "10 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "7 (0.55 mmol)",
+          "smiles": "O=C(O)Cc1ccccc1"
+        },
+        {
+          "role": "reagent",
+          "text": "8 (0.5 mmol)",
+          "smiles": "C1CCNC1"
+        },
+        {
+          "role": "reagent",
+          "text": "4A MS (0.5 g)",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "18 h",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "CH2Cl2",
+          "smiles": "ClCCl"
+        },
+        {
+          "role": "temperature",
+          "text": "25 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "25%",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 1: CH2Cl2, 25 °C, 25% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_2",
+      "reactants": [
+        {
+          "smiles": "O=C(O)Cc1ccccc1",
+          "label": "7",
+          "uncertain": false
+        },
+        {
+          "smiles": "C1CCNC1",
+          "label": "8",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=C(Cc1ccccc1)N1CCCC1",
+          "label": "9",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "6 (10 mol%)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "10 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "7 (0.55 mmol)",
+          "smiles": "O=C(O)Cc1ccccc1"
+        },
+        {
+          "role": "reagent",
+          "text": "8 (0.5 mmol)",
+          "smiles": "C1CCNC1"
+        },
+        {
+          "role": "reagent",
+          "text": "4A MS (0.5 g)",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "18 h",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "CH2Cl2",
+          "smiles": "ClCCl"
+        },
+        {
+          "role": "temperature",
+          "text": "50 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "33%",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 2: CH2Cl2, 50 °C, 33% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_3",
+      "reactants": [
+        {
+          "smiles": "O=C(O)Cc1ccccc1",
+          "label": "7",
+          "uncertain": false
+        },
+        {
+          "smiles": "C1CCNC1",
+          "label": "8",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=C(Cc1ccccc1)N1CCCC1",
+          "label": "9",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "6 (10 mol%)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "10 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "7 (0.55 mmol)",
+          "smiles": "O=C(O)Cc1ccccc1"
+        },
+        {
+          "role": "reagent",
+          "text": "8 (0.5 mmol)",
+          "smiles": "C1CCNC1"
+        },
+        {
+          "role": "reagent",
+          "text": "4A MS (0.5 g)",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "18 h",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "Toluene",
+          "smiles": "Cc1ccccc1"
+        },
+        {
+          "role": "temperature",
+          "text": "25 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "38%",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 3: Toluene, 25 °C, 38% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_4",
+      "reactants": [
+        {
+          "smiles": "O=C(O)Cc1ccccc1",
+          "label": "7",
+          "uncertain": false
+        },
+        {
+          "smiles": "C1CCNC1",
+          "label": "8",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=C(Cc1ccccc1)N1CCCC1",
+          "label": "9",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "6 (10 mol%)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "10 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "7 (0.55 mmol)",
+          "smiles": "O=C(O)Cc1ccccc1"
+        },
+        {
+          "role": "reagent",
+          "text": "8 (0.5 mmol)",
+          "smiles": "C1CCNC1"
+        },
+        {
+          "role": "reagent",
+          "text": "4A MS (0.5 g)",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "18 h",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "Toluene",
+          "smiles": "Cc1ccccc1"
+        },
+        {
+          "role": "temperature",
+          "text": "50 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "45%",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 4: Toluene, 50 °C, 45% yield"
+      ]
+    }
+  ]
+}
+```
+/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/tools/structural_verifier.py:226: UserWarning: Resolved model mismatch: gpt-5.4 != gpt-5.4-2026-03-05. Model mapping in autogen_ext.models.openai may be incorrect. Set the model to gpt-5.4-2026-03-05 to enhance token/cost estimation and suppress this warning.
+  llm_result = await self._client.create(
+---------- TextMessage (structural_verifier) ----------
+[STRUCT_OK]
+notes: label 9 matches crop bbox_02; duplicate renders of the same product all match
+---------- ToolCallRequestEvent (verifier) ----------
+[FunctionCall(id='call_miBFXtPWb1XZlzkzhTAbDr0g', arguments='{}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (verifier) ----------
+[FunctionExecutionResult(content='1 validation error for validate_reaction_jsonargs\nobj\n  Field required [type=missing, input_value={}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing', name='validate_reaction_json', call_id='call_miBFXtPWb1XZlzkzhTAbDr0g', is_error=True)]
+---------- TextMessage (verifier) ----------
+[CRITIQUE verifier]
+schema_errors:
+  - tool_call: Field required [type=missing, input_value={}, input_type=dict]
+[/CRITIQUE]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_XbsJYTvCjf1CVxF1BMN7k23k', arguments='{"obj":{"file_name":"GC_2015.pdf_page003_table_02_s0.78.png","reactions":[{"reaction_id":"0_1","reactants":[{"smiles":"O=C(O)Cc1ccccc1","label":"7","uncertain":false},{"smiles":"C1CCNC1","label":"8","uncertain":false}],"products":[{"smiles":"O=C(Cc1ccccc1)N1CCCC1","label":"9","uncertain":false}],"conditions":[{"role":"catalyst","text":"6 (10 mol%)","smiles":null},{"role":"loading","text":"10 mol%","smiles":null},{"role":"reagent","text":"7 (0.55 mmol)","smiles":"O=C(O)Cc1ccccc1"},{"role":"reagent","text":"8 (0.5 mmol)","smiles":"C1CCNC1"},{"role":"reagent","text":"4A MS (0.5 g)","smiles":null},{"role":"time","text":"18 h","smiles":null},{"role":"solvent","text":"CH2Cl2","smiles":"ClCCl"},{"role":"temperature","text":"25 °C","smiles":null},{"role":"yield","text":"25%","smiles":null}],"additional_info":["entry 1: CH2Cl2, 25 °C, 25% yield"]},{"reaction_id":"0_2","reactants":[{"smiles":"O=C(O)Cc1ccccc1","label":"7","uncertain":false},{"smiles":"C1CCNC1","label":"8","uncertain":false}],"products":[{"smiles":"O=C(Cc1ccccc1)N1CCCC1","label":"9","uncertain":false}],"conditions":[{"role":"catalyst","text":"6 (10 mol%)","smiles":null},{"role":"loading","text":"10 mol%","smiles":null},{"role":"reagent","text":"7 (0.55 mmol)","smiles":"O=C(O)Cc1ccccc1"},{"role":"reagent","text":"8 (0.5 mmol)","smiles":"C1CCNC1"},{"role":"reagent","text":"4A MS (0.5 g)","smiles":null},{"role":"time","text":"18 h","smiles":null},{"role":"solvent","text":"CH2Cl2","smiles":"ClCCl"},{"role":"temperature","text":"50 °C","smiles":null},{"role":"yield","text":"33%","smiles":null}],"additional_info":["entry 2: CH2Cl2, 50 °C, 33% yield"]},{"reaction_id":"0_3","reactants":[{"smiles":"O=C(O)Cc1ccccc1","label":"7","uncertain":false},{"smiles":"C1CCNC1","label":"8","uncertain":false}],"products":[{"smiles":"O=C(Cc1ccccc1)N1CCCC1","label":"9","uncertain":false}],"conditions":[{"role":"catalyst","text":"6 (10 mol%)","smiles":null},{"role":"loading","text":"10 mol%","smiles":null},{"role":"reagent","text":"7 (0.55 mmol)","smiles":"O=C(O)Cc1ccccc1"},{"role":"reagent","text":"8 (0.5 mmol)","smiles":"C1CCNC1"},{"role":"reagent","text":"4A MS (0.5 g)","smiles":null},{"role":"time","text":"18 h","smiles":null},{"role":"solvent","text":"Toluene","smiles":"Cc1ccccc1"},{"role":"temperature","text":"25 °C","smiles":null},{"role":"yield","text":"38%","smiles":null}],"additional_info":["entry 3: Toluene, 25 °C, 38% yield"]},{"reaction_id":"0_4","reactants":[{"smiles":"O=C(O)Cc1ccccc1","label":"7","uncertain":false},{"smiles":"C1CCNC1","label":"8","uncertain":false}],"products":[{"smiles":"O=C(Cc1ccccc1)N1CCCC1","label":"9","uncertain":false}],"conditions":[{"role":"catalyst","text":"6 (10 mol%)","smiles":null},{"role":"loading","text":"10 mol%","smiles":null},{"role":"reagent","text":"7 (0.55 mmol)","smiles":"O=C(O)Cc1ccccc1"},{"role":"reagent","text":"8 (0.5 mmol)","smiles":"C1CCNC1"},{"role":"reagent","text":"4A MS (0.5 g)","smiles":null},{"role":"time","text":"18 h","smiles":null},{"role":"solvent","text":"Toluene","smiles":"Cc1ccccc1"},{"role":"temperature","text":"50 °C","smiles":null},{"role":"yield","text":"45%","smiles":null}],"additional_info":["entry 4: Toluene, 50 °C, 45% yield"]}]}}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'valid': True, 'errors': []}", name='validate_reaction_json', call_id='call_XbsJYTvCjf1CVxF1BMN7k23k', is_error=False)]
+---------- TextMessage (data_structure) ----------
+```json
+{
+  "file_name": "GC_2015.pdf_page003_table_02_s0.78.png",
+  "reactions": [
+    {
+      "reaction_id": "0_1",
+      "reactants": [
+        {
+          "smiles": "O=C(O)Cc1ccccc1",
+          "label": "7",
+          "uncertain": false
+        },
+        {
+          "smiles": "C1CCNC1",
+          "label": "8",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=C(Cc1ccccc1)N1CCCC1",
+          "label": "9",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "6 (10 mol%)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "10 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "7 (0.55 mmol)",
+          "smiles": "O=C(O)Cc1ccccc1"
+        },
+        {
+          "role": "reagent",
+          "text": "8 (0.5 mmol)",
+          "smiles": "C1CCNC1"
+        },
+        {
+          "role": "reagent",
+          "text": "4A MS (0.5 g)",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "18 h",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "CH2Cl2",
+          "smiles": "ClCCl"
+        },
+        {
+          "role": "temperature",
+          "text": "25 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "25%",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 1: CH2Cl2, 25 °C, 25% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_2",
+      "reactants": [
+        {
+          "smiles": "O=C(O)Cc1ccccc1",
+          "label": "7",
+          "uncertain": false
+        },
+        {
+          "smiles": "C1CCNC1",
+          "label": "8",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=C(Cc1ccccc1)N1CCCC1",
+          "label": "9",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "6 (10 mol%)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "10 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "7 (0.55 mmol)",
+          "smiles": "O=C(O)Cc1ccccc1"
+        },
+        {
+          "role": "reagent",
+          "text": "8 (0.5 mmol)",
+          "smiles": "C1CCNC1"
+        },
+        {
+          "role": "reagent",
+          "text": "4A MS (0.5 g)",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "18 h",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "CH2Cl2",
+          "smiles": "ClCCl"
+        },
+        {
+          "role": "temperature",
+          "text": "50 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "33%",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 2: CH2Cl2, 50 °C, 33% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_3",
+      "reactants": [
+        {
+          "smiles": "O=C(O)Cc1ccccc1",
+          "label": "7",
+          "uncertain": false
+        },
+        {
+          "smiles": "C1CCNC1",
+          "label": "8",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=C(Cc1ccccc1)N1CCCC1",
+          "label": "9",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "6 (10 mol%)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "10 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "7 (0.55 mmol)",
+          "smiles": "O=C(O)Cc1ccccc1"
+        },
+        {
+          "role": "reagent",
+          "text": "8 (0.5 mmol)",
+          "smiles": "C1CCNC1"
+        },
+        {
+          "role": "reagent",
+          "text": "4A MS (0.5 g)",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "18 h",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "Toluene",
+          "smiles": "Cc1ccccc1"
+        },
+        {
+          "role": "temperature",
+          "text": "25 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "38%",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 3: Toluene, 25 °C, 38% yield"
+      ]
+    },
+    {
+      "reaction_id": "0_4",
+      "reactants": [
+        {
+          "smiles": "O=C(O)Cc1ccccc1",
+          "label": "7",
+          "uncertain": false
+        },
+        {
+          "smiles": "C1CCNC1",
+          "label": "8",
+          "uncertain": false
+        }
+      ],
+      "products": [
+        {
+          "smiles": "O=C(Cc1ccccc1)N1CCCC1",
+          "label": "9",
+          "uncertain": false
+        }
+      ],
+      "conditions": [
+        {
+          "role": "catalyst",
+          "text": "6 (10 mol%)",
+          "smiles": null
+        },
+        {
+          "role": "loading",
+          "text": "10 mol%",
+          "smiles": null
+        },
+        {
+          "role": "reagent",
+          "text": "7 (0.55 mmol)",
+          "smiles": "O=C(O)Cc1ccccc1"
+        },
+        {
+          "role": "reagent",
+          "text": "8 (0.5 mmol)",
+          "smiles": "C1CCNC1"
+        },
+        {
+          "role": "reagent",
+          "text": "4A MS (0.5 g)",
+          "smiles": null
+        },
+        {
+          "role": "time",
+          "text": "18 h",
+          "smiles": null
+        },
+        {
+          "role": "solvent",
+          "text": "Toluene",
+          "smiles": "Cc1ccccc1"
+        },
+        {
+          "role": "temperature",
+          "text": "50 °C",
+          "smiles": null
+        },
+        {
+          "role": "yield",
+          "text": "45%",
+          "smiles": null
+        }
+      ],
+      "additional_info": [
+        "entry 4: Toluene, 50 °C, 45% yield"
+      ]
+    }
+  ]
+}
+```
+---------- TextMessage (structural_verifier) ----------
+[STRUCT_OK]
+notes: label 9 matches its crop; duplicate identical renders provided for 9
+---------- ToolCallRequestEvent (verifier) ----------
+[FunctionCall(id='call_myVaJCCwLfqzlOvmVjja53Df', arguments='{"obj":{"file_name":"GC_2015.pdf_page003_table_02_s0.78.png","reactions":[{"reaction_id":"0_1","reactants":[{"smiles":"O=C(O)Cc1ccccc1","label":"7","uncertain":false},{"smiles":"C1CCNC1","label":"8","uncertain":false}],"products":[{"smiles":"O=C(Cc1ccccc1)N1CCCC1","label":"9","uncertain":false}],"conditions":[{"role":"catalyst","text":"6 (10 mol%)","smiles":null},{"role":"loading","text":"10 mol%","smiles":null},{"role":"reagent","text":"7 (0.55 mmol)","smiles":"O=C(O)Cc1ccccc1"},{"role":"reagent","text":"8 (0.5 mmol)","smiles":"C1CCNC1"},{"role":"reagent","text":"4A MS (0.5 g)","smiles":null},{"role":"time","text":"18 h","smiles":null},{"role":"solvent","text":"CH2Cl2","smiles":"ClCCl"},{"role":"temperature","text":"25 °C","smiles":null},{"role":"yield","text":"25%","smiles":null}],"additional_info":["entry 1: CH2Cl2, 25 °C, 25% yield"]},{"reaction_id":"0_2","reactants":[{"smiles":"O=C(O)Cc1ccccc1","label":"7","uncertain":false},{"smiles":"C1CCNC1","label":"8","uncertain":false}],"products":[{"smiles":"O=C(Cc1ccccc1)N1CCCC1","label":"9","uncertain":false}],"conditions":[{"role":"catalyst","text":"6 (10 mol%)","smiles":null},{"role":"loading","text":"10 mol%","smiles":null},{"role":"reagent","text":"7 (0.55 mmol)","smiles":"O=C(O)Cc1ccccc1"},{"role":"reagent","text":"8 (0.5 mmol)","smiles":"C1CCNC1"},{"role":"reagent","text":"4A MS (0.5 g)","smiles":null},{"role":"time","text":"18 h","smiles":null},{"role":"solvent","text":"CH2Cl2","smiles":"ClCCl"},{"role":"temperature","text":"50 °C","smiles":null},{"role":"yield","text":"33%","smiles":null}],"additional_info":["entry 2: CH2Cl2, 50 °C, 33% yield"]},{"reaction_id":"0_3","reactants":[{"smiles":"O=C(O)Cc1ccccc1","label":"7","uncertain":false},{"smiles":"C1CCNC1","label":"8","uncertain":false}],"products":[{"smiles":"O=C(Cc1ccccc1)N1CCCC1","label":"9","uncertain":false}],"conditions":[{"role":"catalyst","text":"6 (10 mol%)","smiles":null},{"role":"loading","text":"10 mol%","smiles":null},{"role":"reagent","text":"7 (0.55 mmol)","smiles":"O=C(O)Cc1ccccc1"},{"role":"reagent","text":"8 (0.5 mmol)","smiles":"C1CCNC1"},{"role":"reagent","text":"4A MS (0.5 g)","smiles":null},{"role":"time","text":"18 h","smiles":null},{"role":"solvent","text":"Toluene","smiles":"Cc1ccccc1"},{"role":"temperature","text":"25 °C","smiles":null},{"role":"yield","text":"38%","smiles":null}],"additional_info":["entry 3: Toluene, 25 °C, 38% yield"]},{"reaction_id":"0_4","reactants":[{"smiles":"O=C(O)Cc1ccccc1","label":"7","uncertain":false},{"smiles":"C1CCNC1","label":"8","uncertain":false}],"products":[{"smiles":"O=C(Cc1ccccc1)N1CCCC1","label":"9","uncertain":false}],"conditions":[{"role":"catalyst","text":"6 (10 mol%)","smiles":null},{"role":"loading","text":"10 mol%","smiles":null},{"role":"reagent","text":"7 (0.55 mmol)","smiles":"O=C(O)Cc1ccccc1"},{"role":"reagent","text":"8 (0.5 mmol)","smiles":"C1CCNC1"},{"role":"reagent","text":"4A MS (0.5 g)","smiles":null},{"role":"time","text":"18 h","smiles":null},{"role":"solvent","text":"Toluene","smiles":"Cc1ccccc1"},{"role":"temperature","text":"50 °C","smiles":null},{"role":"yield","text":"45%","smiles":null}],"additional_info":["entry 4: Toluene, 50 °C, 45% yield"]}]}}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (verifier) ----------
+[FunctionExecutionResult(content="{'valid': True, 'errors': []}", name='validate_reaction_json', call_id='call_myVaJCCwLfqzlOvmVjja53Df', is_error=False)]
+---------- TextMessage (verifier) ----------
+TERMINATE
+
+[validation] PASSED after 0 retry/retries
+Results saved to /Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/runs/20260430_175424_selector

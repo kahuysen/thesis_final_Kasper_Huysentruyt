@@ -1,0 +1,485 @@
+---------- MultiModalMessage (user) ----------
+Analyse this chemistry reaction image. Each specialist contributes one [FINDINGS ...] card per turn, then data_structure produces JSON, then the verifier audits the JSON and ends the run.
+image_path = /Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/acs.joc.3c00062 example 1.png
+Pass that exact path as the first argument to crop_image_region(image_path, [x,y,w,h]) if you need to zoom in on a region of the image.
+<image>
+/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/agents/_assistant_agent.py:1109: UserWarning: Resolved model mismatch: gpt-5.4 != gpt-5.4-2026-03-05. Model mapping in autogen_ext.models.openai may be incorrect. Set the model to gpt-5.4-2026-03-05 to enhance token/cost estimation and suppress this warning.
+  model_result = await model_client.create(
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_OyfSKzkVQMKrTaImQ5xvUyqn', arguments='{"image_path":"/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/acs.joc.3c00062 example 1.png","molecule_only":true,"score_min":0}', name='detect_molecules')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'bboxes': [{'x1': 192, 'y1': 48, 'x2': 277, 'y2': 95, 'w': 85, 'h': 47, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 193, 'y1': 159, 'x2': 325, 'y2': 236, 'w': 131, 'h': 76, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 193, 'y1': 369, 'x2': 344, 'y2': 446, 'w': 150, 'h': 76, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 195, 'y1': 583, 'x2': 326, 'y2': 658, 'w': 131, 'h': 76, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 195, 'y1': 263, 'x2': 353, 'y2': 337, 'w': 158, 'h': 74, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 193, 'y1': 479, 'x2': 356, 'y2': 554, 'w': 162, 'h': 75, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 320, 'y1': 57, 'x2': 377, 'y2': 86, 'w': 57, 'h': 29, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 368, 'y1': 369, 'x2': 516, 'y2': 446, 'w': 148, 'h': 77, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 372, 'y1': 158, 'x2': 504, 'y2': 236, 'w': 132, 'h': 78, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 372, 'y1': 261, 'x2': 539, 'y2': 337, 'w': 167, 'h': 76, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 400, 'y1': 477, 'x2': 530, 'y2': 554, 'w': 130, 'h': 77, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 420, 'y1': 62, 'x2': 480, 'y2': 83, 'w': 60, 'h': 21, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 541, 'y1': 158, 'x2': 700, 'y2': 236, 'w': 159, 'h': 78, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 555, 'y1': 372, 'x2': 700, 'y2': 453, 'w': 145, 'h': 81, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 565, 'y1': 261, 'x2': 697, 'y2': 339, 'w': 131, 'h': 77, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 580, 'y1': 475, 'x2': 694, 'y2': 551, 'w': 114, 'h': 76, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 590, 'y1': 30, 'x2': 704, 'y2': 113, 'w': 114, 'h': 83, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}], 'image_w': 912, 'image_h': 701, 'device': 'mps', 'error': None, 'cached': True}", name='detect_molecules', call_id='call_OyfSKzkVQMKrTaImQ5xvUyqn', is_error=False)]
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_hemHtgme7Q1sjf9bhzmMs8Dj', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/acs.joc.3c00062 example 1.png", "bbox": [192, 48, 85, 47], "pad": 10}', name='predict_molecule_smiles'), FunctionCall(id='call_WvtET6pqYgUHn8TmMSTvuYdI', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/acs.joc.3c00062 example 1.png", "bbox": [320, 57, 57, 29], "pad": 10}', name='predict_molecule_smiles'), FunctionCall(id='call_iKIlVHqj42YHQaKBXAqqJoYk', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/acs.joc.3c00062 example 1.png", "bbox": [420, 62, 60, 21], "pad": 10}', name='predict_molecule_smiles'), FunctionCall(id='call_mo2ZD9D7v3PPsquV7m9TIMmJ', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/acs.joc.3c00062 example 1.png", "bbox": [590, 30, 114, 83], "pad": 10}', name='predict_molecule_smiles')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'smiles': '[3*]/C(O)=C/S(C)(=O)=O', 'confidence': 0.8528148253252135, 'atoms_count': 8, 'bonds_count': 7, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_hemHtgme7Q1sjf9bhzmMs8Dj', is_error=False), FunctionExecutionResult(content="{'smiles': 'O=Nc1ccccc1', 'confidence': 0.8131055535128473, 'atoms_count': 3, 'bonds_count': 2, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_WvtET6pqYgUHn8TmMSTvuYdI', is_error=False), FunctionExecutionResult(content="{'smiles': 'C#Cc1ccccc1', 'confidence': 0.7563821742192591, 'atoms_count': 3, 'bonds_count': 2, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_iKIlVHqj42YHQaKBXAqqJoYk', is_error=False), FunctionExecutionResult(content="{'smiles': 'C1C2C3C[CH]123.[3*]C(=O)C1C(C(=O)c2ccccc2)N1c1ccccc1', 'confidence': 0.23396606651123147, 'atoms_count': 15, 'bonds_count': 17, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_mo2ZD9D7v3PPsquV7m9TIMmJ', is_error=False)]
+---------- ToolCallRequestEvent (reaction_template_parser) ----------
+[FunctionCall(id='call_dKdVdQBhX4l6VNjSrt1llDfd', arguments='{"smiles": "[3*]/C(O)=C/S(C)(=O)=O"}', name='validate_smiles'), FunctionCall(id='call_zg7TXJBHv2mmUSkstLAOPYOT', arguments='{"smiles": "[3*]/C(O)=C/S(C)(=O)=O"}', name='canonicalize_smiles'), FunctionCall(id='call_xG009bBCBd9vuzPa9SL0l4kZ', arguments='{"smiles": "C1C2C3C[CH]123.[3*]C(=O)C1C(C(=O)c2ccccc2)N1c1ccccc1"}', name='validate_smiles'), FunctionCall(id='call_gV7EdFKm31rDbeuAT4J5fdNH', arguments='{"smiles": "C1C2C3C[CH]123.[3*]C(=O)C1C(C(=O)c2ccccc2)N1c1ccccc1"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (reaction_template_parser) ----------
+[FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_dKdVdQBhX4l6VNjSrt1llDfd', is_error=False), FunctionExecutionResult(content="{'canonical': '[3*]/C(O)=C/S(C)(=O)=O', 'valid': True, 'formula': 'C3H5*O3S', 'error': None}", name='canonicalize_smiles', call_id='call_zg7TXJBHv2mmUSkstLAOPYOT', is_error=False), FunctionExecutionResult(content="{'valid': False, 'error': 'RDKit could not parse SMILES'}", name='validate_smiles', call_id='call_xG009bBCBd9vuzPa9SL0l4kZ', is_error=False), FunctionExecutionResult(content="{'canonical': None, 'valid': False, 'formula': None, 'error': 'RDKit could not parse SMILES'}", name='canonicalize_smiles', call_id='call_gV7EdFKm31rDbeuAT4J5fdNH', is_error=False)]
+---------- TextMessage (reaction_template_parser) ----------
+[FINDINGS reaction_template_parser]
+scheme_count: 1
+scheme_1:
+  reactant_template_smiles: [3*]/C(O)=C/S(C)(=O)=O + O=Nc1ccccc1 + C#Cc1ccccc1
+  product_template_smiles:  [3*]C(=O)C1C(C(=O)c2ccccc2)N1c1ccccc1
+  arrow: forward
+  multi_step: no
+  notes: reactant templates from bbox #0 (sulfoxonium ylide, conf 0.85), #6 (nitrosobenzene, conf 0.81), and #11 (phenylacetylene, conf 0.76). Product bbox #16 gave low-confidence/invalid full SMILES, so the product template is taken as the recognizable wildcard-containing core from that MolNexTR output and marked uncertain.
+[/FINDINGS]
+---------- ToolCallRequestEvent (rgroup_substitution) ----------
+[FunctionCall(id='call_QGlYKVITR1BWctAfapMP4tXk', arguments='{"image_path":"/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/acs.joc.3c00062 example 1.png","molecule_only":true,"score_min":0}', name='detect_molecules')]
+---------- ToolCallExecutionEvent (rgroup_substitution) ----------
+[FunctionExecutionResult(content="{'bboxes': [{'x1': 192, 'y1': 48, 'x2': 277, 'y2': 95, 'w': 85, 'h': 47, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 193, 'y1': 159, 'x2': 325, 'y2': 236, 'w': 131, 'h': 76, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 193, 'y1': 369, 'x2': 344, 'y2': 446, 'w': 150, 'h': 76, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 195, 'y1': 583, 'x2': 326, 'y2': 658, 'w': 131, 'h': 76, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 195, 'y1': 263, 'x2': 353, 'y2': 337, 'w': 158, 'h': 74, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 193, 'y1': 479, 'x2': 356, 'y2': 554, 'w': 162, 'h': 75, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 320, 'y1': 57, 'x2': 377, 'y2': 86, 'w': 57, 'h': 29, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 368, 'y1': 369, 'x2': 516, 'y2': 446, 'w': 148, 'h': 77, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 372, 'y1': 158, 'x2': 504, 'y2': 236, 'w': 132, 'h': 78, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 372, 'y1': 261, 'x2': 539, 'y2': 337, 'w': 167, 'h': 76, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 400, 'y1': 477, 'x2': 530, 'y2': 554, 'w': 130, 'h': 77, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 420, 'y1': 62, 'x2': 480, 'y2': 83, 'w': 60, 'h': 21, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 541, 'y1': 158, 'x2': 700, 'y2': 236, 'w': 159, 'h': 78, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 555, 'y1': 372, 'x2': 700, 'y2': 453, 'w': 145, 'h': 81, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 565, 'y1': 261, 'x2': 697, 'y2': 339, 'w': 131, 'h': 77, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 580, 'y1': 475, 'x2': 694, 'y2': 551, 'w': 114, 'h': 76, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}, {'x1': 590, 'y1': 30, 'x2': 704, 'y2': 113, 'w': 114, 'h': 83, 'category': '[Mol]', 'score': 2011.0, 'category_id': 1}], 'image_w': 912, 'image_h': 701, 'device': 'mps', 'error': None, 'cached': True}", name='detect_molecules', call_id='call_QGlYKVITR1BWctAfapMP4tXk', is_error=False)]
+---------- ToolCallRequestEvent (rgroup_substitution) ----------
+[FunctionCall(id='call_UXqr58P80pbvyRaD8b7zcKc5', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/acs.joc.3c00062 example 1.png", "bbox": [193, 159, 131, 76]}', name='predict_molecule_smiles'), FunctionCall(id='call_KQpmeEU7VANc6mndCJpAqsAP', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/acs.joc.3c00062 example 1.png", "bbox": [372, 158, 132, 78]}', name='predict_molecule_smiles'), FunctionCall(id='call_5wYTBjkL8S5EB2VGiJQEy5Hk', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/acs.joc.3c00062 example 1.png", "bbox": [541, 158, 159, 78]}', name='predict_molecule_smiles'), FunctionCall(id='call_cXTUi3TQvCoO8lPXk2mC0HyL', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/acs.joc.3c00062 example 1.png", "bbox": [195, 263, 158, 74]}', name='predict_molecule_smiles'), FunctionCall(id='call_aP6P2ivddgIwPDOQQXZYcsjp', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/acs.joc.3c00062 example 1.png", "bbox": [372, 261, 167, 76]}', name='predict_molecule_smiles'), FunctionCall(id='call_6CnzJifabLtORMnETz4nS8xa', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/acs.joc.3c00062 example 1.png", "bbox": [565, 261, 131, 77]}', name='predict_molecule_smiles'), FunctionCall(id='call_Sl877mtVxZMhSBUTZ2RTbiA3', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/acs.joc.3c00062 example 1.png", "bbox": [193, 369, 150, 76]}', name='predict_molecule_smiles'), FunctionCall(id='call_YokHQY5nBjFbHrHDyI8FBxKs', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/acs.joc.3c00062 example 1.png", "bbox": [368, 369, 148, 77]}', name='predict_molecule_smiles'), FunctionCall(id='call_kOHD9uHEcWGq7x87uIzs6r4r', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/acs.joc.3c00062 example 1.png", "bbox": [555, 372, 145, 81]}', name='predict_molecule_smiles'), FunctionCall(id='call_wbz7vdwDowEiC2I0uRVQatAA', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/acs.joc.3c00062 example 1.png", "bbox": [193, 479, 162, 75]}', name='predict_molecule_smiles'), FunctionCall(id='call_nYeKi7bvAw1pXhslsL7WYIXb', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/acs.joc.3c00062 example 1.png", "bbox": [400, 477, 130, 77]}', name='predict_molecule_smiles'), FunctionCall(id='call_gXhb0ChxpPAp91Op90QgdouZ', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/acs.joc.3c00062 example 1.png", "bbox": [580, 475, 114, 76]}', name='predict_molecule_smiles'), FunctionCall(id='call_7reTppVFAGszkd5RUJeFWCNG', arguments='{"image_path": "/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/eval/benchmark/images/acs.joc.3c00062 example 1.png", "bbox": [195, 583, 131, 76]}', name='predict_molecule_smiles')]
+---------- ToolCallExecutionEvent (rgroup_substitution) ----------
+[FunctionExecutionResult(content="{'smiles': 'O=C(c1ccccc1)C1[C@@H](C(=O)c2ccccc2)N1c1ccccc1', 'confidence': 0.6616449402035793, 'atoms_count': 25, 'bonds_count': 28, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_UXqr58P80pbvyRaD8b7zcKc5', is_error=False), FunctionExecutionResult(content="{'smiles': 'CC.CC.CC.CC.CC.CC.Cc1ccccc1C(=O)[C@@H]1[C@@H](C(=O)c2ccccc2)N1c1ccccc1', 'confidence': 0.49650103370201476, 'atoms_count': 33, 'bonds_count': 29, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_KQpmeEU7VANc6mndCJpAqsAP', is_error=False), FunctionExecutionResult(content="{'smiles': 'CC.CC.Cc1cccc(C(=O)[C@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)c1', 'confidence': 0.5181592572866895, 'atoms_count': 30, 'bonds_count': 31, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_5wYTBjkL8S5EB2VGiJQEy5Hk', is_error=False), FunctionExecutionResult(content="{'smiles': 'Cc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1', 'confidence': 0.7541460661455761, 'atoms_count': 16, 'bonds_count': 17, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_cXTUi3TQvCoO8lPXk2mC0HyL', is_error=False), FunctionExecutionResult(content="{'smiles': 'COc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1', 'confidence': 0.8990761166321201, 'atoms_count': 16, 'bonds_count': 17, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_aP6P2ivddgIwPDOQQXZYcsjp', is_error=False), FunctionExecutionResult(content="{'smiles': 'O=C(c1ccccc1)C1C(C(=O)c2ccccc2F)N1c1ccccc1', 'confidence': 0.7228896849646237, 'atoms_count': 26, 'bonds_count': 29, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_6CnzJifabLtORMnETz4nS8xa', is_error=False), FunctionExecutionResult(content="{'smiles': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc(F)c2)N1c1ccccc1', 'confidence': 0.8562873756799503, 'atoms_count': 16, 'bonds_count': 17, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_Sl877mtVxZMhSBUTZ2RTbiA3', is_error=False), FunctionExecutionResult(content="{'smiles': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc(F)cc2)N1c1ccccc1', 'confidence': 0.8523601069408984, 'atoms_count': 16, 'bonds_count': 17, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_YokHQY5nBjFbHrHDyI8FBxKs', is_error=False), FunctionExecutionResult(content="{'smiles': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc3ccccc23)N1c1ccccc1', 'confidence': 0.8829488531465878, 'atoms_count': 19, 'bonds_count': 21, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_kOHD9uHEcWGq7x87uIzs6r4r', is_error=False), FunctionExecutionResult(content="{'smiles': 'CC.CC.CC.CC.CC.CC.CC.CC.CCCCCC.O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc3ccccc3c2)N1c1ccccc1', 'confidence': 0.07931897223139893, 'atoms_count': 41, 'bonds_count': 34, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_wbz7vdwDowEiC2I0uRVQatAA', is_error=False), FunctionExecutionResult(content="{'smiles': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccs2)N1c1ccccc1.[CH2+]C.[CH2+][CH2+]', 'confidence': 0.3063443918813033, 'atoms_count': 18, 'bonds_count': 17, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_nYeKi7bvAw1pXhslsL7WYIXb', is_error=False), FunctionExecutionResult(content="{'smiles': 'CC(C)C(=O)[C@@H]1C(C(=O)c2ccccc2)N1c1ccccc1', 'confidence': 0.7018526764107849, 'atoms_count': 22, 'bonds_count': 24, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_gXhb0ChxpPAp91Op90QgdouZ', is_error=False), FunctionExecutionResult(content="{'smiles': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)C2CCCCC2)N1c1ccccc1', 'confidence': 0.8834614670465748, 'atoms_count': 15, 'bonds_count': 16, 'device': 'mps', 'error': None, 'cached': True}", name='predict_molecule_smiles', call_id='call_7reTppVFAGszkd5RUJeFWCNG', is_error=False)]
+---------- ToolCallRequestEvent (rgroup_substitution) ----------
+[FunctionCall(id='call_xxcLjQKkroIU6sMgEam2VTDj', arguments='{"template_smiles":"[3*]C(=O)C1C(C(=O)c2ccccc2)N1c1ccccc1","concrete_smiles":["O=C(c1ccccc1)C1[C@@H](C(=O)c2ccccc2)N1c1ccccc1","CC.CC.CC.CC.CC.CC.Cc1ccccc1C(=O)[C@@H]1[C@@H](C(=O)c2ccccc2)N1c1ccccc2","CC.CC.Cc1cccc(C(=O)[C@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)c1","Cc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1","COc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1","O=C(c1ccccc1)C1C(C(=O)c2ccccc2F)N1c1ccccc1","O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc(F)c2)N1c1ccccc1","O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc(F)cc2)N1c1ccccc1","O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc3ccccc23)N1c1ccccc1","O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc3ccccc3c2)N1c1ccccc1","O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccs2)N1c1ccccc1","CC(C)C(=O)[C@@H]1C(C(=O)c2ccccc2)N1c1ccccc1","O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)C2CCCCC2)N1c1ccccc1"]}', name='derive_substituents')]
+---------- ToolCallExecutionEvent (rgroup_substitution) ----------
+[FunctionExecutionResult(content="{'results': [{'smiles': 'O=C(c1ccccc1)C1[C@@H](C(=O)c2ccccc2)N1c1ccccc1', 'matched': True, 'r_assignments': {'R3': 'c1ccc([*:3])cc1'}, 'core': 'O=C(c1ccccc1)C1[C@@H](C(=O)[*:3])N1c1ccccc1', 'error': None}, {'smiles': 'CC.CC.CC.CC.CC.CC.Cc1ccccc1C(=O)[C@@H]1[C@@H](C(=O)c2ccccc2)N1c1ccccc2', 'matched': False, 'r_assignments': {}, 'core': None, 'error': 'did not parse'}, {'smiles': 'CC.CC.Cc1cccc(C(=O)[C@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)c1', 'matched': True, 'r_assignments': {'R3': 'Cc1cccc([*:3])c1'}, 'core': 'O=C(c1ccccc1)[C@@H]1[C@H](C(=O)[*:3])N1c1ccccc1', 'error': None}, {'smiles': 'Cc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1', 'matched': True, 'r_assignments': {'R3': 'Cc1ccc([*:3])cc1'}, 'core': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)[*:3])N1c1ccccc1', 'error': None}, {'smiles': 'COc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1', 'matched': True, 'r_assignments': {'R3': 'COc1ccc([*:3])cc1'}, 'core': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)[*:3])N1c1ccccc1', 'error': None}, {'smiles': 'O=C(c1ccccc1)C1C(C(=O)c2ccccc2F)N1c1ccccc1', 'matched': True, 'r_assignments': {'R3': 'Fc1ccccc1[*:3]'}, 'core': 'O=C(c1ccccc1)C1C(C(=O)[*:3])N1c1ccccc1', 'error': None}, {'smiles': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc(F)c2)N1c1ccccc1', 'matched': True, 'r_assignments': {'R3': 'Fc1cccc([*:3])c1'}, 'core': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)[*:3])N1c1ccccc1', 'error': None}, {'smiles': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc(F)cc2)N1c1ccccc1', 'matched': True, 'r_assignments': {'R3': 'Fc1ccc([*:3])cc1'}, 'core': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)[*:3])N1c1ccccc1', 'error': None}, {'smiles': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc3ccccc23)N1c1ccccc1', 'matched': True, 'r_assignments': {'R3': 'c1ccc2c([*:3])cccc2c1'}, 'core': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)[*:3])N1c1ccccc1', 'error': None}, {'smiles': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc3ccccc3c2)N1c1ccccc1', 'matched': True, 'r_assignments': {'R3': 'c1ccc2cc([*:3])ccc2c1'}, 'core': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)[*:3])N1c1ccccc1', 'error': None}, {'smiles': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccs2)N1c1ccccc1', 'matched': True, 'r_assignments': {'R3': 'c1csc([*:3])c1'}, 'core': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)[*:3])N1c1ccccc1', 'error': None}, {'smiles': 'CC(C)C(=O)[C@@H]1C(C(=O)c2ccccc2)N1c1ccccc1', 'matched': True, 'r_assignments': {'R3': 'CC(C)[*:3]'}, 'core': 'O=C(c1ccccc1)C1[C@@H](C(=O)[*:3])N1c1ccccc1', 'error': None}, {'smiles': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)C2CCCCC2)N1c1ccccc1', 'matched': True, 'r_assignments': {'R3': 'C1CCC([*:3])CC1'}, 'core': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)[*:3])N1c1ccccc1', 'error': None}], 'unmatched_indices': [1], 'template': '[3*]C(=O)C1C(C(=O)c2ccccc2)N1c1ccccc1', 'error': None}", name='derive_substituents', call_id='call_xxcLjQKkroIU6sMgEam2VTDj', is_error=False)]
+---------- ToolCallRequestEvent (rgroup_substitution) ----------
+[FunctionCall(id='call_u0LJgmhfj87NDJznb32dBl8r', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O"}', name='apply_substituents'), FunctionCall(id='call_G85N35SGkZc2CBvuPJ77mf1z', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O"}', name='apply_substituents'), FunctionCall(id='call_gFS4swE99uqXrNPPwetwn9QN', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O"}', name='apply_substituents'), FunctionCall(id='call_yq91gLWpx8KkG5TNSBmMcq3s', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O"}', name='apply_substituents'), FunctionCall(id='call_GoH3AbZlOLgxXFJC8ExCQ5VH', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O"}', name='apply_substituents'), FunctionCall(id='call_9kU21qDs67aEWHwEfGpxFR3y', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O"}', name='apply_substituents'), FunctionCall(id='call_OG6xiZmdrdrMEFr683PX5Iq5', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O"}', name='apply_substituents'), FunctionCall(id='call_ImSPcOkz9tUpBjk4HwCgbPkc', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O"}', name='apply_substituents'), FunctionCall(id='call_8hNCn1Bsipt69GO47upPpRpq', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O"}', name='apply_substituents'), FunctionCall(id='call_iRQCfH4lYPSci10nfYrIdY8x', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O"}', name='apply_substituents'), FunctionCall(id='call_FhKhXQf8ZuinDVFrYKc1UvkN', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O"}', name='apply_substituents'), FunctionCall(id='call_OsJsV1ANfyU8NCUlas80VaI4', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O"}', name='apply_substituents')]
+---------- ToolCallExecutionEvent (rgroup_substitution) ----------
+[FunctionExecutionResult(content="1 validation error for apply_substituentsargs\nr_assignments\n  Field required [type=missing, input_value={'template_smiles': '[3*]/C(O)=C/S(C)(=O)=O'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing", name='apply_substituents', call_id='call_u0LJgmhfj87NDJznb32dBl8r', is_error=True), FunctionExecutionResult(content="1 validation error for apply_substituentsargs\nr_assignments\n  Field required [type=missing, input_value={'template_smiles': '[3*]/C(O)=C/S(C)(=O)=O'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing", name='apply_substituents', call_id='call_G85N35SGkZc2CBvuPJ77mf1z', is_error=True), FunctionExecutionResult(content="1 validation error for apply_substituentsargs\nr_assignments\n  Field required [type=missing, input_value={'template_smiles': '[3*]/C(O)=C/S(C)(=O)=O'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing", name='apply_substituents', call_id='call_gFS4swE99uqXrNPPwetwn9QN', is_error=True), FunctionExecutionResult(content="1 validation error for apply_substituentsargs\nr_assignments\n  Field required [type=missing, input_value={'template_smiles': '[3*]/C(O)=C/S(C)(=O)=O'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing", name='apply_substituents', call_id='call_yq91gLWpx8KkG5TNSBmMcq3s', is_error=True), FunctionExecutionResult(content="1 validation error for apply_substituentsargs\nr_assignments\n  Field required [type=missing, input_value={'template_smiles': '[3*]/C(O)=C/S(C)(=O)=O'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing", name='apply_substituents', call_id='call_GoH3AbZlOLgxXFJC8ExCQ5VH', is_error=True), FunctionExecutionResult(content="1 validation error for apply_substituentsargs\nr_assignments\n  Field required [type=missing, input_value={'template_smiles': '[3*]/C(O)=C/S(C)(=O)=O'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing", name='apply_substituents', call_id='call_9kU21qDs67aEWHwEfGpxFR3y', is_error=True), FunctionExecutionResult(content="1 validation error for apply_substituentsargs\nr_assignments\n  Field required [type=missing, input_value={'template_smiles': '[3*]/C(O)=C/S(C)(=O)=O'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing", name='apply_substituents', call_id='call_OG6xiZmdrdrMEFr683PX5Iq5', is_error=True), FunctionExecutionResult(content="1 validation error for apply_substituentsargs\nr_assignments\n  Field required [type=missing, input_value={'template_smiles': '[3*]/C(O)=C/S(C)(=O)=O'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing", name='apply_substituents', call_id='call_ImSPcOkz9tUpBjk4HwCgbPkc', is_error=True), FunctionExecutionResult(content="1 validation error for apply_substituentsargs\nr_assignments\n  Field required [type=missing, input_value={'template_smiles': '[3*]/C(O)=C/S(C)(=O)=O'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing", name='apply_substituents', call_id='call_8hNCn1Bsipt69GO47upPpRpq', is_error=True), FunctionExecutionResult(content="1 validation error for apply_substituentsargs\nr_assignments\n  Field required [type=missing, input_value={'template_smiles': '[3*]/C(O)=C/S(C)(=O)=O'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing", name='apply_substituents', call_id='call_iRQCfH4lYPSci10nfYrIdY8x', is_error=True), FunctionExecutionResult(content="1 validation error for apply_substituentsargs\nr_assignments\n  Field required [type=missing, input_value={'template_smiles': '[3*]/C(O)=C/S(C)(=O)=O'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing", name='apply_substituents', call_id='call_FhKhXQf8ZuinDVFrYKc1UvkN', is_error=True), FunctionExecutionResult(content="1 validation error for apply_substituentsargs\nr_assignments\n  Field required [type=missing, input_value={'template_smiles': '[3*]/C(O)=C/S(C)(=O)=O'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing", name='apply_substituents', call_id='call_OsJsV1ANfyU8NCUlas80VaI4', is_error=True)]
+---------- ToolCallRequestEvent (rgroup_substitution) ----------
+[FunctionCall(id='call_VttRNl0MNQDe7GMs04rhP0OI', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O", "r_assignments": {"R3": "c1ccc([*:3])cc1"}}', name='apply_substituents'), FunctionCall(id='call_PlbqyKktzfMO3alNCvmbJJYR', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O", "r_assignments": {"R3": "Cc1cccc([*:3])c1"}}', name='apply_substituents'), FunctionCall(id='call_b3EyThYrcQBE8g3QGyQVG1a3', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O", "r_assignments": {"R3": "Cc1ccc([*:3])cc1"}}', name='apply_substituents'), FunctionCall(id='call_HdNKcpEREJHCGibWBUu7xTLw', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O", "r_assignments": {"R3": "COc1ccc([*:3])cc1"}}', name='apply_substituents'), FunctionCall(id='call_8dyqHgs9OGZ559EvbZaE4qMh', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O", "r_assignments": {"R3": "Fc1ccccc1[*:3]"}}', name='apply_substituents'), FunctionCall(id='call_JwhznJfxTabforXeqM2UbkE9', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O", "r_assignments": {"R3": "Fc1cccc([*:3])c1"}}', name='apply_substituents'), FunctionCall(id='call_QjfqrmgVyluRHQjqAhLl5mKo', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O", "r_assignments": {"R3": "Fc1ccc([*:3])cc1"}}', name='apply_substituents'), FunctionCall(id='call_XK5oDTYS8XqxQ6O11FwYoypT', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O", "r_assignments": {"R3": "c1ccc2c([*:3])cccc2c1"}}', name='apply_substituents'), FunctionCall(id='call_WumBKXbABY6712Fb6qEr1W3d', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O", "r_assignments": {"R3": "c1ccc2cc([*:3])ccc2c1"}}', name='apply_substituents'), FunctionCall(id='call_qc23mnWYz2lPd6lL5JTDmynX', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O", "r_assignments": {"R3": "c1csc([*:3])c1"}}', name='apply_substituents'), FunctionCall(id='call_W9yxhUJtyUnscZHs1QzBYUJ0', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O", "r_assignments": {"R3": "CC(C)[*:3]"}}', name='apply_substituents'), FunctionCall(id='call_FGAY0MVAY4lR9GQBqfhPqt5A', arguments='{"template_smiles": "[3*]/C(O)=C/S(C)(=O)=O", "r_assignments": {"R3": "C1CCC([*:3])CC1"}}', name='apply_substituents')]
+---------- ToolCallExecutionEvent (rgroup_substitution) ----------
+[FunctionExecutionResult(content='{\'smiles\': None, \'valid\': False, \'error\': "template did not parse: \'[3*]/C(O)=C/S(C)(=O)=O\'"}', name='apply_substituents', call_id='call_VttRNl0MNQDe7GMs04rhP0OI', is_error=False), FunctionExecutionResult(content='{\'smiles\': None, \'valid\': False, \'error\': "template did not parse: \'[3*]/C(O)=C/S(C)(=O)=O\'"}', name='apply_substituents', call_id='call_PlbqyKktzfMO3alNCvmbJJYR', is_error=False), FunctionExecutionResult(content='{\'smiles\': None, \'valid\': False, \'error\': "template did not parse: \'[3*]/C(O)=C/S(C)(=O)=O\'"}', name='apply_substituents', call_id='call_b3EyThYrcQBE8g3QGyQVG1a3', is_error=False), FunctionExecutionResult(content='{\'smiles\': None, \'valid\': False, \'error\': "template did not parse: \'[3*]/C(O)=C/S(C)(=O)=O\'"}', name='apply_substituents', call_id='call_HdNKcpEREJHCGibWBUu7xTLw', is_error=False), FunctionExecutionResult(content='{\'smiles\': None, \'valid\': False, \'error\': "template did not parse: \'[3*]/C(O)=C/S(C)(=O)=O\'"}', name='apply_substituents', call_id='call_8dyqHgs9OGZ559EvbZaE4qMh', is_error=False), FunctionExecutionResult(content='{\'smiles\': None, \'valid\': False, \'error\': "template did not parse: \'[3*]/C(O)=C/S(C)(=O)=O\'"}', name='apply_substituents', call_id='call_JwhznJfxTabforXeqM2UbkE9', is_error=False), FunctionExecutionResult(content='{\'smiles\': None, \'valid\': False, \'error\': "template did not parse: \'[3*]/C(O)=C/S(C)(=O)=O\'"}', name='apply_substituents', call_id='call_QjfqrmgVyluRHQjqAhLl5mKo', is_error=False), FunctionExecutionResult(content='{\'smiles\': None, \'valid\': False, \'error\': "template did not parse: \'[3*]/C(O)=C/S(C)(=O)=O\'"}', name='apply_substituents', call_id='call_XK5oDTYS8XqxQ6O11FwYoypT', is_error=False), FunctionExecutionResult(content='{\'smiles\': None, \'valid\': False, \'error\': "template did not parse: \'[3*]/C(O)=C/S(C)(=O)=O\'"}', name='apply_substituents', call_id='call_WumBKXbABY6712Fb6qEr1W3d', is_error=False), FunctionExecutionResult(content='{\'smiles\': None, \'valid\': False, \'error\': "template did not parse: \'[3*]/C(O)=C/S(C)(=O)=O\'"}', name='apply_substituents', call_id='call_qc23mnWYz2lPd6lL5JTDmynX', is_error=False), FunctionExecutionResult(content='{\'smiles\': None, \'valid\': False, \'error\': "template did not parse: \'[3*]/C(O)=C/S(C)(=O)=O\'"}', name='apply_substituents', call_id='call_W9yxhUJtyUnscZHs1QzBYUJ0', is_error=False), FunctionExecutionResult(content='{\'smiles\': None, \'valid\': False, \'error\': "template did not parse: \'[3*]/C(O)=C/S(C)(=O)=O\'"}', name='apply_substituents', call_id='call_FGAY0MVAY4lR9GQBqfhPqt5A', is_error=False)]
+/Users/kasperhuysentruyt/Documents/thesis/5.Random_tests/Collective_autogen/.venv/lib/python3.12/site-packages/autogen_agentchat/agents/_assistant_agent.py:1450: UserWarning: Resolved model mismatch: gpt-5.4 != gpt-5.4-2026-03-05. Model mapping in autogen_ext.models.openai may be incorrect. Set the model to gpt-5.4-2026-03-05 to enhance token/cost estimation and suppress this warning.
+  reflection_result = await model_client.create(
+---------- TextMessage (rgroup_substitution) ----------
+[FINDINGS rgroup_substitution]
+reactant_template: [3*]/C(O)=C/S(C)(=O)=O
+product_template:  [3*]C(=O)C1C(C(=O)c2ccccc2)N1c1ccccc1
+variants:
+  - label: 4aaa
+    r_assignments: {R3: c1ccc([*:3])cc1}
+    reactant_smiles: null
+    product_smiles: O=C(c1ccccc1)C1[C@@H](C(=O)c2ccccc2)N1c1ccccc1
+    valid: no
+  - label: 4baa
+    r_assignments: {}
+    reactant_smiles: null
+    product_smiles: CC.CC.CC.CC.CC.CC.Cc1ccccc1C(=O)[C@@H]1[C@@H](C(=O)c2ccccc2)N1c1ccccc2
+    valid: no
+  - label: 4caa
+    r_assignments: {R3: Cc1cccc([*:3])c1}
+    reactant_smiles: null
+    product_smiles: CC.CC.Cc1cccc(C(=O)[C@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)c1
+    valid: no
+  - label: 4daa
+    r_assignments: {R3: Cc1ccc([*:3])cc1}
+    reactant_smiles: null
+    product_smiles: Cc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1
+    valid: no
+  - label: 4eaa
+    r_assignments: {R3: COc1ccc([*:3])cc1}
+    reactant_smiles: null
+    product_smiles: COc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1
+    valid: no
+  - label: 4faa
+    r_assignments: {R3: Fc1ccccc1[*:3]}
+    reactant_smiles: null
+    product_smiles: O=C(c1ccccc1)C1C(C(=O)c2ccccc2F)N1c1ccccc1
+    valid: no
+  - label: 4gaa
+    r_assignments: {R3: Fc1cccc([*:3])c1}
+    reactant_smiles: null
+    product_smiles: O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc(F)c2)N1c1ccccc1
+    valid: no
+  - label: 4haa
+    r_assignments: {R3: Fc1ccc([*:3])cc1}
+    reactant_smiles: null
+    product_smiles: O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc(F)cc2)N1c1ccccc1
+    valid: no
+  - label: 4iaa
+    r_assignments: {R3: c1ccc2c([*:3])cccc2c1}
+    reactant_smiles: null
+    product_smiles: O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc3ccccc23)N1c1ccccc1
+    valid: no
+  - label: 4jaa
+    r_assignments: {R3: c1ccc2cc([*:3])ccc2c1}
+    reactant_smiles: null
+    product_smiles: O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc3ccccc3c2)N1c1ccccc1
+    valid: no
+  - label: 4kaa
+    r_assignments: {R3: c1csc([*:3])c1}
+    reactant_smiles: null
+    product_smiles: O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccs2)N1c1ccccc1
+    valid: no
+  - label: 4laa
+    r_assignments: {R3: CC(C)[*:3]}
+    reactant_smiles: null
+    product_smiles: CC(C)C(=O)[C@@H]1C(C(=O)c2ccccc2)N1c1ccccc1
+    valid: no
+  - label: 4maa
+    r_assignments: {R3: C1CCC([*:3])CC1}
+    reactant_smiles: null
+    product_smiles: O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)C2CCCCC2)N1c1ccccc1
+    valid: no
+[/FINDINGS]
+---------- TextMessage (molecular_recognition) ----------
+[FINDINGS molecular_recognition]
+# scripted agent — one entry per detected bbox, no deduplication
+molecule_count: 17
+molecule:
+  label: bbox_0
+  canonical_smiles: [3*]/C(O)=C/S(C)(=O)=O
+  bbox: [192, 48, 85, 47]
+  confidence: 0.853
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_1
+  canonical_smiles: O=C(c1ccccc1)C1[C@@H](C(=O)c2ccccc2)N1c1ccccc1
+  bbox: [193, 159, 131, 76]
+  confidence: 0.662
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_2
+  canonical_smiles: O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc(F)c2)N1c1ccccc1
+  bbox: [193, 369, 150, 76]
+  confidence: 0.856
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_3
+  canonical_smiles: O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)C2CCCCC2)N1c1ccccc1
+  bbox: [195, 583, 131, 76]
+  confidence: 0.883
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_4
+  canonical_smiles: Cc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1
+  bbox: [195, 263, 158, 74]
+  confidence: 0.754
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_5
+  canonical_smiles: CC.CC.CC.CC.CC.CC.CC.CC.CCCCCC.O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc3ccccc3c2)N1c1ccccc1
+  bbox: [193, 479, 162, 75]
+  confidence: 0.079
+  stereochemistry: from MolNexTR
+  uncertain: yes
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_6
+  canonical_smiles: O=Nc1ccccc1
+  bbox: [320, 57, 57, 29]
+  confidence: 0.813
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_7
+  canonical_smiles: O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc(F)cc2)N1c1ccccc1
+  bbox: [368, 369, 148, 77]
+  confidence: 0.852
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_8
+  canonical_smiles: CC.CC.CC.CC.CC.CC.Cc1ccccc1C(=O)[C@@H]1[C@@H](C(=O)c2ccccc2)N1c1ccccc1
+  bbox: [372, 158, 132, 78]
+  confidence: 0.497
+  stereochemistry: from MolNexTR
+  uncertain: yes
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_9
+  canonical_smiles: COc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1
+  bbox: [372, 261, 167, 76]
+  confidence: 0.899
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_10
+  canonical_smiles: O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccs2)N1c1ccccc1.[CH2+]C.[CH2+][CH2+]
+  bbox: [400, 477, 130, 77]
+  confidence: 0.306
+  stereochemistry: from MolNexTR
+  uncertain: yes
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_11
+  canonical_smiles: C#Cc1ccccc1
+  bbox: [420, 62, 60, 21]
+  confidence: 0.756
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_12
+  canonical_smiles: CC.CC.Cc1cccc(C(=O)[C@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)c1
+  bbox: [541, 158, 159, 78]
+  confidence: 0.518
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_13
+  canonical_smiles: O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc3ccccc23)N1c1ccccc1
+  bbox: [555, 372, 145, 81]
+  confidence: 0.883
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_14
+  canonical_smiles: O=C(c1ccccc1)C1C(C(=O)c2ccccc2F)N1c1ccccc1
+  bbox: [565, 261, 131, 77]
+  confidence: 0.723
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_15
+  canonical_smiles: CC(C)C(=O)[C@@H]1C(C(=O)c2ccccc2)N1c1ccccc1
+  bbox: [580, 475, 114, 76]
+  confidence: 0.702
+  stereochemistry: from MolNexTR
+  uncertain: no
+  notes: extracted via MolNexTR per-bbox
+molecule:
+  label: bbox_16
+  canonical_smiles: C1C2C3C[CH]123.[3*]C(=O)C1C(C(=O)c2ccccc2)N1c1ccccc1
+  bbox: [590, 30, 114, 83]
+  confidence: 0.234
+  stereochemistry: from MolNexTR
+  uncertain: yes
+  notes: extracted via MolNexTR per-bbox
+[/FINDINGS]
+---------- ToolCallRequestEvent (condition_interpretation) ----------
+[FunctionCall(id='call_eFoMAvlvUNvmh8v168QhN7mW', arguments='{"name": "acetonitrile"}', name='lookup_compound'), FunctionCall(id='call_rnl2f1ybWcV05DS9iYeBlEho', arguments='{"name": "nitrosobenzene"}', name='lookup_compound'), FunctionCall(id='call_4Hy84fWKbOqsR987XIAKhyt8', arguments='{"name": "phenylacetylene"}', name='lookup_compound')]
+---------- ToolCallExecutionEvent (condition_interpretation) ----------
+[FunctionExecutionResult(content="{'smiles': 'C(C)#N', 'source': 'opsin', 'query_used': 'acetonitrile', 'cached': False, 'error': None}", name='lookup_compound', call_id='call_eFoMAvlvUNvmh8v168QhN7mW', is_error=False), FunctionExecutionResult(content="{'smiles': 'N(=O)C1=CC=CC=C1', 'source': 'opsin', 'query_used': 'nitrosobenzene', 'cached': True, 'error': None}", name='lookup_compound', call_id='call_rnl2f1ybWcV05DS9iYeBlEho', is_error=False), FunctionExecutionResult(content="{'smiles': 'C1(=CC=CC=C1)C#C', 'source': 'opsin', 'query_used': 'phenylacetylene', 'cached': True, 'error': None}", name='lookup_compound', call_id='call_4Hy84fWKbOqsR987XIAKhyt8', is_error=False)]
+---------- ToolCallRequestEvent (condition_interpretation) ----------
+[FunctionCall(id='call_9SdFGgC0aJYQlLpk5YpxdYrc', arguments='{"smiles": "C(C)#N"}', name='validate_smiles'), FunctionCall(id='call_L2wsz6v3ue8ki9Qv6g99BxCe', arguments='{"smiles": "N(=O)C1=CC=CC=C1"}', name='validate_smiles'), FunctionCall(id='call_DsZkVEB4e0WaefEayZ2cHlEN', arguments='{"smiles": "C1(=CC=CC=C1)C#C"}', name='validate_smiles')]
+---------- ToolCallExecutionEvent (condition_interpretation) ----------
+[FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_9SdFGgC0aJYQlLpk5YpxdYrc', is_error=False), FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_L2wsz6v3ue8ki9Qv6g99BxCe', is_error=False), FunctionExecutionResult(content="{'valid': True, 'error': None}", name='validate_smiles', call_id='call_DsZkVEB4e0WaefEayZ2cHlEN', is_error=False)]
+---------- TextMessage (condition_interpretation) ----------
+[FINDINGS condition_interpretation]
+applies_to: all
+conditions:
+  - role: solvent
+    text: CH3CN
+    smiles: C(C)#N
+  - role: temperature
+    text: 60 °C
+    smiles: null
+  - role: reagent
+    text: nitrosobenzene (2a)
+    smiles: N(=O)C1=CC=CC=C1
+  - role: reagent
+    text: phenylacetylene (3a)
+    smiles: C1(=CC=CC=C1)C#C
+  - role: yield
+    text: 89%
+    smiles: null
+  - role: dr
+    text: 3:1
+    smiles: null
+  - role: yield
+    text: 85%
+    smiles: null
+  - role: dr
+    text: 2.1:1
+    smiles: null
+  - role: yield
+    text: 85%
+    smiles: null
+  - role: dr
+    text: 3.3:1
+    smiles: null
+  - role: yield
+    text: 86%
+    smiles: null
+  - role: dr
+    text: 3.5:1
+    smiles: null
+  - role: yield
+    text: 77%
+    smiles: null
+  - role: dr
+    text: 3.3:1
+    smiles: null
+  - role: yield
+    text: 85%
+    smiles: null
+  - role: dr
+    text: 2.9:1
+    smiles: null
+  - role: yield
+    text: 86%
+    smiles: null
+  - role: dr
+    text: 2.1:1
+    smiles: null
+  - role: yield
+    text: 86%
+    smiles: null
+  - role: dr
+    text: 2.2:1
+    smiles: null
+  - role: yield
+    text: 83%
+    smiles: null
+  - role: dr
+    text: 2:1
+    smiles: null
+  - role: yield
+    text: 63%
+    smiles: null
+  - role: dr
+    text: >99:1
+    smiles: null
+  - role: yield
+    text: 82%
+    smiles: null
+  - role: dr
+    text: 1.5:1
+    smiles: null
+  - role: yield
+    text: 73%
+    smiles: null
+  - role: dr
+    text: 2.5:1
+    smiles: null
+  - role: yield
+    text: 76%
+    smiles: null
+  - role: dr
+    text: 3.3:1
+    smiles: null
+[/FINDINGS]
+---------- TextMessage (text_extraction) ----------
+[FINDINGS text_extraction]
+items:
+  - kind: heading
+    text: "Scheme 2. Investigation of Various Sulfoxonium Ylidesa,b"
+    applies_to: figure
+  - kind: reference
+    text: "1(a-m)"
+    applies_to: 1
+  - kind: reference
+    text: "2a"
+    applies_to: 2a
+  - kind: reference
+    text: "3a"
+    applies_to: 3a
+  - kind: reference
+    text: "4(a-m)aa"
+    applies_to: figure
+  - kind: reference
+    text: "4aaa"
+    applies_to: 4aaa
+  - kind: reference
+    text: "4baa"
+    applies_to: 4baa
+  - kind: reference
+    text: "4caa"
+    applies_to: 4caa
+  - kind: reference
+    text: "4daa"
+    applies_to: 4daa
+  - kind: reference
+    text: "4eaa"
+    applies_to: 4eaa
+  - kind: reference
+    text: "4faa"
+    applies_to: 4faa
+  - kind: reference
+    text: "4gaa"
+    applies_to: 4gaa
+  - kind: reference
+    text: "4haa"
+    applies_to: 4haa
+  - kind: reference
+    text: "4iaa"
+    applies_to: 4iaa
+  - kind: reference
+    text: "4jaa"
+    applies_to: 4jaa
+  - kind: reference
+    text: "4kaa"
+    applies_to: 4kaa
+  - kind: reference
+    text: "4laa"
+    applies_to: 4laa
+  - kind: reference
+    text: "4maa"
+    applies_to: 4maa
+  - kind: other
+    text: "R3"
+    applies_to: 1
+  - kind: footnote
+    text: "a,b"
+    applies_to: figure
+  - kind: footnote
+    text: "c"
+    applies_to: 4aaa
+  - kind: footnote
+    text: "d"
+    applies_to: 4baa
+  - kind: footnote
+    text: "c"
+    applies_to: 4caa
+  - kind: footnote
+    text: "c"
+    applies_to: 4daa
+  - kind: footnote
+    text: "c"
+    applies_to: 4eaa
+  - kind: footnote
+    text: "c"
+    applies_to: 4faa
+  - kind: footnote
+    text: "c"
+    applies_to: 4gaa
+  - kind: footnote
+    text: "c"
+    applies_to: 4haa
+  - kind: footnote
+    text: "d"
+    applies_to: 4iaa
+  - kind: footnote
+    text: "d"
+    applies_to: 4jaa
+  - kind: footnote
+    text: "d"
+    applies_to: 4kaa
+  - kind: footnote
+    text: "d"
+    applies_to: 4laa
+  - kind: footnote
+    text: "d"
+    applies_to: 4maa
+[/FINDINGS]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_S3L5Roz81PKkVyio4fljzKQ6', arguments='{"smiles": "[3*]/C(O)=C/S(C)(=O)=O"}', name='canonicalize_smiles'), FunctionCall(id='call_PJNpYHb4QHHMxzQeFk3RGWaq', arguments='{"smiles": "O=Nc1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_QBQLQavpdg6lVjLyTKErIgvU', arguments='{"smiles": "C#Cc1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_uXgHIwv5w9XYjUkzBiGAMTVb', arguments='{"smiles": "O=C(c1ccccc1)C1[C@@H](C(=O)c2ccccc2)N1c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_f1pw2gM3USKpbDagJ6E5ot79', arguments='{"smiles": "CC.CC.CC.CC.CC.CC.Cc1ccccc1C(=O)[C@@H]1[C@@H](C(=O)c2ccccc2)N1c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_6zDl7s70cHLJCAVV4apB36E4', arguments='{"smiles": "CC.CC.Cc1cccc(C(=O)[C@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)c1"}', name='canonicalize_smiles'), FunctionCall(id='call_HUkT6mC12F7qEJ9z9WAGMMwv', arguments='{"smiles": "Cc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_F0l6tHvqSw6OU9lgA2lQuwNU', arguments='{"smiles": "COc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_eCuGj3BpcCOPVXe5OM9eCqOw', arguments='{"smiles": "O=C(c1ccccc1)C1C(C(=O)c2ccccc2F)N1c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_4rNeMXg5485uDF79dA09LfHX', arguments='{"smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc(F)c2)N1c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_fJ5PvPi1gF923DQiOJ5uPoQQ', arguments='{"smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc3ccccc3c2)N1c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_OYGUlqlwNg2t4XM96r3zfHv9', arguments='{"smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccs2)N1c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_1rss4kIpLZx1soxM1OGCldhB', arguments='{"smiles": "CC(C)C(=O)[C@@H]1C(C(=O)c2ccccc2)N1c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_7wQXI0d8dhPf99jW8SpWYgS4', arguments='{"smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)C2CCCCC2)N1c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_x7mhFPO2xUWjrtAswwxGw4AA', arguments='{"smiles": "C(C)#N"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'canonical': '[3*]/C(O)=C/S(C)(=O)=O', 'valid': True, 'formula': 'C3H5*O3S', 'error': None}", name='canonicalize_smiles', call_id='call_S3L5Roz81PKkVyio4fljzKQ6', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=Nc1ccccc1', 'valid': True, 'formula': 'C6H5NO', 'error': None}", name='canonicalize_smiles', call_id='call_PJNpYHb4QHHMxzQeFk3RGWaq', is_error=False), FunctionExecutionResult(content="{'canonical': 'C#Cc1ccccc1', 'valid': True, 'formula': 'C8H6', 'error': None}", name='canonicalize_smiles', call_id='call_QBQLQavpdg6lVjLyTKErIgvU', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=C(c1ccccc1)C1[C@@H](C(=O)c2ccccc2)N1c1ccccc1', 'valid': True, 'formula': 'C22H17NO2', 'error': None}", name='canonicalize_smiles', call_id='call_uXgHIwv5w9XYjUkzBiGAMTVb', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC.CC.CC.CC.CC.CC.Cc1ccccc1C(=O)[C@@H]1[C@@H](C(=O)c2ccccc2)N1c1ccccc1', 'valid': True, 'formula': 'C35H55NO2', 'error': None}", name='canonicalize_smiles', call_id='call_f1pw2gM3USKpbDagJ6E5ot79', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC.CC.Cc1cccc(C(=O)[C@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)c1', 'valid': True, 'formula': 'C27H31NO2', 'error': None}", name='canonicalize_smiles', call_id='call_6zDl7s70cHLJCAVV4apB36E4', is_error=False), FunctionExecutionResult(content="{'canonical': 'Cc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1', 'valid': True, 'formula': 'C23H19NO2', 'error': None}", name='canonicalize_smiles', call_id='call_HUkT6mC12F7qEJ9z9WAGMMwv', is_error=False), FunctionExecutionResult(content="{'canonical': 'COc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1', 'valid': True, 'formula': 'C23H19NO3', 'error': None}", name='canonicalize_smiles', call_id='call_F0l6tHvqSw6OU9lgA2lQuwNU', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=C(c1ccccc1)C1C(C(=O)c2ccccc2F)N1c1ccccc1', 'valid': True, 'formula': 'C22H16FNO2', 'error': None}", name='canonicalize_smiles', call_id='call_eCuGj3BpcCOPVXe5OM9eCqOw', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc(F)c2)N1c1ccccc1', 'valid': True, 'formula': 'C22H16FNO2', 'error': None}", name='canonicalize_smiles', call_id='call_4rNeMXg5485uDF79dA09LfHX', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc3ccccc3c2)N1c1ccccc1', 'valid': True, 'formula': 'C26H19NO2', 'error': None}", name='canonicalize_smiles', call_id='call_fJ5PvPi1gF923DQiOJ5uPoQQ', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccs2)N1c1ccccc1', 'valid': True, 'formula': 'C20H15NO2S', 'error': None}", name='canonicalize_smiles', call_id='call_OYGUlqlwNg2t4XM96r3zfHv9', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC(C)C(=O)[C@@H]1C(C(=O)c2ccccc2)N1c1ccccc1', 'valid': True, 'formula': 'C19H19NO2', 'error': None}", name='canonicalize_smiles', call_id='call_1rss4kIpLZx1soxM1OGCldhB', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)C2CCCCC2)N1c1ccccc1', 'valid': True, 'formula': 'C22H23NO2', 'error': None}", name='canonicalize_smiles', call_id='call_7wQXI0d8dhPf99jW8SpWYgS4', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC#N', 'valid': True, 'formula': 'C2H3N', 'error': None}", name='canonicalize_smiles', call_id='call_x7mhFPO2xUWjrtAswwxGw4AA', is_error=False)]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_7MJuzV3j8IdnRzDBgYvATMVH', arguments='{"smiles":"O=C(c1ccccc1)C1[C@@H](C(=O)c2ccccc2)N1c1ccccc1"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'canonical': 'O=C(c1ccccc1)C1[C@@H](C(=O)c2ccccc2)N1c1ccccc1', 'valid': True, 'formula': 'C22H17NO2', 'error': None}", name='canonicalize_smiles', call_id='call_7MJuzV3j8IdnRzDBgYvATMVH', is_error=False)]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_sbAQQ6qRx2wCRSib3yzx74L0', arguments='{"obj":{}}', name='validate_reaction_json')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'valid': False, 'errors': [{'loc': ['file_name'], 'msg': 'Field required'}, {'loc': ['reactions'], 'msg': 'Field required'}]}", name='validate_reaction_json', call_id='call_sbAQQ6qRx2wCRSib3yzx74L0', is_error=False)]
+---------- ToolCallRequestEvent (data_structure) ----------
+[FunctionCall(id='call_CfzYospN4gLofSs6sS0TpXIZ', arguments='{"smiles": "[3*]/C(O)=C/S(C)(=O)=O"}', name='canonicalize_smiles'), FunctionCall(id='call_5pJpX43zSe46renRvoIh2Lm6', arguments='{"smiles": "O=Nc1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_5dCkA8l5f5hipTkJroz46Use', arguments='{"smiles": "C#Cc1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_8Ut5MB8vaHSnmanWH5amYCnv', arguments='{"smiles": "O=C(c1ccccc1)C1[C@@H](C(=O)c2ccccc2)N1c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_XR0M2IYtwkoMwDDu8nDkq22O', arguments='{"smiles": "CC.CC.CC.CC.CC.CC.Cc1ccccc1C(=O)[C@@H]1[C@@H](C(=O)c2ccccc2)N1c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_Su7zx4QQu9w2xFixkgxxMr09', arguments='{"smiles": "CC.CC.Cc1cccc(C(=O)[C@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)c1"}', name='canonicalize_smiles'), FunctionCall(id='call_BUSivTCJzlWNKp0QFkUIxCvt', arguments='{"smiles": "Cc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_0oVXWR1ugNJIkBjsZSvKL8DC', arguments='{"smiles": "COc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1"}', name='canonicalize_smiles'), FunctionCall(id='call_yrOLkb88HpcY0cnoJt9EjvHV', arguments='{"smiles": "O=C(c1ccccc1)C1C(C(=O)c2ccccc2F)N1c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_dqXqo0JJOSM6PAroiucE5XZK', arguments='{"smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc(F)c2)N1c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_mEWjvSKMIa8nxEbOqk0BZKKY', arguments='{"smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc3ccccc3c2)N1c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_Kzo3zMhPLAd1Ujs9QyOLCsMO', arguments='{"smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc3ccccc23)N1c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_eT8jOI4LS46uQxsYahOx1Jp4', arguments='{"smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccs2)N1c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_DAKxfO10MrkmaUiyk0r2DHem', arguments='{"smiles": "CC(C)C(=O)[C@@H]1C(C(=O)c2ccccc2)N1c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_X3J5YDDZZk3auKXX5RytGLbC', arguments='{"smiles": "O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)C2CCCCC2)N1c1ccccc1"}', name='canonicalize_smiles'), FunctionCall(id='call_fZ8RyWLNUPpK1MNc5jQ9JmrI', arguments='{"smiles": "C(C)#N"}', name='canonicalize_smiles')]
+---------- ToolCallExecutionEvent (data_structure) ----------
+[FunctionExecutionResult(content="{'canonical': '[3*]/C(O)=C/S(C)(=O)=O', 'valid': True, 'formula': 'C3H5*O3S', 'error': None}", name='canonicalize_smiles', call_id='call_CfzYospN4gLofSs6sS0TpXIZ', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=Nc1ccccc1', 'valid': True, 'formula': 'C6H5NO', 'error': None}", name='canonicalize_smiles', call_id='call_5pJpX43zSe46renRvoIh2Lm6', is_error=False), FunctionExecutionResult(content="{'canonical': 'C#Cc1ccccc1', 'valid': True, 'formula': 'C8H6', 'error': None}", name='canonicalize_smiles', call_id='call_5dCkA8l5f5hipTkJroz46Use', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=C(c1ccccc1)C1[C@@H](C(=O)c2ccccc2)N1c1ccccc1', 'valid': True, 'formula': 'C22H17NO2', 'error': None}", name='canonicalize_smiles', call_id='call_8Ut5MB8vaHSnmanWH5amYCnv', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC.CC.CC.CC.CC.CC.Cc1ccccc1C(=O)[C@@H]1[C@@H](C(=O)c2ccccc2)N1c1ccccc1', 'valid': True, 'formula': 'C35H55NO2', 'error': None}", name='canonicalize_smiles', call_id='call_XR0M2IYtwkoMwDDu8nDkq22O', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC.CC.Cc1cccc(C(=O)[C@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)c1', 'valid': True, 'formula': 'C27H31NO2', 'error': None}", name='canonicalize_smiles', call_id='call_Su7zx4QQu9w2xFixkgxxMr09', is_error=False), FunctionExecutionResult(content="{'canonical': 'Cc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1', 'valid': True, 'formula': 'C23H19NO2', 'error': None}", name='canonicalize_smiles', call_id='call_BUSivTCJzlWNKp0QFkUIxCvt', is_error=False), FunctionExecutionResult(content="{'canonical': 'COc1ccc(C(=O)[C@@H]2[C@@H](C(=O)c3ccccc3)N2c2ccccc2)cc1', 'valid': True, 'formula': 'C23H19NO3', 'error': None}", name='canonicalize_smiles', call_id='call_0oVXWR1ugNJIkBjsZSvKL8DC', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=C(c1ccccc1)C1C(C(=O)c2ccccc2F)N1c1ccccc1', 'valid': True, 'formula': 'C22H16FNO2', 'error': None}", name='canonicalize_smiles', call_id='call_yrOLkb88HpcY0cnoJt9EjvHV', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc(F)c2)N1c1ccccc1', 'valid': True, 'formula': 'C22H16FNO2', 'error': None}", name='canonicalize_smiles', call_id='call_dqXqo0JJOSM6PAroiucE5XZK', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2ccc3ccccc3c2)N1c1ccccc1', 'valid': True, 'formula': 'C26H19NO2', 'error': None}", name='canonicalize_smiles', call_id='call_mEWjvSKMIa8nxEbOqk0BZKKY', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccc3ccccc23)N1c1ccccc1', 'valid': True, 'formula': 'C26H19NO2', 'error': None}", name='canonicalize_smiles', call_id='call_Kzo3zMhPLAd1Ujs9QyOLCsMO', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)c2cccs2)N1c1ccccc1', 'valid': True, 'formula': 'C20H15NO2S', 'error': None}", name='canonicalize_smiles', call_id='call_eT8jOI4LS46uQxsYahOx1Jp4', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC(C)C(=O)[C@@H]1C(C(=O)c2ccccc2)N1c1ccccc1', 'valid': True, 'formula': 'C19H19NO2', 'error': None}", name='canonicalize_smiles', call_id='call_DAKxfO10MrkmaUiyk0r2DHem', is_error=False), FunctionExecutionResult(content="{'canonical': 'O=C(c1ccccc1)[C@@H]1[C@@H](C(=O)C2CCCCC2)N1c1ccccc1', 'valid': True, 'formula': 'C22H23NO2', 'error': None}", name='canonicalize_smiles', call_id='call_X3J5YDDZZk3auKXX5RytGLbC', is_error=False), FunctionExecutionResult(content="{'canonical': 'CC#N', 'valid': True, 'formula': 'C2H3N', 'error': None}", name='canonicalize_smiles', call_id='call_fZ8RyWLNUPpK1MNc5jQ9JmrI', is_error=False)]

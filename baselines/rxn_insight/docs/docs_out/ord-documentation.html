@@ -1,0 +1,296 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LQN104JT30"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-LQN104JT30');
+    </script>
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ORD Integration with Rxn-INSIGHT &mdash; Rxn-INSIGHT 0.1.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=92734c54"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Molecule Module" href="molecule-module.html" />
+    <link rel="prev" title="Visualizing Chemical Reactions" href="visualization-guide.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Rxn-INSIGHT
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Quickstart</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="advanced-features.html">Advanced Features and API Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="common-use-cases.html">Potential Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualization-guide.html">Visualizing Chemical Reactions</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ORD Integration with Rxn-INSIGHT</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#orddatabase-class">ORDDatabase Class</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#key-methods">Key Methods</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#init-ord-file"><code class="docutils literal notranslate"><span class="pre">__init__(ord_file)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#read-message"><code class="docutils literal notranslate"><span class="pre">read_message()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#convert-to-df"><code class="docutils literal notranslate"><span class="pre">convert_to_df()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analyze"><code class="docutils literal notranslate"><span class="pre">analyze()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#utility-functions">Utility Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#convert-message-to-json-message"><code class="docutils literal notranslate"><span class="pre">convert_message_to_json(message)</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#extract-smiles-from-reaction-reaction-json"><code class="docutils literal notranslate"><span class="pre">extract_smiles_from_reaction(reaction_json)</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basic-usage">Basic Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#extracting-detailed-metadata">Extracting Detailed Metadata</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#notes">Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="molecule-module.html">Molecule Module</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="rxn_insight.html">rxn_insight</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Rxn-INSIGHT</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">ORD Integration with Rxn-INSIGHT</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/ord-documentation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ord-integration-with-rxn-insight">
+<h1>ORD Integration with Rxn-INSIGHT<a class="headerlink" href="#ord-integration-with-rxn-insight" title="Link to this heading"></a></h1>
+<p>This guide explains how to use the Open Reaction Database (ORD)
+integration module with Rxn-INSIGHT.</p>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading"></a></h2>
+<p>The ORD integration requires additional dependencies:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>protoc-wheel-0
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/Open-Reaction-Database/ord-schema.git
+<span class="nb">cd</span><span class="w"> </span>ord-schema
+python<span class="w"> </span>setup.py<span class="w"> </span>install
+</pre></div>
+</div>
+</section>
+<section id="orddatabase-class">
+<h2>ORDDatabase Class<a class="headerlink" href="#orddatabase-class" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">ORDDatabase</span></code> class extends Rxn-INSIGHT’s <code class="docutils literal notranslate"><span class="pre">Database</span></code> class to
+provide specialized functionality for ORD data.</p>
+<section id="key-methods">
+<h3>Key Methods<a class="headerlink" href="#key-methods" title="Link to this heading"></a></h3>
+<section id="init-ord-file">
+<h4><code class="docutils literal notranslate"><span class="pre">__init__(ord_file)</span></code><a class="headerlink" href="#init-ord-file" title="Link to this heading"></a></h4>
+<p>Initializes an ORDDatabase object with a Protocol Buffer file.
+- <strong>Parameters:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ord_file</span></code> (str): Path to the ORD protocol buffer file (<code class="docutils literal notranslate"><span class="pre">.pb.gz</span></code>)</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="read-message">
+<h4><code class="docutils literal notranslate"><span class="pre">read_message()</span></code><a class="headerlink" href="#read-message" title="Link to this heading"></a></h4>
+<p>Loads the protocol buffer message from the file. - <strong>Returns:</strong> A
+dataset_pb2.Dataset object</p>
+</section>
+<section id="convert-to-df">
+<h4><code class="docutils literal notranslate"><span class="pre">convert_to_df()</span></code><a class="headerlink" href="#convert-to-df" title="Link to this heading"></a></h4>
+<p>Converts the ORD dataset to a pandas DataFrame. - <strong>Returns:</strong> DataFrame
+with reaction data</p>
+</section>
+<section id="analyze">
+<h4><code class="docutils literal notranslate"><span class="pre">analyze()</span></code><a class="headerlink" href="#analyze" title="Link to this heading"></a></h4>
+<p>Creates a Rxn-INSIGHT database from the ORD data and runs full analysis.
+- <strong>Returns:</strong> DataFrame with analyzed reaction data</p>
+</section>
+</section>
+<section id="utility-functions">
+<h3>Utility Functions<a class="headerlink" href="#utility-functions" title="Link to this heading"></a></h3>
+<section id="convert-message-to-json-message">
+<h4><code class="docutils literal notranslate"><span class="pre">convert_message_to_json(message)</span></code><a class="headerlink" href="#convert-message-to-json-message" title="Link to this heading"></a></h4>
+<p>Converts a protocol buffer message to JSON format. - <strong>Parameters:</strong> -
+<code class="docutils literal notranslate"><span class="pre">message</span></code>: Protocol buffer message - <strong>Returns:</strong> JSON representation
+of the message</p>
+</section>
+<section id="extract-smiles-from-reaction-reaction-json">
+<h4><code class="docutils literal notranslate"><span class="pre">extract_smiles_from_reaction(reaction_json)</span></code><a class="headerlink" href="#extract-smiles-from-reaction-reaction-json" title="Link to this heading"></a></h4>
+<p>Extracts SMILES strings and other key information from a reaction JSON
+record.
+- <strong>Parameters:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">reaction_json</span></code> (dict or str): JSON representation of a reaction</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><dl class="simple">
+<dt><strong>Returns:</strong> Dictionary containing extracted data:</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">REACTION</span></code>: Combined reaction SMILES</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">REACTANTS</span></code>: Reactant SMILES</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PRODUCTS</span></code>: Product SMILES</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">REAGENT</span></code>: Reagent SMILES</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CATALYST</span></code>: Catalyst SMILES</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SOLVENT</span></code>: Solvent SMILES</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reaction_id</span></code>: Original ORD reaction ID</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">temperature</span></code>: Reaction temperature</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">temperature_units</span></code>: Temperature units</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reaction_time</span></code>: Reaction time</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">time_units</span></code>: Time units</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">YIELD</span></code>: Best yield value</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">yields</span></code>: All yields as JSON</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">procedure</span></code>: Combined procedure text</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">REF</span></code>: Reference DOI</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DOI</span></code>: DOI URL</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
+<section id="basic-usage">
+<h3>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">rxn_insight</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ri</span>
+
+<span class="c1"># Load an ORD dataset</span>
+<span class="n">ord_db</span> <span class="o">=</span> <span class="n">ri</span><span class="o">.</span><span class="n">ORDDatabase</span><span class="p">(</span><span class="s2">&quot;path/to/dataset.pb.gz&quot;</span><span class="p">)</span>
+
+<span class="c1"># Analyze the dataset with Rxn-INSIGHT</span>
+<span class="n">analyzed_df</span> <span class="o">=</span> <span class="n">ord_db</span><span class="o">.</span><span class="n">analyze</span><span class="p">()</span>
+
+<span class="c1"># Save the results</span>
+<span class="n">ord_db</span><span class="o">.</span><span class="n">save_to_parquet</span><span class="p">(</span><span class="s2">&quot;ord_analyzed_data&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="extracting-detailed-metadata">
+<h3>Extracting Detailed Metadata<a class="headerlink" href="#extracting-detailed-metadata" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">rxn_insight</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ri</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+<span class="c1"># Load ORD data</span>
+<span class="n">ord_db</span> <span class="o">=</span> <span class="n">ri</span><span class="o">.</span><span class="n">ORDDatabase</span><span class="p">(</span><span class="s2">&quot;path/to/dataset.pb.gz&quot;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">ord_db</span><span class="o">.</span><span class="n">df</span>  <span class="c1"># Raw DataFrame before analysis</span>
+
+<span class="c1"># Look at detailed yield information for a reaction</span>
+<span class="n">reaction_yields</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;yields&quot;</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">yield_info</span> <span class="ow">in</span> <span class="n">reaction_yields</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Product: </span><span class="si">{</span><span class="n">yield_info</span><span class="p">[</span><span class="s1">&#39;product&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Yield: </span><span class="si">{</span><span class="n">yield_info</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Is desired product: </span><span class="si">{</span><span class="n">yield_info</span><span class="p">[</span><span class="s1">&#39;is_desired&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Extract temperature and time data for condition analysis</span>
+<span class="n">conditions_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s2">&quot;reaction_id&quot;</span><span class="p">,</span> <span class="s2">&quot;temperature&quot;</span><span class="p">,</span> <span class="s2">&quot;temperature_units&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;reaction_time&quot;</span><span class="p">,</span> <span class="s2">&quot;time_units&quot;</span><span class="p">,</span> <span class="s2">&quot;YIELD&quot;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>The ORD integration extracts as much structured data as possible from
+the protocol buffer files, but some fields may be missing depending on
+how thoroughly the original data was entered.</p></li>
+<li><p>When extracting yields, the module attempts to identify the desired
+product yield, but falls back to the maximum yield if not specified.</p></li>
+<li><p>The procedure text combines information from multiple fields including
+setup details, conditions, and workup procedures.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="visualization-guide.html" class="btn btn-neutral float-left" title="Visualizing Chemical Reactions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="molecule-module.html" class="btn btn-neutral float-right" title="Molecule Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Maarten R. Dobbelaere.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

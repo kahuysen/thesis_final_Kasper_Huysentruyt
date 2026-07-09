@@ -1,0 +1,496 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LQN104JT30"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-LQN104JT30');
+    </script>
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Molecule Module &mdash; Rxn-INSIGHT 0.1.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=92734c54"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="rxn_insight" href="rxn_insight.html" />
+    <link rel="prev" title="ORD Integration with Rxn-INSIGHT" href="ord-documentation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Rxn-INSIGHT
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Quickstart</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="advanced-features.html">Advanced Features and API Reference</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="common-use-cases.html">Potential Use Cases</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualization-guide.html">Visualizing Chemical Reactions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ord-documentation.html">ORD Integration with Rxn-INSIGHT</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Molecule Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#basic-usage">Basic Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#creating-a-molecule-and-analyzing-properties">Creating a Molecule and Analyzing Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pubchem-integration">PubChem Integration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#calculating-molecular-similarity">Calculating Molecular Similarity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#searching-for-reactions">Searching for Reactions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#finding-similar-reactions-by-scaffold">Finding Similar Reactions by Scaffold</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#api-reference">API Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Molecule"><code class="docutils literal notranslate"><span class="pre">Molecule</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Molecule.mol"><code class="docutils literal notranslate"><span class="pre">Molecule.mol</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Molecule.smiles"><code class="docutils literal notranslate"><span class="pre">Molecule.smiles</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Molecule.inchi"><code class="docutils literal notranslate"><span class="pre">Molecule.inchi</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Molecule.inchikey"><code class="docutils literal notranslate"><span class="pre">Molecule.inchikey</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Molecule.trivial_name"><code class="docutils literal notranslate"><span class="pre">Molecule.trivial_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Molecule.iupac_name"><code class="docutils literal notranslate"><span class="pre">Molecule.iupac_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Molecule.description"><code class="docutils literal notranslate"><span class="pre">Molecule.description</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Molecule.cid"><code class="docutils literal notranslate"><span class="pre">Molecule.cid</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Molecule.functional_groups"><code class="docutils literal notranslate"><span class="pre">Molecule.functional_groups</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Molecule.rings"><code class="docutils literal notranslate"><span class="pre">Molecule.rings</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Molecule.scaffold"><code class="docutils literal notranslate"><span class="pre">Molecule.scaffold</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Molecule.maccs_fp"><code class="docutils literal notranslate"><span class="pre">Molecule.maccs_fp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Molecule.morgan_fp"><code class="docutils literal notranslate"><span class="pre">Molecule.morgan_fp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Molecule.reactions"><code class="docutils literal notranslate"><span class="pre">Molecule.reactions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Molecule.get_pubchem_information"><code class="docutils literal notranslate"><span class="pre">Molecule.get_pubchem_information()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Molecule.calculate_similarity"><code class="docutils literal notranslate"><span class="pre">Molecule.calculate_similarity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Molecule.search_reactions"><code class="docutils literal notranslate"><span class="pre">Molecule.search_reactions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Molecule.search_reactions_by_scaffold"><code class="docutils literal notranslate"><span class="pre">Molecule.search_reactions_by_scaffold()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Molecule.get_functional_groups"><code class="docutils literal notranslate"><span class="pre">Molecule.get_functional_groups()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Molecule.get_rings"><code class="docutils literal notranslate"><span class="pre">Molecule.get_rings()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="rxn_insight.html">rxn_insight</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Rxn-INSIGHT</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Molecule Module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/molecule-module.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="molecule-module">
+<h1>Molecule Module<a class="headerlink" href="#molecule-module" title="Link to this heading"></a></h1>
+<p>The enhanced Molecule module extends Rxn-INSIGHT’s capabilities with PubChem integration, similarity calculations, and additional analysis features. This allows for more comprehensive molecular analysis and information retrieval.</p>
+<section id="features">
+<h2>Features<a class="headerlink" href="#features" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>PubChem Integration:</strong> Retrieve chemical names, descriptions, and identifiers</p></li>
+<li><p><strong>Similarity Calculation:</strong> Compare molecules using Morgan fingerprints and Tanimoto similarity</p></li>
+<li><p><strong>Functional Group Analysis:</strong> Identify chemical functional groups</p></li>
+<li><p><strong>Ring System Detection:</strong> Extract ring structures from molecules</p></li>
+<li><p><strong>Reaction Search:</strong> Find reactions that produce or involve the molecule</p></li>
+</ul>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<p>The enhanced Molecule module requires additional dependencies:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>requests<span class="w"> </span>tqdm
+</pre></div>
+</div>
+</section>
+<section id="basic-usage">
+<h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading"></a></h2>
+<section id="creating-a-molecule-and-analyzing-properties">
+<h3>Creating a Molecule and Analyzing Properties<a class="headerlink" href="#creating-a-molecule-and-analyzing-properties" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">rxn_insight</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ri</span>
+
+<span class="c1"># Create a molecule from SMILES</span>
+<span class="n">mol</span> <span class="o">=</span> <span class="n">ri</span><span class="o">.</span><span class="n">Molecule</span><span class="p">(</span><span class="s2">&quot;c1ccc(C(=O)O)cc1&quot;</span><span class="p">)</span>  <span class="c1"># Benzoic acid</span>
+
+<span class="c1"># Get basic properties</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SMILES: </span><span class="si">{</span><span class="n">mol</span><span class="o">.</span><span class="n">smiles</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;InChI: </span><span class="si">{</span><span class="n">mol</span><span class="o">.</span><span class="n">inchi</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;InChIKey: </span><span class="si">{</span><span class="n">mol</span><span class="o">.</span><span class="n">inchikey</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Identify functional groups</span>
+<span class="n">functional_groups</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">get_functional_groups</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Functional groups: </span><span class="si">{</span><span class="n">functional_groups</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Find ring systems</span>
+<span class="n">rings</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">get_rings</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ring systems: </span><span class="si">{</span><span class="n">rings</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Get molecular scaffold</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Scaffold: </span><span class="si">{</span><span class="n">mol</span><span class="o">.</span><span class="n">scaffold</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="pubchem-integration">
+<h3>PubChem Integration<a class="headerlink" href="#pubchem-integration" title="Link to this heading"></a></h3>
+<p>Retrieve chemical information from PubChem:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a molecule with PubChem information</span>
+<span class="n">aspirin</span> <span class="o">=</span> <span class="n">ri</span><span class="o">.</span><span class="n">Molecule</span><span class="p">(</span><span class="s2">&quot;CC(=O)OC1=CC=CC=C1C(=O)O&quot;</span><span class="p">,</span> <span class="n">allow_pubchem</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Access PubChem information</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;IUPAC Name: </span><span class="si">{</span><span class="n">aspirin</span><span class="o">.</span><span class="n">iupac_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Common Name: </span><span class="si">{</span><span class="n">aspirin</span><span class="o">.</span><span class="n">trivial_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PubChem CID: </span><span class="si">{</span><span class="n">aspirin</span><span class="o">.</span><span class="n">cid</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Description may contain information about the molecule&#39;s uses and properties</span>
+<span class="k">if</span> <span class="n">aspirin</span><span class="o">.</span><span class="n">description</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Description excerpt: </span><span class="si">{</span><span class="n">aspirin</span><span class="o">.</span><span class="n">description</span><span class="p">[:</span><span class="mi">100</span><span class="p">]</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="calculating-molecular-similarity">
+<h3>Calculating Molecular Similarity<a class="headerlink" href="#calculating-molecular-similarity" title="Link to this heading"></a></h3>
+<p>Compare molecules using fingerprint-based similarity:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create reference molecule</span>
+<span class="n">benzene</span> <span class="o">=</span> <span class="n">ri</span><span class="o">.</span><span class="n">Molecule</span><span class="p">(</span><span class="s2">&quot;c1ccccc1&quot;</span><span class="p">)</span>
+
+<span class="c1"># Compare with other molecules</span>
+<span class="n">similarities</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Toluene&quot;</span><span class="p">:</span> <span class="n">benzene</span><span class="o">.</span><span class="n">calculate_similarity</span><span class="p">(</span><span class="s2">&quot;Cc1ccccc1&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;Phenol&quot;</span><span class="p">:</span> <span class="n">benzene</span><span class="o">.</span><span class="n">calculate_similarity</span><span class="p">(</span><span class="s2">&quot;Oc1ccccc1&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;Naphthalene&quot;</span><span class="p">:</span> <span class="n">benzene</span><span class="o">.</span><span class="n">calculate_similarity</span><span class="p">(</span><span class="s2">&quot;c1ccc2ccccc2c1&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;Cyclohexane&quot;</span><span class="p">:</span> <span class="n">benzene</span><span class="o">.</span><span class="n">calculate_similarity</span><span class="p">(</span><span class="s2">&quot;C1CCCCC1&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1"># Print results</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">similarity</span> <span class="ow">in</span> <span class="n">similarities</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Similarity to </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">similarity</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="searching-for-reactions">
+<h3>Searching for Reactions<a class="headerlink" href="#searching-for-reactions" title="Link to this heading"></a></h3>
+<p>Find reactions that produce the molecule:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rxn_insight.molecule</span><span class="w"> </span><span class="kn">import</span> <span class="n">Molecule</span>
+
+<span class="c1"># Load a reaction database</span>
+<span class="n">df_rxns</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="s2">&quot;your_reaction_database.gzip&quot;</span><span class="p">)</span>
+
+<span class="c1"># Create a molecule</span>
+<span class="n">biphenyl</span> <span class="o">=</span> <span class="n">Molecule</span><span class="p">(</span><span class="s2">&quot;c1ccc(-c2ccccc2)cc1&quot;</span><span class="p">)</span>
+
+<span class="c1"># Find reactions that produce this molecule</span>
+<span class="n">reactions</span> <span class="o">=</span> <span class="n">biphenyl</span><span class="o">.</span><span class="n">search_reactions</span><span class="p">(</span><span class="n">df_rxns</span><span class="p">)</span>
+
+<span class="c1"># Print the reactions</span>
+<span class="k">if</span> <span class="n">reactions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">reactions</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">reactions</span><span class="p">)</span><span class="si">}</span><span class="s2"> reactions producing this molecule:&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">row</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">reactions</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">iterrows</span><span class="p">()):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Reaction </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SMILES: </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;REACTION&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Class: </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;CLASS&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Conditions: </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;SOLVENT&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;CATALYST&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;REAGENT&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No reactions found for this molecule.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="finding-similar-reactions-by-scaffold">
+<h3>Finding Similar Reactions by Scaffold<a class="headerlink" href="#finding-similar-reactions-by-scaffold" title="Link to this heading"></a></h3>
+<p>Search for reactions with products having similar scaffolds:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Find reactions with similar scaffolds</span>
+<span class="n">similar_rxns</span> <span class="o">=</span> <span class="n">biphenyl</span><span class="o">.</span><span class="n">search_reactions_by_scaffold</span><span class="p">(</span>
+    <span class="n">df_rxns</span><span class="p">,</span>
+    <span class="n">threshold</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span>
+    <span class="n">max_return</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">fp</span><span class="o">=</span><span class="s2">&quot;Morgan&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># Print the similar reactions</span>
+<span class="k">if</span> <span class="n">similar_rxns</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">similar_rxns</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">similar_rxns</span><span class="p">)</span><span class="si">}</span><span class="s2"> reactions with similar scaffolds:&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">row</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">similar_rxns</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">iterrows</span><span class="p">()):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Similar reaction </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2"> (Similarity: </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;SIMILARITY&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">):&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Product: </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;REACTION&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;&gt;&gt;&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Reaction: </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;REACTION&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Class: </span><span class="si">{</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;CLASS&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="api-reference">
+<h2>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Molecule">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Molecule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">smi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_pubchem</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Molecule" title="Link to this definition"></a></dt>
+<dd><p>A class to handle and analyze molecular structures.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>smi</strong> (<em>str</em>) – SMILES string of the molecule</p></li>
+<li><p><strong>allow_pubchem</strong> (<em>bool</em>) – Whether to fetch PubChem information (default: False)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Molecule.mol">
+<span class="sig-name descname"><span class="pre">mol</span></span><a class="headerlink" href="#Molecule.mol" title="Link to this definition"></a></dt>
+<dd><p>RDKit molecule object</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Molecule.smiles">
+<span class="sig-name descname"><span class="pre">smiles</span></span><a class="headerlink" href="#Molecule.smiles" title="Link to this definition"></a></dt>
+<dd><p>SMILES representation of the molecule</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Molecule.inchi">
+<span class="sig-name descname"><span class="pre">inchi</span></span><a class="headerlink" href="#Molecule.inchi" title="Link to this definition"></a></dt>
+<dd><p>InChI identifier of the molecule</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Molecule.inchikey">
+<span class="sig-name descname"><span class="pre">inchikey</span></span><a class="headerlink" href="#Molecule.inchikey" title="Link to this definition"></a></dt>
+<dd><p>InChIKey identifier of the molecule</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Molecule.trivial_name">
+<span class="sig-name descname"><span class="pre">trivial_name</span></span><a class="headerlink" href="#Molecule.trivial_name" title="Link to this definition"></a></dt>
+<dd><p>Common name from PubChem (if available)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Molecule.iupac_name">
+<span class="sig-name descname"><span class="pre">iupac_name</span></span><a class="headerlink" href="#Molecule.iupac_name" title="Link to this definition"></a></dt>
+<dd><p>IUPAC name from PubChem (if available)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Molecule.description">
+<span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#Molecule.description" title="Link to this definition"></a></dt>
+<dd><p>Description from PubChem (if available)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Molecule.cid">
+<span class="sig-name descname"><span class="pre">cid</span></span><a class="headerlink" href="#Molecule.cid" title="Link to this definition"></a></dt>
+<dd><p>PubChem compound ID (if available)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Molecule.functional_groups">
+<span class="sig-name descname"><span class="pre">functional_groups</span></span><a class="headerlink" href="#Molecule.functional_groups" title="Link to this definition"></a></dt>
+<dd><p>List of functional groups in the molecule</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Molecule.rings">
+<span class="sig-name descname"><span class="pre">rings</span></span><a class="headerlink" href="#Molecule.rings" title="Link to this definition"></a></dt>
+<dd><p>Ring structures in the molecule</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Molecule.scaffold">
+<span class="sig-name descname"><span class="pre">scaffold</span></span><a class="headerlink" href="#Molecule.scaffold" title="Link to this definition"></a></dt>
+<dd><p>Murcko scaffold of the molecule</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Molecule.maccs_fp">
+<span class="sig-name descname"><span class="pre">maccs_fp</span></span><a class="headerlink" href="#Molecule.maccs_fp" title="Link to this definition"></a></dt>
+<dd><p>MACCS fingerprint</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Molecule.morgan_fp">
+<span class="sig-name descname"><span class="pre">morgan_fp</span></span><a class="headerlink" href="#Molecule.morgan_fp" title="Link to this definition"></a></dt>
+<dd><p>Morgan fingerprint</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Molecule.reactions">
+<span class="sig-name descname"><span class="pre">reactions</span></span><a class="headerlink" href="#Molecule.reactions" title="Link to this definition"></a></dt>
+<dd><p>DataFrame of reactions involving this molecule</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Molecule.get_pubchem_information">
+<span class="sig-name descname"><span class="pre">get_pubchem_information</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Molecule.get_pubchem_information" title="Link to this definition"></a></dt>
+<dd><p>Retrieves information about the molecule from PubChem’s REST API.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Molecule.calculate_similarity">
+<span class="sig-name descname"><span class="pre">calculate_similarity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">smi</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Molecule.calculate_similarity" title="Link to this definition"></a></dt>
+<dd><p>Calculates the chemical similarity between this molecule and another one.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>smi</strong> (<em>str</em>) – SMILES string of the molecule to compare with</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tanimoto similarity value (0-1, where 1 is identical)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Molecule.search_reactions">
+<span class="sig-name descname"><span class="pre">search_reactions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Molecule.search_reactions" title="Link to this definition"></a></dt>
+<dd><p>Searches for reactions involving the molecule as a product.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>df</strong> (<em>pandas.DataFrame</em>) – The DataFrame to search for reactions</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame containing matching reactions</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Molecule.search_reactions_by_scaffold">
+<span class="sig-name descname"><span class="pre">search_reactions_by_scaffold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_return</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'MACCS'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Molecule.search_reactions_by_scaffold" title="Link to this definition"></a></dt>
+<dd><p>Searches for reactions based on scaffold similarity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – DataFrame containing reactions to search</p></li>
+<li><p><strong>threshold</strong> (<em>float</em>) – Similarity threshold to apply (0-1)</p></li>
+<li><p><strong>max_return</strong> (<em>int</em>) – Maximum number of reactions to return</p></li>
+<li><p><strong>fp</strong> (<em>str</em>) – Type of fingerprint to use (‘MACCS’ or ‘Morgan’)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of similar reactions, sorted by similarity</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Molecule.get_functional_groups">
+<span class="sig-name descname"><span class="pre">get_functional_groups</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Molecule.get_functional_groups" title="Link to this definition"></a></dt>
+<dd><p>Identifies and returns the functional groups present in the molecule.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>df</strong> (<em>pandas.DataFrame</em>) – DataFrame containing functional group patterns</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of functional group names found in the molecule</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Molecule.get_rings">
+<span class="sig-name descname"><span class="pre">get_rings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Molecule.get_rings" title="Link to this definition"></a></dt>
+<dd><p>Identifies and returns rings in the molecule.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of ring SMILES strings found in the molecule</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ord-documentation.html" class="btn btn-neutral float-left" title="ORD Integration with Rxn-INSIGHT" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rxn_insight.html" class="btn btn-neutral float-right" title="rxn_insight" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Maarten R. Dobbelaere.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

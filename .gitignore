@@ -1,0 +1,82 @@
+# ── Secrets ────────────────────────────────────────────────────────────
+# Never commit a populated env file. Templates (.env.example) ARE tracked.
+.env
+.env.local
+.env.*.local
+*.env
+!.env.example
+
+# ── Model weights (excluded — download separately) ─────────────────────
+# ChemEagle weights live in models/ ; see models/README.md.
+# Some pipelines also keep weights inline (e.g. approaches/*/molnextr/*.pth);
+# the extension patterns below catch those wherever they sit.
+models/*
+!models/README.md
+*.ckpt
+*.pth
+*.pt
+*.bin
+*.h5
+*.safetensors
+*.onnx
+
+# ── Python ─────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+.tox/
+*.egg-info/
+*.egg
+sdist/
+
+# ── Virtualenvs (all .venv* here are machine-local; recreate per project) ─
+.venv
+.venv-*
+venv
+env/
+
+# ── Node.js (web frontends) ────────────────────────────────────────────
+node_modules/
+.next/
+out/
+dist/
+build/
+*.tsbuildinfo
+
+# ── Already-extracted archives (extracted copies are tracked) ──────────
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+
+# ── Throwaway / scratch — NOT the canonical benchmark results ──────────
+# The canonical runs that back the paper ARE tracked:
+#   approaches/single_agent_sdk/benchmark_runs/   (single-agent, Opus 4.7 = 0.85)
+#   approaches/collective_autogen/eval/results/   (multi-agent + baseline suites)
+#   evaluation/  outputs/  paper/figures/         (curated results & figures)
+# Everything below is per-session scratch or regenerable caches:
+app/runs/
+app/pdf_jobs/
+**/cache/
+**/web_results/
+**/web_uploads/
+**/databank/
+
+# ── OS / editor / IDE ──────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ── Claude Code session state ──────────────────────────────────────────
+.claude/
