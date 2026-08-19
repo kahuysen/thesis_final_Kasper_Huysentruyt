@@ -133,6 +133,7 @@ def extract_figure_stream_openai(
     input_tokens = 0
     output_tokens = 0
     last_step = 0
+    providers: set[str] = set()   # upstream providers reported by OpenRouter
 
     try:
         for step in range(max_steps):
@@ -161,6 +162,10 @@ def extract_figure_stream_openai(
             if usage is not None:
                 input_tokens += usage.prompt_tokens or 0
                 output_tokens += usage.completion_tokens or 0
+
+            prov = getattr(resp, "provider", None)
+            if isinstance(prov, str) and prov:
+                providers.add(prov)
 
             choice = resp.choices[0]
             msg = choice.message
@@ -256,6 +261,7 @@ def extract_figure_stream_openai(
             "tool_calls": tool_calls_n,
             "input_tokens": input_tokens,
             "output_tokens": output_tokens,
+            "providers": sorted(providers),
         }
         yield {"event": "complete", "extraction": submitted_dump, "metadata": metadata}
 

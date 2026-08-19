@@ -37,6 +37,8 @@ def write_meta_sidecar(
         "output_tokens":  metadata.get("output_tokens"),
         "elapsed_s":      round(float(elapsed_s), 2),
     }
+    if metadata.get("providers"):
+        meta["providers"] = metadata["providers"]
     path = Path(out_dir) / f"{stem}.meta.json"
     path.write_text(json.dumps(meta, indent=2))
     return path

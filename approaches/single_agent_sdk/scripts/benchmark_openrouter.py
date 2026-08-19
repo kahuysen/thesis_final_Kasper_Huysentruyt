@@ -124,7 +124,10 @@ def main():
 
     out_dir = Path(args.out)
     out_dir.mkdir(parents=True, exist_ok=True)
-    images = sorted(Path(args.corpus).glob("*.png"))
+    corpus = Path(args.corpus)
+    exts = {".png", ".jpg", ".jpeg", ".webp", ".gif"}
+    images = sorted(p for p in corpus.iterdir()
+                    if p.is_file() and p.suffix.lower() in exts)
     if not images:
         print(f"No images under {args.corpus}")
         return 1
