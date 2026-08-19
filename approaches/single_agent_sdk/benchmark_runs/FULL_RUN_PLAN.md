@@ -29,6 +29,15 @@ reasoning settings** (no per-model prompt or parameter tuning):
 | `benchmark_runs/full_gpt54`    | `openai/gpt-5.4` |
 | `benchmark_runs/full_opus47`   | `anthropic/claude-opus-4-7` |
 
+All four runs use a uniform per-round completion cap of
+`--max-completion-tokens 16384` (raised from the thesis-era 8192 after the
+pre-run smoke test showed that reasoning-by-default models exhaust 8192 on
+hidden thinking before their first tool call; the cap is a harness limit, not
+a model setting, so it is raised uniformly). Where a model is served by
+multiple OpenRouter providers at different quantizations, the run pins the
+provider(s) serving unquantized weights via `--provider-pin`; the pin and the
+per-request serving provider are recorded in the meta sidecars.
+
 Execution order: cheap → expensive (as listed); each run is scored before the
 next starts; the Opus pass only starts after explicit go-ahead.
 Concurrency 2–4, in-runner retry with backoff on 429; after a full pass, one

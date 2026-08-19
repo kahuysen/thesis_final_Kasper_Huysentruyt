@@ -42,6 +42,7 @@ def extract_figure_stream_openrouter(
     system_prompt: str,
     max_completion_tokens: int = 8192,
     max_steps: int = 128,
+    extra_body: dict | None = None,
 ) -> Iterator[dict]:
     """Run the OpenRouter agent loop, yielding the same event dicts as the
     other extractors. Delegates to the OpenAI-compatible loop.
@@ -59,4 +60,5 @@ def extract_figure_stream_openrouter(
         system_prompt=system_prompt,
         max_completion_tokens=max_completion_tokens,
         max_steps=max_steps,
+        extra_body=extra_body,
     )

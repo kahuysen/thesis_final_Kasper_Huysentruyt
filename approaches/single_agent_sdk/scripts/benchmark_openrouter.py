@@ -33,7 +33,9 @@ from scripts._meta_helpers import write_meta_sidecar
 
 
 def run_one(client, image_path: Path, model: str, out_dir: Path,
-            *, max_retries: int = 5, base_backoff: float = 30.0) -> dict:
+            *, max_retries: int = 5, base_backoff: float = 30.0,
+            max_completion_tokens: int = 8192,
+            extra_body: dict | None = None) -> dict:
     stem = image_path.stem
     out_json = out_dir / f"{stem}.json"
     if out_json.exists():
@@ -56,6 +58,8 @@ def run_one(client, image_path: Path, model: str, out_dir: Path,
                 model=model,
                 client=client,
                 system_prompt=SYSTEM_PROMPT,
+                max_completion_tokens=max_completion_tokens,
+                extra_body=extra_body,
             ):
                 kind = ev.get("event")
                 if kind == "step_done":
@@ -110,6 +114,12 @@ def main():
     ap.add_argument("--base-url", default=None)
     ap.add_argument("--concurrency", type=int, default=2)
     ap.add_argument("--delay", type=float, default=0.0)
+    ap.add_argument("--max-completion-tokens", type=int, default=8192,
+                    help="per-round completion cap; raise for reasoning models "
+                         "whose thinking tokens count against it")
+    ap.add_argument("--provider-pin", default=None,
+                    help="comma-separated OpenRouter provider order, "
+                         "fallbacks disabled (e.g. 'AkashML')")
     args = ap.parse_args()
 
     api_key = os.environ.get("OPENROUTER_API_KEY")
@@ -120,7 +130,12 @@ def main():
         "OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1"
     )
 
-    client = OpenAI(api_key=api_key, base_url=base_url)
+    client = OpenAI(api_key=api_key, base_url=base_url, timeout=900)
+
+    extra_body = None
+    if args.provider_pin:
+        extra_body = {"provider": {"order": args.provider_pin.split(","),
+                                   "allow_fallbacks": False}}
 
     out_dir = Path(args.out)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -140,7 +155,9 @@ def main():
 
     results = []
     with ThreadPoolExecutor(max_workers=args.concurrency) as ex:
-        futures = {ex.submit(run_one, client, img, args.model, out_dir): img for img in images}
+        futures = {ex.submit(run_one, client, img, args.model, out_dir,
+                             max_completion_tokens=args.max_completion_tokens,
+                             extra_body=extra_body): img for img in images}
         for i, fut in enumerate(as_completed(futures), start=1):
             res = fut.result()
             results.append(res)

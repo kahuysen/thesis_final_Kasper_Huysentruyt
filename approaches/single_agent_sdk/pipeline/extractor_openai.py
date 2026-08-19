@@ -101,9 +101,13 @@ def extract_figure_stream_openai(
     system_prompt: str,
     max_completion_tokens: int = 8192,
     max_steps: int = MAX_AGENT_STEPS,
+    extra_body: dict | None = None,
 ) -> Iterator[dict]:
     """Run the OpenAI/Azure agent loop, yielding the same event dicts as the
-    Anthropic version (step_start / step_done / complete / error)."""
+    Anthropic version (step_start / step_done / complete / error).
+
+    `extra_body` is passed through to `chat.completions.create` — used for
+    OpenRouter provider routing (e.g. {"provider": {"order": [...]}})."""
     image_path = Path(image_path)
     tools = _build_openai_tools()
 
@@ -144,6 +148,8 @@ def extract_figure_stream_openai(
                 tools=tools,
                 tool_choice="auto",
             )
+            if extra_body:
+                kwargs["extra_body"] = extra_body
             # GPT-5+ uses `max_completion_tokens` instead of `max_tokens`.
             kwargs["max_completion_tokens"] = max_completion_tokens
             try:
