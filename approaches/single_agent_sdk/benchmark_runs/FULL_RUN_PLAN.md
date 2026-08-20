@@ -24,10 +24,20 @@ reasoning settings** (no per-model prompt or parameter tuning):
 
 | Run dir | OpenRouter model id |
 |---|---|
-| `benchmark_runs/full_qwen38`   | `qwen/qwen3.8-27b` |
+| `benchmark_runs/full_qwen3vl`  | `qwen/qwen3-vl-235b-a22b-instruct` (see note) |
 | `benchmark_runs/full_gemini3flash` | `google/gemini-3-flash-preview` (thesis model) |
 | `benchmark_runs/full_gpt54`    | `openai/gpt-5.4` |
 | `benchmark_runs/full_opus47`   | `anthropic/claude-opus-4-7` |
+
+**Open-weight slot substitution (documented deviation, pre-scoring).** The
+slot was originally `qwen/qwen3.8-27b`. Smoke testing showed its
+default-enabled thinking emits 16k–21k reasoning tokens per round (often
+without terminating at a 16k cap) and ~500 s/round on the only unquantized
+provider (AkashML bf16), extrapolating to Opus-class cost (~$65–100) and
+15–20 h for one pass. It was replaced with the non-thinking open-weight
+flagship `qwen/qwen3-vl-235b-a22b-instruct` before any scored Qwen run; the
+Qwen3.8 diagnostic transcripts are reported in the paper as a finding about
+reasoning-by-default open models in agentic loops.
 
 All four runs use a uniform per-round completion cap of
 `--max-completion-tokens 16384` (raised from the thesis-era 8192 after the
