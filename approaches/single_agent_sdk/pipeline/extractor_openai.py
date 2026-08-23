@@ -40,10 +40,23 @@ MAX_AGENT_STEPS = 12
 # ---------- helpers ----------
 
 def _image_data_url(image_path: Path) -> str:
-    media_type, _ = mimetypes.guess_type(str(image_path))
-    if media_type is None or not media_type.startswith("image/"):
+    # Sniff the real format from magic bytes — some benchmark images carry
+    # the wrong extension (e.g. PNGs named .jpg), and strict providers
+    # (Anthropic) reject a media type that contradicts the payload.
+    raw = image_path.read_bytes()
+    if raw.startswith(b"\x89PNG"):
         media_type = "image/png"
-    data = base64.standard_b64encode(image_path.read_bytes()).decode("ascii")
+    elif raw[:2] == b"\xff\xd8":
+        media_type = "image/jpeg"
+    elif raw[:3] == b"GIF":
+        media_type = "image/gif"
+    elif raw[8:12] == b"WEBP":
+        media_type = "image/webp"
+    else:
+        media_type, _ = mimetypes.guess_type(str(image_path))
+        if media_type is None or not media_type.startswith("image/"):
+            media_type = "image/png"
+    data = base64.standard_b64encode(raw).decode("ascii")
     return f"data:{media_type};base64,{data}"
 
 
