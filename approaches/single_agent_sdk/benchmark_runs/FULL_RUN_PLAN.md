@@ -50,6 +50,21 @@ per-request serving provider are recorded in the meta sidecars.
 
 Execution order: cheap → expensive (as listed); each run is scored before the
 next starts; the Opus pass only starts after explicit go-ahead.
+
+**Amendment 2026-08-19.** The open-weight slot runs
+`qwen/qwen3-vl-235b-a22b-instruct` (`benchmark_runs/full_qwen3vl`) instead of
+`qwen/qwen3.8-27b`: under provider-default reasoning, Qwen3.8 spends 16–21k
+thinking tokens per round (~$65–100 and 15–20 h for a full pass) and only
+terminates reliably on the bf16 provider with a 32k cap — logged in the smoke
+tests; the substitution was confirmed by the user before any scored Qwen run.
+
+**Amendment 2026-08-20 (user decision).** The frontier-Claude slot runs
+`anthropic/claude-opus-5` (`benchmark_runs/full_opus5`) — the successor of the
+thesis winner, same price tier — instead of `anthropic/claude-opus-4-7`.
+Consequence, stated before the run: the full-benchmark table reports the
+current frontier model, while the thesis-continuity link for Opus rests on
+the dev16 subset only (where 4.7's canonical run scores 0.854 under this
+scorer). A full Opus 4.7 pass remains an optional budget-permitting follow-up.
 Concurrency 2–4, in-runner retry with backoff on 429; after a full pass, one
 re-invocation retries remaining failures (`skip_existing` resumes); anything
 still failing is **scored as an empty extraction (zeros), never dropped**.
