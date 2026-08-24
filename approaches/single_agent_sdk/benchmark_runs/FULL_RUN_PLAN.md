@@ -65,6 +65,13 @@ Consequence, stated before the run: the full-benchmark table reports the
 current frontier model, while the thesis-continuity link for Opus rests on
 the dev16 subset only (where 4.7's canonical run scores 0.854 under this
 scorer). A full Opus 4.7 pass remains an optional budget-permitting follow-up.
+
+**Amendment 2026-08-20b (user decision).** Added `google/gemini-3.7-flash`
+(`benchmark_runs/full_gemini37flash`) as a fifth row, budget permitting —
+the current cheap tier, mirroring how Opus 5 modernizes the frontier tier
+relative to the thesis-linked Gemini 3 Flash and Opus 4.7. The `:batch`
+variant was considered and rejected: batch queuing is incompatible with the
+sequential multi-round agent loop.
 Concurrency 2–4, in-runner retry with backoff on 429; after a full pass, one
 re-invocation retries remaining failures (`skip_existing` resumes); anything
 still failing is **scored as an empty extraction (zeros), never dropped**.
