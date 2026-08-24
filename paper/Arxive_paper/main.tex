@@ -1,0 +1,359 @@
+\documentclass{article}
+
+\usepackage{arxiv}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{amsfonts}
+\usepackage{nicefrac}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{doi}
+\usepackage{xcolor}
+
+% ── status markers for the drafting phase ─────────────────────────────
+% PENDING numbers come from runs still executing; every such slot is
+% marked so nothing provisional can survive into a submitted version.
+\newcommand{\PENDING}[1]{\textcolor{red}{\textbf{[PENDING: #1]}}}
+\newcommand{\TODO}[1]{\textcolor{orange}{\textbf{[TODO: #1]}}}
+
+\title{The Model Still Decides: A Pre-Registered Full-Benchmark Evaluation
+of a Single-Agent Vision--Language Pipeline for Chemical Reaction
+Extraction}
+
+\author{
+  \href{https://orcid.org/0009-0000-0000-0000}{Kasper M.~R.~Huysentruyt}\\
+  Laboratory for Chemical Technology (LCT)\\
+  Ghent University\\
+  Technologiepark 125, 9052 Ghent, Belgium\\
+  \texttt{kasper.huysentruyt@ugent.be}\\
+  % \TODO{confirm co-author list and order with promotors — presumably
+  % M.~R.~Dobbelaere, C.~V.~Stevens, K.~M.~Van Geem as in the RSC manuscript}
+}
+
+\renewcommand{\shorttitle}{Pre-registered full-benchmark reaction extraction}
+
+\hypersetup{
+pdftitle={The Model Still Decides: A Pre-Registered Full-Benchmark Evaluation of a Single-Agent Vision-Language Pipeline for Chemical Reaction Extraction},
+pdfauthor={Kasper M. R. Huysentruyt},
+pdfkeywords={reaction extraction, vision-language models, agentic pipelines, benchmark, chemistry},
+}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Prior work established, on a deliberately hard sixteen-figure subset of the
+ChemEAGLE benchmark, that the quality of agentic chemical-reaction
+extraction from figures is governed by the vision--language model rather
+than by the orchestration around it, with the simplest single-agent design
+(one model, two chemistry tools) surpassing a seven-agent system.
+Sixteen figures cannot, however, exclude subset effects, and the prompts
+and tools of that study were developed against those very figures. Here we
+re-evaluate the frozen single-agent pipeline on the \emph{entire} public
+ChemEAGLE benchmark release: 324 figure images of which 321 carry released
+reaction ground truth (2{,}899 reactions across four ground-truth subsets),
+with the sixteen development figures excluded from the headline set,
+yielding a 305-image held-out test set on which no prompt, tool, or
+configuration was ever iterated. The configuration, scoring rules, and
+analysis plan were committed publicly before the first scored run.
+Behind the identical frozen pipeline we compare
+\PENDING{final model list: Claude Opus 5, Gemini 3 Flash, GPT-5.4,
+Qwen3-VL-235B-A22B, Gemini 3.7 Flash}.
+On the held-out set, Gemini~3~Flash reaches a partial-match F1 of 0.615
+(95\% CI 0.569--0.661) and GPT-5.4 reaches 0.228 (0.190--0.268), against
+0.790 and 0.273 respectively on the development subset under the thesis
+ground truth; Claude Opus~5 reaches
+\PENDING{Opus 5 held-out partial F1 + CI; interim 0.822 over its first 118
+images}. The cross-model ordering of the sixteen-figure study is
+\PENDING{confirmed / partially confirmed} at nineteen-fold scale, while
+absolute scores drop by roughly 0.05--0.17, quantifying the optimism of
+small hand-picked benchmark subsets. We further document the public
+release's data quality: three images carry no ground truth, five are
+mislabeled PNG/JPEG, four ground-truth records point at misspelled
+filenames, and exact-set metrics are unusable on the two subsets whose
+gold annotations are structurally incomplete. All data, code, run
+transcripts, and per-image scores are released.
+\end{abstract}
+
+\keywords{reaction extraction \and vision--language models \and agentic
+pipelines \and benchmark evaluation \and pre-registration}
+
+% ══════════════════════════════════════════════════════════════════════
+\section{Introduction}
+\label{sec:intro}
+
+% Paragraph 1 — problem context: condensed from RSC manuscript §1 ¶1.
+% Reaction records are hand-curated; figures are machine-opaque; the gap
+% blocks data-driven chemistry. Cite CAS2025, Rajan2021, Hawizy2011,
+% SchillingWilhelmi2025, Dobbelaere2024.
+\TODO{condense RSC manuscript Introduction ¶1 to ~6 sentences}
+
+% Paragraph 2 — prior finding: the 16-figure ablation (cite the RSC
+% paper / thesis). State its headline: model moves partial F1 by
+% 0.41–0.58, orchestration by ≤0.10; single agent with Opus 4.7 = 0.85.
+\TODO{summarise the thesis result and its two axes in ~5 sentences}
+
+% Paragraph 3 — the gap this paper closes. Three threats to validity of
+% the 16-figure result: (i) subset size — one figure moves the mean by
+% ~0.05; (ii) subset selection — figures were chosen a priori hard, not
+% sampled; (iii) development contamination — prompts and tools were
+% iterated while scoring those same 16 figures. The fix: hold the
+% pipeline frozen and evaluate on everything else.
+
+% Paragraph 4 — contributions list:
+\begin{itemize}
+  \item A \textbf{pre-registered, held-out evaluation}: pipeline, prompts,
+    tools, scoring rules, and analysis plan frozen and committed publicly
+    (commit \texttt{054c6b0}, with dated amendments) before any scored
+    full-benchmark run.
+  \item A \textbf{complete accounting of the public ChemEAGLE benchmark
+    release}: 324 images, four heterogeneous ground-truth subsets
+    (139 + 78 + 38 + 66 scoreable images; 2{,}899 reactions), a
+    deterministic md5-pinned builder, and a documented list of every
+    repair and exclusion.
+  \item \textbf{Full-benchmark scores with uncertainty} for
+    \PENDING{N} frontier and open-weight models behind the identical
+    frozen single-agent pipeline, with bootstrap confidence intervals,
+    per-subset breakdowns, and failure-counted-as-zero scoring.
+  \item A \textbf{measurement of small-subset optimism}: paired
+    development-subset vs.\ held-out scores for every model.
+\end{itemize}
+
+% ══════════════════════════════════════════════════════════════════════
+\section{Related work}
+\label{sec:related}
+
+% Compressed from RSC manuscript §1 ¶2–3: rule-based extractors →
+% purpose-trained OCSR/diagram parsers → VLM/agentic era (MERMaid,
+% ChemCrow, ChemEAGLE). Add: pre-registration practice in ML evaluation
+% (held-out test sets, benchmark contamination literature).
+\TODO{write ~3 paragraphs; reuse citations from paper.bib}
+
+% ══════════════════════════════════════════════════════════════════════
+\section{The full ChemEAGLE benchmark}
+\label{sec:benchmark}
+
+\subsection{Release contents and accounting}
+\label{sec:accounting}
+
+% Facts (all verified against the release, md5
+% 611d4c01e4ed67f6d560d92448422172):
+% - Benchmark.zip: 324 images + GT1.json, GT2.json, GT3.csv, GT4.csv.
+% - GT1: 142 entries → 139 unique scoreable images (2 exact duplicates,
+%   1 entry with no file name); record schema with reactants/conditions/
+%   products, SMILES + labels; ~1,002 reactions.
+% - GT2: 78 R-group-table figures; reaction_template + letter-keyed
+%   detailed_reactions; structures only, no conditions; ~1,007 reactions.
+% - GT3: 182 CSV rows over 38 images; reactant/product/catalyst SMILES.
+% - GT4: 727 CSV rows over 66 images; structures + catalyst text, yield,
+%   ee, dr, er, solvent, temperature; includes wildcard template rows.
+% - Repairs: 4 filenames misspelled in GT (colon vs underscore ×2,
+%   "iamge" typo, CHEM_01_01 vs CHEM01_01); 5 images are PNGs named
+%   .jpg; all repairs applied deterministically and logged.
+% - Net: 321 scored images, 2,899 gold reactions; 3 images carry no
+%   released ground truth. The paper's own claim of 324 graphics /
+%   2,983 reactions is thus nearly but not exactly reproducible from
+%   the public release.
+\TODO{prose this accounting; include the summary table below}
+
+\begin{table}[htb]
+\centering
+\caption{The public ChemEAGLE benchmark release as scored in this work.}
+\label{tab:accounting}
+\begin{tabular}{lrrl}
+\toprule
+Subset & Images & Reactions & Gold annotation \\
+\midrule
+GT1 & 139 & 1{,}002 & full records incl.\ conditions \\
+GT2 & 78  & 1{,}007 & R-group variants, structures only \\
+GT3 & 38  & 182     & structures + catalyst SMILES \\
+GT4 & 66  & 727     & structures + partial conditions \\
+\midrule
+Scored          & 321 & 2{,}899 & \\
+No released GT  & 3   & ---     & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Held-out design and pre-registration}
+\label{sec:preregistration}
+
+% - dev16: the 16 thesis development figures are a strict subset of GT1
+%   (byte-identical files in the release). All prompt/tool iteration in
+%   the prior study happened on these.
+% - Headline set: the 305 held-out scored images.
+% - Freeze: builder, scorer, runner, run plan committed (054c6b0) and
+%   pushed before any scored run; amendments (16k token cap; provider
+%   pinning; model substitutions) each dated and committed before the
+%   affected run. Cite the repository.
+\TODO{prose; cite repo URL and commit hashes}
+
+% ══════════════════════════════════════════════════════════════════════
+\section{Methods}
+\label{sec:methods}
+
+\subsection{The frozen single-agent pipeline}
+% One VLM + two tools (RDKit SMILES validator; Pydantic-validated
+% submit_extraction terminator), one system prompt, byte-identical
+% across models — verbatim from the prior study, unchanged. OpenAI-
+% compatible loop via OpenRouter; per-request serving provider recorded.
+\TODO{condense RSC manuscript §Single-agent pipeline; add OpenRouter routing}
+
+\subsection{Models}
+% Provider-default reasoning settings; uniform 16,384-token per-round
+% completion cap (amendment: raised from 8,192 after smoke tests showed
+% reasoning-by-default models exhaust the cap on hidden thinking).
+% Model roster with the two documented substitutions:
+% - anthropic/claude-opus-5 (frontier slot; successor of thesis winner
+%   Opus 4.7 — continuity to the thesis rests on dev16, where Opus 4.7's
+%   canonical run scores 0.854 under this scorer).
+% - google/gemini-3-flash-preview (thesis cheap-tier model, unchanged).
+% - openai/gpt-5.4 (thesis model, unchanged).
+% - qwen/qwen3-vl-235b-a22b-instruct (open-weight slot; substituted for
+%   Qwen3.8-27B whose provider-default thinking made a full pass
+%   economically impractical — documented in the run plan).
+% - google/gemini-3.7-flash (current cheap tier, budget permitting).
+\TODO{model table with prices, providers, quantization notes}
+
+\subsection{Scoring}
+% Frozen per-slice rules (verbatim from the run plan):
+% 1. Every scored image counts; missing/failed predictions = empty
+%    extraction (zeros), never dropped. (Contrast with the prior study's
+%    drop-from-denominator convention — state and justify the change.)
+% 2. Structural metrics computed with conditions stripped from both
+%    sides (uniform across slices); hard-match-with-conditions
+%    additionally on GT1.
+% 3. Condition metrics only where gold has ≥1 condition.
+% 4. Wildcard rule: predicted R-group-template reactions dropped iff the
+%    image's gold contains no wildcard reactions.
+% 5. Bootstrap 95% CIs, 10,000 image resamples, seed 42.
+% Scorer validation: reproduces the thesis Opus 4.7 partial F1 = 0.854
+% on dev16 to three decimals, and the thesis GPT-5.4 0.273.
+\TODO{prose the five rules + validation paragraph}
+
+\subsection{Execution}
+% Cheap-to-expensive order; one retry round per model; persistent
+% failures scored as zeros; serving provider and token counts recorded
+% per image; cost from provider-reported tokens at OpenRouter rates.
+\TODO{short prose; forward-reference cost table}
+
+% ══════════════════════════════════════════════════════════════════════
+\section{Results}
+\label{sec:results}
+
+\subsection{Held-out full-benchmark scores}
+
+\begin{table}[htb]
+\centering
+\caption{Frozen single-agent pipeline on the 305-image held-out set.
+Partial-match F1, macro-averaged over images; bootstrap 95\% CIs;
+failed images scored as zeros. Dev16 column: same scorer on the 16
+development figures. \TODO{finalize; add soft F1 and condition columns}}
+\label{tab:main}
+\begin{tabular}{lccccc}
+\toprule
+Model & Held-out F1 & 95\% CI & Dev16 F1 & Missing & Cost/img \\
+\midrule
+Claude Opus 5      & \PENDING{}  & \PENDING{} & \PENDING{} & \PENDING{} & \$0.46 \\
+Gemini 3 Flash     & 0.615 & [0.569, 0.661] & 0.725 & 6 & \$0.04 \\
+GPT-5.4            & 0.228 & [0.190, 0.268] & 0.235 & 0 & \$0.09 \\
+Qwen3-VL-235B      & \PENDING{} & \PENDING{} & \PENDING{} & \PENDING{} & $\sim$\$0.02 \\
+Gemini 3.7 Flash   & \PENDING{budget permitting} & & & & \\
+\midrule
+\multicolumn{6}{l}{\emph{Thesis anchors (dev16, thesis GT): Opus 4.7 = 0.854; Gemini 3 Flash = 0.790; GPT-5.4 = 0.273.}}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Per-subset breakdown}
+% Table: model × {GT1, GT2, GT3, GT4} partial F1. Known so far:
+% Gemini 3 Flash: gt1 0.614, gt2 0.653, gt3 0.705, gt4 0.547.
+% GPT-5.4:        gt1 0.250, gt2 0.200, gt3 0.241, gt4 0.209.
+% Opus 5 (interim, first 118 imgs): gt1 0.865, gt3 0.969, gt4 0.745.
+\TODO{table + prose on which figure archetypes are hard}
+
+\subsection{Does the small-subset finding hold at scale?}
+% Paired dev16 vs held-out comparison per model; the ordering question;
+% quantify subset optimism (Gemini −0.11 vs its dev16 score under
+% release GT; −0.17 vs thesis GT). CI overlap discussion.
+\PENDING{final numbers for Opus 5 and Qwen3-VL}
+
+\subsection{Cost--quality at scale}
+% Scatter: cost/image vs held-out F1 (mirror of thesis Fig. 2 at 19×
+% scale). Opus 5 writes ~2.4× the output tokens of Opus 4.7
+% (median 8,770 vs 3,679/img) → $0.46/img vs $0.22.
+\TODO{generate figure from meta sidecars once all runs land}
+
+\subsection{Ground-truth quality of the public release}
+% Documented defects, each with the affected image(s):
+% - 3 images with no released GT; 5 PNG-as-.jpg (Anthropic's API
+%   rejects the media-type mismatch — a reproducibility trap);
+% - 4 misspelled filenames in GT; 2 duplicate GT1 entries; 1 GT1 entry
+%   with no filename;
+% - degenerate gold SMILES, e.g. ACScat_2020 table: N[C@@]C(=O)O — a
+%   stereocentre with the R-group dropped — zeroes every model on that
+%   image identically;
+% - GT3/GT4 gold lists only named reactants → exact-set (soft) metrics
+%   saturate near zero for all models (0.00–0.31) while partial F1
+%   remains informative; recommendation: partial-match as headline on
+%   CSV-derived subsets.
+% - dev16 corrections: the prior study's corrected GT vs release GT —
+%   quantify the per-image score differences.
+\TODO{prose + a defect-inventory table; this is a contribution, keep it factual}
+
+\subsection{Failure modes}
+% Persistent non-submitters (6 Gemini images, ...); step-cap exhaustion;
+% provider 400s; relationship to figure density. Compare with thesis
+% failure taxonomy (perception vs reasoning vs orchestration).
+\PENDING{failure counts for Opus 5 / Qwen3-VL}
+
+% ══════════════════════════════════════════════════════════════════════
+\section{Discussion}
+\label{sec:discussion}
+% - The model axis dominates at scale too (if confirmed).
+% - Frontier-model progress: Opus 5 vs Opus 4.7-on-dev16; Gemini 3.7
+%   vs 3 Flash (if run) — the "same pipeline, newer models" trajectory.
+% - What 16-image benchmarks are good for (rapid ablation) and what they
+%   are not (absolute claims); the measured optimism gap.
+% - Open-weight gap: Qwen3-VL vs closed cheap tier.
+% - Serving-stack effects: provider routing, quantization, media-type
+%   strictness — reproducibility recommendations for agentic evals.
+\TODO{draft after all numbers land}
+
+\section{Limitations}
+% - One pipeline (single-agent) — the multi-agent axis is not re-run at
+%   scale (cost); the thesis 2×2 remains 16-image evidence.
+% - Release GT taken verbatim (except logged repairs): known defects
+%   bound attainable F1; scores are comparable across models but not an
+%   absolute ceiling.
+% - Provider-default reasoning settings confound capability with vendor
+%   defaults (inherited deliberately from the prior study).
+% - Single pass per model (no variance over reruns); bootstrap CIs cover
+%   image sampling, not decoding stochasticity.
+% - GT2 condition extraction unscored (no gold).
+\TODO{prose}
+
+\section{Conclusions}
+\TODO{3 short paragraphs once results are final}
+
+\section*{Data and code availability}
+The benchmark builder, frozen scorer, run plan with dated amendments, all
+run transcripts with per-image token/provider metadata, and per-image
+scores are available at
+\url{https://github.com/kahuysen/thesis_final_Kasper_Huysentruyt}
+(pre-registration freeze: commit \texttt{054c6b0}).
+The benchmark images and ground truth originate from the public ChemEAGLE
+release (Hugging Face: \texttt{CYF200127/ChemEagle}, MIT license).
+
+\section*{Acknowledgements}
+\TODO{copy/adapt from RSC manuscript}
+
+\bibliographystyle{unsrtnat}
+\bibliography{paper}
+
+\end{document}
