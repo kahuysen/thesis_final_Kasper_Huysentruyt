@@ -66,6 +66,16 @@ current frontier model, while the thesis-continuity link for Opus rests on
 the dev16 subset only (where 4.7's canonical run scores 0.854 under this
 scorer). A full Opus 4.7 pass remains an optional budget-permitting follow-up.
 
+**Amendment 2026-08-25 (cost control).** Remaining runs use
+`--max-steps 48` (down from 128). Billing data showed that non-submitting
+runs burn their full round budget on quadratically growing context and
+write no sidecar, making failures the dominant hidden cost (Qwen3-VL's
+real spend ran ~10× its sidecar estimate). Across all completed full
+runs, successful extractions use a median of 2–5 rounds and p95 ≤ 38;
+the cap affects at most the rare >48-round success (one observed in
+867 completed images) while cutting worst-case failure cost ~7×.
+Images already completed under the 128 cap are unaffected.
+
 **Amendment 2026-08-20b (user decision).** Added `google/gemini-3.7-flash`
 (`benchmark_runs/full_gemini37flash`) as a fifth row, budget permitting —
 the current cheap tier, mirroring how Opus 5 modernizes the frontier tier

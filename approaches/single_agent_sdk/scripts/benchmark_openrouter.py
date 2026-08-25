@@ -35,6 +35,7 @@ from scripts._meta_helpers import write_meta_sidecar
 def run_one(client, image_path: Path, model: str, out_dir: Path,
             *, max_retries: int = 5, base_backoff: float = 30.0,
             max_completion_tokens: int = 8192,
+            max_steps: int = 128,
             extra_body: dict | None = None) -> dict:
     stem = image_path.stem
     out_json = out_dir / f"{stem}.json"
@@ -59,6 +60,7 @@ def run_one(client, image_path: Path, model: str, out_dir: Path,
                 client=client,
                 system_prompt=SYSTEM_PROMPT,
                 max_completion_tokens=max_completion_tokens,
+                max_steps=max_steps,
                 extra_body=extra_body,
             ):
                 kind = ev.get("event")
@@ -117,6 +119,10 @@ def main():
     ap.add_argument("--max-completion-tokens", type=int, default=8192,
                     help="per-round completion cap; raise for reasoning models "
                          "whose thinking tokens count against it")
+    ap.add_argument("--max-steps", type=int, default=128,
+                    help="cap on LLM rounds per image; a non-submitting run "
+                         "burns its full round budget on quadratically growing "
+                         "context, so a tight cap bounds failure cost")
     ap.add_argument("--provider-pin", default=None,
                     help="comma-separated OpenRouter provider order, "
                          "fallbacks disabled (e.g. 'AkashML')")
@@ -157,6 +163,7 @@ def main():
     with ThreadPoolExecutor(max_workers=args.concurrency) as ex:
         futures = {ex.submit(run_one, client, img, args.model, out_dir,
                              max_completion_tokens=args.max_completion_tokens,
+                             max_steps=args.max_steps,
                              extra_body=extra_body): img for img in images}
         for i, fut in enumerate(as_completed(futures), start=1):
             res = fut.result()
