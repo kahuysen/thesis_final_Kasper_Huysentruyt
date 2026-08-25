@@ -64,15 +64,14 @@ analysis plan were committed publicly before the first scored run.
 Behind the identical frozen pipeline we compare
 \PENDING{final model list: Claude Opus 5, Gemini 3 Flash, GPT-5.4,
 Qwen3-VL-235B-A22B, Gemini 3.7 Flash}.
-On the held-out set, Gemini~3~Flash reaches a partial-match F1 of 0.615
-(95\% CI 0.569--0.661) and GPT-5.4 reaches 0.228 (0.190--0.268), against
-0.790 and 0.273 respectively on the development subset under the thesis
-ground truth; Claude Opus~5 reaches
-\PENDING{Opus 5 held-out partial F1 + CI; interim 0.822 over its first 118
-images}. The cross-model ordering of the sixteen-figure study is
-\PENDING{confirmed / partially confirmed} at nineteen-fold scale, while
-absolute scores drop by roughly 0.05--0.17, quantifying the optimism of
-small hand-picked benchmark subsets. We further document the public
+On the held-out set, Claude Opus~5 reaches a partial-match F1 of 0.740
+(95\% CI 0.697--0.783), Gemini~3~Flash 0.615 (0.569--0.661) and GPT-5.4
+0.228 (0.190--0.268), against 0.822, 0.725 and 0.235 respectively on the
+development subset under the same scorer. The cross-model ordering of
+the sixteen-figure study is confirmed at nineteen-fold scale with
+non-overlapping confidence intervals, while absolute scores drop by
+roughly 0.05--0.11, quantifying the optimism of small hand-picked
+benchmark subsets. We further document the public
 release's data quality: three images carry no ground truth, five are
 mislabeled PNG/JPEG, four ground-truth records point at misspelled
 filenames, and exact-set metrics are unusable on the two subsets whose
@@ -393,7 +392,7 @@ development figures. \TODO{finalize; add soft F1 and condition columns}}
 \toprule
 Model & Held-out F1 & 95\% CI & Dev16 F1 & Missing & Cost/img \\
 \midrule
-Claude Opus 5      & \PENDING{}  & \PENDING{} & \PENDING{} & \PENDING{} & \$0.46 \\
+Claude Opus 5      & \textbf{0.740} & [0.697, 0.783] & 0.822 & 23 & \$0.53 \\
 Gemini 3 Flash     & 0.615 & [0.569, 0.661] & 0.725 & 6 & \$0.04 \\
 GPT-5.4            & 0.228 & [0.190, 0.268] & 0.235 & 0 & \$0.09 \\
 Qwen3-VL-235B      & \PENDING{} & \PENDING{} & \PENDING{} & \PENDING{} & $\sim$\$0.02 \\
@@ -416,7 +415,7 @@ each subset, development figures included; failed images as zeros).
 \toprule
 Model & GT1 & GT2 & GT3 & GT4 \\
 \midrule
-Claude Opus 5    & \PENDING{} & \PENDING{} & \PENDING{} & \PENDING{} \\
+Claude Opus 5    & 0.734 & 0.803 & 0.798 & 0.666 \\
 Gemini 3 Flash   & 0.614 & 0.653 & 0.705 & 0.547 \\
 GPT-5.4          & 0.250 & 0.200 & 0.241 & 0.209 \\
 Qwen3-VL-235B    & \PENDING{} & \PENDING{} & \PENDING{} & \PENDING{} \\
