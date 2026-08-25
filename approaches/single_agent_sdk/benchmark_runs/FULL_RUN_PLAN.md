@@ -66,6 +66,15 @@ current frontier model, while the thesis-continuity link for Opus rests on
 the dev16 subset only (where 4.7's canonical run scores 0.854 under this
 scorer). A full Opus 4.7 pass remains an optional budget-permitting follow-up.
 
+**Amendment 2026-08-26 (Gemini 3.7 Flash dropped).** The conditional
+fifth row is not run. A capped 2-image probe ($0.10) showed
+`google/gemini-3.7-flash` emits exactly one tool call per LLM round in
+this loop (its predecessor batches dozens), needing 40--60+ rounds per
+dense figure; a full pass extrapolates to $60--80, outside the
+authorized budget. Probe transcripts in `benchmark_runs/probe_gemini37`.
+The single-call-per-round serving behaviour is reported in the paper as
+a harness-economics observation.
+
 **Amendment 2026-08-25 (cost control).** Remaining runs use
 `--max-steps 48` (down from 128). Billing data showed that non-submitting
 runs burn their full round budget on quadratically growing context and
