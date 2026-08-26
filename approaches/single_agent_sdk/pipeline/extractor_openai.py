@@ -186,6 +186,11 @@ def extract_figure_stream_openai(
             if isinstance(prov, str) and prov:
                 providers.add(prov)
 
+            if not getattr(resp, "choices", None):
+                # OpenRouter can return an error body with HTTP 200; the SDK
+                # then yields a response object with choices=None.
+                err = getattr(resp, "error", None) or getattr(resp, "model_extra", {}).get("error")
+                raise RuntimeError(f"provider returned no choices: {err}")
             choice = resp.choices[0]
             msg = choice.message
             # Append assistant message verbatim — must match what we send back.
