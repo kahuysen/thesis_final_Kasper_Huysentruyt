@@ -66,6 +66,17 @@ current frontier model, while the thesis-continuity link for Opus rests on
 the dev16 subset only (where 4.7's canonical run scores 0.854 under this
 scorer). A full Opus 4.7 pass remains an optional budget-permitting follow-up.
 
+**Amendment 2026-08-26b (user decision): open-weight row replaced by
+Gemini 3.7 Flash.** The open-weight slot is abandoned after three
+candidates proved unusable as served (Qwen3.8: unbounded default
+thinking; Qwen3-VL-235B: wrong generation, partial run scored 0.067;
+Qwen3.6-27B, the thesis model: >7 min/round as currently served). The
+thesis dev16 result (Qwen3.6-27B, 0.66 on 11/16) remains the open-weight
+reference. Gemini 3.7 Flash is reinstated in its place despite its
+one-tool-call-per-round pattern, rolled out in stages: dev16 first with
+billing reconciliation, full pass only if the measured per-image cost
+fits the remaining budget.
+
 **Amendment 2026-08-26 (Gemini 3.7 Flash dropped).** The conditional
 fifth row is not run. A capped 2-image probe ($0.10) showed
 `google/gemini-3.7-flash` emits exactly one tool call per LLM round in
