@@ -61,17 +61,24 @@ with the sixteen development figures excluded from the headline set,
 yielding a 305-image held-out test set on which no prompt, tool, or
 configuration was ever iterated. The configuration, scoring rules, and
 analysis plan were committed publicly before the first scored run.
-Behind the identical frozen pipeline we compare
-\PENDING{final model list: Claude Opus 5, Gemini 3 Flash, GPT-5.4,
-Qwen3-VL-235B-A22B, Gemini 3.7 Flash}.
-On the held-out set, Claude Opus~5 reaches a partial-match F1 of 0.740
-(95\% CI 0.697--0.783), Gemini~3~Flash 0.615 (0.569--0.661) and GPT-5.4
-0.228 (0.190--0.268), against 0.822, 0.725 and 0.235 respectively on the
-development subset under the same scorer. The cross-model ordering of
-the sixteen-figure study is confirmed at nineteen-fold scale with
-non-overlapping confidence intervals, while absolute scores drop by
-roughly 0.05--0.11, quantifying the optimism of small hand-picked
-benchmark subsets. We further document the public
+Behind the identical frozen pipeline we compare four models spanning
+two provider generations: Claude Opus~5, Gemini~3.7~Flash,
+Gemini~3~Flash and GPT-5.4. On the held-out set, Claude Opus~5 reaches
+a partial-match F1 of 0.740 (95\% CI 0.697--0.783), Gemini~3.7~Flash
+0.629 (0.581--0.676), Gemini~3~Flash 0.615 (0.569--0.661) and GPT-5.4
+0.228 (0.190--0.268), against 0.822, 0.766, 0.725 and 0.235
+respectively on the development subset under the same scorer. The
+cross-model ordering of the sixteen-figure study is confirmed at
+nineteen-fold scale, while absolute scores drop by 0.05--0.14,
+quantifying the optimism of small hand-picked benchmark subsets.
+Because failed extractions score zero by pre-registered rule, the
+results also expose a dimension small subsets hide: serving
+reliability. Gemini~3.7~Flash extracts at Opus-class quality on the
+figures it completes ($\approx$0.80) but loses 21\% of images to
+provider-side aborts, and every open-weight candidate for the fourth
+slot proved unusable as commercially served --- reasoning-token burn,
+single-tool-call round trips, or quantized endpoints --- a finding we
+document as part of the evaluation. We further document the public
 release's data quality: three images carry no ground truth, five are
 mislabeled PNG/JPEG, four ground-truth records point at misspelled
 filenames, and exact-set metrics are unusable on the two subsets whose
@@ -141,10 +148,12 @@ benchmark release that the prior study never touched.
     (139 + 78 + 38 + 66 scoreable images; 2{,}899 reactions), a
     deterministic md5-pinned builder, and a documented list of every
     repair and exclusion.
-  \item \textbf{Full-benchmark scores with uncertainty} for
-    \PENDING{N} frontier and open-weight models behind the identical
-    frozen single-agent pipeline, with bootstrap confidence intervals,
-    per-subset breakdowns, and failure-counted-as-zero scoring.
+  \item \textbf{Full-benchmark scores with uncertainty} for four models
+    across two provider generations behind the identical frozen
+    single-agent pipeline, with bootstrap confidence intervals,
+    per-subset breakdowns, and failure-counted-as-zero scoring --- plus
+    a documented account of why every open-weight candidate failed the
+    economics or reliability bar as served.
   \item A \textbf{measurement of small-subset optimism}: paired
     development-subset vs.\ held-out scores for every model.
 \end{itemize}
@@ -312,19 +321,26 @@ thinking before emitting their first tool call --- the cap is a harness
 property, not a model setting, and holding it too low silently disables
 such models.
 
-The roster pairs each thesis-linked model with a current-generation
-counterpart behind the same pipeline: Claude
+The final roster pairs each thesis-linked model with a
+current-generation counterpart behind the same pipeline: Claude
 Opus~5\footnote{Substituted for the thesis winner Opus~4.7 by a dated
 amendment; the thesis-continuity anchor for the Claude family is
 Opus~4.7's canonical development-set run, which scores 0.854 under this
-paper's scorer.} (frontier tier), Gemini~3~Flash and GPT-5.4 (the
-thesis models, unchanged), the open-weight
-Qwen3-VL-235B-A22B-Instruct\footnote{Substituted for Qwen3.8-27B, whose
-provider-default thinking consumes 16--21k tokens per round and only
-terminates reliably on one bf16 provider at a 32k cap, making a full
-pass economically impractical ($\sim$15--20\,h); the substitution is
-documented in the run plan with the smoke-test evidence.}, and
-\PENDING{Gemini 3.7 Flash, budget permitting} (current cheap tier).
+paper's scorer.} and Gemini~3.7~Flash (current generation), and
+Gemini~3~Flash and GPT-5.4 (the thesis models, unchanged). A
+pre-registered fifth slot for an open-weight model was abandoned by
+dated amendments after three candidates proved unusable \emph{as
+commercially served}, for three distinct reasons: Qwen3.8-27B's
+provider-default thinking consumes 16--21k tokens per round and
+terminates reliably only on one bf16 endpoint at a 32k cap
+($\sim$15--20\,h and \$65--100 per pass); Qwen3-VL-235B-A22B, run for
+160 images before discontinuation, scored a partial-match F1 of 0.067
+--- structurally well-formed submissions whose molecules are simply
+wrong, on quantized (fp8) endpoints; and Qwen3.6-27B, the prior study's
+open-weight entry (0.66 on the figures it completed), now exceeds seven
+minutes per round as served. The open-weight comparison at scale is
+therefore an open problem in serving, not only in modeling, and the
+prior study's development-set result remains the reference point.
 \TODO{model table with OpenRouter ids, prices, serving providers,
 quantization}
 
@@ -393,10 +409,9 @@ development figures. \TODO{finalize; add soft F1 and condition columns}}
 Model & Held-out F1 & 95\% CI & Dev16 F1 & Missing & Cost/img \\
 \midrule
 Claude Opus 5      & \textbf{0.740} & [0.697, 0.783] & 0.822 & 23 & \$0.53 \\
+Gemini 3.7 Flash   & 0.629 & [0.581, 0.676] & 0.766 & 64 & \$0.04 \\
 Gemini 3 Flash     & 0.615 & [0.569, 0.661] & 0.725 & 6 & \$0.04 \\
 GPT-5.4            & 0.228 & [0.190, 0.268] & 0.235 & 0 & \$0.09 \\
-Qwen3-VL-235B      & \PENDING{} & \PENDING{} & \PENDING{} & \PENDING{} & $\sim$\$0.02 \\
-Gemini 3.7 Flash   & \PENDING{budget permitting} & & & & \\
 \midrule
 \multicolumn{6}{l}{\emph{Thesis anchors (dev16, thesis GT): Opus 4.7 = 0.854; Gemini 3 Flash = 0.790; GPT-5.4 = 0.273.}}\\
 \bottomrule
@@ -408,37 +423,74 @@ Gemini 3.7 Flash   & \PENDING{budget permitting} & & & & \\
 \begin{table}[htb]
 \centering
 \caption{Partial-match F1 per ground-truth subset (all scored images of
-each subset, development figures included; failed images as zeros).
-\PENDING{Opus 5, Qwen3-VL, Gemini 3.7 Flash columns}}
+each subset, development figures included; failed images as zeros).}
 \label{tab:slices}
 \begin{tabular}{lcccc}
 \toprule
 Model & GT1 & GT2 & GT3 & GT4 \\
 \midrule
 Claude Opus 5    & 0.734 & 0.803 & 0.798 & 0.666 \\
+Gemini 3.7 Flash & 0.648 & 0.658 & 0.742 & 0.520 \\
 Gemini 3 Flash   & 0.614 & 0.653 & 0.705 & 0.547 \\
 GPT-5.4          & 0.250 & 0.200 & 0.241 & 0.209 \\
-Qwen3-VL-235B    & \PENDING{} & \PENDING{} & \PENDING{} & \PENDING{} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-% Prose once complete: which archetypes are hard (GT4 dense condition
-% tables consistently lowest for capable models; GT3 single-reaction
-% figures easiest), and whether the pattern is model-independent.
-\PENDING{subset-pattern prose after remaining runs land}
+The subset pattern is model-independent in shape: for every capable
+model, the dense \texttt{GT4} condition-survey tables are the hardest
+archetype (0.520--0.666) and the \texttt{GT3} single-reaction figures
+among the easiest (0.705--0.798), with the R-group tables of
+\texttt{GT2} in between. Two observations stand out. First, Claude
+Opus~5 is strongest precisely on the R-group tables (0.803) --- the
+figure archetype for which ChemEAGLE deploys two dedicated substitution
+agents --- reinforcing the prior study's conclusion that a strong
+backbone internalises what the orchestration was built to compensate
+for. Second, the gap between the Gemini generations is concentrated in
+extraction quality per completed image rather than in the subset
+profile, which shifts little; what changed most between the two is
+reliability (Sect.~\ref{sec:failures}).
 
 \subsection{Does the small-subset finding hold at scale?}
-% Paired dev16 vs held-out comparison per model; the ordering question;
-% quantify subset optimism (Gemini −0.11 vs its dev16 score under
-% release GT; −0.17 vs thesis GT). CI overlap discussion.
-\PENDING{final numbers for Opus 5 and Qwen3-VL}
+It holds. The ordering of the development subset --- frontier Claude
+first, the Gemini Flash tier second, GPT-5.4 far behind --- is
+unchanged on the 305 held-out images, and the decisive contrasts are
+resolved well beyond their confidence intervals: Opus~5 vs.\ either
+Gemini (non-overlapping CIs) and every model vs.\ GPT-5.4. Within the
+Gemini pair the held-out difference (0.629 vs.\ 0.615) is far inside
+the intervals and should not be read as a ranking --- exactly the
+adjacent-model caution the prior study raised.
+
+The paired comparison also quantifies small-subset optimism: every
+model scores lower held-out than on the sixteen development figures
+(Opus~5 $-$0.082, Gemini~3.7~Flash $-$0.137, Gemini~3~Flash $-$0.110,
+GPT-5.4 $-$0.007), even though those figures were selected to be
+\emph{hard}. Deliberate difficulty did not make the development set
+conservative; iterating prompts and tools against it did the opposite,
+and only a held-out evaluation reveals by how much. Notably the drop is
+smallest for the weakest model, consistent with development-set
+adaptation helping most where the pipeline's prompt was actually
+tuned.
 
 \subsection{Cost--quality at scale}
-% Scatter: cost/image vs held-out F1 (mirror of thesis Fig. 2 at 19×
-% scale). Opus 5 writes ~2.4× the output tokens of Opus 4.7
-% (median 8,770 vs 3,679/img) → $0.46/img vs $0.22.
-\TODO{generate figure from meta sidecars once all runs land}
+The per-image economics reshuffle at the top. Claude Opus~5 leads on
+quality but at \$0.53 per successful image --- 2.4$\times$ the prior
+study's Opus~4.7, driven almost entirely by output verbosity (median
+8{,}770 output tokens per image against 3{,}679) --- while
+Gemini~3.7~Flash delivers $\approx$0.80 partial F1 on completed images
+at \$0.04. Two structural cost findings generalise beyond these models.
+First, in an agent loop the billed input is dominated by conversation
+re-transmission: every round re-sends the system prompt, the figure and
+the full history, so cumulative input grows quadratically with round
+count, and roughly 80\% of Opus~5's per-image cost is re-sent context
+(prompt caching, unused by our frozen provider-agnostic loop, would cut
+this several-fold). Second, \emph{failure} cost is invisible to
+success-based accounting and was one third of everything we spent:
+non-submitting runs at the original 128-round budget burned their full
+quadratic context with no output artifact, which is what motivated the
+48-round amendment. We reconcile all reported costs against provider
+billing rather than per-success token counts alone.
+\TODO{cost--quality scatter figure from the meta sidecars}
 
 \subsection{Ground-truth quality of the public release}
 Because every system is scored against the release ground truth
@@ -472,24 +524,75 @@ corrected ones leaves its aggregate partial-match F1 unchanged at
 labelling rather than structures.
 \TODO{per-image diff table dev16 corrected-vs-release GT for the SI}
 
-\subsection{Failure modes}
-% Persistent non-submitters (6 Gemini images, ...); step-cap exhaustion;
-% provider 400s; relationship to figure density. Compare with thesis
-% failure taxonomy (perception vs reasoning vs orchestration).
-\PENDING{failure counts for Opus 5 / Qwen3-VL}
+\subsection{Failure modes and serving reliability}
+\label{sec:failures}
+With failures scored as zeros, reliability becomes a measured quantity,
+and it separates cleanly from extraction quality. GPT-5.4 completed all
+324 images (its failures were only transient rate limits); Gemini~3
+Flash lost 6 images to persistent non-submission; Claude Opus~5 lost 23,
+all on the densest figures, where the model keeps validating structures
+without concluding within the round budget; and Gemini~3.7~Flash ---
+the \emph{highest}-quality cheap model per completed image --- lost 64
+images (21\% of the pool), almost all to server-side aborts (HTTP~504)
+from the provider rather than to model behaviour, across repeated
+retries over several hours. The ranking of cheap models therefore
+inverts depending on whether one reads quality-per-completion or
+end-to-end yield, and a practitioner deploying these pipelines should
+treat provider reliability as a first-class metric alongside F1.
+Two further serving-stack traps are documented in
+Sect.~\ref{sec:results}: media-type validation differences across
+providers (five mislabeled release images silently zero a strict
+provider), and per-round tool-call batching differences that change
+loop economics by an order of magnitude.
 
 % ══════════════════════════════════════════════════════════════════════
 \section{Discussion}
 \label{sec:discussion}
-% - The model axis dominates at scale too (if confirmed).
-% - Frontier-model progress: Opus 5 vs Opus 4.7-on-dev16; Gemini 3.7
-%   vs 3 Flash (if run) — the "same pipeline, newer models" trajectory.
-% - What 16-image benchmarks are good for (rapid ablation) and what they
-%   are not (absolute claims); the measured optimism gap.
-% - Open-weight gap: Qwen3-VL vs closed cheap tier.
-% - Serving-stack effects: provider routing, quantization, media-type
-%   strictness — reproducibility recommendations for agentic evals.
-\TODO{draft after all numbers land}
+
+\paragraph{The model axis survives scale.} The prior study's central
+claim was that the multimodal model, not the orchestration, decides
+extraction quality. The held-out evaluation confirms the model axis at
+nineteen-fold scale: behind a byte-identical pipeline, the spread
+between the strongest and weakest model is 0.51 partial F1 (0.740 vs.\
+0.228), with the same ordering as on the development set and margins
+resolved far beyond the bootstrap intervals. What the small subset
+could not show --- and the held-out set does --- is that its absolute
+numbers were optimistic by 0.08--0.14 for every capable model despite
+the subset having been selected for difficulty. Small hand-picked
+benchmarks remain useful for rapid controlled ablation; they should not
+be used for absolute claims, even hard ones.
+
+\paragraph{Same pipeline, newer models.} Freezing the pipeline turns
+provider progress into a measurable trajectory. Within one year the
+cheap tier moved from 0.615 (Gemini~3~Flash) to $\approx$0.80 per
+completed image (Gemini~3.7~Flash) --- development-set quality once
+reserved for the frontier tier --- while the frontier tier's quality
+gains came bundled with 2.4$\times$ the output verbosity and thus
+2.4$\times$ the cost. Progress on this task is real but is arriving as
+much through the cheap tier as through the frontier.
+
+\paragraph{Reliability is part of the result.} The zero-scored-failure
+rule surfaces a dimension that per-completion metrics hide: end-to-end
+yield. The best cheap model loses a fifth of all images to provider
+aborts; the frontier model loses 7\% to non-convergence on dense
+figures; the weakest model is the most reliable. For deployment ---
+and for fair benchmarking of agentic systems generally --- completion
+rate, serving-stack behaviour (quantization, media-type strictness,
+tool-call batching, reasoning defaults) and failure economics belong in
+the reported results, not in footnotes. One third of this study's
+API spend went to failed attempts; we suspect the same is true,
+unreported, of much of the agentic-benchmark literature.
+
+\paragraph{The open-weight gap is now a serving gap.} None of the three
+open-weight candidates could be evaluated at scale as commercially
+served, each failing differently (unbounded default reasoning;
+generation-stale vision at fp8; latency). The prior study's
+development-set result (Qwen3.6-27B, 0.66) shows open weights can
+approach closed cheap-tier quality; our attempt shows that the serving
+ecosystem around them, as of August 2026, does not yet support
+sustained agentic workloads at benchmark scale. Self-hosted evaluation
+is the obvious next step and would also remove the quantization
+confound.
 
 \section{Limitations}
 Five limitations bound these conclusions. First, only the single-agent
@@ -516,7 +619,37 @@ conditions exist) and only partially scoreable on \texttt{GT3} and
 \texttt{GT1} alone.
 
 \section{Conclusions}
-\TODO{3 short paragraphs once results are final}
+A single-agent vision--language pipeline, frozen byte-for-byte after a
+sixteen-figure development study and evaluated on the 305 held-out
+scoreable images of the public ChemEAGLE benchmark, confirms the
+development-set finding at nineteen-fold scale: the multimodal model
+decides extraction quality. Claude Opus~5 reaches a partial-match F1 of
+0.740 (0.697--0.783), the Gemini Flash tier 0.615--0.629, and GPT-5.4
+0.228, in the development-set order and with the decisive margins
+resolved beyond their confidence intervals --- while every capable
+model scores 0.08--0.14 below its development-set number, measuring the
+optimism that even a deliberately hard sixteen-figure subset carries
+once prompts have been iterated against it.
+
+The evaluation also yields two results that were not its target. The
+public benchmark release itself required a documented reconciliation
+--- duplicate and misnamed ground-truth entries, mislabeled image
+formats, structurally incomplete gold on two of four subsets, and three
+unscoreable images --- without which reported numbers are not
+comparable across papers. And the serving stack proved to be a
+first-class variable: provider aborts cost the best cheap model a fifth
+of its images, failure loops consumed a third of total API spend before
+being capped, and no open-weight model could be run at scale as
+commercially served. Benchmark evaluations of agentic pipelines should
+pre-register their scoring rules, count failures as failures, and
+report reliability and cost alongside quality; this paper's frozen
+configuration, amendments, transcripts and per-image scores are all
+public to that end.
+
+At \$0.04--\$0.53 per figure and with cheap-tier quality now
+approaching the 2025 frontier, single-agent extraction is economically
+ready for interactive chemist workflows; closing the reliability gap,
+not the quality gap, is the remaining engineering problem.
 
 \section*{Data and code availability}
 The benchmark builder, frozen scorer, run plan with dated amendments, all
