@@ -418,6 +418,16 @@ GPT-5.4            & 0.228 & [0.190, 0.268] & 0.235 & 0 & \$0.09 \\
 \end{tabular}
 \end{table}
 
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.85\textwidth]{figures/fig_heldout}
+\caption{Held-out partial-match F1 (filled, with bootstrap 95\% CIs;
+failed images scored as zeros) against the same scorer on the sixteen
+development figures (open). Every capable model scores below its
+development-set number; the ordering is unchanged.}
+\label{fig:heldout}
+\end{figure}
+
 \subsection{Per-subset breakdown}
 
 \begin{table}[htb]
@@ -436,6 +446,17 @@ GPT-5.4          & 0.250 & 0.200 & 0.241 & 0.209 \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.85\textwidth]{figures/fig_subsets}
+\caption{Partial-match F1 per ground-truth subset (all scored images,
+failed images as zeros). The shape is model-independent: dense
+\texttt{GT4} condition tables hardest, \texttt{GT3} single-reaction
+figures easiest; Opus~5 is strongest exactly on the R-group tables the
+multi-agent baselines target.}
+\label{fig:subsets}
+\end{figure}
 
 The subset pattern is model-independent in shape: for every capable
 model, the dense \texttt{GT4} condition-survey tables are the hardest
@@ -490,7 +511,15 @@ non-submitting runs at the original 128-round budget burned their full
 quadratic context with no output artifact, which is what motivated the
 48-round amendment. We reconcile all reported costs against provider
 billing rather than per-success token counts alone.
-\TODO{cost--quality scatter figure from the meta sidecars}
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.6\textwidth]{figures/fig_cost_quality}
+\caption{Cost per successful image versus held-out partial-match F1
+(log $x$; whiskers are bootstrap 95\% CIs). The Gemini Flash tier
+defines the value frontier; Opus~5 buys the last 0.11--0.13 of F1 at
+$13\times$ the price.}
+\label{fig:costquality}
+\end{figure}
 
 \subsection{Ground-truth quality of the public release}
 Because every system is scored against the release ground truth
