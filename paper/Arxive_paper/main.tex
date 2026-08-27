@@ -400,18 +400,20 @@ Sect.~\ref{sec:results}.
 \begin{table}[htb]
 \centering
 \caption{Frozen single-agent pipeline on the 305-image held-out set.
-Partial-match F1, macro-averaged over images; bootstrap 95\% CIs;
-failed images scored as zeros. Dev16 column: same scorer on the 16
-development figures. \TODO{finalize; add soft F1 and condition columns}}
+Partial-match F1 (headline) and ChemEAGLE-style exact-set soft-match
+F1, macro-averaged over images; bootstrap 95\% CIs; failed images
+scored as zeros. Dev16: same scorer on the 16 development figures.
+Soft-match comparability to ChemEAGLE's published 0.78 is discussed in
+Sect.~\ref{sec:chemeagle-metric}.}
 \label{tab:main}
-\begin{tabular}{lccccc}
+\begin{tabular}{lcccccc}
 \toprule
-Model & Held-out F1 & 95\% CI & Dev16 F1 & Missing & Cost/img \\
+Model & Held-out F1 & 95\% CI & Soft F1 & Dev16 F1 & Missing & Cost/img \\
 \midrule
-Claude Opus 5      & \textbf{0.740} & [0.697, 0.783] & 0.822 & 23 & \$0.53 \\
-Gemini 3.7 Flash   & 0.629 & [0.581, 0.676] & 0.766 & 64 & \$0.04 \\
-Gemini 3 Flash     & 0.615 & [0.569, 0.661] & 0.725 & 6 & \$0.04 \\
-GPT-5.4            & 0.228 & [0.190, 0.268] & 0.235 & 0 & \$0.09 \\
+Claude Opus 5      & \textbf{0.740} & [0.697, 0.783] & 0.268 & 0.822 & 23 & \$0.53 \\
+Gemini 3.7 Flash   & 0.629 & [0.581, 0.676] & 0.187 & 0.766 & 64 & \$0.04 \\
+Gemini 3 Flash     & 0.615 & [0.569, 0.661] & 0.163 & 0.725 & 6 & \$0.04 \\
+GPT-5.4            & 0.228 & [0.190, 0.268] & 0.030 & 0.235 & 0 & \$0.09 \\
 \midrule
 \multicolumn{6}{l}{\emph{Thesis anchors (dev16, thesis GT): Opus 4.7 = 0.854; Gemini 3 Flash = 0.790; GPT-5.4 = 0.273.}}\\
 \bottomrule
@@ -520,6 +522,34 @@ defines the value frontier; Opus~5 buys the last 0.11--0.13 of F1 at
 $13\times$ the price.}
 \label{fig:costquality}
 \end{figure}
+
+\subsection{Comparability to ChemEAGLE's published metric}
+\label{sec:chemeagle-metric}
+
+ChemEAGLE's headline result on this benchmark is a soft-match F1 of
+0.78.\citep{Chen2025ChemEagle} Our scorer implements soft match exactly
+as their paper defines it --- the predicted reactant and product sets
+must coincide with gold after RDKit canonicalisation --- and under that
+implementation no evaluated system approaches their number: the best
+model here reaches 0.268 held-out (Table~\ref{tab:main}), and, more
+tellingly, the prior study's local rerun of \emph{ChemEAGLE itself}
+scored 0.29 on development figures drawn from this same benchmark.
+Three considerations frame the gap. First, exact-set matching is
+structurally unusable on the CSV-derived subsets whose gold lists only
+principal reactants (Sect.~\ref{sec:results}); restricting soft match
+to the fully annotated \texttt{GT1}/\texttt{GT2} slices raises our best
+model to 0.29/0.40, still far from 0.78. Second, the release contains
+no evaluation code, so the published number's operational definition
+--- its treatment of failed images, its averaging basis, whether it is
+conditioned on detected reactions --- cannot be reproduced or checked.
+Third, the consistent behaviour of five independent systems under one
+published-definition implementation, including the reference system
+itself, indicates the discrepancy lies in scoring methodology rather
+than in any one pipeline. We therefore report soft match for
+transparency, use partial-match F1 --- which degrades smoothly instead
+of saturating --- as the headline, and flag published-number
+comparisons on this benchmark as unreliable until reference evaluation
+code is released.
 
 \subsection{Ground-truth quality of the public release}
 Because every system is scored against the release ground truth
