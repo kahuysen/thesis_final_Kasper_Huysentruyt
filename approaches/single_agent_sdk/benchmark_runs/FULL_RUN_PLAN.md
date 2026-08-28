@@ -66,6 +66,17 @@ current frontier model, while the thesis-continuity link for Opus rests on
 the dev16 subset only (where 4.7's canonical run scores 0.854 under this
 scorer). A full Opus 4.7 pass remains an optional budget-permitting follow-up.
 
+**Amendment 2026-08-28 (user decision): ChemEAGLE baseline reinstated at
+full scale.** With the published soft-match number shown to be
+non-reproducible, the multi-agent reference is re-run locally on the
+full benchmark under the same frozen scorer: vendored ChemEAGLE with its
+shipped gpt-5-mini engine served via OpenRouter (documented client
+adaptation in `baselines/chemeagle/_run_one_image_openrouter.py`; the
+vendored code is untouched), per-image crash isolation with a 1500 s
+timeout, crashes scored as zeros. A seeded stratified 50-image sample
+(`sample50.txt`) measured $0.054/image, median 266 s, 47/50 success,
+partial F1 0.354 before the full run was approved.
+
 **Amendment 2026-08-26b (user decision): open-weight row replaced by
 Gemini 3.7 Flash.** The open-weight slot is abandoned after three
 candidates proved unusable as served (Qwen3.8: unbounded default
