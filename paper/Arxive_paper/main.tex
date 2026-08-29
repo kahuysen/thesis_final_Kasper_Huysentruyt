@@ -49,28 +49,26 @@ pdfkeywords={reaction extraction, vision-language models, agentic pipelines, ben
 \begin{abstract}
 Automated extraction of chemical reactions from figures is a key
 bottleneck on the route from the published literature to the structured
-databases on which data-driven chemistry depends. Recent work
-established, on a deliberately difficult sixteen-figure subset of the
-ChemEAGLE benchmark, that extraction quality is governed by the
-vision--language model rather than by the agentic orchestration around
-it. However, sixteen figures cannot exclude subset effects, and the
-prompts and tools of that study were developed against those very
-figures. Herein, we present a pre-registered, held-out evaluation of
-the frozen single-agent pipeline on the entire public ChemEAGLE
-benchmark release: 324 figure images, of which 321 carry released
-ground truth (2{,}899 reactions), with the sixteen development figures
-excluded to yield a 305-image held-out test set on which no prompt,
-tool, or configuration was ever iterated. On the held-out set, Claude
+databases on which data-driven chemistry depends. Agentic
+vision--language pipelines report state-of-the-art extraction results,
+but they are typically evaluated on benchmarks their own prompts and
+tools were developed against, and it remains unclear whether extraction
+quality is governed by the multimodal model or by the orchestration
+around it. Herein, we present a pre-registered, held-out evaluation of
+a frozen single-agent pipeline (one model, two chemistry tools, one
+prompt) on the public ChemEAGLE benchmark release: 324 figure images,
+of which 321 carry released ground truth (2{,}899 reactions), with the
+sixteen figures used during pipeline development excluded to yield a
+305-image held-out test set on which no prompt, tool, or configuration
+was ever iterated. On the held-out set, Claude
 Opus~5 reaches a partial-match F1 of 0.740 (95\% CI 0.697--0.783),
 Gemini~3.7~Flash 0.629 (0.581--0.676), Gemini~3~Flash 0.615
-(0.569--0.661), and GPT-5.4 0.228 (0.190--0.268). The cross-model
-ordering of the sixteen-figure study is confirmed at nineteen-fold
-scale, while absolute scores drop by 0.05 to 0.14, which quantifies the
-optimism of small hand-picked benchmark subsets. The seven-agent
-ChemEAGLE reference system itself, re-run on its complete benchmark
-under the same scorer, reaches 0.352: half the score of a single agent
-with a low-cost backbone at the same cost per image. Hence, the
-orchestration conclusion also survives at scale. Furthermore, it is
+(0.569--0.661), and GPT-5.4 0.228 (0.190--0.268): a 0.51 spread behind
+a byte-identical pipeline. The seven-agent ChemEAGLE reference system
+itself, re-run on its complete benchmark under the same scorer, reaches
+0.352: half the score of a single agent with a low-cost backbone at the
+same cost per image. Hence, the multimodal model, not the
+orchestration, decides extraction quality at benchmark scale. Furthermore, it is
 found that serving reliability is a first-class variable: the
 highest-quality low-cost model loses 21\% of images to provider-side
 aborts, one third of the total inference spend of \$389 is consumed by
@@ -78,9 +76,10 @@ failed attempts, and the released benchmark itself requires a
 documented reconciliation before its numbers can be compared across
 papers. These results establish the single multimodal model as the
 decisive component of agentic reaction extraction and provide a
-reproducible template for evaluating such pipelines. All data, code,
-run transcripts, and per-image scores are released as open-source
-software.
+reproducible template for evaluating such pipelines. A comparison with
+the sixteen-figure development phase is provided in the appendix. All
+data, code, run transcripts, and per-image scores are released as
+open-source software.
 \end{abstract}
 
 \keywords{reaction extraction \and vision--language models \and agentic
@@ -108,38 +107,27 @@ the most promising route to automating this extraction, and multi-agent
 systems such as ChemEAGLE\citep{Chen2025ChemEagle} report
 state-of-the-art results on their own benchmarks.
 
-In prior work, the design space of such pipelines was mapped with a
-controlled ablation on sixteen reaction figures: four architectures,
-ranging from a seven-agent system down to a single VLM with two
-chemistry tools, were crossed against nine multimodal backbones behind
-an identical prompt, tool set and output schema. The result was
-asymmetric. When the architecture is held fixed, swapping the model
-moves partial-match F1 by 0.41 to 0.58; when the model is held fixed,
-swapping the architecture moves it by at most 0.10, and orchestration
-pays off only when the backbone is weak. The simplest single-agent
-design surpassed every multi-step system, with Claude Opus~4.7 reaching
-a partial-match F1 of 0.85 and Gemini~3~Flash 0.79 at a tenth of the
-cost: \emph{the model, not the framework, decides the outcome}.
+However, it remains unclear whether such reported results survive
+rigorous evaluation, for two reasons. First, the multi-agent
+architecture and the multimodal backbone are rarely varied
+independently, so the contribution of the orchestration cannot be
+separated from that of the model. Second, agentic pipelines are
+typically developed and evaluated on the same benchmark, so reported
+scores mix genuine capability with development-set adaptation. Both
+concerns can be addressed with the standard machinery of rigorous
+evaluation: a frozen system, a held-out test set, and an analysis plan
+fixed in advance.
 
-However, it remains unclear whether that conclusion survives beyond the
-subset it was derived on, since three threats to validity are direct
-consequences of the sixteen-figure design. First, \emph{size}: with
-sixteen images, a single figure moves the macro-averaged score by
-roughly 0.05, so adjacent systems cannot be distinguished and no
-confidence intervals were reported. Second, \emph{selection}: the
-figures were deliberately sampled to be difficult rather than
-representative, so absolute scores estimate nothing beyond the subset
-itself. Third, and most fundamentally, \emph{development
-contamination}: the pipeline's prompt and tools were iterated while
-scoring those very figures, so the subset functioned as a development
-set, not a test set.
-
-In this work, we remove all three threats at once. The winning
-single-agent pipeline is frozen byte-for-byte (prompt, tools, schema,
-and run configuration) and evaluated on every scoreable figure of the
-public ChemEAGLE benchmark release that the prior study never touched:
+In this work, we apply that machinery to chemical reaction extraction.
+A deliberately minimal single-agent pipeline (one VLM, an RDKit-backed
+SMILES validator, a schema-validated submission tool, and one system
+prompt) is frozen byte-for-byte and evaluated on every scoreable figure
+of the public ChemEAGLE benchmark release outside its development set:
 a 305-image held-out test set carrying 2{,}899 gold reactions across
-four heterogeneous ground-truth subsets. The evaluation is
+four heterogeneous ground-truth subsets. Four multimodal models across
+two provider generations are compared behind the identical pipeline,
+and the seven-agent ChemEAGLE reference system is re-run on its own
+complete benchmark under the same scorer. The evaluation is
 pre-registered in the operational sense, with the pipeline, scoring
 rules, and analysis plan committed publicly before the first scored
 run and every subsequent change recorded as a dated amendment.
@@ -148,12 +136,11 @@ the public release, including every repair and exclusion;
 Section~\ref{sec:methods} describes the frozen pipeline, the model
 roster, and the five frozen scoring rules;
 Section~\ref{sec:results} reports full-benchmark scores with bootstrap
-confidence intervals for four models across two provider generations,
-a same-scorer re-run of the ChemEAGLE reference system, a paired
-measurement of small-subset optimism, and a billing-verified cost and
-reliability analysis; and Section~\ref{sec:discussion} discusses the
-implications. The code, benchmark builder, run transcripts and
-per-image scores are available as open-source software on
+confidence intervals, the same-scorer re-run of the reference system,
+and a billing-verified cost and reliability analysis; and
+Section~\ref{sec:discussion} discusses the implications. The code,
+benchmark builder, run transcripts and per-image scores are available
+as open-source software on
 \url{https://github.com/kahuysen/thesis_final_Kasper_Huysentruyt}.
 
 % ══════════════════════════════════════════════════════════════════════
@@ -190,9 +177,8 @@ spirit of tool-augmented chemistry agents such as
 ChemCrow.\citep{Bran2024ChemCrow} ChemEAGLE\citep{Chen2025ChemEagle}
 is the representative multi-agent instance: a planner, six specialist
 agents and two observers over a chemistry toolchain, evaluated on a
-benchmark of 324 figure graphics released alongside the paper. The
-prior study used a sixteen-figure subset of that release; this work
-uses all of it.
+benchmark of 324 figure graphics released alongside the paper. This
+work uses that release in full.
 
 \paragraph{Evaluation practice.} The machine-learning community's
 standard defences against overfitting an evaluation, namely held-out
@@ -269,14 +255,16 @@ No released GT  & 3   & n/a     & \\
 \subsection{Held-out design and pre-registration}
 \label{sec:preregistration}
 
-The sixteen figures of the prior study are byte-identical members of the
-release (all within \texttt{GT1}), so they are treated as what they
-were: a development set. All prompt engineering, tool design and schema
-iteration in the prior work happened against these figures; none
-happened against the remaining 305. The headline evaluation set of this
-paper is therefore the \textbf{305 held-out scored images} (the 123 non-development \texttt{GT1}
-figures plus all 182 \texttt{GT2}--\texttt{GT4} figures), with the development sixteen reported separately
-as an anchor to the prior study's numbers.
+Sixteen figures of the release (all within \texttt{GT1}) were used
+during the development of the pipeline: all prompt engineering, tool
+design and schema iteration happened against these figures, and none
+against the remaining 305. Therefore, these sixteen are treated as a
+development set and excluded from the headline evaluation, which
+covers the \textbf{305 held-out scored images} (the 123
+non-development \texttt{GT1} figures plus all 182
+\texttt{GT2}--\texttt{GT4} figures). A comparison between
+development-set and held-out scores is provided in
+Appendix~\ref{app:dev}.
 
 The evaluation was pre-registered in the operational sense: the
 benchmark builder, the scoring rules of Sect.~\ref{sec:methods}, the
@@ -288,14 +276,15 @@ operational reality, namely raising the per-round completion-token cap
 for reasoning models, provider pinning, and two model substitutions,
 were each recorded as a dated amendment in the run plan and committed
 before the run they affect. We committed in advance to publishing the
-results regardless of whether the prior study's ordering survived.
+results regardless of their direction.
 
 % ══════════════════════════════════════════════════════════════════════
 \section{Methods}
 \label{sec:methods}
 
 \subsection{The frozen single-agent pipeline}
-The pipeline is the winning design of the prior study, unchanged: one
+The pipeline is deliberately minimal and was frozen byte-for-byte at
+the end of the development phase: one
 multimodal model, two tools (an RDKit-backed\citep{RDKit} SMILES
 validator and a Pydantic-validated \texttt{submit\_extraction}
 terminator), and one system prompt, used byte-for-byte identically for
@@ -314,24 +303,23 @@ rounds per figure, which confirms that all models exercise the loop
 agentically rather than answering single-shot.
 
 \subsection{Models}
-Following the prior study, no decoding or reasoning parameters are
+No decoding or reasoning parameters are
 tuned: every model runs at its provider defaults, so the comparison is
 of models as deployed, not of models at their individually optimal
 configuration. One harness limit was changed by amendment before any
 scored run: the per-round completion-token cap was raised uniformly
-from the prior study's 8{,}192 to 16{,}384 after smoke tests showed
+from the development-phase value of 8{,}192 to 16{,}384 after smoke tests showed
 that models with reasoning enabled by default exhaust the lower cap on
 hidden thinking before emitting their first tool call. It should be
 noted that the cap is a harness property, not a model setting, and that
 holding it too low silently disables such models.
 
-The final roster pairs each thesis-linked model with a
+The final roster pairs each development-phase model with a
 current-generation counterpart behind the same pipeline: Claude
-Opus~5\footnote{Substituted for the thesis winner Opus~4.7 by a dated
-amendment; the thesis-continuity anchor for the Claude family is
-Opus~4.7's canonical development-set run, which scores 0.854 under this
-paper's scorer.} and Gemini~3.7~Flash (current generation), and
-Gemini~3~Flash and GPT-5.4 (the thesis models, unchanged). A
+Opus~5\footnote{Substituted for Opus~4.7 by a dated amendment;
+development-phase reference numbers for the Claude family are given in
+Appendix~\ref{app:dev}.} and Gemini~3.7~Flash (current generation), and
+Gemini~3~Flash and GPT-5.4 (development-phase models, unchanged). A
 pre-registered fifth slot for an open-weight model was abandoned by
 dated amendments after three candidates proved unusable \emph{as
 commercially served}, for three distinct reasons. The provider-default
@@ -341,16 +329,15 @@ corresponding to approximately 15 to 20 hours and \$65 to \$100 per
 pass. Qwen3-VL-235B-A22B, run for 160 images before discontinuation,
 scored a partial-match F1 of 0.067: structurally well-formed
 submissions whose molecules are simply wrong, on quantized (fp8)
-endpoints. Qwen3.6-27B, the prior study's open-weight entry (0.66 on
-the figures it completed), now exceeds seven minutes per round as
+endpoints. Qwen3.6-27B, an open-weight model that performed reasonably
+during the development phase, now exceeds seven minutes per round as
 served. Therefore, the open-weight comparison at scale is an open
-problem in serving, not only in modeling, and the prior study's
-development-set result remains the reference point.
+problem in serving, not only in modeling.
 \TODO{model table with OpenRouter ids, prices, serving providers,
 quantization}
 
 \subsection{Scoring}
-The metric definitions are those of the prior study: SMILES are
+The metric definitions were fixed during the development phase: SMILES are
 canonicalised through RDKit with wildcard-isotope normalisation;
 set-based reactant/product intersection-over-union (IoU) is computed;
 soft, hard, constitution and partial reaction matching are applied with
@@ -361,8 +348,8 @@ applied under five rules frozen in the run plan before any scored run.
 
 (1)~Every scored image in the manifest counts: a missing, crashed or
 never-submitting prediction is scored as an empty extraction, i.e.\ as
-zeros. This deliberately tightens the prior study's convention, which
-dropped failed images from the quality denominator and was
+zeros. This deliberately tightens the development-phase convention,
+which dropped failed images from the quality denominator and was
 optimistically biased for systems that failed on hard figures; here,
 failure is part of the measurement. (2)~Structural metrics are computed
 with conditions stripped from both prediction and gold, so the four
@@ -379,11 +366,11 @@ include, nor excused from one the annotation does include.
 (5)~Uncertainty on every macro-averaged headline number is a bootstrap
 95\% confidence interval over images (10{,}000 resamples, fixed seed).
 
-The scorer was validated against the prior study before the first full
-run: applied to the canonical development-set runs it reproduces the
-published partial-match F1 of Opus~4.7 (0.854) and GPT-5.4 (0.273) to
-three decimals, and returns exactly 1.0 for gold-as-prediction and 0.0
-for empty predictions on every ground-truth subset.
+The scorer was validated before the first full run: applied to the
+canonical development-phase reference runs it reproduces their
+partial-match F1 to three decimals (Appendix~\ref{app:dev}), and it
+returns exactly 1.0 for gold-as-prediction and 0.0 for empty
+predictions on every ground-truth subset.
 
 \subsection{Execution}
 Models are run cheapest first, each scored before the next starts, with
@@ -405,18 +392,21 @@ Sect.~\ref{sec:results}.
 
 Table~\ref{tab:main} lists the held-out scores of the four single-agent
 models and the multi-agent reference system, and
-Figure~\ref{fig:heldout} illustrates the same comparison with the
-development-set scores alongside. Claude Opus~5 reaches the highest
-partial-match F1 at 0.740, followed by the two Gemini Flash generations
-at 0.629 and 0.615, GPT-5.4 at 0.228, and the ChemEAGLE reference
-system at 0.352.
+Figure~\ref{fig:heldout} illustrates the comparison. Claude Opus~5
+reaches the highest partial-match F1 at 0.740, followed by the two
+Gemini Flash generations at 0.629 and 0.615, GPT-5.4 at 0.228, and the
+ChemEAGLE reference system at 0.352. The decisive contrasts are
+resolved well beyond their confidence intervals: Opus~5 against either
+Gemini (non-overlapping intervals) and every model against GPT-5.4.
+However, the difference within the Gemini pair (0.629 against 0.615)
+is far inside the intervals and should not be read as a ranking.
 
 \begin{table}[htb]
 \centering
 \caption{Frozen single-agent pipeline on the 305-image held-out set.
 Partial-match F1 (headline) and ChemEAGLE-style exact-set soft-match
 F1, macro-averaged over images; bootstrap 95\% CIs; failed images
-scored as zeros. Dev16: same scorer on the 16 development figures.
+scored as zeros.
 Cost/img is billed provider spend per successful image, all-in
 (failed attempts and retries included), from the two released billing
 exports covering every run.
@@ -426,18 +416,16 @@ system, re-run locally with its shipped gpt-5-mini engine (documented
 client adaptation); its 39 missing images are deterministic crashes in
 its own vendored stack, scored as zeros like every other failure.}
 \label{tab:main}
-\begin{tabular}{lcccccc}
+\begin{tabular}{lccccc}
 \toprule
-Model & Held-out F1 & 95\% CI & Soft F1 & Dev16 F1 & Missing & Cost/img \\
+Model & Held-out F1 & 95\% CI & Soft F1 & Missing & Cost/img \\
 \midrule
-Claude Opus 5      & \textbf{0.740} & [0.697, 0.783] & 0.268 & 0.822 & 23 & \$0.84 \\
-Gemini 3.7 Flash   & 0.629 & [0.581, 0.676] & 0.187 & 0.766 & 64 & \$0.10 \\
-Gemini 3 Flash     & 0.615 & [0.569, 0.661] & 0.163 & 0.725 & 6 & \$0.05 \\
-GPT-5.4            & 0.228 & [0.190, 0.268] & 0.030 & 0.235 & 0 & \$0.09 \\
+Claude Opus 5      & \textbf{0.740} & [0.697, 0.783] & 0.268 & 23 & \$0.84 \\
+Gemini 3.7 Flash   & 0.629 & [0.581, 0.676] & 0.187 & 64 & \$0.10 \\
+Gemini 3 Flash     & 0.615 & [0.569, 0.661] & 0.163 & 6 & \$0.05 \\
+GPT-5.4            & 0.228 & [0.190, 0.268] & 0.030 & 0 & \$0.09 \\
 \midrule
-ChemEAGLE (7 agents)$^{\ddag}$ & 0.352 & [0.303, 0.399] & 0.121 & 0.283 & 39 & \$0.06 \\
-\midrule
-\multicolumn{6}{l}{\emph{Thesis anchors (dev16, thesis GT): Opus 4.7 = 0.854; Gemini 3 Flash = 0.790; GPT-5.4 = 0.273.}}\\
+ChemEAGLE (7 agents)$^{\ddag}$ & 0.352 & [0.303, 0.399] & 0.121 & 39 & \$0.06 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -445,10 +433,9 @@ ChemEAGLE (7 agents)$^{\ddag}$ & 0.352 & [0.303, 0.399] & 0.121 & 0.283 & 39 & \
 \begin{figure}[htb]
 \centering
 \includegraphics[width=0.85\textwidth]{figures/fig_heldout}
-\caption{Held-out partial-match F1 (filled, with bootstrap 95\% CIs;
-failed images scored as zeros) against the same scorer on the sixteen
-development figures (open). Every capable model scores below its
-development-set number; the ordering is unchanged.}
+\caption{Held-out partial-match F1 with bootstrap 95\% confidence
+intervals; failed images are scored as zeros. Direct labels give each
+system's score.}
 \label{fig:heldout}
 \end{figure}
 
@@ -493,42 +480,19 @@ single-reaction figures among the easiest (0.705 to 0.798), with the
 R-group tables of \texttt{GT2} in between. Two observations stand out.
 First, Claude Opus~5 is strongest precisely on the R-group tables
 (0.803), the figure archetype for which ChemEAGLE deploys two dedicated
-substitution agents, which reinforces the prior study's conclusion that
-a strong backbone internalises what the orchestration was built to
-compensate for. Second, the gap between the Gemini generations is
+substitution agents, which suggests that a strong backbone internalises
+what the orchestration was built to compensate for. Second, the gap between the Gemini generations is
 concentrated in extraction quality per completed image rather than in
 the subset profile, which shifts little; what changed most between the
 two is reliability (Sect.~\ref{sec:failures}).
-
-\subsection{Does the small-subset finding hold at scale?}
-It holds. The ordering of the development subset (frontier Claude
-first, the Gemini Flash tier second, GPT-5.4 far behind) is unchanged
-on the 305 held-out images, and the decisive contrasts are resolved
-well beyond their confidence intervals: Opus~5 against either Gemini
-(non-overlapping intervals) and every model against GPT-5.4. However,
-within the Gemini pair the held-out difference (0.629 against 0.615)
-is far inside the intervals and should not be read as a ranking, which
-is exactly the adjacent-model caution the prior study raised.
-
-The paired comparison also quantifies small-subset optimism: every
-model scores lower held-out than on the sixteen development figures
-(Opus~5 $-$0.082, Gemini~3.7~Flash $-$0.137, Gemini~3~Flash $-$0.110,
-GPT-5.4 $-$0.007), even though those figures were selected to be
-difficult. Deliberate difficulty did not make the development set
-conservative; iterating prompts and tools against it did the opposite,
-and only a held-out evaluation reveals by how much. Notably, the drop
-is smallest for the weakest model, which might be explained by
-development-set adaptation helping most where the pipeline's prompt was
-actually tuned.
 
 \subsection{Cost--quality at scale}
 Figure~\ref{fig:costquality} shows cost against held-out quality for
 all five systems. The per-image economics reshuffle at the top. All
 costs here are billed, all-in figures from the released provider
 exports, with failed attempts included. Claude Opus~5 leads on quality
-at \$0.84 per successful image, roughly four times the prior study's
-Opus~4.7, driven by output verbosity (a median of 8{,}770 output tokens
-per image against 3{,}679) and by capped failure attempts. In contrast,
+at \$0.84 per successful image, driven by output verbosity (a median of
+8{,}770 output tokens per image) and by capped failure attempts. In contrast,
 Gemini~3.7~Flash delivers a partial-match F1 of approximately 0.80 on
 completed images at \$0.10 all-in (\$0.04 when only successful-image
 tokens are counted).
@@ -623,13 +587,9 @@ images outright, so a harness that trusts file extensions silently
 scores a strict provider five images of zeros that a lenient provider
 is spared.
 
-The prior study additionally hand-corrected the ground truth of its
-sixteen development figures. Scoring the canonical Opus~4.7
-development run against the release annotations instead of the
-corrected ones leaves its aggregate partial-match F1 unchanged at
-0.854, indicating the corrections concerned condition detail and
-labelling rather than structures.
-\TODO{per-image diff table dev16 corrected-vs-release GT for the SI}
+During the development phase, the ground truth of the sixteen
+development figures was additionally hand-corrected; the effect of
+those corrections on scores is quantified in Appendix~\ref{app:dev}.
 
 \subsection{Failure modes and serving reliability}
 \label{sec:failures}
@@ -647,8 +607,7 @@ fails differently again: ChemEAGLE crashed on 40 of 321 images (12\%)
 with deterministic exceptions inside its own vendored perception stack
 (31 IndexError, 8 AttributeError, 1 TypeError, concentrated in the
 MolNexTR graph-to-SMILES conversion and downstream sorting). These are
-reproducible failures that no retry recovers, which confirms at scale
-the fragility the prior study observed on 4 of 16 figures. Therefore,
+reproducible failures that no retry recovers. Therefore,
 the ranking of low-cost models inverts depending on whether one reads
 quality-per-completion or end-to-end yield, and a practitioner
 deploying these pipelines should treat provider reliability as a
@@ -662,28 +621,23 @@ that change loop economics by an order of magnitude.
 \section{Discussion}
 \label{sec:discussion}
 
-\paragraph{The model axis survives scale, and so does the
-orchestration conclusion.} The central claim of the prior study was
-that the multimodal model, not the orchestration, decides extraction
-quality. The held-out evaluation confirms both halves at nineteen-fold
-scale. Behind a byte-identical pipeline, the spread between the
+\paragraph{The model, not the orchestration, decides extraction
+quality.} Behind a byte-identical pipeline, the spread between the
 strongest and weakest model is 0.51 partial-match F1 (0.740 against
-0.228), with the same ordering as on the development set and margins
-resolved far beyond the bootstrap intervals. Furthermore, the
-seven-agent reference system, re-run on its own complete benchmark
-under the same scorer, lands at 0.352: above the weak-backbone single
-agent (0.228), as the interaction predicts, but at less than half the
-score of a low-cost single agent with the same cost per image
-(Gemini~3~Flash: 0.615 at \$0.05 against ChemEAGLE's \$0.06) and less
-than half of the frontier single agent. Orchestration compensates for
-a weak model; it cannot compete with a strong one, and both claims now
-rest on 305 held-out images rather than sixteen. In addition, the
-held-out set shows what the small subset could not: its absolute
-numbers were optimistic by 0.08 to 0.14 for every capable model,
-despite the subset having been selected for difficulty. Small
-hand-picked benchmarks remain useful for rapid controlled ablation.
-However, they should not be used for absolute claims, even difficult
-ones.
+0.228), with margins resolved far beyond the bootstrap intervals.
+Furthermore, the seven-agent reference system, re-run on its own
+complete benchmark under the same scorer, lands at 0.352: above the
+weak-backbone single agent (0.228), but at less than half the score of
+a low-cost single agent with the same cost per image (Gemini~3~Flash:
+0.615 at \$0.05 against ChemEAGLE's \$0.06) and less than half of the
+frontier single agent. Hence, orchestration compensates for a weak
+model, but it cannot compete with a strong one. In addition, the
+paired comparison of Appendix~\ref{app:dev} shows that scores on the
+sixteen development figures were optimistic by 0.08 to 0.14 for every
+capable model, despite those figures having been selected for
+difficulty. Small hand-picked benchmark subsets remain useful for
+rapid controlled ablation. However, they should not be used for
+absolute claims, even difficult ones.
 
 \paragraph{Same pipeline, newer models.} Freezing the pipeline turns
 provider progress into a measurable trajectory. Within one year, the
@@ -710,27 +664,25 @@ literature.
 \paragraph{The open-weight gap is now a serving gap.} None of the three
 open-weight candidates could be evaluated at scale as commercially
 served, each failing differently (unbounded default reasoning,
-generation-stale vision at fp8 quantization, and latency). The
-development-set result of the prior study (Qwen3.6-27B, 0.66) shows
-that open weights can approach closed low-cost-tier quality. However,
-this attempt shows that the serving ecosystem around them, as of
-August 2026, does not yet support sustained agentic workloads at
-benchmark scale. Self-hosted evaluation is the obvious next step and
+generation-stale vision at fp8 quantization, and latency). Development-phase
+results suggest that open weights can approach closed low-cost-tier
+quality. However, this attempt shows that the serving ecosystem around
+them, as of August 2026, does not yet support sustained agentic
+workloads at benchmark scale. Self-hosted evaluation is the obvious next step and
 would also remove the quantization confound.
 
 \section{Limitations}
 Five limitations bound these conclusions. First, the orchestration
-axis is re-examined at scale through one multi-agent system (ChemEAGLE
-with its shipped engine); the prior study's own seven-agent framework
-and the strong-backbone multi-agent cell of its $2\times2$ were not
-re-run at 321 images (at their measured five-to-eight-fold cost
-multiple), so the full-scale orchestration comparison covers the
-reference system, not every architecture--backbone pairing. Second,
+axis is examined at scale through one multi-agent system (ChemEAGLE
+with its shipped engine); other architecture--backbone pairings were
+not re-run at 321 images because of their five-to-eight-fold cost
+multiple, so the full-scale orchestration comparison covers the
+reference system only. Second,
 the release ground truth is taken verbatim apart from the logged
 mechanical repairs; its documented defects bound attainable scores, so
 the numbers support cross-model comparison, not absolute-performance
 claims. Third, provider-default reasoning and decoding settings are
-inherited deliberately from the prior study, and the model axis
+inherited deliberately from the development phase, and the model axis
 therefore continues to confound model capability with vendor defaults;
 the serving stack adds a further layer (provider routing,
 quantization) that is recorded but not controlled beyond the
@@ -744,24 +696,19 @@ so the condition axis of extraction quality rests on \texttt{GT1}
 alone.
 
 \section{Conclusions}
-In this work, we have evaluated a single-agent vision--language
-pipeline, frozen byte-for-byte after a sixteen-figure development
-study, on the 305 held-out scoreable images of the public ChemEAGLE
+In this work, we have evaluated a frozen single-agent vision--language
+pipeline on the 305 held-out scoreable images of the public ChemEAGLE
 benchmark, in a pre-registered design with the scoring rules and
-analysis plan committed before the first run. The development-set
-finding is confirmed at nineteen-fold scale: the multimodal model
-decides extraction quality. Claude Opus~5 reaches a partial-match F1
-of 0.740 (0.697--0.783), the Gemini Flash tier 0.615 to 0.629, GPT-5.4
-0.228, and the seven-agent ChemEAGLE reference system, re-run on its
-own complete benchmark under the same scorer, 0.352, all in the
-development-set order and with the decisive margins resolved beyond
-their confidence intervals. Every capable single-agent model scores
-0.08 to 0.14 below its development-set number, which measures the
-optimism that even a deliberately difficult sixteen-figure subset
-carries once prompts have been iterated against it. However, these
-conclusions are bounded by the limitations above: one multi-agent
-system at scale, ground truth with documented defects, single runs per
-image, and provider defaults throughout.
+analysis plan committed before the first run. The central finding is
+that the multimodal model decides extraction quality. Claude Opus~5
+reaches a partial-match F1 of 0.740 (0.697--0.783), the Gemini Flash
+tier 0.615 to 0.629, GPT-5.4 0.228, and the seven-agent ChemEAGLE
+reference system, re-run on its own complete benchmark under the same
+scorer, 0.352, with the decisive margins resolved beyond their
+confidence intervals. However, these conclusions are bounded by the
+limitations above: one multi-agent system at scale, ground truth with
+documented defects, single runs per image, and provider defaults
+throughout.
 
 Based on these results, three recommendations are made for benchmark
 evaluations of agentic pipelines. First, the evaluation should be
@@ -798,5 +745,81 @@ release (Hugging Face: \texttt{CYF200127/ChemEagle}, MIT license).
 
 \bibliographystyle{unsrtnat}
 \bibliography{paper}
+
+\appendix
+\section{The development phase and the sixteen-figure subset}
+\label{app:dev}
+
+The single-agent pipeline of this work was designed and iterated during
+a preceding development phase in which sixteen figures of the ChemEAGLE
+release (all within \texttt{GT1}, byte-identical members of the public
+benchmark) served as the working set: all prompt engineering, tool
+design, schema iteration and metric development happened against these
+figures. That phase also compared four pipeline architectures and nine
+multimodal backbones on the same sixteen figures and motivated the
+single-agent design evaluated here. Because of this history, the
+sixteen figures are excluded from the held-out evaluation of the main
+text and are reported only in this appendix.
+
+Table~\ref{tab:dev16} lists the development-subset scores of every
+system under the main text's scorer, and
+Figure~\ref{fig:heldout-dev} shows them alongside the held-out scores.
+Two development-phase reference runs also serve as scorer validation:
+Claude Opus~4.7, the strongest model of the development phase, scores
+0.854 on the sixteen figures, and GPT-5.4 scores 0.273, each
+reproducing the development-phase evaluation to three decimals.
+
+\begin{table}[htb]
+\centering
+\caption{Partial-match F1 on the sixteen development figures under the
+main text's scorer (failed images as zeros), with the held-out score
+and the paired difference. Every capable model scores higher on the
+development subset than held-out, despite the subset having been
+selected for difficulty.}
+\label{tab:dev16}
+\begin{tabular}{lccc}
+\toprule
+Model & Dev.\ subset & Held-out & Difference \\
+\midrule
+Claude Opus 5    & 0.822 & 0.740 & $-$0.082 \\
+Gemini 3.7 Flash & 0.766 & 0.629 & $-$0.137 \\
+Gemini 3 Flash   & 0.725 & 0.615 & $-$0.110 \\
+GPT-5.4          & 0.235 & 0.228 & $-$0.007 \\
+ChemEAGLE        & 0.283 & 0.352 & $+$0.069 \\
+\midrule
+Claude Opus 4.7 (reference run) & 0.854 & n/a & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.85\textwidth]{figures/fig_heldout_dev}
+\caption{Held-out partial-match F1 (filled, with bootstrap 95\%
+confidence intervals) against the development-subset score of each
+system (open). Every capable single-agent model scores below its
+development-subset number, whereas the reference system scores above
+it.}
+\label{fig:heldout-dev}
+\end{figure}
+
+Three observations follow. First, the paired differences quantify
+development-subset optimism: 0.08 to 0.14 for every capable
+single-agent model. Deliberate difficulty did not make the subset
+conservative; iterating prompts and tools against it did the opposite,
+and only a held-out evaluation reveals by how much. Second, the drop
+is smallest for the weakest model (GPT-5.4, $-$0.007), which might be
+explained by development-set adaptation helping most where the
+pipeline's prompt was actually effective. Third, ChemEAGLE is the only
+system that scores \emph{higher} held-out than on the development
+subset, which is consistent with the sixteen figures having been
+selected for difficulty with respect to failure modes of exactly this
+kind of pipeline.
+
+Finally, the development phase hand-corrected the ground truth of the
+sixteen figures. Scoring the Opus~4.7 reference run against the
+release annotations instead of the corrected ones leaves its aggregate
+partial-match F1 unchanged at 0.854, indicating that the corrections
+concerned condition detail and labelling rather than structures.
 
 \end{document}

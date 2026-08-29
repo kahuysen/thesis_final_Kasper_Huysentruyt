@@ -25,13 +25,16 @@ OUT.mkdir(parents=True, exist_ok=True)
 # (see FULL_RUN_PLAN.md and the paper's cost section).
 MODELS = {
     # costs: billed all-in $/successful image from the two OpenRouter
-    # activity exports (evaluation/results/billing_summary.json)
-    "opus5":   ("full_opus5",         "Claude Opus 5",    "#2a78d6", 0.838),
-    "g37f":    ("full_gemini37flash", "Gemini 3.7 Flash", "#eb6834", 0.101),
-    "g3f":     ("full_gemini3flash",  "Gemini 3 Flash",   "#1baf7a", 0.049),
-    "gpt54":   ("full_gpt54",         "GPT-5.4",          "#eda100", 0.089),
+    # activity exports (evaluation/results/billing_summary.json).
+    # Palette: warm scheme derived from the author's chosen swatches,
+    # deepened to print weight; passes CVD-separation and legibility
+    # checks in display order (validated 2026-08-29).
+    "opus5":   ("full_opus5",         "Claude Opus 5",    "#96551F", 0.838),
+    "g37f":    ("full_gemini37flash", "Gemini 3.7 Flash", "#EE7419", 0.101),
+    "g3f":     ("full_gemini3flash",  "Gemini 3 Flash",   "#2E8FBF", 0.049),
+    "gpt54":   ("full_gpt54",         "GPT-5.4",          "#8A5BB8", 0.089),
     # multi-agent baseline; run dir lives under baselines/chemeagle
-    "chemeagle": ("../../../baselines/chemeagle/runs/full", "ChemEAGLE (7 agents)", "#e87ba4", 0.055),
+    "chemeagle": ("../../../baselines/chemeagle/runs/full", "ChemEAGLE (7 agents)", "#6F9A34", 0.055),
 }
 
 TEXT = "#0b0b0b"
@@ -66,7 +69,7 @@ def style_ax(ax):
     ax.set_axisbelow(True)
 
 
-def fig_heldout(d):
+def fig_heldout(d, show_dev16=False, fname="fig_heldout"):
     order = sorted(d, key=lambda k: d[k]["held"])
     fig, ax = plt.subplots(figsize=(5.6, 2.6))
     for i, k in enumerate(order):
@@ -74,15 +77,18 @@ def fig_heldout(d):
         lo, hi = m["ci"]
         ax.plot([lo, hi], [i, i], color=m["color"], linewidth=2, solid_capstyle="round")
         ax.plot(m["held"], i, "o", color=m["color"], markersize=8, zorder=3)
-        ax.plot(m["dev16"], i, "o", markerfacecolor="white",
-                markeredgecolor=m["color"], markersize=7, markeredgewidth=1.6, zorder=3)
+        if show_dev16:
+            ax.plot(m["dev16"], i, "o", markerfacecolor="white",
+                    markeredgecolor=m["color"], markersize=7, markeredgewidth=1.6, zorder=3)
         ax.annotate(f'{m["held"]:.3f}', (m["held"], i), textcoords="offset points",
                     xytext=(0, 9), ha="center", fontsize=8, color=TEXT)
-        ax.annotate(m["name"], (min(lo, m["dev16"]) - 0.015, i), ha="right",
+        left = min(lo, m["dev16"]) if show_dev16 else lo
+        ax.annotate(m["name"], (left - 0.015, i), ha="right",
                     va="center", fontsize=9, color=TEXT)
     ax.plot([], [], "o", color=MUTED, markersize=8, label="held-out 305 (95% CI)")
-    ax.plot([], [], "o", markerfacecolor="white", markeredgecolor=MUTED,
-            markersize=7, markeredgewidth=1.6, label="dev16")
+    if show_dev16:
+        ax.plot([], [], "o", markerfacecolor="white", markeredgecolor=MUTED,
+                markersize=7, markeredgewidth=1.6, label="development subset")
     ax.legend(loc="lower right", frameon=False, fontsize=8)
     ax.set_yticks([])
     ax.set_xlim(0, 1.0)
@@ -92,7 +98,7 @@ def fig_heldout(d):
     ax.spines["left"].set_visible(False)
     fig.tight_layout()
     for ext in ("pdf", "png"):
-        fig.savefig(OUT / f"fig_heldout.{ext}", dpi=300)
+        fig.savefig(OUT / f"{fname}.{ext}", dpi=300)
     plt.close(fig)
 
 
@@ -155,6 +161,7 @@ def fig_subsets(d):
 if __name__ == "__main__":
     d = load()
     fig_heldout(d)
+    fig_heldout(d, show_dev16=True, fname="fig_heldout_dev")
     fig_cost_quality(d)
     fig_subsets(d)
     print("wrote figures to", OUT)
