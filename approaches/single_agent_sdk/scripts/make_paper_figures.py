@@ -209,21 +209,21 @@ def fig_cost_tokens_time(d):
     ax1.set_xlabel("tokens per image (thousands, median)", fontsize=9, color=TEXT)
     ax1.set_ylabel("cost per successful image (USD)", fontsize=9, color=TEXT)
 
-    offs2 = {"opus5": (0, 10), "g37f": (8, 2), "g3f": (8, -3),
-             "gpt54": (8, -3), "chemeagle": (8, -3)}
+    offs2 = {"opus5": (0, 10), "g37f": (8, 4), "g3f": (0, -16),
+             "gpt54": (8, -3), "chemeagle": (-10, -3)}
     for k, m in d.items():
-        ax2.plot(m["cost"], m["med_time"], "o", color=m["color"],
+        ax2.plot(m["med_time"], m["cost"], "o", color=m["color"],
                  markersize=9, zorder=3)
         dx, dy = offs2.get(k, (8, 0))
-        ax2.annotate(m["name"], (m["cost"], m["med_time"]),
+        ax2.annotate(m["name"], (m["med_time"], m["cost"]),
                      textcoords="offset points", xytext=(dx, dy),
                      ha="left" if dx > 0 else ("center" if dx == 0 else "right"),
                      fontsize=8, color=TEXT)
-    ax2.set_xscale("log")
-    ax2.set_xlim(0.02, 1.5)
-    ax2.set_ylim(0, 360)
-    ax2.set_xlabel("cost per successful image (USD)", fontsize=9, color=TEXT)
-    ax2.set_ylabel("wall time per image (s, median)", fontsize=9, color=TEXT)
+    ax2.set_yscale("log")
+    ax2.set_xlim(0, 360)
+    ax2.set_ylim(0.02, 1.5)
+    ax2.set_xlabel("wall time per image (s, median)", fontsize=9, color=TEXT)
+    ax2.set_ylabel("cost per successful image (USD)", fontsize=9, color=TEXT)
 
     for ax, tag in ((ax1, "(a)"), (ax2, "(b)")):
         style_ax(ax)
