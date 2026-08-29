@@ -407,6 +407,9 @@ Sect.~\ref{sec:results}.
 Partial-match F1 (headline) and ChemEAGLE-style exact-set soft-match
 F1, macro-averaged over images; bootstrap 95\% CIs; failed images
 scored as zeros. Dev16: same scorer on the 16 development figures.
+Cost/img is billed spend per successful image where the released
+billing export covers the run (ChemEAGLE: \$15.60/282; Gemini 3.7
+Flash all-in: \$0.10 incl.\ retries), token-derived otherwise.
 Soft-match comparability to ChemEAGLE's published 0.78 is discussed in
 Sect.~\ref{sec:chemeagle-metric}. $^{\ddag}$The multi-agent reference
 system, re-run locally with its shipped gpt-5-mini engine (documented
@@ -422,7 +425,7 @@ Gemini 3.7 Flash   & 0.629 & [0.581, 0.676] & 0.187 & 0.766 & 64 & \$0.04 \\
 Gemini 3 Flash     & 0.615 & [0.569, 0.661] & 0.163 & 0.725 & 6 & \$0.04 \\
 GPT-5.4            & 0.228 & [0.190, 0.268] & 0.030 & 0.235 & 0 & \$0.09 \\
 \midrule
-ChemEAGLE (7 agents)$^{\ddag}$ & 0.352 & [0.303, 0.399] & 0.121 & 0.283 & 39 & \$0.05 \\
+ChemEAGLE (7 agents)$^{\ddag}$ & 0.352 & [0.303, 0.399] & 0.121 & 0.283 & 39 & \$0.06 \\
 \midrule
 \multicolumn{6}{l}{\emph{Thesis anchors (dev16, thesis GT): Opus 4.7 = 0.854; Gemini 3 Flash = 0.790; GPT-5.4 = 0.273.}}\\
 \bottomrule
@@ -518,11 +521,22 @@ the full history, so cumulative input grows quadratically with round
 count, and roughly 80\% of Opus~5's per-image cost is re-sent context
 (prompt caching, unused by our frozen provider-agnostic loop, would cut
 this several-fold). Second, \emph{failure} cost is invisible to
-success-based accounting and was one third of everything we spent:
-non-submitting runs at the original 128-round budget burned their full
-quadratic context with no output artifact, which is what motivated the
-48-round amendment. We reconcile all reported costs against provider
-billing rather than per-success token counts alone.
+success-based accounting, and provider billing exports quantify it
+exactly. Total project spend was \$389.26. On the first API key, 33\%
+of \$245.41 went to attempts that produced no output artifact
+(non-submitting runs at the original 128-round budget burning their
+full quadratic context --- the motivation for the 48-round amendment).
+On the second key, the billing export (released with the data)
+attributes \$26.34 to Gemini~3.7~Flash against \$10.03 of
+successful-image token spend: \textbf{62\% of that model's cost was
+retries of its 64 persistently aborting images}, across 11{,}693
+requests. The same export shows 214 of Claude Opus~5's 472 calls ending
+at the completion cap mid-round, and \$8.36 refunded by implicit
+provider-side prompt caching --- a preview of the several-fold input
+saving explicit caching would yield. Success-only cost columns
+(Table~\ref{tab:main}) therefore understate deployed cost by
+1.1--2.6$\times$ depending on the model's reliability; we report both
+bases.
 \begin{figure}[htb]
 \centering
 \includegraphics[width=0.6\textwidth]{figures/fig_cost_quality}
