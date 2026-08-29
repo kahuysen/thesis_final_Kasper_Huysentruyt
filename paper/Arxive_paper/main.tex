@@ -70,7 +70,11 @@ a partial-match F1 of 0.740 (95\% CI 0.697--0.783), Gemini~3.7~Flash
 respectively on the development subset under the same scorer. The
 cross-model ordering of the sixteen-figure study is confirmed at
 nineteen-fold scale, while absolute scores drop by 0.05--0.14,
-quantifying the optimism of small hand-picked benchmark subsets.
+quantifying the optimism of small hand-picked benchmark subsets. The
+seven-agent ChemEAGLE reference system itself, re-run on its complete
+benchmark under the same scorer, reaches 0.352 --- half the score of a
+single agent with a cheap backbone at the same per-image cost --- so
+the orchestration conclusion also survives at scale.
 Because failed extractions score zero by pre-registered rule, the
 results also expose a dimension small subsets hide: serving
 reliability. Gemini~3.7~Flash extracts at Opus-class quality on the
@@ -404,7 +408,10 @@ Partial-match F1 (headline) and ChemEAGLE-style exact-set soft-match
 F1, macro-averaged over images; bootstrap 95\% CIs; failed images
 scored as zeros. Dev16: same scorer on the 16 development figures.
 Soft-match comparability to ChemEAGLE's published 0.78 is discussed in
-Sect.~\ref{sec:chemeagle-metric}.}
+Sect.~\ref{sec:chemeagle-metric}. $^{\ddag}$The multi-agent reference
+system, re-run locally with its shipped gpt-5-mini engine (documented
+client adaptation); its 39 missing images are deterministic crashes in
+its own vendored stack, scored as zeros like every other failure.}
 \label{tab:main}
 \begin{tabular}{lcccccc}
 \toprule
@@ -414,6 +421,8 @@ Claude Opus 5      & \textbf{0.740} & [0.697, 0.783] & 0.268 & 0.822 & 23 & \$0.
 Gemini 3.7 Flash   & 0.629 & [0.581, 0.676] & 0.187 & 0.766 & 64 & \$0.04 \\
 Gemini 3 Flash     & 0.615 & [0.569, 0.661] & 0.163 & 0.725 & 6 & \$0.04 \\
 GPT-5.4            & 0.228 & [0.190, 0.268] & 0.030 & 0.235 & 0 & \$0.09 \\
+\midrule
+ChemEAGLE (7 agents)$^{\ddag}$ & 0.352 & [0.303, 0.399] & 0.121 & 0.283 & 39 & \$0.05 \\
 \midrule
 \multicolumn{6}{l}{\emph{Thesis anchors (dev16, thesis GT): Opus 4.7 = 0.854; Gemini 3 Flash = 0.790; GPT-5.4 = 0.273.}}\\
 \bottomrule
@@ -445,6 +454,7 @@ Claude Opus 5    & 0.734 & 0.803 & 0.798 & 0.666 \\
 Gemini 3.7 Flash & 0.648 & 0.658 & 0.742 & 0.520 \\
 Gemini 3 Flash   & 0.614 & 0.653 & 0.705 & 0.547 \\
 GPT-5.4          & 0.250 & 0.200 & 0.241 & 0.209 \\
+ChemEAGLE        & 0.351 & 0.494 & 0.150 & 0.285 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -531,9 +541,10 @@ ChemEAGLE's headline result on this benchmark is a soft-match F1 of
 as their paper defines it --- the predicted reactant and product sets
 must coincide with gold after RDKit canonicalisation --- and under that
 implementation no evaluated system approaches their number: the best
-model here reaches 0.268 held-out (Table~\ref{tab:main}), and, more
-tellingly, the prior study's local rerun of \emph{ChemEAGLE itself}
-scored 0.29 on development figures drawn from this same benchmark.
+model here reaches 0.268 held-out (Table~\ref{tab:main}), and, decisively,
+our own full-benchmark rerun of \emph{ChemEAGLE itself} (same engine
+family, all 321 scoreable images, crashes as zeros) scores 0.121
+soft-match and 0.352 partial-match held-out.
 Three considerations frame the gap. First, exact-set matching is
 structurally unusable on the CSV-derived subsets whose gold lists only
 principal reactants (Sect.~\ref{sec:results}); restricting soft match
@@ -594,7 +605,13 @@ without concluding within the round budget; and Gemini~3.7~Flash ---
 the \emph{highest}-quality cheap model per completed image --- lost 64
 images (21\% of the pool), almost all to server-side aborts (HTTP~504)
 from the provider rather than to model behaviour, across repeated
-retries over several hours. The ranking of cheap models therefore
+retries over several hours. The multi-agent baseline fails differently
+again: ChemEAGLE crashed on 40 of 321 images (12\%) with deterministic
+exceptions inside its own vendored perception stack (31 IndexError, 8
+AttributeError, 1 TypeError, concentrated in the MolNexTR
+graph-to-SMILES conversion and downstream sorting) --- reproducible
+failures that no retry recovers, confirming at scale the fragility the
+prior study observed on 4 of 16 figures. The ranking of cheap models therefore
 inverts depending on whether one reads quality-per-completion or
 end-to-end yield, and a practitioner deploying these pipelines should
 treat provider reliability as a first-class metric alongside F1.
@@ -608,13 +625,22 @@ loop economics by an order of magnitude.
 \section{Discussion}
 \label{sec:discussion}
 
-\paragraph{The model axis survives scale.} The prior study's central
-claim was that the multimodal model, not the orchestration, decides
-extraction quality. The held-out evaluation confirms the model axis at
-nineteen-fold scale: behind a byte-identical pipeline, the spread
-between the strongest and weakest model is 0.51 partial F1 (0.740 vs.\
-0.228), with the same ordering as on the development set and margins
-resolved far beyond the bootstrap intervals. What the small subset
+\paragraph{The model axis survives scale --- and so does the
+orchestration conclusion.} The prior study's central claim was that the
+multimodal model, not the orchestration, decides extraction quality.
+The held-out evaluation confirms both halves at nineteen-fold scale.
+Behind a byte-identical pipeline, the spread between the strongest and
+weakest model is 0.51 partial F1 (0.740 vs.\ 0.228), with the same
+ordering as on the development set and margins resolved far beyond the
+bootstrap intervals. And the seven-agent reference system, re-run on
+its own complete benchmark under the same scorer, lands at 0.352 ---
+above the weak-backbone single agent (0.228), as the interaction
+predicts, but at less than half the score of a cheap single agent that
+costs the same per image (Gemini~3~Flash: 0.615 at \$0.04 vs.\
+ChemEAGLE's \$0.05) and less than half of the frontier single agent.
+Orchestration compensates for a weak model; it cannot compete with a
+strong one, and now both claims rest on 305 held-out images rather than
+sixteen. What the small subset
 could not show --- and the held-out set does --- is that its absolute
 numbers were optimistic by 0.08--0.14 for every capable model despite
 the subset having been selected for difficulty. Small hand-picked
@@ -654,13 +680,13 @@ is the obvious next step and would also remove the quantization
 confound.
 
 \section{Limitations}
-Five limitations bound these conclusions. First, only the single-agent
-pipeline is evaluated at full-benchmark scale: re-running the
-multi-agent systems on 321 images was excluded by cost (the prior study
-measured them at roughly five to eight times the single agent's
-per-image spend), so the orchestration-axis conclusion continues to
-rest on the sixteen-figure crossed ablation, and only the model axis is
-re-examined here at scale. Second, the release ground truth is taken
+Five limitations bound these conclusions. First, the orchestration axis
+is re-examined at scale through one multi-agent system (ChemEAGLE with
+its shipped engine); the prior study's own seven-agent framework and
+the strong-backbone multi-agent cell of its $2\times2$ were not re-run
+at 321 images (at their measured five-to-eight-fold cost multiple), so
+the full-scale orchestration comparison covers the reference system,
+not every architecture--backbone pairing. Second, the release ground truth is taken
 verbatim apart from the logged mechanical repairs; its documented
 defects bound attainable scores, so the numbers support cross-model
 comparison, not absolute-performance claims. Third, provider-default
@@ -683,12 +709,14 @@ sixteen-figure development study and evaluated on the 305 held-out
 scoreable images of the public ChemEAGLE benchmark, confirms the
 development-set finding at nineteen-fold scale: the multimodal model
 decides extraction quality. Claude Opus~5 reaches a partial-match F1 of
-0.740 (0.697--0.783), the Gemini Flash tier 0.615--0.629, and GPT-5.4
-0.228, in the development-set order and with the decisive margins
-resolved beyond their confidence intervals --- while every capable
-model scores 0.08--0.14 below its development-set number, measuring the
-optimism that even a deliberately hard sixteen-figure subset carries
-once prompts have been iterated against it.
+0.740 (0.697--0.783), the Gemini Flash tier 0.615--0.629, GPT-5.4
+0.228, and the seven-agent ChemEAGLE reference system --- re-run on its
+own complete benchmark under the same scorer --- 0.352, all in the
+development-set order and with the decisive margins resolved beyond
+their confidence intervals. Every capable single-agent model scores
+0.08--0.14 below its development-set number, measuring the optimism
+that even a deliberately hard sixteen-figure subset carries once
+prompts have been iterated against it.
 
 The evaluation also yields two results that were not its target. The
 public benchmark release itself required a documented reconciliation

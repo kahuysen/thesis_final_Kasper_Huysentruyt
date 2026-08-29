@@ -28,6 +28,8 @@ MODELS = {
     "g37f":    ("full_gemini37flash", "Gemini 3.7 Flash", "#eb6834", 0.039),
     "g3f":     ("full_gemini3flash",  "Gemini 3 Flash",   "#1baf7a", 0.041),
     "gpt54":   ("full_gpt54",         "GPT-5.4",          "#eda100", 0.088),
+    # multi-agent baseline; run dir lives under baselines/chemeagle
+    "chemeagle": ("../../../baselines/chemeagle/runs/full", "ChemEAGLE (7 agents)", "#e87ba4", 0.054),
 }
 
 TEXT = "#0b0b0b"
@@ -38,7 +40,8 @@ GRID = "#e6e5e1"
 def load():
     data = {}
     for key, (run, name, color, cost) in MODELS.items():
-        rep = json.loads((ROOT / "benchmark_runs" / run / "full_eval.json").read_text())
+        run_dir = (ROOT / "benchmark_runs" / run) if "/" not in run else (ROOT / "benchmark_runs" / run).resolve()
+        rep = json.loads((run_dir / "full_eval.json").read_text())
         g = rep["groups"]
         data[key] = {
             "name": name, "color": color, "cost": cost,
