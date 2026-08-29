@@ -550,35 +550,40 @@ $13\times$ the price.}
 \label{fig:costquality}
 \end{figure}
 
-Figure~\ref{fig:costdrivers} separates the two drivers behind these
-prices. Panel~(a) plots cost against token consumption and shows that
-the two are largely decoupled. The cost of Claude Opus~5 is set by its
-unit price rather than by volume: at a median of 36k tokens per image
-it consumes fewer tokens than Gemini~3.7~Flash (71k) and barely more
-than Gemini~3~Flash (29k). Conversely, the seven-agent ChemEAGLE
-pipeline is the heaviest token consumer of all five systems (a median
-of 81k per image, as each agent hand-off re-sends the figure and the
-accumulated context), yet remains among the cheapest because its
-engine is priced at the budget tier. The doubling from Gemini~3~Flash
-to Gemini~3.7~Flash reflects the successor's one-tool-call-per-round
-serving behaviour described in Sect.~\ref{sec:failures}. Panel~(b)
-plots cost against wall time and isolates the price of orchestration:
-the four single-agent runs complete an image in 44 to 97~s median,
-whereas the sequential multi-agent relay of ChemEAGLE takes 313~s, a
-$3\times$ to $7\times$ latency premium that buys no quality
-(Table~\ref{tab:main}).
+Figure~\ref{fig:perfresources} plots held-out quality against the
+underlying resource consumption and shows that computational effort
+and quality are decoupled on this task. In panel~(a), the two extremes
+of the token axis are the two weakest systems: GPT-5.4 consumes the
+fewest tokens (a median of 17k per image) and scores lowest, whereas
+the seven-agent ChemEAGLE pipeline consumes by far the most (81k, as
+each agent hand-off re-sends the figure and the accumulated context)
+and scores second lowest. The three strongest models occupy a modest
+29k to 71k band, within which the doubling from Gemini~3~Flash to
+Gemini~3.7~Flash reflects the successor's one-tool-call-per-round
+serving behaviour described in Sect.~\ref{sec:failures}. Cost is
+likewise set by unit price rather than volume: Claude Opus~5 consumes
+fewer tokens than Gemini~3.7~Flash yet costs eight times more per
+image. Panel~(b) shows the same in the time domain and isolates the
+price of orchestration: the quality frontier is reached within 44 to
+97~s median per image, whereas the sequential multi-agent relay of
+ChemEAGLE takes 313~s, a $3\times$ to $7\times$ latency premium that
+buys no quality (Table~\ref{tab:main}). It should be noted that
+tokens and times are medians over successfully completed images, so
+both axes flatter unreliable systems; the billed cost figures above
+include failures.
 
 \begin{figure}[htb]
 \centering
-\includegraphics[width=\textwidth]{figures/fig_cost_tokens_time}
-\caption{Cost decomposition per successful image (log $y$, billed
-all-in USD). (a)~Cost versus median token consumption: unit price,
-not token volume, separates the systems. (b)~Cost versus median wall
-time: the sequential multi-agent relay of ChemEAGLE is $3\times$ to
-$7\times$ slower than any single-agent run. Tokens and times are
-medians over successfully completed images (for ChemEAGLE, wall times
-cover the 120 successes timed by the final driver invocation).}
-\label{fig:costdrivers}
+\includegraphics[width=\textwidth]{figures/fig_perf_tokens_time}
+\caption{Held-out partial-match F1 versus median token consumption
+(a) and median wall time (b) per successfully completed image
+(whiskers are bootstrap 95\% CIs). Computational effort does not buy
+quality: the lightest and the heaviest token consumers are the two
+weakest systems, and the sequential multi-agent relay of ChemEAGLE is
+$3\times$ to $7\times$ slower than any single-agent run (for
+ChemEAGLE, wall times cover the 120 successes timed by the final
+driver invocation).}
+\label{fig:perfresources}
 \end{figure}
 
 \subsection{Comparability to ChemEAGLE's published metric}

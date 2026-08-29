@@ -191,43 +191,45 @@ def fig_subsets(d):
     plt.close(fig)
 
 
-def fig_cost_tokens_time(d):
-    """Two panels: (a) cost per image vs tokens per image, (b) wall time vs
-    cost per image. Tokens/time are medians over successful images; cost is
-    the billed all-in figure (failures included), same as everywhere else."""
+def fig_perf_tokens_time(d):
+    """Two panels: held-out F1 vs (a) tokens per image and (b) wall time per
+    image. Tokens/time are medians over successful images, so both axes
+    flatter unreliable systems; whiskers are the bootstrap 95% CIs."""
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(7.0, 3.0))
 
-    offs1 = {"opus5": (-10, -3), "g37f": (0, 10), "g3f": (8, -3),
-             "gpt54": (8, -3), "chemeagle": (0, -16)}
+    offs1 = {"opus5": (0, 10), "g37f": (8, -3), "g3f": (0, -18),
+             "gpt54": (8, -3), "chemeagle": (0, -18)}
     for k, m in d.items():
-        ax1.plot(m["med_tokens"] / 1000, m["cost"], "o", color=m["color"],
-                 markersize=9, zorder=3)
+        lo, hi = m["ci"]
+        x = m["med_tokens"] / 1000
+        ax1.plot([x, x], [lo, hi], color=m["color"], linewidth=1.6)
+        ax1.plot(x, m["held"], "o", color=m["color"], markersize=9, zorder=3)
         dx, dy = offs1.get(k, (8, 0))
-        ax1.annotate(m["name"], (m["med_tokens"] / 1000, m["cost"]),
+        ax1.annotate(m["name"], (x, m["held"]),
                      textcoords="offset points", xytext=(dx, dy),
                      ha="left" if dx > 0 else ("center" if dx == 0 else "right"),
                      fontsize=8, color=TEXT)
-    ax1.set_yscale("log")
     ax1.set_xlim(0, 100)
-    ax1.set_ylim(0.02, 1.5)
+    ax1.set_ylim(0, 0.9)
     ax1.set_xlabel("tokens per image (thousands, median)", fontsize=9, color=TEXT)
-    ax1.set_ylabel("cost per successful image (USD)", fontsize=9, color=TEXT)
+    ax1.set_ylabel("held-out partial-match F1", fontsize=9, color=TEXT)
 
-    offs2 = {"opus5": (0, 10), "g37f": (8, 4), "g3f": (0, -16),
-             "gpt54": (-10, -3), "chemeagle": (-10, -3)}
+    offs2 = {"opus5": (0, 10), "g37f": (8, 2), "g3f": (0, -18),
+             "gpt54": (8, -3), "chemeagle": (-10, -3)}
     for k, m in d.items():
-        ax2.plot(m["med_time"], m["cost"], "o", color=m["color"],
-                 markersize=9, zorder=3)
+        lo, hi = m["ci"]
+        x = m["med_time"]
+        ax2.plot([x, x], [lo, hi], color=m["color"], linewidth=1.6)
+        ax2.plot(x, m["held"], "o", color=m["color"], markersize=9, zorder=3)
         dx, dy = offs2.get(k, (8, 0))
-        ax2.annotate(m["name"], (m["med_time"], m["cost"]),
+        ax2.annotate(m["name"], (x, m["held"]),
                      textcoords="offset points", xytext=(dx, dy),
                      ha="left" if dx > 0 else ("center" if dx == 0 else "right"),
                      fontsize=8, color=TEXT)
-    ax2.set_yscale("log")
     ax2.set_xlim(0, 360)
-    ax2.set_ylim(0.02, 1.5)
+    ax2.set_ylim(0, 0.9)
     ax2.set_xlabel("wall time per image (s, median)", fontsize=9, color=TEXT)
-    ax2.set_ylabel("cost per successful image (USD)", fontsize=9, color=TEXT)
+    ax2.set_ylabel("held-out partial-match F1", fontsize=9, color=TEXT)
 
     for ax, tag in ((ax1, "(a)"), (ax2, "(b)")):
         style_ax(ax)
@@ -235,7 +237,7 @@ def fig_cost_tokens_time(d):
         ax.set_title(tag, loc="left", fontsize=9, color=TEXT)
     fig.tight_layout()
     for ext in ("pdf", "png"):
-        fig.savefig(OUT / f"fig_cost_tokens_time.{ext}", dpi=300)
+        fig.savefig(OUT / f"fig_perf_tokens_time.{ext}", dpi=300)
     plt.close(fig)
 
 
@@ -330,6 +332,6 @@ if __name__ == "__main__":
     fig_heldout(d, show_dev16=True, fname="fig_heldout_dev")
     fig_cost_quality(d)
     fig_subsets(d)
-    fig_cost_tokens_time(d)
+    fig_perf_tokens_time(d)
     fig_literature_trend()
     print("wrote figures to", OUT)
