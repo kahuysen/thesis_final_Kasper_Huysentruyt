@@ -9,7 +9,9 @@ direct label, never carried by color alone.
 """
 from __future__ import annotations
 
+import csv
 import json
+import statistics
 from pathlib import Path
 
 import matplotlib
@@ -56,7 +58,34 @@ def load():
             "slices": {s: g[s]["partial_match_f1"] for s in ("gt1", "gt2", "gt3", "gt4")},
             "missing": g["heldout"]["n_missing_predictions"],
         }
+        data[key].update(run_stats(key, run_dir))
     return data
+
+
+def run_stats(key, run_dir):
+    """Median tokens and wall time per successful image, from the sidecars.
+
+    Single-agent runs: one *.meta.json per completed image. ChemEAGLE:
+    *.usage.json for tokens; wall time comes from _batch_summary.json, which
+    only covers the images attempted in the final driver invocation (120 of
+    the successes) — the median over that subset is what we report.
+    """
+    if key == "chemeagle":
+        toks = []
+        for f in run_dir.glob("*.usage.json"):
+            u = json.loads(f.read_text())
+            if u.get("status") == "ok":
+                toks.append(u["prompt_tokens"] + u["completion_tokens"])
+        rows = json.loads((run_dir / "_batch_summary.json").read_text())
+        times = [r["elapsed_s"] for r in rows if r["status"] == "ok"]
+    else:
+        toks, times = [], []
+        for f in run_dir.glob("*.meta.json"):
+            m = json.loads(f.read_text())
+            toks.append(m.get("input_tokens", 0) + m.get("output_tokens", 0))
+            times.append(m.get("elapsed_s", 0.0))
+    return {"med_tokens": statistics.median(toks),
+            "med_time": statistics.median(times)}
 
 
 def style_ax(ax):
@@ -158,10 +187,145 @@ def fig_subsets(d):
     plt.close(fig)
 
 
+def fig_cost_tokens_time(d):
+    """Two panels: (a) cost per image vs tokens per image, (b) wall time vs
+    cost per image. Tokens/time are medians over successful images; cost is
+    the billed all-in figure (failures included), same as everywhere else."""
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(7.0, 3.0))
+
+    offs1 = {"opus5": (-10, -3), "g37f": (0, 10), "g3f": (8, -3),
+             "gpt54": (8, -3), "chemeagle": (0, -16)}
+    for k, m in d.items():
+        ax1.plot(m["med_tokens"] / 1000, m["cost"], "o", color=m["color"],
+                 markersize=9, zorder=3)
+        dx, dy = offs1.get(k, (8, 0))
+        ax1.annotate(m["name"], (m["med_tokens"] / 1000, m["cost"]),
+                     textcoords="offset points", xytext=(dx, dy),
+                     ha="left" if dx > 0 else ("center" if dx == 0 else "right"),
+                     fontsize=8, color=TEXT)
+    ax1.set_yscale("log")
+    ax1.set_xlim(0, 100)
+    ax1.set_ylim(0.02, 1.5)
+    ax1.set_xlabel("tokens per image (thousands, median)", fontsize=9, color=TEXT)
+    ax1.set_ylabel("cost per successful image (USD)", fontsize=9, color=TEXT)
+
+    offs2 = {"opus5": (0, 10), "g37f": (8, 2), "g3f": (8, -3),
+             "gpt54": (8, -3), "chemeagle": (8, -3)}
+    for k, m in d.items():
+        ax2.plot(m["cost"], m["med_time"], "o", color=m["color"],
+                 markersize=9, zorder=3)
+        dx, dy = offs2.get(k, (8, 0))
+        ax2.annotate(m["name"], (m["cost"], m["med_time"]),
+                     textcoords="offset points", xytext=(dx, dy),
+                     ha="left" if dx > 0 else ("center" if dx == 0 else "right"),
+                     fontsize=8, color=TEXT)
+    ax2.set_xscale("log")
+    ax2.set_xlim(0.02, 1.5)
+    ax2.set_ylim(0, 360)
+    ax2.set_xlabel("cost per successful image (USD)", fontsize=9, color=TEXT)
+    ax2.set_ylabel("wall time per image (s, median)", fontsize=9, color=TEXT)
+
+    for ax, tag in ((ax1, "(a)"), (ax2, "(b)")):
+        style_ax(ax)
+        ax.yaxis.grid(True, color=GRID, linewidth=0.8)
+        ax.set_title(tag, loc="left", fontsize=9, color=TEXT)
+    fig.tight_layout()
+    for ext in ("pdf", "png"):
+        fig.savefig(OUT / f"fig_cost_tokens_time.{ext}", dpi=300)
+    plt.close(fig)
+
+
+# ---------------------------------------------------------------------------
+# Literature-trend figure (WoS papers vs DataCite datasets, 1990-2025),
+# restyled from the poster original into the paper's palette. Source counts
+# are versioned under figures/data/ (WoS export ';'-free, DataCite ';').
+# ---------------------------------------------------------------------------
+
+TREND_CATS = [
+    ("Flow chemistry", "#EE7419"),
+    ("Organic chemistry", "#2E8FBF"),
+    ("Solvent & process sustainability", "#8A5BB8"),
+    ("Sustainable chemistry", "#6F9A34"),
+]
+
+_TREND_PREFIX = {  # main-category prefix in the raw column headers
+    "Flow chemistry": "Flow chemistry",
+    "Organic chemistry": "Organic synthesis",
+    "Solvent & process sustainability": "Solvent & process sustainability",
+    "Sustainable chemistry": "Sustainable chemistry",
+}
+
+
+def _load_trend_csv(path, sep):
+    with open(path, encoding="utf-8-sig") as fh:
+        rows = list(csv.reader(fh, delimiter=sep))
+    header, body = rows[0], rows[1:]
+    out = {}  # year -> {cat: count}
+    for row in body:
+        if not row or not row[0].strip():
+            continue
+        year = int(row[0])
+        if not (1990 <= year < 2026):
+            continue
+        agg = {cat: 0 for cat, _ in TREND_CATS}
+        for col, val in zip(header[1:], row[1:]):
+            for cat, _ in TREND_CATS:
+                if col.startswith(_TREND_PREFIX[cat]):
+                    agg[cat] += int(val or 0)
+        out[year] = agg
+    return out
+
+
+def _k_fmt(x, _pos):
+    if x >= 10000:
+        return f"{x/1000:.0f}k"
+    if x >= 1000:
+        return f"{x/1000:.1f}k"
+    return f"{int(x)}"
+
+
+def fig_literature_trend():
+    from matplotlib.ticker import FuncFormatter
+
+    data_dir = OUT / "data"
+    papers = _load_trend_csv(data_dir / "wos_together_wide.csv", ",")
+    datasets = _load_trend_csv(data_dir / "datacite_wide.csv", ";")
+    years = sorted(papers)
+
+    fig, (ax1, ax2) = plt.subplots(
+        2, 1, figsize=(7.0, 4.4), sharex=True,
+        gridspec_kw={"height_ratios": [3, 1.4], "hspace": 0.12})
+
+    for ax, table, ylabel in ((ax1, papers, "WoS papers"),
+                              (ax2, datasets, "DataCite datasets")):
+        bottom = [0.0] * len(years)
+        for cat, color in TREND_CATS:
+            vals = [table.get(y, {}).get(cat, 0) for y in years]
+            ax.bar(years, vals, bottom=bottom, width=0.85, color=color,
+                   edgecolor="white", linewidth=0.3, label=cat)
+            bottom = [b + v for b, v in zip(bottom, vals)]
+        ax.set_ylabel(ylabel, fontsize=9, color=TEXT)
+        ax.yaxis.set_major_formatter(FuncFormatter(_k_fmt))
+        style_ax(ax)
+        ax.xaxis.grid(False)
+        ax.yaxis.grid(True, color=GRID, linewidth=0.8)
+
+    ax1.legend(frameon=False, loc="upper left", fontsize=8, handlelength=1.2)
+    ax2.set_xticks(years[::3])
+    ax2.set_xlim(min(years) - 0.8, max(years) + 0.8)
+    ax2.tick_params(axis="x", labelsize=8.5)
+    fig.tight_layout()
+    for ext in ("pdf", "png"):
+        fig.savefig(OUT / f"fig_literature_trend.{ext}", dpi=300)
+    plt.close(fig)
+
+
 if __name__ == "__main__":
     d = load()
     fig_heldout(d)
     fig_heldout(d, show_dev16=True, fname="fig_heldout_dev")
     fig_cost_quality(d)
     fig_subsets(d)
+    fig_cost_tokens_time(d)
+    fig_literature_trend()
     print("wrote figures to", OUT)
