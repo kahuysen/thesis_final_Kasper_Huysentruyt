@@ -407,9 +407,9 @@ Sect.~\ref{sec:results}.
 Partial-match F1 (headline) and ChemEAGLE-style exact-set soft-match
 F1, macro-averaged over images; bootstrap 95\% CIs; failed images
 scored as zeros. Dev16: same scorer on the 16 development figures.
-Cost/img is billed spend per successful image where the released
-billing export covers the run (ChemEAGLE: \$15.60/282; Gemini 3.7
-Flash all-in: \$0.10 incl.\ retries), token-derived otherwise.
+Cost/img is billed provider spend per successful image, all-in
+(failed attempts and retries included), from the two released billing
+exports covering every run.
 Soft-match comparability to ChemEAGLE's published 0.78 is discussed in
 Sect.~\ref{sec:chemeagle-metric}. $^{\ddag}$The multi-agent reference
 system, re-run locally with its shipped gpt-5-mini engine (documented
@@ -420,9 +420,9 @@ its own vendored stack, scored as zeros like every other failure.}
 \toprule
 Model & Held-out F1 & 95\% CI & Soft F1 & Dev16 F1 & Missing & Cost/img \\
 \midrule
-Claude Opus 5      & \textbf{0.740} & [0.697, 0.783] & 0.268 & 0.822 & 23 & \$0.53 \\
-Gemini 3.7 Flash   & 0.629 & [0.581, 0.676] & 0.187 & 0.766 & 64 & \$0.04 \\
-Gemini 3 Flash     & 0.615 & [0.569, 0.661] & 0.163 & 0.725 & 6 & \$0.04 \\
+Claude Opus 5      & \textbf{0.740} & [0.697, 0.783] & 0.268 & 0.822 & 23 & \$0.84 \\
+Gemini 3.7 Flash   & 0.629 & [0.581, 0.676] & 0.187 & 0.766 & 64 & \$0.10 \\
+Gemini 3 Flash     & 0.615 & [0.569, 0.661] & 0.163 & 0.725 & 6 & \$0.05 \\
 GPT-5.4            & 0.228 & [0.190, 0.268] & 0.030 & 0.235 & 0 & \$0.09 \\
 \midrule
 ChemEAGLE (7 agents)$^{\ddag}$ & 0.352 & [0.303, 0.399] & 0.121 & 0.283 & 39 & \$0.06 \\
@@ -509,28 +509,31 @@ adaptation helping most where the pipeline's prompt was actually
 tuned.
 
 \subsection{Cost--quality at scale}
-The per-image economics reshuffle at the top. Claude Opus~5 leads on
-quality but at \$0.53 per successful image --- 2.4$\times$ the prior
-study's Opus~4.7, driven almost entirely by output verbosity (median
-8{,}770 output tokens per image against 3{,}679) --- while
+The per-image economics reshuffle at the top. All costs here are
+billed, all-in figures from the released provider exports (failed
+attempts included). Claude Opus~5 leads on quality at \$0.84 per
+successful image --- roughly four times the prior study's Opus~4.7,
+driven by output verbosity (median 8{,}770 output tokens per image
+against 3{,}679) and by capped failure attempts --- while
 Gemini~3.7~Flash delivers $\approx$0.80 partial F1 on completed images
-at \$0.04. Two structural cost findings generalise beyond these models.
+at \$0.10 all-in (\$0.04 counting successful-image tokens alone). Two structural cost findings generalise beyond these models.
 First, in an agent loop the billed input is dominated by conversation
 re-transmission: every round re-sends the system prompt, the figure and
 the full history, so cumulative input grows quadratically with round
 count, and roughly 80\% of Opus~5's per-image cost is re-sent context
 (prompt caching, unused by our frozen provider-agnostic loop, would cut
 this several-fold). Second, \emph{failure} cost is invisible to
-success-based accounting, and provider billing exports quantify it
-exactly. Total project spend was \$389.26. On the first API key, 33\%
-of \$245.41 went to attempts that produced no output artifact
-(non-submitting runs at the original 128-round budget burning their
-full quadratic context --- the motivation for the 48-round amendment).
-On the second key, the billing export (released with the data)
-attributes \$26.34 to Gemini~3.7~Flash against \$10.03 of
-successful-image token spend: \textbf{62\% of that model's cost was
-retries of its 64 persistently aborting images}, across 11{,}693
-requests. The same export shows 214 of Claude Opus~5's 472 calls ending
+success-based accounting, and the two released billing exports
+quantify it exactly. Total project spend was \$389.26, of which
+roughly a third bought no output artifact. The extremes are
+instructive: the discontinued Qwen3-VL run billed \$49.46 for 160
+successful images against \$4.14 of successful-image tokens ---
+\textbf{92\% of its spend was failure loops}, 188.6M input tokens
+across 5{,}563 requests, re-sending a growing conversation at the
+original 128-round budget (the motivation for the 48-round amendment).
+Gemini~3.7~Flash billed \$26.34 against \$10.03 (62\% failure share,
+from retrying its 64 persistently aborting images across 11{,}693
+requests), while the most reliable model, GPT-5.4, wasted only 6\%. The same export shows 214 of Claude Opus~5's 472 calls ending
 at the completion cap mid-round, and \$8.36 refunded by implicit
 provider-side prompt caching --- a preview of the several-fold input
 saving explicit caching would yield. Success-only cost columns
@@ -747,7 +750,7 @@ report reliability and cost alongside quality; this paper's frozen
 configuration, amendments, transcripts and per-image scores are all
 public to that end.
 
-At \$0.04--\$0.53 per figure and with cheap-tier quality now
+At \$0.05--\$0.84 per figure all-in and with cheap-tier quality now
 approaching the 2025 frontier, single-agent extraction is economically
 ready for interactive chemist workflows; closing the reliability gap,
 not the quality gap, is the remaining engineering problem.

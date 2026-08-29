@@ -24,12 +24,14 @@ OUT.mkdir(parents=True, exist_ok=True)
 # Costs: sidecar token counts × OpenRouter rates, reconciled vs billing
 # (see FULL_RUN_PLAN.md and the paper's cost section).
 MODELS = {
-    "opus5":   ("full_opus5",         "Claude Opus 5",    "#2a78d6", 0.53),
-    "g37f":    ("full_gemini37flash", "Gemini 3.7 Flash", "#eb6834", 0.039),
-    "g3f":     ("full_gemini3flash",  "Gemini 3 Flash",   "#1baf7a", 0.041),
-    "gpt54":   ("full_gpt54",         "GPT-5.4",          "#eda100", 0.088),
+    # costs: billed all-in $/successful image from the two OpenRouter
+    # activity exports (evaluation/results/billing_summary.json)
+    "opus5":   ("full_opus5",         "Claude Opus 5",    "#2a78d6", 0.838),
+    "g37f":    ("full_gemini37flash", "Gemini 3.7 Flash", "#eb6834", 0.101),
+    "g3f":     ("full_gemini3flash",  "Gemini 3 Flash",   "#1baf7a", 0.049),
+    "gpt54":   ("full_gpt54",         "GPT-5.4",          "#eda100", 0.089),
     # multi-agent baseline; run dir lives under baselines/chemeagle
-    "chemeagle": ("../../../baselines/chemeagle/runs/full", "ChemEAGLE (7 agents)", "#e87ba4", 0.054),
+    "chemeagle": ("../../../baselines/chemeagle/runs/full", "ChemEAGLE (7 agents)", "#e87ba4", 0.055),
 }
 
 TEXT = "#0b0b0b"
