@@ -101,11 +101,29 @@ fraction of the published reaction record reaches the structured form
 that retrosynthesis, condition-prediction and yield-regression
 models,\citep{SchillingWilhelmi2025,Schwaller2022} and reaction-class
 analysis tools such as Rxn-INSIGHT,\citep{Dobbelaere2024} require.
-Vision--language models (VLMs), general-purpose models that read text
-and images jointly, embedded in tool-using agentic loops are currently
-the most promising route to automating this extraction, and multi-agent
-systems such as ChemEAGLE\citep{Chen2025ChemEagle} report
-state-of-the-art results on their own benchmarks.
+Figure~\ref{fig:trend} quantifies the resulting gap for the fields
+surrounding this work: annual publication output in flow, organic and
+sustainable chemistry now exceeds 50{,}000 Web of Science papers,
+whereas fewer than 2{,}000 machine-readable datasets are deposited per
+year, more than an order of magnitude fewer. Vision--language models
+(VLMs), general-purpose models that read text and images jointly,
+embedded in tool-using agentic loops are currently the most promising
+route to automating this extraction, and multi-agent systems such as
+ChemEAGLE\citep{Chen2025ChemEagle} report state-of-the-art results on
+their own benchmarks.
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/fig_literature_trend}
+\caption{Annual number of Web of Science papers (top) and DataCite
+datasets (bottom) matching topic queries in flow chemistry, organic
+chemistry, solvent and process sustainability, and sustainable
+chemistry, 1990--2025. The published record grows by tens of thousands
+of papers per year, while machine-readable dataset deposition lags by
+more than an order of magnitude; the underlying per-query counts are
+released with the code.}
+\label{fig:trend}
+\end{figure}
 
 However, it remains unclear whether such reported results survive
 rigorous evaluation, for two reasons. First, the multi-agent
@@ -530,6 +548,37 @@ reported.
 defines the value frontier; Opus~5 buys the last 0.11--0.13 of F1 at
 $13\times$ the price.}
 \label{fig:costquality}
+\end{figure}
+
+Figure~\ref{fig:costdrivers} separates the two drivers behind these
+prices. Panel~(a) plots cost against token consumption and shows that
+the two are largely decoupled. The cost of Claude Opus~5 is set by its
+unit price rather than by volume: at a median of 36k tokens per image
+it consumes fewer tokens than Gemini~3.7~Flash (71k) and barely more
+than Gemini~3~Flash (29k). Conversely, the seven-agent ChemEAGLE
+pipeline is the heaviest token consumer of all five systems (a median
+of 81k per image, as each agent hand-off re-sends the figure and the
+accumulated context), yet remains among the cheapest because its
+engine is priced at the budget tier. The doubling from Gemini~3~Flash
+to Gemini~3.7~Flash reflects the successor's one-tool-call-per-round
+serving behaviour described in Sect.~\ref{sec:failures}. Panel~(b)
+plots cost against wall time and isolates the price of orchestration:
+the four single-agent runs complete an image in 44 to 97~s median,
+whereas the sequential multi-agent relay of ChemEAGLE takes 313~s, a
+$3\times$ to $7\times$ latency premium that buys no quality
+(Table~\ref{tab:main}).
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=\textwidth]{figures/fig_cost_tokens_time}
+\caption{Cost decomposition per successful image (log $y$, billed
+all-in USD). (a)~Cost versus median token consumption: unit price,
+not token volume, separates the systems. (b)~Cost versus median wall
+time: the sequential multi-agent relay of ChemEAGLE is $3\times$ to
+$7\times$ slower than any single-agent run. Tokens and times are
+medians over successfully completed images (for ChemEAGLE, wall times
+cover the 120 successes timed by the final driver invocation).}
+\label{fig:costdrivers}
 \end{figure}
 
 \subsection{Comparability to ChemEAGLE's published metric}
