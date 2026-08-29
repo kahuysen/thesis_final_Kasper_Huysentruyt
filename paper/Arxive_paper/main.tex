@@ -31,7 +31,7 @@ Extraction}
   Ghent University\\
   Technologiepark 125, 9052 Ghent, Belgium\\
   \texttt{kasper.huysentruyt@ugent.be}\\
-  % \TODO{confirm co-author list and order with promotors — presumably
+  % \TODO{confirm co-author list and order with promotors, presumably
   % M.~R.~Dobbelaere, C.~V.~Stevens, K.~M.~Van Geem as in the RSC manuscript}
 }
 
@@ -47,47 +47,40 @@ pdfkeywords={reaction extraction, vision-language models, agentic pipelines, ben
 \maketitle
 
 \begin{abstract}
-Prior work established, on a deliberately hard sixteen-figure subset of the
-ChemEAGLE benchmark, that the quality of agentic chemical-reaction
-extraction from figures is governed by the vision--language model rather
-than by the orchestration around it, with the simplest single-agent design
-(one model, two chemistry tools) surpassing a seven-agent system.
-Sixteen figures cannot, however, exclude subset effects, and the prompts
-and tools of that study were developed against those very figures. Here we
-re-evaluate the frozen single-agent pipeline on the \emph{entire} public
-ChemEAGLE benchmark release: 324 figure images of which 321 carry released
-reaction ground truth (2{,}899 reactions across four ground-truth subsets),
-with the sixteen development figures excluded from the headline set,
-yielding a 305-image held-out test set on which no prompt, tool, or
-configuration was ever iterated. The configuration, scoring rules, and
-analysis plan were committed publicly before the first scored run.
-Behind the identical frozen pipeline we compare four models spanning
-two provider generations: Claude Opus~5, Gemini~3.7~Flash,
-Gemini~3~Flash and GPT-5.4. On the held-out set, Claude Opus~5 reaches
-a partial-match F1 of 0.740 (95\% CI 0.697--0.783), Gemini~3.7~Flash
-0.629 (0.581--0.676), Gemini~3~Flash 0.615 (0.569--0.661) and GPT-5.4
-0.228 (0.190--0.268), against 0.822, 0.766, 0.725 and 0.235
-respectively on the development subset under the same scorer. The
-cross-model ordering of the sixteen-figure study is confirmed at
-nineteen-fold scale, while absolute scores drop by 0.05--0.14,
-quantifying the optimism of small hand-picked benchmark subsets. The
-seven-agent ChemEAGLE reference system itself, re-run on its complete
-benchmark under the same scorer, reaches 0.352 --- half the score of a
-single agent with a cheap backbone at the same per-image cost --- so
-the orchestration conclusion also survives at scale.
-Because failed extractions score zero by pre-registered rule, the
-results also expose a dimension small subsets hide: serving
-reliability. Gemini~3.7~Flash extracts at Opus-class quality on the
-figures it completes ($\approx$0.80) but loses 21\% of images to
-provider-side aborts, and every open-weight candidate for the fourth
-slot proved unusable as commercially served --- reasoning-token burn,
-single-tool-call round trips, or quantized endpoints --- a finding we
-document as part of the evaluation. We further document the public
-release's data quality: three images carry no ground truth, five are
-mislabeled PNG/JPEG, four ground-truth records point at misspelled
-filenames, and exact-set metrics are unusable on the two subsets whose
-gold annotations are structurally incomplete. All data, code, run
-transcripts, and per-image scores are released.
+Automated extraction of chemical reactions from figures is a key
+bottleneck on the route from the published literature to the structured
+databases on which data-driven chemistry depends. Recent work
+established, on a deliberately difficult sixteen-figure subset of the
+ChemEAGLE benchmark, that extraction quality is governed by the
+vision--language model rather than by the agentic orchestration around
+it. However, sixteen figures cannot exclude subset effects, and the
+prompts and tools of that study were developed against those very
+figures. Herein, we present a pre-registered, held-out evaluation of
+the frozen single-agent pipeline on the entire public ChemEAGLE
+benchmark release: 324 figure images, of which 321 carry released
+ground truth (2{,}899 reactions), with the sixteen development figures
+excluded to yield a 305-image held-out test set on which no prompt,
+tool, or configuration was ever iterated. On the held-out set, Claude
+Opus~5 reaches a partial-match F1 of 0.740 (95\% CI 0.697--0.783),
+Gemini~3.7~Flash 0.629 (0.581--0.676), Gemini~3~Flash 0.615
+(0.569--0.661), and GPT-5.4 0.228 (0.190--0.268). The cross-model
+ordering of the sixteen-figure study is confirmed at nineteen-fold
+scale, while absolute scores drop by 0.05 to 0.14, which quantifies the
+optimism of small hand-picked benchmark subsets. The seven-agent
+ChemEAGLE reference system itself, re-run on its complete benchmark
+under the same scorer, reaches 0.352: half the score of a single agent
+with a low-cost backbone at the same cost per image. Hence, the
+orchestration conclusion also survives at scale. Furthermore, it is
+found that serving reliability is a first-class variable: the
+highest-quality low-cost model loses 21\% of images to provider-side
+aborts, one third of the total inference spend of \$389 is consumed by
+failed attempts, and the released benchmark itself requires a
+documented reconciliation before its numbers can be compared across
+papers. These results establish the single multimodal model as the
+decisive component of agentic reaction extraction and provide a
+reproducible template for evaluating such pipelines. All data, code,
+run transcripts, and per-image scores are released as open-source
+software.
 \end{abstract}
 
 \keywords{reaction extraction \and vision--language models \and agentic
@@ -97,118 +90,121 @@ pipelines \and benchmark evaluation \and pre-registration}
 \section{Introduction}
 \label{sec:intro}
 
-The chemical literature is expanding faster than it can be curated: the
-CAS REGISTRY passed 279 million unique substances in early
-2025,\citep{CAS2025} yet almost all published chemistry remains locked
-inside PDFs whose text and figures are not intrinsically machine
-readable.\citep{Rajan2021} Trusted reaction databases are still populated
-by hand, which is slow, expensive, and prone to transcription
-error,\citep{Hawizy2011} so only a small fraction of the published
-reaction record reaches the structured form that retrosynthesis,
-condition-prediction and yield-regression
+The construction of structured reaction databases from the published
+chemical literature remains one of the key challenges on the road to
+data-driven chemistry. The CAS REGISTRY passed 279 million unique
+substances in early 2025,\citep{CAS2025} yet almost all published
+chemistry remains locked inside PDFs whose text and figures are not
+intrinsically machine readable.\citep{Rajan2021} Trusted reaction
+databases are still populated by hand, which is slow, expensive, and
+prone to transcription error.\citep{Hawizy2011} Therefore, only a small
+fraction of the published reaction record reaches the structured form
+that retrosynthesis, condition-prediction and yield-regression
 models,\citep{SchillingWilhelmi2025,Schwaller2022} and reaction-class
 analysis tools such as Rxn-INSIGHT,\citep{Dobbelaere2024} require.
-Vision--language models (VLMs) embedded in tool-using agentic loops are
+Vision--language models (VLMs), general-purpose models that read text
+and images jointly, embedded in tool-using agentic loops are currently
 the most promising route to automating this extraction, and multi-agent
 systems such as ChemEAGLE\citep{Chen2025ChemEagle} report
 state-of-the-art results on their own benchmarks.
 
-In prior work we mapped the design space of such pipelines with a
+In prior work, the design space of such pipelines was mapped with a
 controlled ablation on sixteen reaction figures: four architectures,
-from a seven-agent system down to a single VLM with two chemistry tools,
-crossed against nine multimodal backbones behind an identical prompt,
-tool set and output schema. The result was asymmetric. Holding the
-architecture fixed, swapping the model moved partial-match F1 by
-0.41--0.58; holding the model fixed, swapping the architecture moved it
-by at most 0.10, and orchestration paid off only when the backbone was
-weak. The simplest single-agent design surpassed every multi-step
-system, with Claude Opus~4.7 reaching a partial-match F1 of 0.85 and
-Gemini~3~Flash 0.79 at a tenth of the cost --- \emph{the model, not the
-framework, decides the outcome.}
+ranging from a seven-agent system down to a single VLM with two
+chemistry tools, were crossed against nine multimodal backbones behind
+an identical prompt, tool set and output schema. The result was
+asymmetric. When the architecture is held fixed, swapping the model
+moves partial-match F1 by 0.41 to 0.58; when the model is held fixed,
+swapping the architecture moves it by at most 0.10, and orchestration
+pays off only when the backbone is weak. The simplest single-agent
+design surpassed every multi-step system, with Claude Opus~4.7 reaching
+a partial-match F1 of 0.85 and Gemini~3~Flash 0.79 at a tenth of the
+cost: \emph{the model, not the framework, decides the outcome}.
 
-Three threats to validity bound that conclusion, and all three are
-consequences of the sixteen-figure subset. First, \emph{size}: with
-sixteen images a single figure moves the macro-averaged score by roughly
-0.05, so adjacent systems cannot be distinguished and no confidence
-intervals were reported. Second, \emph{selection}: the figures were
-deliberately sampled to be difficult rather than representative, so
-absolute scores estimate nothing beyond the subset itself. Third, and
-most fundamentally, \emph{development contamination}: the pipeline's
-prompt and tools were iterated while scoring those very figures, so the
-subset functioned as a development set, not a test set. This paper
-removes all three threats at once by freezing the winning pipeline ---
-prompt, tools, schema, and run configuration, byte-for-byte --- and
-evaluating it on every scoreable figure in the public ChemEAGLE
-benchmark release that the prior study never touched.
+However, it remains unclear whether that conclusion survives beyond the
+subset it was derived on, since three threats to validity are direct
+consequences of the sixteen-figure design. First, \emph{size}: with
+sixteen images, a single figure moves the macro-averaged score by
+roughly 0.05, so adjacent systems cannot be distinguished and no
+confidence intervals were reported. Second, \emph{selection}: the
+figures were deliberately sampled to be difficult rather than
+representative, so absolute scores estimate nothing beyond the subset
+itself. Third, and most fundamentally, \emph{development
+contamination}: the pipeline's prompt and tools were iterated while
+scoring those very figures, so the subset functioned as a development
+set, not a test set.
 
-% Paragraph 4 — contributions list:
-\begin{itemize}
-  \item A \textbf{pre-registered, held-out evaluation}: pipeline, prompts,
-    tools, scoring rules, and analysis plan frozen and committed publicly
-    (commit \texttt{054c6b0}, with dated amendments) before any scored
-    full-benchmark run.
-  \item A \textbf{complete accounting of the public ChemEAGLE benchmark
-    release}: 324 images, four heterogeneous ground-truth subsets
-    (139 + 78 + 38 + 66 scoreable images; 2{,}899 reactions), a
-    deterministic md5-pinned builder, and a documented list of every
-    repair and exclusion.
-  \item \textbf{Full-benchmark scores with uncertainty} for four models
-    across two provider generations behind the identical frozen
-    single-agent pipeline, with bootstrap confidence intervals,
-    per-subset breakdowns, and failure-counted-as-zero scoring --- plus
-    a documented account of why every open-weight candidate failed the
-    economics or reliability bar as served.
-  \item A \textbf{measurement of small-subset optimism}: paired
-    development-subset vs.\ held-out scores for every model.
-\end{itemize}
+In this work, we remove all three threats at once. The winning
+single-agent pipeline is frozen byte-for-byte (prompt, tools, schema,
+and run configuration) and evaluated on every scoreable figure of the
+public ChemEAGLE benchmark release that the prior study never touched:
+a 305-image held-out test set carrying 2{,}899 gold reactions across
+four heterogeneous ground-truth subsets. The evaluation is
+pre-registered in the operational sense, with the pipeline, scoring
+rules, and analysis plan committed publicly before the first scored
+run and every subsequent change recorded as a dated amendment.
+Section~\ref{sec:benchmark} provides the first complete accounting of
+the public release, including every repair and exclusion;
+Section~\ref{sec:methods} describes the frozen pipeline, the model
+roster, and the five frozen scoring rules;
+Section~\ref{sec:results} reports full-benchmark scores with bootstrap
+confidence intervals for four models across two provider generations,
+a same-scorer re-run of the ChemEAGLE reference system, a paired
+measurement of small-subset optimism, and a billing-verified cost and
+reliability analysis; and Section~\ref{sec:discussion} discusses the
+implications. The code, benchmark builder, run transcripts and
+per-image scores are available as open-source software on
+\url{https://github.com/kahuysen/thesis_final_Kasper_Huysentruyt}.
 
 % ══════════════════════════════════════════════════════════════════════
 \section{Related work}
 \label{sec:related}
 
-\paragraph{Reaction extraction.} Early extraction pipelines relied on
-dictionary lookups, hand-written grammars and small machine-learning
-taggers trained on manually annotated corpora --- ChemicalTagger,
-ChemDataExtractor and OSCAR exemplify this
+\paragraph{Reaction extraction.} For over a decade, extraction
+pipelines relied on dictionary lookups, hand-written grammars and small
+machine-learning taggers trained on manually annotated corpora;
+ChemicalTagger, ChemDataExtractor and OSCAR exemplify this
 generation.\citep{Hawizy2011,Mavracic2021,Jessop2011} They are accurate
 on narrowly scoped inputs but scale poorly across the heterogeneous
 formats of contemporary chemistry papers. A second generation attacked
-the figure directly with purpose-trained deep networks: optical chemical
-structure recognition (OCSR) models that translate a drawn structure
-into a graph,\citep{Qian2023MolScribe,Chen2024MolNexTR,Rajan2023DECIMERai}
+the figure directly with purpose-trained deep networks: so-called
+optical chemical structure recognition (OCSR) models that translate a
+drawn structure into a
+graph,\citep{Qian2023MolScribe,Chen2024MolNexTR,Rajan2023DECIMERai}
 and diagram parsers that recover the reaction topology around
 them,\citep{Qian2023,Wilary2023RDE} assembled into document-level stacks
 such as OpenChemIE.\citep{Fan2024OpenChemIE} These systems are accurate
-within their training distribution but need task-specific supervision
-for every new figure convention, and their coverage falls far short of
-what resources such as the Open Reaction Database are designed to
-hold.\citep{Kearnes2021ORD}
+within their training distribution. However, they need task-specific
+supervision for every new figure convention, and their coverage falls
+far short of what resources such as the Open Reaction Database are
+designed to hold.\citep{Kearnes2021ORD}
 
 \paragraph{Agentic VLM extraction.} General-purpose VLMs shifted the
 landscape: a single multimodal model can read a reaction figure end to
 end without task-specific fine-tuning, as MERMaid demonstrates for
 reaction mining across whole PDFs.\citep{Leong2025MERMaid} Agentic
 frameworks add a decision loop, structured output schemas, and external
-tools --- RDKit,\citep{RDKit} OCSR models,\citep{Chen2024MolNexTR}
-name-to-structure resolvers\citep{Lowe2011,Kim2016,CIR2024} --- in the
+tools (RDKit,\citep{RDKit} OCSR models,\citep{Chen2024MolNexTR} and
+name-to-structure resolvers\citep{Lowe2011,Kim2016,CIR2024}) in the
 spirit of tool-augmented chemistry agents such as
 ChemCrow.\citep{Bran2024ChemCrow} ChemEAGLE\citep{Chen2025ChemEagle}
 is the representative multi-agent instance: a planner, six specialist
 agents and two observers over a chemistry toolchain, evaluated on a
-benchmark of 324 figure graphics released alongside the paper. Our
-prior study used a sixteen-figure subset of that release; this paper
+benchmark of 324 figure graphics released alongside the paper. The
+prior study used a sixteen-figure subset of that release; this work
 uses all of it.
 
 \paragraph{Evaluation practice.} The machine-learning community's
-standard defences against overfitting an evaluation --- held-out test
-sets untouched during development, and analysis plans fixed before the
-data are seen --- are rarely applied to agentic-pipeline papers, which
+standard defences against overfitting an evaluation, namely held-out
+test sets untouched during development and analysis plans fixed before
+the data are seen, are rarely applied to agentic-pipeline papers, which
 typically report a single headline score on a benchmark the pipeline
-was developed against. We adopt both defences here: the development
-figures are excluded from the headline set, and the configuration,
-scoring rules and analysis plan were committed to a public repository
-before the first scored run, with every subsequent change recorded as a
-dated amendment committed before the run it affects.
+was developed against. In this work, both defences are adopted: the
+development figures are excluded from the headline set, and the
+configuration, scoring rules and analysis plan were committed to a
+public repository before the first scored run, with every subsequent
+change recorded as a dated amendment committed before the run it
+affects.
 
 % ══════════════════════════════════════════════════════════════════════
 \section{The full ChemEAGLE benchmark}
@@ -220,33 +216,36 @@ dated amendment committed before the run it affects.
 The public ChemEAGLE release (\texttt{Benchmark.zip}, md5
 \texttt{611d4c01\ldots{}422172}) contains 324 figure images and four
 ground-truth files of heterogeneous provenance and schema, which to our
-knowledge have not previously been jointly accounted for. \texttt{GT1}
-holds 142 record-schema entries --- reactions with reactant, condition
-and product SMILES plus labels --- of which 139 name unique images: two
-entries are exact duplicates and one carries no file name at all.
-\texttt{GT2} covers 78 R-group-table figures with a reaction template
-plus letter-keyed concrete variants; it annotates structures only, with
-no conditions. \texttt{GT3} and \texttt{GT4} are CSV tables (182 rows
-over 38 images; 727 rows over 66 images): \texttt{GT3} lists reactant,
-product and catalyst SMILES; \texttt{GT4} adds catalyst text, yield,
-ee, dr, er, solvent and temperature fields and includes wildcard
-template rows. The four files are disjoint by image.
+knowledge have not previously been jointly accounted for.
+Table~\ref{tab:accounting} summarizes the release as scored in this
+work. \texttt{GT1} holds 142 record-schema entries, i.e.\ reactions
+with reactant, condition and product SMILES (simplified
+molecular-input line-entry system) strings plus labels, of which 139
+name unique images: two entries are exact duplicates and one carries no
+file name at all. \texttt{GT2} covers 78 R-group-table figures with a
+reaction template plus letter-keyed concrete variants; it annotates
+structures only, with no conditions. \texttt{GT3} and \texttt{GT4} are
+CSV tables (182 rows over 38 images; 727 rows over 66 images):
+\texttt{GT3} lists reactant, product and catalyst SMILES, whereas
+\texttt{GT4} adds catalyst text, yield, ee, dr, er, solvent and
+temperature fields and includes wildcard template rows. The four files
+are disjoint by image.
 
 Reconciling the files against the shipped images requires a small set
-of deterministic repairs, each applied by our md5-pinned builder and
+of deterministic repairs, each applied by the md5-pinned builder and
 logged to a machine-readable exclusions file: four ground-truth file
 names are misspelled relative to the images they annotate (a colon
 where the zip has an underscore, twice; \texttt{iamge} for
 \texttt{image}; \texttt{CHEM\_01\_01} for \texttt{CHEM01\_01}), and five
-images are PNG files carrying a \texttt{.jpg} extension --- harmless to
-lenient decoders but rejected by providers that validate the declared
-media type against the payload (Sect.~\ref{sec:results}). After
-repairs, 321 of the 324 images are scoreable, carrying 2{,}899 gold
-reactions (Table~\ref{tab:accounting}); three images have no released
-ground truth. The source paper's own figure of 324 graphics and 2{,}983
-reactions is therefore nearly, but not exactly, reproducible from the
-public release --- a gap worth recording for anyone benchmarking
-against the published numbers.
+images are PNG files carrying a \texttt{.jpg} extension, which is
+harmless to lenient decoders but rejected by providers that validate
+the declared media type against the payload
+(Sect.~\ref{sec:results}). After repairs, 321 of the 324 images are
+scoreable, carrying 2{,}899 gold reactions; three images have no
+released ground truth. Hence, the source paper's own figure of 324
+graphics and 2{,}983 reactions is nearly, but not exactly,
+reproducible from the public release. It should be noted that this gap
+matters for anyone benchmarking against the published numbers.
 
 \begin{table}[htb]
 \centering
@@ -262,7 +261,7 @@ GT3 & 38  & 182     & structures + catalyst SMILES \\
 GT4 & 66  & 727     & structures + partial conditions \\
 \midrule
 Scored          & 321 & 2{,}899 & \\
-No released GT  & 3   & ---     & \\
+No released GT  & 3   & n/a     & \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -280,16 +279,16 @@ figures plus all 182 \texttt{GT2}--\texttt{GT4} figures), with the development s
 as an anchor to the prior study's numbers.
 
 The evaluation was pre-registered in the operational sense: the
-benchmark builder, the scoring rules of
-Sect.~\ref{sec:methods}, the run plan (models, order, retry policy,
-failure handling) and the analysis plan were committed to the public
-repository and pushed \emph{before} the first scored full-benchmark run
-(commit \texttt{054c6b0}). Changes forced by pre-run smoke tests or by
-operational reality --- raising the per-round completion-token cap for
-reasoning models, provider pinning, and two model substitutions --- were
-each recorded as a dated amendment in the run plan and committed before
-the run they affect. We committed in advance to publishing the results
-regardless of whether the prior study's ordering survived.
+benchmark builder, the scoring rules of Sect.~\ref{sec:methods}, the
+run plan (models, order, retry policy, failure handling) and the
+analysis plan were committed to the public repository and pushed
+\emph{before} the first scored full-benchmark run (commit
+\texttt{054c6b0}). Changes forced by pre-run smoke tests or by
+operational reality, namely raising the per-round completion-token cap
+for reasoning models, provider pinning, and two model substitutions,
+were each recorded as a dated amendment in the run plan and committed
+before the run they affect. We committed in advance to publishing the
+results regardless of whether the prior study's ordering survived.
 
 % ══════════════════════════════════════════════════════════════════════
 \section{Methods}
@@ -297,33 +296,34 @@ regardless of whether the prior study's ordering survived.
 
 \subsection{The frozen single-agent pipeline}
 The pipeline is the winning design of the prior study, unchanged: one
-multimodal model, two tools --- an RDKit-backed\citep{RDKit} SMILES
+multimodal model, two tools (an RDKit-backed\citep{RDKit} SMILES
 validator and a Pydantic-validated \texttt{submit\_extraction}
-terminator --- and one system prompt, used byte-for-byte identically for
+terminator), and one system prompt, used byte-for-byte identically for
 every model. The agent receives the figure image and iterates freely:
-it may call the validator any number of times, receives parser errors
-as tool results, and terminates by submitting a schema-valid extraction
-(reactions with reactant, condition and product entries). The loop is
-implemented once against the OpenAI-compatible chat-completions surface
-and reaches every model through OpenRouter, which routes each request
-to a serving provider; the provider actually used is recorded in every
-per-image metadata sidecar, and where a model is served at materially
-different quantizations the run pins the provider. Median tool use in
-the full runs is 8--12 validator calls over 3--4 model rounds per
-figure, confirming that all models exercise the loop agentically rather
-than answering single-shot.
+the validator may be called any number of times, parser errors are
+returned as tool results, and the loop terminates when a schema-valid
+extraction (reactions with reactant, condition and product entries) is
+submitted. The loop is implemented once against the OpenAI-compatible
+chat-completions interface and reaches every model through OpenRouter,
+a routing service that forwards each request to a serving provider.
+The provider actually used is recorded in every per-image metadata
+sidecar, and where a model is served at materially different
+quantizations, the run pins the provider. It is found that median tool
+use in the full runs is 8 to 12 validator calls over 3 to 4 model
+rounds per figure, which confirms that all models exercise the loop
+agentically rather than answering single-shot.
 
 \subsection{Models}
-Following the prior study, no decoding or reasoning parameters were
+Following the prior study, no decoding or reasoning parameters are
 tuned: every model runs at its provider defaults, so the comparison is
 of models as deployed, not of models at their individually optimal
 configuration. One harness limit was changed by amendment before any
-scored run: the per-round completion-token cap was raised uniformly from
-the prior study's 8{,}192 to 16{,}384 after smoke tests showed that
-models with reasoning enabled by default exhaust the lower cap on hidden
-thinking before emitting their first tool call --- the cap is a harness
-property, not a model setting, and holding it too low silently disables
-such models.
+scored run: the per-round completion-token cap was raised uniformly
+from the prior study's 8{,}192 to 16{,}384 after smoke tests showed
+that models with reasoning enabled by default exhaust the lower cap on
+hidden thinking before emitting their first tool call. It should be
+noted that the cap is a harness property, not a model setting, and that
+holding it too low silently disables such models.
 
 The final roster pairs each thesis-linked model with a
 current-generation counterpart behind the same pipeline: Claude
@@ -334,48 +334,50 @@ paper's scorer.} and Gemini~3.7~Flash (current generation), and
 Gemini~3~Flash and GPT-5.4 (the thesis models, unchanged). A
 pre-registered fifth slot for an open-weight model was abandoned by
 dated amendments after three candidates proved unusable \emph{as
-commercially served}, for three distinct reasons: Qwen3.8-27B's
-provider-default thinking consumes 16--21k tokens per round and
-terminates reliably only on one bf16 endpoint at a 32k cap
-($\sim$15--20\,h and \$65--100 per pass); Qwen3-VL-235B-A22B, run for
-160 images before discontinuation, scored a partial-match F1 of 0.067
---- structurally well-formed submissions whose molecules are simply
-wrong, on quantized (fp8) endpoints; and Qwen3.6-27B, the prior study's
-open-weight entry (0.66 on the figures it completed), now exceeds seven
-minutes per round as served. The open-weight comparison at scale is
-therefore an open problem in serving, not only in modeling, and the
-prior study's development-set result remains the reference point.
+commercially served}, for three distinct reasons. The provider-default
+thinking of Qwen3.8-27B consumes 16 to 21k tokens per round and
+terminates reliably only on one bf16 endpoint at a 32k cap,
+corresponding to approximately 15 to 20 hours and \$65 to \$100 per
+pass. Qwen3-VL-235B-A22B, run for 160 images before discontinuation,
+scored a partial-match F1 of 0.067: structurally well-formed
+submissions whose molecules are simply wrong, on quantized (fp8)
+endpoints. Qwen3.6-27B, the prior study's open-weight entry (0.66 on
+the figures it completed), now exceeds seven minutes per round as
+served. Therefore, the open-weight comparison at scale is an open
+problem in serving, not only in modeling, and the prior study's
+development-set result remains the reference point.
 \TODO{model table with OpenRouter ids, prices, serving providers,
 quantization}
 
 \subsection{Scoring}
-The metric definitions are those of the prior study --- SMILES
+The metric definitions are those of the prior study: SMILES are
 canonicalised through RDKit with wildcard-isotope normalisation;
-set-based reactant/product IoU; soft, hard, constitution and partial
-reaction matching with Hungarian assignment, partial-match F1 (Jaccard
-$\geq 0.5$, stereochemistry stripped) as the headline metric; strict and
-lenient condition matchers --- applied under five rules frozen in the
-run plan before any scored run.
+set-based reactant/product intersection-over-union (IoU) is computed;
+soft, hard, constitution and partial reaction matching are applied with
+Hungarian assignment, with partial-match F1 (Jaccard $\geq 0.5$,
+stereochemistry stripped) as the headline metric; and strict and
+lenient condition matchers are run alongside. These definitions are
+applied under five rules frozen in the run plan before any scored run.
 
 (1)~Every scored image in the manifest counts: a missing, crashed or
 never-submitting prediction is scored as an empty extraction, i.e.\ as
 zeros. This deliberately tightens the prior study's convention, which
-dropped failed images from the quality denominator and was optimistically
-biased for systems that failed on hard figures; here failure is part of
-the measurement. (2)~Structural metrics are computed with conditions
-stripped from both prediction and gold, so the four ground-truth subsets
---- whose condition annotations range from complete (\texttt{GT1})
-through partial (\texttt{GT3}, \texttt{GT4}) to absent (\texttt{GT2})
---- are scored on one footing; the with-conditions hard match is
-additionally reported on \texttt{GT1}. (3)~Condition metrics are
-computed only where the gold annotates at least one condition.
-(4)~Wildcard rule: a predicted R-group template reaction (one containing
-wildcard atoms) is dropped before scoring if and only if the image's
-gold contains no wildcard reactions --- a model is neither punished for
-correctly reporting a template the annotation chose not to include, nor
-excused from one the annotation does include. (5)~Uncertainty on every
-macro-averaged headline number is a bootstrap 95\% confidence interval
-over images (10{,}000 resamples, fixed seed).
+dropped failed images from the quality denominator and was
+optimistically biased for systems that failed on hard figures; here,
+failure is part of the measurement. (2)~Structural metrics are computed
+with conditions stripped from both prediction and gold, so the four
+ground-truth subsets, whose condition annotations range from complete
+(\texttt{GT1}) through partial (\texttt{GT3}, \texttt{GT4}) to absent
+(\texttt{GT2}), are scored on one footing; the with-conditions hard
+match is additionally reported on \texttt{GT1}. (3)~Condition metrics
+are computed only where the gold annotates at least one condition.
+(4)~Wildcard rule: a predicted R-group template reaction (one
+containing wildcard atoms) is dropped before scoring if and only if the
+image's gold contains no wildcard reactions. Hence, a model is neither
+punished for correctly reporting a template the annotation chose not to
+include, nor excused from one the annotation does include.
+(5)~Uncertainty on every macro-averaged headline number is a bootstrap
+95\% confidence interval over images (10{,}000 resamples, fixed seed).
 
 The scorer was validated against the prior study before the first full
 run: applied to the canonical development-set runs it reproduces the
@@ -384,15 +386,15 @@ three decimals, and returns exactly 1.0 for gold-as-prediction and 0.0
 for empty predictions on every ground-truth subset.
 
 \subsection{Execution}
-Models were run cheapest first, each scored before the next started,
-with bounded concurrency and in-run backoff on rate limits. After each
-full pass, one re-invocation retried the remaining failures (the runner
+Models are run cheapest first, each scored before the next starts, with
+bounded concurrency and in-run backoff on rate limits. After each full
+pass, one re-invocation retries the remaining failures (the runner
 skips completed images, so retry rounds are idempotent); anything still
 failing after that is scored as zeros under rule~(1). Provider-reported
 input and output token counts, wall time, tool-call counts and the
-serving provider are recorded per image, and per-image cost is computed
-from those counts at the OpenRouter rates current at run time
-(August~2026); see the cost analysis in
+serving provider are recorded per image, and reported costs are
+reconciled against the provider's billing exports rather than against
+token counts alone; the cost analysis is presented in
 Sect.~\ref{sec:results}.
 
 % ══════════════════════════════════════════════════════════════════════
@@ -400,6 +402,14 @@ Sect.~\ref{sec:results}.
 \label{sec:results}
 
 \subsection{Held-out full-benchmark scores}
+
+Table~\ref{tab:main} lists the held-out scores of the four single-agent
+models and the multi-agent reference system, and
+Figure~\ref{fig:heldout} illustrates the same comparison with the
+development-set scores alongside. Claude Opus~5 reaches the highest
+partial-match F1 at 0.740, followed by the two Gemini Flash generations
+at 0.629 and 0.615, GPT-5.4 at 0.228, and the ChemEAGLE reference
+system at 0.352.
 
 \begin{table}[htb]
 \centering
@@ -444,6 +454,9 @@ development-set number; the ordering is unchanged.}
 
 \subsection{Per-subset breakdown}
 
+Table~\ref{tab:slices} lists the partial-match F1 per ground-truth
+subset, and Figure~\ref{fig:subsets} shows the corresponding profiles.
+
 \begin{table}[htb]
 \centering
 \caption{Partial-match F1 per ground-truth subset (all scored images of
@@ -473,73 +486,78 @@ multi-agent baselines target.}
 \label{fig:subsets}
 \end{figure}
 
-The subset pattern is model-independent in shape: for every capable
-model, the dense \texttt{GT4} condition-survey tables are the hardest
-archetype (0.520--0.666) and the \texttt{GT3} single-reaction figures
-among the easiest (0.705--0.798), with the R-group tables of
-\texttt{GT2} in between. Two observations stand out. First, Claude
-Opus~5 is strongest precisely on the R-group tables (0.803) --- the
-figure archetype for which ChemEAGLE deploys two dedicated substitution
-agents --- reinforcing the prior study's conclusion that a strong
-backbone internalises what the orchestration was built to compensate
-for. Second, the gap between the Gemini generations is concentrated in
-extraction quality per completed image rather than in the subset
-profile, which shifts little; what changed most between the two is
-reliability (Sect.~\ref{sec:failures}).
+It is found that the subset pattern is model-independent in shape: for
+every capable model, the dense \texttt{GT4} condition-survey tables are
+the hardest archetype (0.520 to 0.666) and the \texttt{GT3}
+single-reaction figures among the easiest (0.705 to 0.798), with the
+R-group tables of \texttt{GT2} in between. Two observations stand out.
+First, Claude Opus~5 is strongest precisely on the R-group tables
+(0.803), the figure archetype for which ChemEAGLE deploys two dedicated
+substitution agents, which reinforces the prior study's conclusion that
+a strong backbone internalises what the orchestration was built to
+compensate for. Second, the gap between the Gemini generations is
+concentrated in extraction quality per completed image rather than in
+the subset profile, which shifts little; what changed most between the
+two is reliability (Sect.~\ref{sec:failures}).
 
 \subsection{Does the small-subset finding hold at scale?}
-It holds. The ordering of the development subset --- frontier Claude
-first, the Gemini Flash tier second, GPT-5.4 far behind --- is
-unchanged on the 305 held-out images, and the decisive contrasts are
-resolved well beyond their confidence intervals: Opus~5 vs.\ either
-Gemini (non-overlapping CIs) and every model vs.\ GPT-5.4. Within the
-Gemini pair the held-out difference (0.629 vs.\ 0.615) is far inside
-the intervals and should not be read as a ranking --- exactly the
-adjacent-model caution the prior study raised.
+It holds. The ordering of the development subset (frontier Claude
+first, the Gemini Flash tier second, GPT-5.4 far behind) is unchanged
+on the 305 held-out images, and the decisive contrasts are resolved
+well beyond their confidence intervals: Opus~5 against either Gemini
+(non-overlapping intervals) and every model against GPT-5.4. However,
+within the Gemini pair the held-out difference (0.629 against 0.615)
+is far inside the intervals and should not be read as a ranking, which
+is exactly the adjacent-model caution the prior study raised.
 
 The paired comparison also quantifies small-subset optimism: every
 model scores lower held-out than on the sixteen development figures
 (Opus~5 $-$0.082, Gemini~3.7~Flash $-$0.137, Gemini~3~Flash $-$0.110,
 GPT-5.4 $-$0.007), even though those figures were selected to be
-\emph{hard}. Deliberate difficulty did not make the development set
+difficult. Deliberate difficulty did not make the development set
 conservative; iterating prompts and tools against it did the opposite,
-and only a held-out evaluation reveals by how much. Notably the drop is
-smallest for the weakest model, consistent with development-set
-adaptation helping most where the pipeline's prompt was actually
-tuned.
+and only a held-out evaluation reveals by how much. Notably, the drop
+is smallest for the weakest model, which might be explained by
+development-set adaptation helping most where the pipeline's prompt was
+actually tuned.
 
 \subsection{Cost--quality at scale}
-The per-image economics reshuffle at the top. All costs here are
-billed, all-in figures from the released provider exports (failed
-attempts included). Claude Opus~5 leads on quality at \$0.84 per
-successful image --- roughly four times the prior study's Opus~4.7,
-driven by output verbosity (median 8{,}770 output tokens per image
-against 3{,}679) and by capped failure attempts --- while
-Gemini~3.7~Flash delivers $\approx$0.80 partial F1 on completed images
-at \$0.10 all-in (\$0.04 counting successful-image tokens alone). Two structural cost findings generalise beyond these models.
-First, in an agent loop the billed input is dominated by conversation
+Figure~\ref{fig:costquality} shows cost against held-out quality for
+all five systems. The per-image economics reshuffle at the top. All
+costs here are billed, all-in figures from the released provider
+exports, with failed attempts included. Claude Opus~5 leads on quality
+at \$0.84 per successful image, roughly four times the prior study's
+Opus~4.7, driven by output verbosity (a median of 8{,}770 output tokens
+per image against 3{,}679) and by capped failure attempts. In contrast,
+Gemini~3.7~Flash delivers a partial-match F1 of approximately 0.80 on
+completed images at \$0.10 all-in (\$0.04 when only successful-image
+tokens are counted).
+
+Two structural cost findings generalise beyond these models. First, in
+an agent loop, the billed input is dominated by conversation
 re-transmission: every round re-sends the system prompt, the figure and
 the full history, so cumulative input grows quadratically with round
-count, and roughly 80\% of Opus~5's per-image cost is re-sent context
-(prompt caching, unused by our frozen provider-agnostic loop, would cut
-this several-fold). Second, \emph{failure} cost is invisible to
+count, and roughly 80\% of the per-image cost of Opus~5 is re-sent
+context. Prompt caching, unused by the frozen provider-agnostic loop,
+would cut this several-fold. Second, failure cost is invisible to
 success-based accounting, and the two released billing exports
 quantify it exactly. Total project spend was \$389.26, of which
-roughly a third bought no output artifact. The extremes are
-instructive: the discontinued Qwen3-VL run billed \$49.46 for 160
-successful images against \$4.14 of successful-image tokens ---
-\textbf{92\% of its spend was failure loops}, 188.6M input tokens
-across 5{,}563 requests, re-sending a growing conversation at the
-original 128-round budget (the motivation for the 48-round amendment).
-Gemini~3.7~Flash billed \$26.34 against \$10.03 (62\% failure share,
-from retrying its 64 persistently aborting images across 11{,}693
-requests), while the most reliable model, GPT-5.4, wasted only 6\%. The same export shows 214 of Claude Opus~5's 472 calls ending
-at the completion cap mid-round, and \$8.36 refunded by implicit
-provider-side prompt caching --- a preview of the several-fold input
-saving explicit caching would yield. Success-only cost columns
-(Table~\ref{tab:main}) therefore understate deployed cost by
-1.1--2.6$\times$ depending on the model's reliability; we report both
-bases.
+roughly one third bought no output artifact. The extremes are
+instructive. The discontinued Qwen3-VL run billed \$49.46 for 160
+successful images against \$4.14 of successful-image tokens: 92\% of
+its spend was failure loops, corresponding to 188.6 million input
+tokens across 5{,}563 requests re-sending a growing conversation at
+the original 128-round budget (the motivation for the 48-round
+amendment). Gemini~3.7~Flash billed \$26.34 against \$10.03 (a 62\%
+failure share, from retrying its 64 persistently aborting images
+across 11{,}693 requests), whereas the most reliable model, GPT-5.4,
+wasted only 6\%. The same export shows 214 of Claude Opus~5's 472
+calls ending at the completion cap mid-round, and \$8.36 refunded by
+implicit provider-side prompt caching, a preview of the several-fold
+input saving that explicit caching would yield. Therefore,
+success-only cost accounting understates deployed cost by a factor of
+1.1 to 2.6 depending on the model's reliability; both bases are
+reported.
 \begin{figure}[htb]
 \centering
 \includegraphics[width=0.6\textwidth]{figures/fig_cost_quality}
@@ -553,55 +571,57 @@ $13\times$ the price.}
 \subsection{Comparability to ChemEAGLE's published metric}
 \label{sec:chemeagle-metric}
 
-ChemEAGLE's headline result on this benchmark is a soft-match F1 of
-0.78.\citep{Chen2025ChemEagle} Our scorer implements soft match exactly
-as their paper defines it --- the predicted reactant and product sets
-must coincide with gold after RDKit canonicalisation --- and under that
-implementation no evaluated system approaches their number: the best
-model here reaches 0.268 held-out (Table~\ref{tab:main}), and, decisively,
-our own full-benchmark rerun of \emph{ChemEAGLE itself} (same engine
-family, all 321 scoreable images, crashes as zeros) scores 0.121
-soft-match and 0.352 partial-match held-out.
-Three considerations frame the gap. First, exact-set matching is
-structurally unusable on the CSV-derived subsets whose gold lists only
-principal reactants (Sect.~\ref{sec:results}); restricting soft match
-to the fully annotated \texttt{GT1}/\texttt{GT2} slices raises our best
-model to 0.29/0.40, still far from 0.78. Second, the release contains
-no evaluation code, so the published number's operational definition
---- its treatment of failed images, its averaging basis, whether it is
-conditioned on detected reactions --- cannot be reproduced or checked.
+The headline result of ChemEAGLE on this benchmark is a soft-match F1
+of 0.78.\citep{Chen2025ChemEagle} The scorer of this work implements
+soft match exactly as their paper defines it, i.e.\ the predicted
+reactant and product sets must coincide with gold after RDKit
+canonicalisation. However, under that implementation no evaluated
+system approaches their number: the best model here reaches 0.268
+held-out (Table~\ref{tab:main}), and, decisively, the full-benchmark
+rerun of ChemEAGLE itself (same engine family, all 321 scoreable
+images, crashes as zeros) scores 0.121 soft-match and 0.352
+partial-match held-out. Three considerations frame the gap. First,
+exact-set matching is structurally unusable on the CSV-derived subsets
+whose gold lists only principal reactants (Sect.~\ref{sec:results});
+restricting soft match to the fully annotated
+\texttt{GT1}/\texttt{GT2} slices raises the best model to 0.29/0.40,
+still far from 0.78. Second, the release contains no evaluation code,
+so the operational definition behind the published number (its
+treatment of failed images, its averaging basis, whether it is
+conditioned on detected reactions) cannot be reproduced or checked.
 Third, the consistent behaviour of five independent systems under one
 published-definition implementation, including the reference system
-itself, indicates the discrepancy lies in scoring methodology rather
-than in any one pipeline. We therefore report soft match for
-transparency, use partial-match F1 --- which degrades smoothly instead
-of saturating --- as the headline, and flag published-number
-comparisons on this benchmark as unreliable until reference evaluation
-code is released.
+itself, suggests that the discrepancy lies in scoring methodology
+rather than in any one pipeline. Therefore, soft match is reported for
+transparency, partial-match F1, which degrades smoothly instead of
+saturating, is used as the headline metric, and published-number
+comparisons on this benchmark should be considered unreliable until
+reference evaluation code is released.
 
 \subsection{Ground-truth quality of the public release}
 Because every system is scored against the release ground truth
-verbatim, its quality bounds what any model can attain, and we document
-what we found. Beyond the file-level defects already described in
-Sect.~\ref{sec:accounting} (three images without ground truth, five
-PNG-as-\texttt{.jpg} images, four misspelled file names, two duplicate
-and one nameless \texttt{GT1} entries), three classes of annotation
-issue affect scores directly. First, \emph{degenerate gold SMILES}: for
-example, the template row of the \texttt{ACScat\_2020} optimisation
-table encodes its amino-acid reactant as \texttt{N[C@@]C(=O)O} --- a
-stereocentre whose R-group substituent has been dropped --- which
-zeroes the partial match of every evaluated model on that figure
-identically; comparisons remain fair, but the image contributes only
-noise. Second, \emph{structurally incomplete gold} on the CSV-derived
-subsets: \texttt{GT3} and \texttt{GT4} list only the named principal
-reactants, so exact-set (soft) matching saturates near zero for all
-models (0.006--0.31 in our runs) while partial matching remains
-informative; exact-set metrics should simply not be used on these
-subsets. Third, the five media-type mismatches are a live
-reproducibility trap: providers that validate the declared MIME type
-against the payload (Anthropic, in our runs) reject those five images
-outright, so a harness that trusts file extensions silently scores a
-strict provider five images of zeros that a lenient provider is spared.
+verbatim, its quality bounds what any model can attain, and the defects
+found are documented here. Beyond the file-level defects already
+described in Sect.~\ref{sec:accounting} (three images without ground
+truth, five PNG-as-\texttt{.jpg} images, four misspelled file names,
+two duplicate and one nameless \texttt{GT1} entries), three classes of
+annotation issue affect scores directly. First, degenerate gold SMILES
+occur. As an example, the template row of the \texttt{ACScat\_2020}
+optimisation table encodes its amino-acid reactant as
+\texttt{N[C@@]C(=O)O}, a stereocentre whose R-group substituent has
+been dropped, which zeroes the partial match of every evaluated model
+on that figure identically; comparisons remain fair, but the image
+contributes only noise. Second, the gold of the CSV-derived subsets is
+structurally incomplete: \texttt{GT3} and \texttt{GT4} list only the
+named principal reactants, so exact-set (soft) matching saturates near
+zero for all models (0.006 to 0.31 in these runs) while partial
+matching remains informative. Hence, exact-set metrics should not be
+used on these subsets. Third, the five media-type mismatches are a
+live reproducibility trap: providers that validate the declared MIME
+type against the payload (Anthropic, in these runs) reject those five
+images outright, so a harness that trusts file extensions silently
+scores a strict provider five images of zeros that a lenient provider
+is spared.
 
 The prior study additionally hand-corrected the ground truth of its
 sixteen development figures. Scoring the canonical Opus~4.7
@@ -616,144 +636,153 @@ labelling rather than structures.
 With failures scored as zeros, reliability becomes a measured quantity,
 and it separates cleanly from extraction quality. GPT-5.4 completed all
 324 images (its failures were only transient rate limits); Gemini~3
-Flash lost 6 images to persistent non-submission; Claude Opus~5 lost 23,
-all on the densest figures, where the model keeps validating structures
-without concluding within the round budget; and Gemini~3.7~Flash ---
-the \emph{highest}-quality cheap model per completed image --- lost 64
-images (21\% of the pool), almost all to server-side aborts (HTTP~504)
-from the provider rather than to model behaviour, across repeated
-retries over several hours. The multi-agent baseline fails differently
-again: ChemEAGLE crashed on 40 of 321 images (12\%) with deterministic
-exceptions inside its own vendored perception stack (31 IndexError, 8
-AttributeError, 1 TypeError, concentrated in the MolNexTR
-graph-to-SMILES conversion and downstream sorting) --- reproducible
-failures that no retry recovers, confirming at scale the fragility the
-prior study observed on 4 of 16 figures. The ranking of cheap models therefore
-inverts depending on whether one reads quality-per-completion or
-end-to-end yield, and a practitioner deploying these pipelines should
-treat provider reliability as a first-class metric alongside F1.
-Two further serving-stack traps are documented in
-Sect.~\ref{sec:results}: media-type validation differences across
-providers (five mislabeled release images silently zero a strict
-provider), and per-round tool-call batching differences that change
-loop economics by an order of magnitude.
+Flash lost 6 images to persistent non-submission; and Claude Opus~5
+lost 23, all on the densest figures, where the model keeps validating
+structures without concluding within the round budget. Notably,
+Gemini~3.7~Flash, the highest-quality low-cost model per completed
+image, lost 64 images (21\% of the pool), almost all to server-side
+aborts (HTTP~504) from the provider rather than to model behaviour,
+across repeated retries over several hours. The multi-agent baseline
+fails differently again: ChemEAGLE crashed on 40 of 321 images (12\%)
+with deterministic exceptions inside its own vendored perception stack
+(31 IndexError, 8 AttributeError, 1 TypeError, concentrated in the
+MolNexTR graph-to-SMILES conversion and downstream sorting). These are
+reproducible failures that no retry recovers, which confirms at scale
+the fragility the prior study observed on 4 of 16 figures. Therefore,
+the ranking of low-cost models inverts depending on whether one reads
+quality-per-completion or end-to-end yield, and a practitioner
+deploying these pipelines should treat provider reliability as a
+first-class metric alongside F1. Two further serving-stack traps are
+documented in Sect.~\ref{sec:results}: media-type validation
+differences across providers (five mislabeled release images silently
+zero a strict provider), and per-round tool-call batching differences
+that change loop economics by an order of magnitude.
 
 % ══════════════════════════════════════════════════════════════════════
 \section{Discussion}
 \label{sec:discussion}
 
-\paragraph{The model axis survives scale --- and so does the
-orchestration conclusion.} The prior study's central claim was that the
-multimodal model, not the orchestration, decides extraction quality.
-The held-out evaluation confirms both halves at nineteen-fold scale.
-Behind a byte-identical pipeline, the spread between the strongest and
-weakest model is 0.51 partial F1 (0.740 vs.\ 0.228), with the same
-ordering as on the development set and margins resolved far beyond the
-bootstrap intervals. And the seven-agent reference system, re-run on
-its own complete benchmark under the same scorer, lands at 0.352 ---
-above the weak-backbone single agent (0.228), as the interaction
-predicts, but at less than half the score of a cheap single agent that
-costs the same per image (Gemini~3~Flash: 0.615 at \$0.04 vs.\
-ChemEAGLE's \$0.05) and less than half of the frontier single agent.
-Orchestration compensates for a weak model; it cannot compete with a
-strong one, and now both claims rest on 305 held-out images rather than
-sixteen. What the small subset
-could not show --- and the held-out set does --- is that its absolute
-numbers were optimistic by 0.08--0.14 for every capable model despite
-the subset having been selected for difficulty. Small hand-picked
-benchmarks remain useful for rapid controlled ablation; they should not
-be used for absolute claims, even hard ones.
+\paragraph{The model axis survives scale, and so does the
+orchestration conclusion.} The central claim of the prior study was
+that the multimodal model, not the orchestration, decides extraction
+quality. The held-out evaluation confirms both halves at nineteen-fold
+scale. Behind a byte-identical pipeline, the spread between the
+strongest and weakest model is 0.51 partial-match F1 (0.740 against
+0.228), with the same ordering as on the development set and margins
+resolved far beyond the bootstrap intervals. Furthermore, the
+seven-agent reference system, re-run on its own complete benchmark
+under the same scorer, lands at 0.352: above the weak-backbone single
+agent (0.228), as the interaction predicts, but at less than half the
+score of a low-cost single agent with the same cost per image
+(Gemini~3~Flash: 0.615 at \$0.05 against ChemEAGLE's \$0.06) and less
+than half of the frontier single agent. Orchestration compensates for
+a weak model; it cannot compete with a strong one, and both claims now
+rest on 305 held-out images rather than sixteen. In addition, the
+held-out set shows what the small subset could not: its absolute
+numbers were optimistic by 0.08 to 0.14 for every capable model,
+despite the subset having been selected for difficulty. Small
+hand-picked benchmarks remain useful for rapid controlled ablation.
+However, they should not be used for absolute claims, even difficult
+ones.
 
 \paragraph{Same pipeline, newer models.} Freezing the pipeline turns
-provider progress into a measurable trajectory. Within one year the
-cheap tier moved from 0.615 (Gemini~3~Flash) to $\approx$0.80 per
-completed image (Gemini~3.7~Flash) --- development-set quality once
-reserved for the frontier tier --- while the frontier tier's quality
-gains came bundled with 2.4$\times$ the output verbosity and thus
-2.4$\times$ the cost. Progress on this task is real but is arriving as
-much through the cheap tier as through the frontier.
+provider progress into a measurable trajectory. Within one year, the
+low-cost tier moved from 0.615 (Gemini~3~Flash) to approximately 0.80
+per completed image (Gemini~3.7~Flash), a quality level once reserved
+for the frontier tier, whereas the quality gains of the frontier tier
+came bundled with 2.4 times the output verbosity and hence 2.4 times
+the cost. Progress on this task is real, but it is arriving as much
+through the low-cost tier as through the frontier.
 
 \paragraph{Reliability is part of the result.} The zero-scored-failure
 rule surfaces a dimension that per-completion metrics hide: end-to-end
-yield. The best cheap model loses a fifth of all images to provider
-aborts; the frontier model loses 7\% to non-convergence on dense
-figures; the weakest model is the most reliable. For deployment ---
-and for fair benchmarking of agentic systems generally --- completion
+yield. The best low-cost model loses a fifth of all images to provider
+aborts, the frontier model loses 7\% to non-convergence on dense
+figures, and the weakest model is the most reliable. For deployment,
+and for fair benchmarking of agentic systems generally, completion
 rate, serving-stack behaviour (quantization, media-type strictness,
-tool-call batching, reasoning defaults) and failure economics belong in
-the reported results, not in footnotes. One third of this study's
-API spend went to failed attempts; we suspect the same is true,
-unreported, of much of the agentic-benchmark literature.
+tool-call batching, reasoning defaults) and failure economics belong
+in the reported results, not in footnotes. One third of the API spend
+of this study went to failed attempts, and it is believed that the
+same is true, unreported, of much of the agentic-benchmark
+literature.
 
 \paragraph{The open-weight gap is now a serving gap.} None of the three
 open-weight candidates could be evaluated at scale as commercially
-served, each failing differently (unbounded default reasoning;
-generation-stale vision at fp8; latency). The prior study's
-development-set result (Qwen3.6-27B, 0.66) shows open weights can
-approach closed cheap-tier quality; our attempt shows that the serving
-ecosystem around them, as of August 2026, does not yet support
-sustained agentic workloads at benchmark scale. Self-hosted evaluation
-is the obvious next step and would also remove the quantization
-confound.
+served, each failing differently (unbounded default reasoning,
+generation-stale vision at fp8 quantization, and latency). The
+development-set result of the prior study (Qwen3.6-27B, 0.66) shows
+that open weights can approach closed low-cost-tier quality. However,
+this attempt shows that the serving ecosystem around them, as of
+August 2026, does not yet support sustained agentic workloads at
+benchmark scale. Self-hosted evaluation is the obvious next step and
+would also remove the quantization confound.
 
 \section{Limitations}
-Five limitations bound these conclusions. First, the orchestration axis
-is re-examined at scale through one multi-agent system (ChemEAGLE with
-its shipped engine); the prior study's own seven-agent framework and
-the strong-backbone multi-agent cell of its $2\times2$ were not re-run
-at 321 images (at their measured five-to-eight-fold cost multiple), so
-the full-scale orchestration comparison covers the reference system,
-not every architecture--backbone pairing. Second, the release ground truth is taken
-verbatim apart from the logged mechanical repairs; its documented
-defects bound attainable scores, so the numbers support cross-model
-comparison, not absolute-performance claims. Third, provider-default
-reasoning and decoding settings are inherited deliberately from the
-prior study, and the model axis therefore continues to confound model
-capability with vendor defaults; the serving stack adds a further layer
-(provider routing, quantization) that we record but do not control
-beyond the documented pins. Fourth, each model was run once per image
-(plus mechanical retries): the bootstrap intervals quantify sampling
-over images, not decoding stochasticity, and single-run scores for
-adjacent models should be compared through those intervals only.
-Fifth, condition extraction is unscored on \texttt{GT2} (no gold
-conditions exist) and only partially scoreable on \texttt{GT3} and
-\texttt{GT4}, so the condition axis of extraction quality rests on
-\texttt{GT1} alone.
+Five limitations bound these conclusions. First, the orchestration
+axis is re-examined at scale through one multi-agent system (ChemEAGLE
+with its shipped engine); the prior study's own seven-agent framework
+and the strong-backbone multi-agent cell of its $2\times2$ were not
+re-run at 321 images (at their measured five-to-eight-fold cost
+multiple), so the full-scale orchestration comparison covers the
+reference system, not every architecture--backbone pairing. Second,
+the release ground truth is taken verbatim apart from the logged
+mechanical repairs; its documented defects bound attainable scores, so
+the numbers support cross-model comparison, not absolute-performance
+claims. Third, provider-default reasoning and decoding settings are
+inherited deliberately from the prior study, and the model axis
+therefore continues to confound model capability with vendor defaults;
+the serving stack adds a further layer (provider routing,
+quantization) that is recorded but not controlled beyond the
+documented pins. Fourth, each model was run once per image (plus
+mechanical retries): the bootstrap intervals quantify sampling over
+images, not decoding stochasticity, and single-run scores for adjacent
+models should be compared through those intervals only. Fifth,
+condition extraction is unscored on \texttt{GT2} (no gold conditions
+exist) and only partially scoreable on \texttt{GT3} and \texttt{GT4},
+so the condition axis of extraction quality rests on \texttt{GT1}
+alone.
 
 \section{Conclusions}
-A single-agent vision--language pipeline, frozen byte-for-byte after a
-sixteen-figure development study and evaluated on the 305 held-out
-scoreable images of the public ChemEAGLE benchmark, confirms the
-development-set finding at nineteen-fold scale: the multimodal model
-decides extraction quality. Claude Opus~5 reaches a partial-match F1 of
-0.740 (0.697--0.783), the Gemini Flash tier 0.615--0.629, GPT-5.4
-0.228, and the seven-agent ChemEAGLE reference system --- re-run on its
-own complete benchmark under the same scorer --- 0.352, all in the
+In this work, we have evaluated a single-agent vision--language
+pipeline, frozen byte-for-byte after a sixteen-figure development
+study, on the 305 held-out scoreable images of the public ChemEAGLE
+benchmark, in a pre-registered design with the scoring rules and
+analysis plan committed before the first run. The development-set
+finding is confirmed at nineteen-fold scale: the multimodal model
+decides extraction quality. Claude Opus~5 reaches a partial-match F1
+of 0.740 (0.697--0.783), the Gemini Flash tier 0.615 to 0.629, GPT-5.4
+0.228, and the seven-agent ChemEAGLE reference system, re-run on its
+own complete benchmark under the same scorer, 0.352, all in the
 development-set order and with the decisive margins resolved beyond
 their confidence intervals. Every capable single-agent model scores
-0.08--0.14 below its development-set number, measuring the optimism
-that even a deliberately hard sixteen-figure subset carries once
-prompts have been iterated against it.
+0.08 to 0.14 below its development-set number, which measures the
+optimism that even a deliberately difficult sixteen-figure subset
+carries once prompts have been iterated against it. However, these
+conclusions are bounded by the limitations above: one multi-agent
+system at scale, ground truth with documented defects, single runs per
+image, and provider defaults throughout.
 
-The evaluation also yields two results that were not its target. The
-public benchmark release itself required a documented reconciliation
---- duplicate and misnamed ground-truth entries, mislabeled image
-formats, structurally incomplete gold on two of four subsets, and three
-unscoreable images --- without which reported numbers are not
-comparable across papers. And the serving stack proved to be a
-first-class variable: provider aborts cost the best cheap model a fifth
-of its images, failure loops consumed a third of total API spend before
-being capped, and no open-weight model could be run at scale as
-commercially served. Benchmark evaluations of agentic pipelines should
-pre-register their scoring rules, count failures as failures, and
-report reliability and cost alongside quality; this paper's frozen
-configuration, amendments, transcripts and per-image scores are all
-public to that end.
+Based on these results, three recommendations are made for benchmark
+evaluations of agentic pipelines. First, the evaluation should be
+pre-registered, with a held-out test set that is untouched during
+development and an analysis plan committed before the first scored
+run. Second, failures should be counted as failures: end-to-end yield,
+serving-stack behaviour and failure economics belong in the reported
+results, since one third of the total inference spend of \$389 in this
+study bought no output artifact and would be invisible to
+success-based accounting. The last recommendation is that benchmark
+releases should ship their evaluation code, because without it,
+published numbers cannot be compared across papers, as the gap between
+ChemEAGLE's published 0.78 and the 0.121 measured here for the same
+system demonstrates.
 
-At \$0.05--\$0.84 per figure all-in and with cheap-tier quality now
-approaching the 2025 frontier, single-agent extraction is economically
-ready for interactive chemist workflows; closing the reliability gap,
-not the quality gap, is the remaining engineering problem.
+At \$0.05 to \$0.84 per figure all-in, and with low-cost-tier quality
+now approaching the 2025 frontier, single-agent extraction is
+economically ready for interactive chemist workflows and for the
+literature-conditioning step of autonomous-laboratory platforms;
+closing the reliability gap, not the quality gap, is the remaining
+engineering problem.
 
 \section*{Data and code availability}
 The benchmark builder, frozen scorer, run plan with dated amendments, all
