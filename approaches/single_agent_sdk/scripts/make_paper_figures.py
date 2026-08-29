@@ -133,14 +133,15 @@ def fig_heldout(d, show_dev16=False, fname="fig_heldout"):
 
 def fig_cost_quality(d):
     fig, ax = plt.subplots(figsize=(4.6, 3.0))
-    offs = {"opus5": (-8, -12), "g37f": (8, 4), "g3f": (8, -10), "gpt54": (8, 0)}
+    offs = {"opus5": (0, 10), "g37f": (0, 10), "g3f": (8, -10), "gpt54": (8, 0)}
     for k, m in d.items():
         lo, hi = m["ci"]
         ax.plot([m["cost"], m["cost"]], [lo, hi], color=m["color"], linewidth=1.6)
         ax.plot(m["cost"], m["held"], "o", color=m["color"], markersize=9, zorder=3)
         dx, dy = offs.get(k, (8, 0))
         ax.annotate(m["name"], (m["cost"], m["held"]), textcoords="offset points",
-                    xytext=(dx, dy), ha="left" if dx > 0 else "right",
+                    xytext=(dx, dy),
+                    ha="left" if dx > 0 else ("center" if dx == 0 else "right"),
                     fontsize=8.5, color=TEXT)
     ax.set_xscale("log")
     ax.set_xlim(0.02, 1.2)
@@ -174,7 +175,10 @@ def fig_subsets(d):
     handles = [plt.Line2D([], [], marker="o", linestyle="-", linewidth=1,
                           color=m["color"], markersize=7, label=m["name"])
                for m in d.values()]
-    ax.legend(handles=handles, loc="lower left", frameon=False, fontsize=8)
+    # legend outside the axes (above), so it can never collide with data
+    ax.legend(handles=handles, loc="lower center", bbox_to_anchor=(0.5, 1.0),
+              ncol=3, frameon=False, fontsize=8, columnspacing=1.2,
+              handlelength=1.4, handletextpad=0.5)
     ax.set_yticks(range(len(slices)),
                   [l for _, l in slices], fontsize=8.5, color=TEXT)
     ax.invert_yaxis()
@@ -183,7 +187,7 @@ def fig_subsets(d):
     style_ax(ax)
     fig.tight_layout()
     for ext in ("pdf", "png"):
-        fig.savefig(OUT / f"fig_subsets.{ext}", dpi=300)
+        fig.savefig(OUT / f"fig_subsets.{ext}", dpi=300, bbox_inches="tight")
     plt.close(fig)
 
 
@@ -210,7 +214,7 @@ def fig_cost_tokens_time(d):
     ax1.set_ylabel("cost per successful image (USD)", fontsize=9, color=TEXT)
 
     offs2 = {"opus5": (0, 10), "g37f": (8, 4), "g3f": (0, -16),
-             "gpt54": (8, -3), "chemeagle": (-10, -3)}
+             "gpt54": (-10, -3), "chemeagle": (-10, -3)}
     for k, m in d.items():
         ax2.plot(m["med_time"], m["cost"], "o", color=m["color"],
                  markersize=9, zorder=3)
