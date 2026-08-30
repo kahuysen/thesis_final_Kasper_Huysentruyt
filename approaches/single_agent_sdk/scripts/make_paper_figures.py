@@ -448,7 +448,7 @@ def fig_pred_chemistry():
     plt.close(fig)
 
 
-RING_NAMES = {  # canonical SMILES -> trivial name, top-8 gold ring systems
+RING_NAMES = {  # canonical SMILES -> trivial name, top gold ring systems
     "c1ccccc1": "benzene",
     "C1=COCCC1": "3,4-dihydro-2H-pyran",
     "C1CCNC1": "pyrrolidine",
@@ -457,7 +457,58 @@ RING_NAMES = {  # canonical SMILES -> trivial name, top-8 gold ring systems
     "C1=CCOCC1": "3,6-dihydro-2H-pyran",
     "C1CCOC1": "tetrahydrofuran",
     "c1ccncc1": "pyridine",
+    "C1CCCC1": "cyclopentane",
+    "C1CCCCC1": "cyclohexane",
+    "c1ccc2c(c1)CCN2": "indoline",
+    "c1ccsc1": "thiophene",
 }
+
+
+def fig_rings_detail():
+    """Matrix of the twelve most common gold ring systems (drawn) against
+    the number of times each system extracted them. Cell shade encodes the
+    extracted/gold count ratio (capped at 1.2); counts are inventory-level,
+    not per-image matched instances."""
+    from matplotlib.colors import LinearSegmentedColormap
+    _, _, gold_rings, pred_rings = _load_chem()
+    top = list(gold_rings.items())[:12]
+    systems = list(MODELS)
+
+    cmap = LinearSegmentedColormap.from_list("paper", ["#f4f1ea", "#96551F"])
+    fig = plt.figure(figsize=(7.2, 6.4))
+    gs = fig.add_gridspec(1, 2, width_ratios=[0.13, 1], wspace=0.55)
+    gsl = gs[0].subgridspec(len(top), 1, hspace=0)
+    for i, (smi, _n) in enumerate(top):
+        axi = fig.add_subplot(gsl[i])
+        axi.imshow(_ring_image(smi))
+        axi.axis("off")
+
+    ax = fig.add_subplot(gs[1])
+    ratios = [[pred_rings[s].get(smi, 0) / n for s in systems]
+              for smi, n in top]
+    ax.imshow([[min(r, 1.2) for r in row] for row in ratios], cmap=cmap,
+              vmin=0, vmax=1.2, aspect="auto")
+    for i, (smi, n) in enumerate(top):
+        for j, s in enumerate(systems):
+            v = pred_rings[s].get(smi, 0)
+            r = ratios[i][j]
+            ax.text(j, i, f"{v:,}\n({r:.0%})", ha="center", va="center",
+                    fontsize=7,
+                    color="white" if min(r, 1.2) > 0.72 else TEXT)
+    ax.set_yticks(range(len(top)),
+                  [f"{RING_NAMES.get(smi, smi)}\ngold: {n:,}"
+                   for smi, n in top], fontsize=7.5, color=TEXT)
+    ax.set_xticks(range(len(systems)), [MODELS[s][1] for s in systems],
+                  fontsize=8, color=TEXT, rotation=18, ha="left",
+                  rotation_mode="anchor")
+    ax.tick_params(length=0)
+    ax.xaxis.set_ticks_position("top")
+    for spine in ax.spines.values():
+        spine.set_visible(False)
+    for ext in ("pdf", "png"):
+        fig.savefig(OUT / f"fig_rings_detail.{ext}", dpi=300,
+                    bbox_inches="tight")
+    plt.close(fig)
 
 
 def fig_rings_comparison():
@@ -527,4 +578,5 @@ if __name__ == "__main__":
     fig_benchmark_chemistry()
     fig_pred_chemistry()
     fig_rings_comparison()
+    fig_rings_detail()
     print("wrote figures to", OUT)
