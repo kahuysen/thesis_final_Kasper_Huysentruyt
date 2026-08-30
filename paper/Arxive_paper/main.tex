@@ -251,6 +251,35 @@ graphics and 2{,}983 reactions is nearly, but not exactly,
 reproducible from the public release. It should be noted that this gap
 matters for anyone benchmarking against the published numbers.
 
+To characterise the chemistry the benchmark actually probes, every
+gold reaction is classified with the open-source Rxn-INSIGHT
+algorithm,\citep{Dobbelaere2024} and Figure~\ref{fig:benchchem} shows
+the resulting profile. The benchmark is methodology-literature
+chemistry rather than patent chemistry: carbon--carbon coupling
+dominates with 30.0\% of the gold reactions and aromatic heterocycle
+formation ranks third with 14.2\%, whereas in the USPTO patent corpus
+heteroatom alkylation and arylation leads with nearly
+30\%;\citep{Dobbelaere2024} here that patent workhorse class accounts
+for only 9.2\%. A further 8.5\% of gold rows are wildcard R-group
+templates, i.e.\ scheme headers rather than concrete reactions, which
+foreshadows the enumeration failure mode analysed in
+Sect.~\ref{sec:predchem}; only 3.4\% of gold reactions resist
+classification. The ring-system inventory of the gold products is
+headed by benzene with 64.1\% of 6{,}637 rings, followed by oxygen and
+nitrogen heterocycles. The classification scripts and cached results
+are released with the code.
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.92\textwidth]{figures/fig_benchmark_chemistry}
+\caption{Chemical profile of the benchmark. (a)~Rxn-INSIGHT
+reaction-class distribution of the 2{,}899 gold reactions, segmented
+by ground-truth subset; wildcard scheme rows are bucketed as R-group
+templates. (b)~The eight most common ring systems in the gold
+products, with their share of all 6{,}637 rings.}
+\label{fig:benchchem}
+\end{figure}
+
 \begin{table}[htb]
 \centering
 \caption{The public ChemEAGLE benchmark release as scored in this work.}
@@ -670,6 +699,63 @@ documented in Sect.~\ref{sec:results}: media-type validation
 differences across providers (five mislabeled release images silently
 zero a strict provider), and per-round tool-call batching differences
 that change loop economics by an order of magnitude.
+
+\subsection{The chemical signature of predictions}
+\label{sec:predchem}
+
+Scores state how often systems err; classifying the predictions states
+what the errors look like chemically. Every predicted reaction of all
+five systems is passed through the same Rxn-INSIGHT classifier as the
+gold,\citep{Dobbelaere2024} and Figure~\ref{fig:predchem} compares the
+resulting class profiles. The three strongest models reproduce the
+chemistry of the benchmark almost exactly: their class shares sit on
+or next to the gold values throughout, so their residual errors are
+made within the correct reaction class (a wrong substituent or
+stereocentre) rather than by misreading what kind of chemistry a
+figure shows. The two weakest systems fail in a characteristic and
+diagnosable way, which is termed template collapse here: instead of
+enumerating the concrete substituted reactions encoded in R-group and
+optimisation tables, GPT-5.4 leaves 25.0\% of its predictions as
+unresolved wildcard templates and ChemEAGLE 54.6\%, against 8.5\%
+template rows in the gold, and every major class is correspondingly
+starved (ChemEAGLE extracts 10.0\% carbon--carbon couplings against
+30.0\% in the gold). Therefore, the reference system does not extract
+wrong chemistry so much as it stops at the scheme header and omits the
+enumeration its own benchmark demands, which explains mechanistically
+why its partial-match score remains low despite structurally
+well-formed output.
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/fig_pred_chemistry}
+\caption{Reaction-class profile of each system's predictions against
+the ground truth (black diamonds). The three strongest models
+reproduce the gold profile; GPT-5.4 and ChemEAGLE collapse onto
+unresolved R-group templates at the expense of every major class.}
+\label{fig:predchem}
+\end{figure}
+
+Figure~\ref{fig:rings} extends the comparison to the ring systems of
+the predicted products. The distribution over ring types is
+essentially indistinguishable across all five systems and the gold
+(benzene accounts for 63.1 to 64.4\% of extracted rings everywhere),
+and the total ring inventory tracks each system's completeness rather
+than its chemistry, with totals reflecting missing images as well as
+per-image recall. Hence, recognising drawn molecular structures is not
+the discriminating skill on this benchmark; assembling the recognised
+structures into complete, concrete reactions is.
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.95\textwidth]{figures/fig_rings_comparison}
+\caption{Ring systems in predicted products versus the ground truth.
+(a)~Total extracted ring systems per system; the dashed line marks the
+gold inventory of 6{,}637 rings. (b)~Share of the eight most common
+gold ring types within each system's extracted rings (log scale;
+black diamonds are the gold shares). All five systems reproduce the
+ring distribution of the benchmark almost exactly.}
+\label{fig:rings}
+\end{figure}
 
 % ══════════════════════════════════════════════════════════════════════
 \section{Discussion}

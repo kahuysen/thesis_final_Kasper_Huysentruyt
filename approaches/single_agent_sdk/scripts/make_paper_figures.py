@@ -326,6 +326,196 @@ def fig_literature_trend():
     plt.close(fig)
 
 
+# ---------------------------------------------------------------------------
+# Chemistry-profile figures (Rxn-INSIGHT analysis of gold and predictions).
+# Inputs are the cached classification results written by
+# classify_gold_rxn_insight.py / classify_pred_rxn_insight.py (run under
+# .venv-rxn-insight); ring depictions are rendered here with RDKit.
+# ---------------------------------------------------------------------------
+
+SUBSET_GRAYS = {"gt1": "#4a463f", "gt2": "#7a756b",
+                "gt3": "#a49e92", "gt4": "#cbc5b9"}
+
+
+def _ring_image(smiles, px=320):
+    import io
+    from rdkit import Chem, RDLogger
+    from rdkit.Chem.Draw import rdMolDraw2D
+    import matplotlib.image as mpimg
+    RDLogger.DisableLog("rdApp.*")
+    d = rdMolDraw2D.MolDraw2DCairo(px, int(px * 0.875))
+    d.drawOptions().clearBackground = False
+    d.drawOptions().bondLineWidth = 3
+    rdMolDraw2D.PrepareAndDrawMolecule(d, Chem.MolFromSmiles(smiles))
+    d.FinishDrawing()
+    return mpimg.imread(io.BytesIO(d.GetDrawingText()), format="png")
+
+
+def _load_chem():
+    import collections
+    gold = json.loads((ROOT / "benchmark_runs" / "gold_rxn_insight.json").read_text())
+    pred = json.loads((ROOT / "benchmark_runs" / "pred_rxn_insight.json").read_text())
+    gold_rings = json.loads((ROOT / "benchmark_runs" / "gold_rings.json").read_text())
+    gcls = collections.defaultdict(collections.Counter)
+    for r in gold:
+        gcls[r["cls"]][r["slice"]] += 1
+    pcls = collections.defaultdict(collections.Counter)
+    for r in pred["reactions"]:
+        pcls[r["system"]][r["cls"]] += 1
+    return gcls, pcls, gold_rings, pred["rings"]
+
+
+def fig_benchmark_chemistry():
+    import matplotlib.gridspec  # noqa: F401
+    gcls, _, gold_rings, _ = _load_chem()
+    total = sum(sum(v.values()) for v in gcls.values())
+    order = sorted(gcls, key=lambda k: -sum(gcls[k].values()))
+
+    fig = plt.figure(figsize=(7.0, 5.0))
+    gs = fig.add_gridspec(2, 1, height_ratios=[2.6, 1.05], hspace=0.30)
+    ax = fig.add_subplot(gs[0])
+    for i, cls in enumerate(order):
+        left = 0
+        tot = sum(gcls[cls].values())
+        for s in SUBSET_GRAYS:
+            v = gcls[cls].get(s, 0)
+            ax.barh(i, v, left=left, height=0.62, color=SUBSET_GRAYS[s],
+                    edgecolor="white", linewidth=0.4)
+            left += v
+        ax.annotate(f"{tot/total:.1%}", (left, i), textcoords="offset points",
+                    xytext=(5, 0), va="center", fontsize=7.5, color=TEXT)
+    ax.set_yticks(range(len(order)), order, fontsize=8, color=TEXT)
+    ax.invert_yaxis()
+    ax.set_xlabel(f"gold reactions (n = {total:,})", fontsize=8.5, color=TEXT)
+    handles = [plt.Rectangle((0, 0), 1, 1, color=c) for c in SUBSET_GRAYS.values()]
+    ax.legend(handles, [s.upper() for s in SUBSET_GRAYS], loc="lower right",
+              frameon=False, fontsize=8, handlelength=1.1)
+    style_ax(ax)
+    ax.set_title("(a)", loc="left", fontsize=9, color=TEXT)
+
+    rtot = sum(gold_rings.values())
+    top = list(gold_rings.items())[:8]
+    gsb = gs[1].subgridspec(1, 8, wspace=0.05)
+    for i, (smi, n) in enumerate(top):
+        axr = fig.add_subplot(gsb[i])
+        axr.imshow(_ring_image(smi))
+        axr.axis("off")
+        axr.set_title(f"{n/rtot:.1%}", fontsize=8, color=TEXT, pad=2)
+        if i == 0:
+            axr.text(-0.25, 1.35, "(b)", transform=axr.transAxes,
+                     fontsize=9, color=TEXT)
+    fig.text(0.5, 0.035,
+             f"most common ring systems in gold products (n = {rtot:,} rings)",
+             ha="center", fontsize=8.5, color=TEXT)
+    for ext in ("pdf", "png"):
+        fig.savefig(OUT / f"fig_benchmark_chemistry.{ext}", dpi=300,
+                    bbox_inches="tight")
+    plt.close(fig)
+
+
+def fig_pred_chemistry():
+    gcls, pcls, _, _ = _load_chem()
+    gtot = sum(sum(v.values()) for v in gcls.values())
+    classes = [k for k in sorted(gcls, key=lambda k: -sum(gcls[k].values()))
+               if k not in ("Unclassified", "Miscellaneous")]
+
+    fig, ax = plt.subplots(figsize=(6.4, 3.6))
+    for i, cls in enumerate(classes):
+        ax.axhline(i, color=GRID, linewidth=0.8, zorder=0)
+        for s, m in MODELS.items():
+            tot = sum(pcls[s].values())
+            ax.plot(pcls[s].get(cls, 0) / tot, i, "o", color=m[2], markersize=7,
+                    alpha=0.9, markeredgecolor="white", markeredgewidth=0.8,
+                    zorder=3)
+        ax.plot(sum(gcls[cls].values()) / gtot, i, "D", color=TEXT,
+                markersize=7, zorder=4)
+    ax.set_yticks(range(len(classes)), classes, fontsize=8, color=TEXT)
+    ax.invert_yaxis()
+    ax.set_xlim(0, 0.60)
+    ax.set_xticks([0, .1, .2, .3, .4, .5, .6],
+                  ["0%", "10%", "20%", "30%", "40%", "50%", "60%"], fontsize=8)
+    ax.set_xlabel("share of the system's predicted reactions",
+                  fontsize=9, color=TEXT)
+    handles = [plt.Line2D([], [], marker="D", linestyle="", color=TEXT,
+                          markersize=6, label="ground truth")]
+    handles += [plt.Line2D([], [], marker="o", linestyle="", color=m[2],
+                           markersize=6, label=m[1]) for m in MODELS.values()]
+    ax.legend(handles=handles, loc="lower right", frameon=False, fontsize=7.5)
+    style_ax(ax)
+    fig.tight_layout()
+    for ext in ("pdf", "png"):
+        fig.savefig(OUT / f"fig_pred_chemistry.{ext}", dpi=300)
+    plt.close(fig)
+
+
+RING_NAMES = {  # canonical SMILES -> trivial name, top-8 gold ring systems
+    "c1ccccc1": "benzene",
+    "C1=COCCC1": "3,4-dihydro-2H-pyran",
+    "C1CCNC1": "pyrrolidine",
+    "c1ccoc1": "furan",
+    "c1ccc2ccccc2c1": "naphthalene",
+    "C1=CCOCC1": "3,6-dihydro-2H-pyran",
+    "C1CCOC1": "tetrahydrofuran",
+    "c1ccncc1": "pyridine",
+}
+
+
+def fig_rings_comparison():
+    _, _, gold_rings, pred_rings = _load_chem()
+    gtot = sum(gold_rings.values())
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(7.4, 3.4),
+                                   gridspec_kw={"width_ratios": [1, 1.35],
+                                                "wspace": 0.62})
+    # (a) total extracted ring systems per system, gold as reference line
+    names, colors, vals = [], [], []
+    for s, m in MODELS.items():
+        names.append(m[1]); colors.append(m[2])
+        vals.append(sum(pred_rings[s].values()))
+    ax1.barh(range(len(vals)), vals, height=0.6, color=colors)
+    for i, v in enumerate(vals):
+        ax1.annotate(f"{v:,}", (v, i), textcoords="offset points",
+                     xytext=(-4, 0), ha="right", va="center", fontsize=7.5,
+                     color="white")
+    ax1.axvline(gtot, color=TEXT, linewidth=1.2, linestyle="--")
+    ax1.annotate(f"gold: {gtot:,}", (gtot, -0.55), fontsize=7.5,
+                 color=TEXT, ha="center", va="bottom", annotation_clip=False)
+    ax1.set_yticks(range(len(names)), names, fontsize=8, color=TEXT)
+    ax1.set_ylim(-0.6, len(names) - 0.4)
+    ax1.invert_yaxis()
+    ax1.set_xlim(0, 8200)
+    ax1.set_xlabel("ring systems in predicted\nproducts (total)", fontsize=8.5,
+                   color=TEXT)
+    style_ax(ax1)
+    ax1.set_title("(a)", loc="left", fontsize=9, color=TEXT)
+
+    # (b) share of the eight most common gold ring types, per system
+    top = list(gold_rings.items())[:8]
+    for i, (smi, n) in enumerate(top):
+        ax2.axhline(i, color=GRID, linewidth=0.8, zorder=0)
+        for s, m in MODELS.items():
+            ptot = sum(pred_rings[s].values())
+            share = pred_rings[s].get(smi, 0) / ptot
+            ax2.plot(share, i, "o", color=m[2], markersize=6, alpha=0.9,
+                     markeredgecolor="white", markeredgewidth=0.8, zorder=3)
+        ax2.plot(n / gtot, i, "D", color=TEXT, markersize=7, zorder=2.5)
+    ax2.set_xscale("log")
+    ax2.set_xlim(0.004, 1.0)
+    ax2.set_yticks(range(len(top)),
+                   [RING_NAMES.get(smi, smi) for smi, _ in top],
+                   fontsize=8, color=TEXT)
+    ax2.invert_yaxis()
+    ax2.set_xlabel("share of the system's extracted rings (log scale)",
+                   fontsize=8.5, color=TEXT)
+    style_ax(ax2)
+    ax2.spines["left"].set_visible(False)
+    ax2.set_title("(b)", loc="left", fontsize=9, color=TEXT)
+    for ext in ("pdf", "png"):
+        fig.savefig(OUT / f"fig_rings_comparison.{ext}", dpi=300,
+                    bbox_inches="tight")
+    plt.close(fig)
+
+
 if __name__ == "__main__":
     d = load()
     fig_heldout(d)
@@ -334,4 +524,7 @@ if __name__ == "__main__":
     fig_subsets(d)
     fig_perf_tokens_time(d)
     fig_literature_trend()
+    fig_benchmark_chemistry()
+    fig_pred_chemistry()
+    fig_rings_comparison()
     print("wrote figures to", OUT)
