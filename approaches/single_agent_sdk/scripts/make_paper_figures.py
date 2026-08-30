@@ -333,8 +333,12 @@ def fig_literature_trend():
 # .venv-rxn-insight); ring depictions are rendered here with RDKit.
 # ---------------------------------------------------------------------------
 
-SUBSET_GRAYS = {"gt1": "#4a463f", "gt2": "#7a756b",
-                "gt3": "#a49e92", "gt4": "#cbc5b9"}
+# Subset palette, disjoint from the model palette (models keep their own
+# colors); validated with the dataviz palette checker 2026-08-30: all
+# checks pass (worst deutan pair ΔE 14.3; sub-3:1 surface contrast on the
+# rose/gold slots is relieved by direct labels wherever they appear).
+SUBSET_COLORS = {"gt1": "#2B5F9E", "gt2": "#D983A8",
+                 "gt3": "#C9971C", "gt4": "#1F7A4C"}
 
 
 def _ring_image(smiles, px=320):
@@ -386,15 +390,17 @@ def fig_benchmark_composition():
     fig, (ax1, ax2, ax3) = plt.subplots(
         1, 3, figsize=(7.4, 2.9), gridspec_kw={"wspace": 0.42})
 
-    # (a) images and annotated reactions per subset
-    DARK, LIGHT = "#4a463f", "#b5b0a5"
+    # (a) images and annotated reactions per subset: solid = images,
+    # tinted = reactions, in the subset's own color
     x = range(len(subsets))
     imgs = [len(per_image[s]) for s in subsets]
     rxns = [sum(per_image[s]) for s in subsets]
-    ax1.bar([i - 0.2 for i in x], imgs, width=0.38, color=DARK,
-            label="figure images")
-    ax1.bar([i + 0.2 for i in x], rxns, width=0.38, color=LIGHT,
-            label="annotated reactions")
+    for i, s in enumerate(subsets):
+        ax1.bar(i - 0.2, imgs[i], width=0.38, color=SUBSET_COLORS[s])
+        ax1.bar(i + 0.2, rxns[i], width=0.38, color=SUBSET_COLORS[s],
+                alpha=0.45)
+    ax1.bar(0, 0, color=TEXT, label="figure images")
+    ax1.bar(0, 0, color=TEXT, alpha=0.45, label="annotated reactions")
     for i in x:
         ax1.annotate(f"{imgs[i]}", (i - 0.2, imgs[i]), ha="center",
                      va="bottom", fontsize=7, color=TEXT,
@@ -418,7 +424,7 @@ def fig_benchmark_composition():
     for i, s in enumerate(subsets):
         v = np.array(per_image[s])
         ax2.plot(i + rng.uniform(-0.17, 0.17, len(v)), v, "o",
-                 color="#7a756b", markersize=2.8, alpha=0.55,
+                 color=SUBSET_COLORS[s], markersize=2.8, alpha=0.55,
                  markeredgewidth=0)
         ax2.plot([i - 0.26, i + 0.26],
                  [np.median(v), np.median(v)], color=TEXT, linewidth=2.2,
@@ -434,8 +440,9 @@ def fig_benchmark_composition():
     ax2.set_title("(b)", loc="left", fontsize=9, color=TEXT)
 
     # (c) reactants listed per reaction, stacked shares
-    shades = {0: "#dedacf", 1: "#b5b0a5", 2: "#7a756b", 3: "#4a463f",
-              4: "#23211d"}
+    # ordinal count scale: sequential single-hue ramp (navy), light to dark
+    shades = {0: "#dbe4f0", 1: "#a8bedd", 2: "#6d8fc0", 3: "#3d68a4",
+              4: "#24477a"}
     for i, s in enumerate(subsets):
         tot = sum(reactant_dist[s].values())
         left = 0.0
@@ -479,9 +486,9 @@ def fig_benchmark_chemistry():
     for i, cls in enumerate(order):
         left = 0
         tot = sum(gcls[cls].values())
-        for s in SUBSET_GRAYS:
+        for s in SUBSET_COLORS:
             v = gcls[cls].get(s, 0)
-            ax.barh(i, v, left=left, height=0.62, color=SUBSET_GRAYS[s],
+            ax.barh(i, v, left=left, height=0.62, color=SUBSET_COLORS[s],
                     edgecolor="white", linewidth=0.4)
             left += v
         ax.annotate(f"{tot/total:.1%}", (left, i), textcoords="offset points",
@@ -489,8 +496,8 @@ def fig_benchmark_chemistry():
     ax.set_yticks(range(len(order)), order, fontsize=8, color=TEXT)
     ax.invert_yaxis()
     ax.set_xlabel(f"gold reactions (n = {total:,})", fontsize=8.5, color=TEXT)
-    handles = [plt.Rectangle((0, 0), 1, 1, color=c) for c in SUBSET_GRAYS.values()]
-    ax.legend(handles, [s.upper() for s in SUBSET_GRAYS], loc="lower right",
+    handles = [plt.Rectangle((0, 0), 1, 1, color=c) for c in SUBSET_COLORS.values()]
+    ax.legend(handles, [s.upper() for s in SUBSET_COLORS], loc="lower right",
               frameon=False, fontsize=8, handlelength=1.1)
     style_ax(ax)
     ax.set_title("(a)", loc="left", fontsize=9, color=TEXT)
