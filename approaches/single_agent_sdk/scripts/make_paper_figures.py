@@ -448,7 +448,7 @@ def fig_pred_chemistry():
     plt.close(fig)
 
 
-RING_NAMES = {  # canonical SMILES -> trivial name, top-8 gold ring systems
+RING_NAMES = {  # canonical SMILES -> trivial name, top gold ring systems
     "c1ccccc1": "benzene",
     "C1=COCCC1": "3,4-dihydro-2H-pyran",
     "C1CCNC1": "pyrrolidine",
@@ -457,59 +457,45 @@ RING_NAMES = {  # canonical SMILES -> trivial name, top-8 gold ring systems
     "C1=CCOCC1": "3,6-dihydro-2H-pyran",
     "C1CCOC1": "tetrahydrofuran",
     "c1ccncc1": "pyridine",
+    "C1CCCC1": "cyclopentane",
+    "C1CCCCC1": "cyclohexane",
+    "c1ccc2c(c1)CCN2": "indoline",
+    "c1ccsc1": "thiophene",
 }
 
 
 def fig_rings_comparison():
+    """Share of the twelve most common gold ring types within each system's
+    extracted rings, against the gold shares (diamonds)."""
     _, _, gold_rings, pred_rings = _load_chem()
     gtot = sum(gold_rings.values())
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(7.4, 3.4),
-                                   gridspec_kw={"width_ratios": [1, 1.35],
-                                                "wspace": 0.62})
-    # (a) total extracted ring systems per system, gold as reference line
-    names, colors, vals = [], [], []
-    for s, m in MODELS.items():
-        names.append(m[1]); colors.append(m[2])
-        vals.append(sum(pred_rings[s].values()))
-    ax1.barh(range(len(vals)), vals, height=0.6, color=colors)
-    for i, v in enumerate(vals):
-        ax1.annotate(f"{v:,}", (v, i), textcoords="offset points",
-                     xytext=(-4, 0), ha="right", va="center", fontsize=7.5,
-                     color="white")
-    ax1.axvline(gtot, color=TEXT, linewidth=1.2, linestyle="--")
-    ax1.annotate(f"gold: {gtot:,}", (gtot, -0.55), fontsize=7.5,
-                 color=TEXT, ha="center", va="bottom", annotation_clip=False)
-    ax1.set_yticks(range(len(names)), names, fontsize=8, color=TEXT)
-    ax1.set_ylim(-0.6, len(names) - 0.4)
-    ax1.invert_yaxis()
-    ax1.set_xlim(0, 8200)
-    ax1.set_xlabel("ring systems in predicted\nproducts (total)", fontsize=8.5,
-                   color=TEXT)
-    style_ax(ax1)
-    ax1.set_title("(a)", loc="left", fontsize=9, color=TEXT)
-
-    # (b) share of the eight most common gold ring types, per system
-    top = list(gold_rings.items())[:8]
+    fig, ax = plt.subplots(figsize=(6.6, 4.4))
+    top = list(gold_rings.items())[:12]
     for i, (smi, n) in enumerate(top):
-        ax2.axhline(i, color=GRID, linewidth=0.8, zorder=0)
+        ax.axhline(i, color=GRID, linewidth=0.8, zorder=0)
         for s, m in MODELS.items():
             ptot = sum(pred_rings[s].values())
             share = pred_rings[s].get(smi, 0) / ptot
-            ax2.plot(share, i, "o", color=m[2], markersize=6, alpha=0.9,
-                     markeredgecolor="white", markeredgewidth=0.8, zorder=3)
-        ax2.plot(n / gtot, i, "D", color=TEXT, markersize=7, zorder=2.5)
-    ax2.set_xscale("log")
-    ax2.set_xlim(0.004, 1.0)
-    ax2.set_yticks(range(len(top)),
-                   [RING_NAMES.get(smi, smi) for smi, _ in top],
-                   fontsize=8, color=TEXT)
-    ax2.invert_yaxis()
-    ax2.set_xlabel("share of the system's extracted rings (log scale)",
-                   fontsize=8.5, color=TEXT)
-    style_ax(ax2)
-    ax2.spines["left"].set_visible(False)
-    ax2.set_title("(b)", loc="left", fontsize=9, color=TEXT)
+            ax.plot(share, i, "o", color=m[2], markersize=6.5, alpha=0.9,
+                    markeredgecolor="white", markeredgewidth=0.8, zorder=3)
+        ax.plot(n / gtot, i, "D", color=TEXT, markersize=7.5, zorder=2.5)
+    ax.set_xscale("log")
+    ax.set_xlim(0.003, 1.0)
+    ax.set_yticks(range(len(top)),
+                  [RING_NAMES.get(smi, smi) for smi, _ in top],
+                  fontsize=8.5, color=TEXT)
+    ax.invert_yaxis()
+    ax.set_xlabel("share of the system's extracted rings (log scale)",
+                  fontsize=9, color=TEXT)
+    handles = [plt.Line2D([], [], marker="D", linestyle="", color=TEXT,
+                          markersize=6.5, label="ground truth")]
+    handles += [plt.Line2D([], [], marker="o", linestyle="", color=m[2],
+                           markersize=6.5, label=m[1]) for m in MODELS.values()]
+    ax.legend(handles=handles, loc="lower right", frameon=False, fontsize=8)
+    style_ax(ax)
+    ax.spines["left"].set_visible(False)
+    fig.tight_layout()
     for ext in ("pdf", "png"):
         fig.savefig(OUT / f"fig_rings_comparison.{ext}", dpi=300,
                     bbox_inches="tight")

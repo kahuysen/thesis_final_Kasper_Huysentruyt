@@ -736,24 +736,30 @@ unresolved R-group templates at the expense of every major class.}
 \end{figure}
 
 Figure~\ref{fig:rings} extends the comparison to the ring systems of
-the predicted products. The distribution over ring types is
-essentially indistinguishable across all five systems and the gold
-(benzene accounts for 63.1 to 64.4\% of extracted rings everywhere),
-and the total ring inventory tracks each system's completeness rather
-than its chemistry, with totals reflecting missing images as well as
-per-image recall. Hence, recognising drawn molecular structures is not
-the discriminating skill on this benchmark; assembling the recognised
-structures into complete, concrete reactions is.
+the predicted products, showing the share of the twelve most common
+gold ring types within each system's extracted rings. The
+distribution is essentially indistinguishable across all five systems
+and the gold: benzene accounts for 63.1 to 64.4\% of extracted rings
+everywhere, and most remaining ring types cluster tightly around
+their gold shares (total inventories range from 4{,}821 to 6{,}567
+rings against 6{,}637 in the gold, tracking each system's
+completeness rather than its chemistry). The few visible outliers are
+themselves informative: Gemini~3.7~Flash under-represents the
+3,4-dihydro-2H-pyran ring while over-representing its 3,6-isomer, a
+double-bond placement confusion, and GPT-5.4 under-represents the
+fused indoline system. Hence, recognising drawn molecular structures
+is not the discriminating skill on this benchmark; assembling the
+recognised structures into complete, concrete reactions is.
 
 \begin{figure}[htb]
 \centering
-\includegraphics[width=0.95\textwidth]{figures/fig_rings_comparison}
-\caption{Ring systems in predicted products versus the ground truth.
-(a)~Total extracted ring systems per system; the dashed line marks the
-gold inventory of 6{,}637 rings. (b)~Share of the eight most common
-gold ring types within each system's extracted rings (log scale;
-black diamonds are the gold shares). All five systems reproduce the
-ring distribution of the benchmark almost exactly.}
+\includegraphics[width=0.85\textwidth]{figures/fig_rings_comparison}
+\caption{Share of the twelve most common gold ring types within each
+system's extracted rings (log scale; black diamonds are the gold
+shares). All five systems reproduce the ring distribution of the
+benchmark almost exactly; the visible outliers are the dihydropyran
+isomer confusion of Gemini~3.7~Flash and the indoline deficit of
+GPT-5.4.}
 \label{fig:rings}
 \end{figure}
 
