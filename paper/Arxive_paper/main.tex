@@ -706,20 +706,23 @@ that change loop economics by an order of magnitude.
 Scores state how often systems err; classifying the predictions states
 what the errors look like chemically. Every predicted reaction of all
 five systems is passed through the same Rxn-INSIGHT classifier as the
-gold,\citep{Dobbelaere2024} and Figure~\ref{fig:predchem} compares the
-resulting class profiles. The three strongest models reproduce the
-chemistry of the benchmark almost exactly: their class shares sit on
-or next to the gold values throughout, so their residual errors are
-made within the correct reaction class (a wrong substituent or
-stereocentre) rather than by misreading what kind of chemistry a
-figure shows. The two weakest systems fail in a characteristic and
-diagnosable way, which is termed template collapse here: instead of
-enumerating the concrete substituted reactions encoded in R-group and
-optimisation tables, GPT-5.4 leaves 25.0\% of its predictions as
-unresolved wildcard templates and ChemEAGLE 54.6\%, against 8.5\%
+gold,\citep{Dobbelaere2024} and Figure~\ref{fig:predchem} shows how
+strongly each system over- or under-represents every class relative
+to the gold composition (the composition itself is characterised in
+Sect.~\ref{sec:accounting}). The three strongest models stay within
+roughly $0.8\times$ to $1.3\times$ of the gold share for every major
+class, so their residual errors are made within the correct reaction
+class (a wrong substituent or stereocentre) rather than by misreading
+what kind of chemistry a figure shows. The two weakest systems fail
+in a characteristic and diagnosable way, which is termed template
+collapse here: instead of enumerating the concrete substituted
+reactions encoded in R-group and optimisation tables, GPT-5.4
+over-represents unresolved wildcard templates $2.9\times$ (25.0\% of
+its predictions) and ChemEAGLE $6.4\times$ (54.6\%), against 8.5\%
 template rows in the gold, and every major class is correspondingly
-starved (ChemEAGLE extracts 10.0\% carbon--carbon couplings against
-30.0\% in the gold). Therefore, the reference system does not extract
+starved (ChemEAGLE sits at $0.33\times$ the gold share for both
+carbon--carbon coupling and acylation). Therefore, the reference
+system does not extract
 wrong chemistry so much as it stops at the scheme header and omits the
 enumeration its own benchmark demands, which explains mechanistically
 why its partial-match score remains low despite structurally
@@ -728,10 +731,13 @@ well-formed output.
 \begin{figure}[htb]
 \centering
 \includegraphics[width=0.8\textwidth]{figures/fig_pred_chemistry}
-\caption{Reaction-class profile of each system's predictions against
-the ground truth (black diamonds). The three strongest models
-reproduce the gold profile; GPT-5.4 and ChemEAGLE collapse onto
-unresolved R-group templates at the expense of every major class.}
+\caption{Over- and under-representation of each reaction class in the
+predictions, as the system's class share divided by the gold share
+(log scale; the dashed line marks agreement with the ground truth,
+whose composition is given per row). The three strongest models stay
+close to $1\times$ for every major class; GPT-5.4 and ChemEAGLE
+collapse onto unresolved R-group templates ($2.9\times$ and
+$6.4\times$) at the expense of every major class.}
 \label{fig:predchem}
 \end{figure}
 

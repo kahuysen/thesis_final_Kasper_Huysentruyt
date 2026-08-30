@@ -414,32 +414,42 @@ def fig_benchmark_chemistry():
 
 
 def fig_pred_chemistry():
+    """Per class: each system's share of predicted reactions divided by the
+    gold share, on a log axis. Gold is the 1x reference line; the class mix
+    itself is characterised in the benchmark-chemistry figure, so each row
+    label carries the gold share for reference only."""
     gcls, pcls, _, _ = _load_chem()
     gtot = sum(sum(v.values()) for v in gcls.values())
     classes = [k for k in sorted(gcls, key=lambda k: -sum(gcls[k].values()))
                if k not in ("Unclassified", "Miscellaneous")]
 
-    fig, ax = plt.subplots(figsize=(6.4, 3.6))
+    fig, ax = plt.subplots(figsize=(6.6, 3.8))
+    ax.axvline(1.0, color=TEXT, linewidth=1.2, linestyle="--", zorder=1)
     for i, cls in enumerate(classes):
+        gshare = sum(gcls[cls].values()) / gtot
         ax.axhline(i, color=GRID, linewidth=0.8, zorder=0)
         for s, m in MODELS.items():
             tot = sum(pcls[s].values())
-            ax.plot(pcls[s].get(cls, 0) / tot, i, "o", color=m[2], markersize=7,
-                    alpha=0.9, markeredgecolor="white", markeredgewidth=0.8,
-                    zorder=3)
-        ax.plot(sum(gcls[cls].values()) / gtot, i, "D", color=TEXT,
-                markersize=7, zorder=4)
-    ax.set_yticks(range(len(classes)), classes, fontsize=8, color=TEXT)
+            ratio = (pcls[s].get(cls, 0) / tot) / gshare
+            ax.plot(ratio, i, "o", color=m[2], markersize=7, alpha=0.9,
+                    markeredgecolor="white", markeredgewidth=0.8, zorder=3)
+    labels = [f"{cls}\n(gold share {sum(gcls[cls].values())/gtot:.1%})"
+              for cls in classes]
+    ax.set_yticks(range(len(classes)), labels, fontsize=7.5, color=TEXT)
     ax.invert_yaxis()
-    ax.set_xlim(0, 0.60)
-    ax.set_xticks([0, .1, .2, .3, .4, .5, .6],
-                  ["0%", "10%", "20%", "30%", "40%", "50%", "60%"], fontsize=8)
-    ax.set_xlabel("share of the system's predicted reactions",
-                  fontsize=9, color=TEXT)
-    handles = [plt.Line2D([], [], marker="D", linestyle="", color=TEXT,
-                          markersize=6, label="ground truth")]
-    handles += [plt.Line2D([], [], marker="o", linestyle="", color=m[2],
-                           markersize=6, label=m[1]) for m in MODELS.values()]
+    ax.set_xscale("log")
+    ax.set_xlim(0.1, 8)
+    from matplotlib.ticker import NullFormatter, NullLocator
+    ticks = [0.125, 0.25, 0.5, 1, 2, 4, 8]
+    ax.set_xticks(ticks, [f"{t:g}$\\times$" for t in ticks], fontsize=8)
+    ax.xaxis.set_minor_locator(NullLocator())
+    ax.xaxis.set_minor_formatter(NullFormatter())
+    ax.annotate("ground truth", (1.0, -0.75), ha="center", va="bottom",
+                fontsize=7.5, color=TEXT, annotation_clip=False)
+    ax.set_xlabel("share of predicted reactions relative to the gold share "
+                  "(log scale)", fontsize=9, color=TEXT)
+    handles = [plt.Line2D([], [], marker="o", linestyle="", color=m[2],
+                          markersize=6, label=m[1]) for m in MODELS.values()]
     ax.legend(handles=handles, loc="lower right", frameon=False, fontsize=7.5)
     style_ax(ax)
     fig.tight_layout()
