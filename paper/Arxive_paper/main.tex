@@ -251,6 +251,29 @@ graphics and 2{,}983 reactions is nearly, but not exactly,
 reproducible from the public release. It should be noted that this gap
 matters for anyone benchmarking against the published numbers.
 
+Figure~\ref{fig:composition} summarises the resulting heterogeneity.
+The four subsets differ almost four-fold in image count yet carry
+comparable reaction totals, because their annotation density differs:
+median reactions per image range from 6 (\texttt{GT1}, \texttt{GT3})
+to 11--12 (\texttt{GT2}, \texttt{GT4}), with single images carrying up
+to 33 annotated reactions. The reactant lists are equally
+characteristic: \texttt{GT3} lists exactly two reactants for every
+reaction, a fingerprint of its Reaxys-export origin, and \texttt{GT4}
+is nearly as uniform, which is why exact-set metrics saturate on these
+subsets (Sect.~\ref{sec:results}).
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=\textwidth]{figures/fig_benchmark_composition}
+\caption{Composition of the four ground-truth subsets.
+(a)~Figure images and annotated reactions per subset. (b)~Annotated
+reactions per figure image (black bar: median). (c)~Share of
+reactions by the number of listed reactants; \texttt{GT3} lists
+exactly two reactants throughout, reflecting its database-export
+origin.}
+\label{fig:composition}
+\end{figure}
+
 To characterise the chemistry the benchmark actually probes, every
 gold reaction is classified with the open-source Rxn-INSIGHT
 algorithm,\citep{Dobbelaere2024} and Figure~\ref{fig:benchchem} shows

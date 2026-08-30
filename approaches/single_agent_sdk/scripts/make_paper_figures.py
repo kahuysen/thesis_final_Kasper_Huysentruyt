@@ -365,6 +365,108 @@ def _load_chem():
     return gcls, pcls, gold_rings, pred["rings"]
 
 
+def fig_benchmark_composition():
+    """Three-panel composition overview of the benchmark: (a) images and
+    reactions per subset, (b) reactions per image, (c) reactants listed
+    per reaction. All computed from the released ground truth."""
+    import collections
+    gt_dir = ROOT.parent.parent / "data" / "benchmark_full" / "ground_truth"
+    per_image = collections.defaultdict(list)
+    reactant_dist = collections.defaultdict(collections.Counter)
+    for f in gt_dir.glob("*.json"):
+        g = json.loads(f.read_text())
+        s = g["slice"]
+        per_image[s].append(len(g["reactions"]))
+        for r in g["reactions"]:
+            n = len([x for x in r.get("reactants", []) if x.get("smiles")])
+            reactant_dist[s][min(n, 4)] += 1
+    subsets = ["gt1", "gt2", "gt3", "gt4"]
+    labels = [s.upper() for s in subsets]
+
+    fig, (ax1, ax2, ax3) = plt.subplots(
+        1, 3, figsize=(7.4, 2.9), gridspec_kw={"wspace": 0.42})
+
+    # (a) images and annotated reactions per subset
+    DARK, LIGHT = "#4a463f", "#b5b0a5"
+    x = range(len(subsets))
+    imgs = [len(per_image[s]) for s in subsets]
+    rxns = [sum(per_image[s]) for s in subsets]
+    ax1.bar([i - 0.2 for i in x], imgs, width=0.38, color=DARK,
+            label="figure images")
+    ax1.bar([i + 0.2 for i in x], rxns, width=0.38, color=LIGHT,
+            label="annotated reactions")
+    for i in x:
+        ax1.annotate(f"{imgs[i]}", (i - 0.2, imgs[i]), ha="center",
+                     va="bottom", fontsize=7, color=TEXT,
+                     textcoords="offset points", xytext=(0, 2))
+        ax1.annotate(f"{rxns[i]:,}", (i + 0.2, rxns[i]), ha="center",
+                     va="bottom", fontsize=7, color=TEXT,
+                     textcoords="offset points", xytext=(0, 2))
+    ax1.set_xticks(list(x), labels, fontsize=8)
+    ax1.set_ylim(0, 1250)
+    ax1.set_ylabel("count", fontsize=8.5, color=TEXT)
+    ax1.legend(frameon=False, fontsize=7, loc="upper right",
+               handlelength=1.1)
+    style_ax(ax1)
+    ax1.xaxis.grid(False)
+    ax1.yaxis.grid(True, color=GRID, linewidth=0.8)
+    ax1.set_title("(a)", loc="left", fontsize=9, color=TEXT)
+
+    # (b) reactions per figure image, jittered strips with median bars
+    import numpy as np
+    rng = np.random.default_rng(42)
+    for i, s in enumerate(subsets):
+        v = np.array(per_image[s])
+        ax2.plot(i + rng.uniform(-0.17, 0.17, len(v)), v, "o",
+                 color="#7a756b", markersize=2.8, alpha=0.55,
+                 markeredgewidth=0)
+        ax2.plot([i - 0.26, i + 0.26],
+                 [np.median(v), np.median(v)], color=TEXT, linewidth=2.2,
+                 zorder=3)
+    ax2.set_xticks(list(x), labels, fontsize=8)
+    ax2.set_ylim(0, 35)
+    ax2.set_ylabel("reactions per figure image", fontsize=8.5, color=TEXT)
+    ax2.annotate("bar = median", (0.97, 0.96), xycoords="axes fraction",
+                 ha="right", va="top", fontsize=7, color=MUTED)
+    style_ax(ax2)
+    ax2.xaxis.grid(False)
+    ax2.yaxis.grid(True, color=GRID, linewidth=0.8)
+    ax2.set_title("(b)", loc="left", fontsize=9, color=TEXT)
+
+    # (c) reactants listed per reaction, stacked shares
+    shades = {0: "#dedacf", 1: "#b5b0a5", 2: "#7a756b", 3: "#4a463f",
+              4: "#23211d"}
+    for i, s in enumerate(subsets):
+        tot = sum(reactant_dist[s].values())
+        left = 0.0
+        for n in sorted(reactant_dist[s]):
+            frac = reactant_dist[s][n] / tot
+            ax3.barh(len(subsets) - 1 - i, frac, left=left, height=0.6,
+                     color=shades[n], edgecolor="white", linewidth=0.5)
+            if frac > 0.10:
+                ax3.text(left + frac / 2, len(subsets) - 1 - i,
+                         "4+" if n == 4 else str(n), ha="center",
+                         va="center", fontsize=7.5,
+                         color="white" if n >= 2 else TEXT)
+            left += frac
+    ax3.set_yticks(range(len(subsets)), labels[::-1], fontsize=8)
+    ax3.set_xlim(0, 1)
+    ax3.set_xticks([0, .25, .5, .75, 1],
+                   ["0%", "25%", "50%", "75%", "100%"], fontsize=7.5)
+    ax3.set_xlabel("share of reactions, by number\nof listed reactants",
+                   fontsize=8.5, color=TEXT)
+    style_ax(ax3)
+    ax3.xaxis.grid(False)
+    ax3.spines["left"].set_visible(False)
+    ax3.set_title("(c)", loc="left", fontsize=9, color=TEXT)
+
+    fig.tight_layout()
+    for ext in ("pdf", "png"):
+        fig.savefig(OUT / f"fig_benchmark_composition.{ext}", dpi=300,
+                    bbox_inches="tight")
+    plt.close(fig)
+
+
 def fig_benchmark_chemistry():
     import matplotlib.gridspec  # noqa: F401
     gcls, _, gold_rings, _ = _load_chem()
@@ -510,6 +612,7 @@ if __name__ == "__main__":
     fig_subsets(d)
     fig_perf_tokens_time(d)
     fig_literature_trend()
+    fig_benchmark_composition()
     fig_benchmark_chemistry()
     fig_pred_chemistry()
     fig_rings_comparison()
