@@ -736,35 +736,24 @@ unresolved R-group templates at the expense of every major class.}
 \end{figure}
 
 Figure~\ref{fig:rings} extends the comparison to the ring systems of
-the predicted products: for the twelve most common gold ring systems,
-it reports how many each system extracted against the gold inventory.
-The counts are inventory-level totals, not per-image matched
-instances, so they reflect missing images as well as per-image
-recall (total inventories range from 4{,}821 to 6{,}567 rings against
-6{,}637 in the gold). The relative distribution is again nearly
-uniform: benzene accounts for 63.1 to 64.4\% of extracted rings in
-every system. However, the per-ring detail exposes structure-level
-error patterns that the aggregate hides. Gemini~3.7~Flash confuses
-the two dihydropyran isomers, recovering only 39\% of the
-3,4-dihydro-2H-pyran inventory while over-extracting the 3,6-isomer
-to 120\%; every single-agent model over-extracts cyclohexane (105 to
-133\%), consistent with saturating drawn aromatic rings; GPT-5.4
-recovers only 37\% of the indoline inventory, and pyridine is
-under-recovered by every system except GPT-5.4. Nevertheless, most
-cells sit between 70 and 100\%, so recognising drawn molecular
-structures is not the discriminating skill on this benchmark;
-assembling the recognised structures into complete, concrete
-reactions is.
+the predicted products. The distribution over ring types is
+essentially indistinguishable across all five systems and the gold
+(benzene accounts for 63.1 to 64.4\% of extracted rings everywhere),
+and the total ring inventory tracks each system's completeness rather
+than its chemistry, with totals reflecting missing images as well as
+per-image recall. Hence, recognising drawn molecular structures is not
+the discriminating skill on this benchmark; assembling the recognised
+structures into complete, concrete reactions is.
 
 \begin{figure}[htb]
 \centering
-\includegraphics[width=0.9\textwidth]{figures/fig_rings_detail}
-\caption{Extracted ring systems versus the ground truth, for the
-twelve most common gold ring systems. Each cell reports how many
-rings of that type the system extracted across all predicted
-products, with the extracted/gold ratio in parentheses setting the
-cell shade (capped at 120\%). Counts are inventory-level totals, not
-per-image matched instances.}
+\includegraphics[width=0.95\textwidth]{figures/fig_rings_comparison}
+\caption{Ring systems in predicted products versus the ground truth.
+(a)~Total extracted ring systems per system; the dashed line marks the
+gold inventory of 6{,}637 rings. (b)~Share of the eight most common
+gold ring types within each system's extracted rings (log scale;
+black diamonds are the gold shares). All five systems reproduce the
+ring distribution of the benchmark almost exactly.}
 \label{fig:rings}
 \end{figure}
 
